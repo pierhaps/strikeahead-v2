@@ -1,0 +1,114 @@
+{
+  "nav": { "home": "Kryefaqja", "stats": "Statistika", "log": "Regjistro", "map": "Harta", "profile": "Profili" },
+  "landing": {
+    "nav_features": "Karakteristikat", "nav_howItWorks": "Si funksionon", "nav_pricing": "Çmimet", "nav_faq": "FAQ",
+    "cta_start": "Fillo falas", "cta_demo": "Shiko demo",
+    "hero_sub": "Aplikacioni i zgjuar i peshkimit për profesionistët dhe fillestarët – me parashikime AI, ndjekje të baticës dhe komunitet.",
+    "features_title": "Gjithçka që ju nevojitet", "features_sub": "StrikeAhead kombinon teknologjinë AI me njohuri të thella peshkimi.",
+    "howItWorks_title": "Si funksionon", "howItWorks_sub": "Tre hapa drejt përvojës së përsosur të peshkimit",
+    "testimonials_title": "Çfarë thonë peshkatarët", "pricing_title": "Zgjidhni planin tuaj", "pricing_sub": "Filloni falas, përmirësohu kur të jeni gati.",
+    "faq_title": "Pyetje të shpeshta", "footer_tagline": "Aplikacioni i zgjuar i peshkimit për gjeneratën e ardhshme.", "footer_rights": "Të gjitha të drejtat të rezervuara."
+  },
+  "common": {
+    "save": "Ruaj", "cancel": "Anulo", "delete": "Fshi", "add": "Shto", "edit": "Ndrysho", "close": "Mbyll",
+    "back": "Kthehu", "next": "Tjetër", "confirm": "Konfirmo", "search": "Kërko", "filter": "Filtro", "all": "Të gjitha",
+    "loading": "Duke ngarkuar...", "error": "Gabim", "retry": "Provo përsëri", "yes": "Po", "no": "Jo", "or": "ose", "and": "dhe",
+    "of": "nga", "showing": "Duke shfaqur", "results": "Rezultate", "noResults": "Nuk ka rezultate",
+    "emptyState": "Nuk ka hyrje ende.", "emptyStateSub": "Krijo hyrjen tënde të parë!",
+    "unknown": "I panjohur", "optional": "opsionale", "required": "E detyrueshme", "success": "Sukses",
+    "updated": "U përditësua", "deleted": "U fshi", "created": "U krijua", "copied": "U kopjua!",
+    "share": "Ndaj", "download": "Shkarko", "upload": "Ngarko", "photo": "Foto", "date": "Data",
+    "time": "Ora", "location": "Vendndodhja", "notes": "Shënime", "description": "Përshkrim",
+    "status_active": "Aktiv", "status_inactive": "Joaktiv", "status_pending": "Në pritje",
+    "status_confirmed": "I konfirmuar", "status_completed": "I përfunduar", "status_cancelled": "I anuluar",
+    "released": "U lirua", "kept": "U mbajt", "premium": "Premium", "free": "Falas", "upgrade": "Përmirëso",
+    "viewAll": "Shiko të gjitha", "seeMore": "Shiko më shumë", "submit": "Dërgo", "reset": "Rivendos",
+    "week": "Javë", "month": "Muaj", "year": "Vit", "total": "Totali", "today": "Sot", "yesterday": "Dje", "language": "Gjuha"
+  },
+  "catches": {
+    "title": "Kapjet", "myCatches": "Kapjet e mia", "logCatch": "Regjistro kapjen", "species": "Lloji",
+    "weight": "Pesha", "length": "Gjatësia", "waterbody": "Trupi ujor", "technique": "Teknika", "bait": "Karrem",
+    "weather": "Moti", "photo": "Foto", "step_photo": "Foto", "step_species": "Lloji", "step_measures": "Masat",
+    "step_location": "Vendndodhja", "aiDetecting": "AI po njeh...", "aiIdentified": "AI njohu",
+    "uploadPhoto": "Bëj ose zgjidh foto", "aiHelp": "AI njeh automatikisht llojin",
+    "searchSpecies": "Kërko llojin...", "useLocation": "Përdor vendndodhjen aktuale", "enterWaterbody": "Shkruaj trupin ujor...",
+    "saveCatch": "Ruaj kapjen", "skipStep": "Kalo", "continueAI": "Vazhdo me sugjerimin e AI",
+    "noCatches": "Nuk ka kapje ende", "noCatchesSub": "Regjistro kapjen tënde të parë!",
+    "totalCatches": "Kapjet totale", "speciesCount": "Llojet", "records": "Rekorde", "rank": "Renditja",
+    "verificationLevel": "Niveli i verifikimit", "unverified": "I paverifikuar", "photo_verified": "Foto e verifikuar",
+    "gps_verified": "GPS i verifikuar", "fully_verified": "Plotësisht i verifikuar"
+  },
+  "diary": {
+    "title": "Ditari i peshkimit", "newEntry": "Hyrje e re", "entryTitle": "Titulli", "mood": "Humori",
+    "highlights": "Momentet kryesore", "myNotes": "Shënimet e mia", "noEntries": "Nuk ka hyrje", "noEntriesSub": "Shkruaj hyrjen tënde të parë!"
+  },
+  "skillprofile": {
+    "title": "Profili i aftësive", "mySkills": "Aftësitë e mia", "noSkills": "Nuk ka të dhëna ende",
+    "noSkillsSub": "Regjistro kapje për të ndërtuar profilin.", "improving": "Duke u përmirësuar", "stable": "Stabil",
+    "declining": "Duke rënë", "confidence": "Besimi", "percentile": "Percentili", "coachingTip": "Rekomandohet stërvitje",
+    "lure_selection": "Zgjedhja e karremit", "location_scouting": "Eksplorimi i vendndodhjes", "weather_reading": "Leximi i motit",
+    "species_knowledge": "Njohja e llojeve", "technique_mastery": "Zotërimi i teknikës", "eco_awareness": "Ndërgjegjja ekologjike",
+    "catch_consistency": "Qëndrueshmëria e kapjes", "trophy_hunting": "Gjuetia e trofeut", "saltwater": "Ujë i kripur",
+    "freshwater": "Ujë i ëmbël", "fly_fishing": "Peshkim me mizë", "spinning": "Spinning", "bottom_fishing": "Peshkim i fundit"
+  },
+  "analytics": {
+    "title": "Analitika", "dashboard": "Paneli", "catches": "Kapjet", "weight": "Pesha", "species": "Llojet",
+    "monthlyGoal": "Synimi mujor", "hitRate": "Shkalla e suksesit", "personalBests": "Rekordet personale",
+    "record": "Rekord", "week": "Javë", "month": "Muaj", "year": "Vit", "total": "Totali",
+    "activity": "Aktiviteti 7 ditë", "goals": "Synimet dhe kuotat"
+  },
+  "licenses": {
+    "title": "Lejet", "myLicenses": "Lejet e mia", "addLicense": "Shto leje", "noLicenses": "Nuk ka leje",
+    "noLicensesSub": "Shto lejen tënde të parë të peshkimit!", "scanDocument": "Skano dokumentin",
+    "expiresOn": "Skadon më", "issuedOn": "Lëshuar më", "licenseNumber": "Numri i lejes", "issuer": "Lëshuesi",
+    "country": "Vendi", "type": "Lloji", "status_valid": "E vlefshme", "status_expiring": "Po skadon",
+    "status_expired": "Skaduar", "status_processing": "Në procesim"
+  },
+  "bookings": {
+    "title": "Rezervimet", "myBookings": "Rezervimet e mia", "upcoming": "Të ardhshme", "past": "Të kaluara",
+    "noBookings": "Nuk ka rezervime", "noBookingsSub": "Rezervo një sesion stërvitjeje!",
+    "bookCoach": "Rezervo trajner", "session": "Sesioni", "duration": "Kohëzgjatja", "price": "Çmimi",
+    "location": "Vendndodhja", "message": "Mesazhi", "sendMessage": "Dërgo", "coach": "Trajner", "student": "Nxënës"
+  },
+  "regulations": {
+    "title": "Rregulloret", "region": "Rajoni", "species": "Lloji", "minSize": "Madhësia minimale", "maxSize": "Madhësia maksimale",
+    "closedSeason": "Sezoni i mbyllur", "catchRelease": "Kap dhe liro", "mandatory": "Grumbullim i detyrueshëm",
+    "allowed": "Lejohet", "notAllowed": "Nuk lejohet", "source": "Burimi", "noRegulations": "Nuk ka rregullore",
+    "allRegions": "Të gjitha rajonet", "allSpecies": "Të gjitha llojet"
+  },
+  "encyclopedia": {
+    "title": "Enciklopedia e peshqve", "search": "Kërko llojin...", "habitat": "Habitati", "family": "Familja",
+    "rarity": "Rrallësia", "freshwater": "Ujë i ëmbël", "saltwater": "Ujë i kripur", "brackish": "Ujë brackish",
+    "anadromous": "Anadromik", "common": "I zakonshëm", "uncommon": "I pazakonshëm", "rare": "I rrallë", "epic": "Epik",
+    "legendary": "Legjendarik", "noFish": "Nuk u gjetën peshq", "overview": "Pasqyra", "identification": "Identifikimi",
+    "technique": "Teknika", "equipment": "Pajisjet", "cooking": "Gatim", "families": "Familjet e peshqve"
+  },
+  "bait": {
+    "title": "Karremet", "catalog": "Katalogu i karremeve", "database": "Baza e karremeve", "artificial": "Artificial",
+    "natural": "Natyral", "live": "I gjallë", "effectiveness": "Efektiviteti", "season": "Sezoni", "technique": "Teknika",
+    "targetSpecies": "Lloji i synuar", "noBaits": "Nuk u gjetën karreme", "selectFish": "Zgjidh llojin"
+  },
+  "forecast": {
+    "title": "Parashikimi i kapjes", "score": "Rezultati i parashikimit", "species": "Lloji", "waterbody": "Trupi ujor",
+    "period": "Periudha", "conditions": "Kushtet", "windows": "Dritaret kohore", "optimal": "Optimal",
+    "good": "Mirë", "fair": "Mesatar", "poor": "Dobët", "generate": "Gjenero parashikim", "noData": "Nuk ka të dhëna"
+  },
+  "insights": {
+    "title": "Njohuri AI", "all": "Të gjitha", "unread": "Të palexuara", "helpful": "E dobishme", "notHelpful": "Jo e dobishme",
+    "irrelevant": "Irelevante", "noInsights": "Nuk ka njohuri", "noInsightsSub": "Regjistro më shumë kapje për këshilla.",
+    "priority_low": "E ulët", "priority_medium": "Mesatare", "priority_high": "E lartë", "priority_urgent": "Urgjente", "confidence": "Besimi"
+  },
+  "subscription": {
+    "title": "Abonimi dhe HookPoints", "free": "Falas", "pro": "Pro", "elite": "Elite", "hookPoints": "HookPoints",
+    "perMonth": "/ muaj", "upgrade": "Përmirëso", "currentPlan": "Plani aktual", "features": "Karakteristikat"
+  },
+  "community": {
+    "title": "Komuniteti", "teams": "Ekipet dhe grupet", "competitions": "Garat", "challenges": "Sfidat",
+    "leaderboard": "Tabela e renditjes", "tournaments": "Turnetë", "feed": "Rrjedha e komunitetit", "chat": "Biseda e peshkatarëve", "coaches": "Trajnerët"
+  },
+  "admin": {
+    "title": "Cilësimet", "language": "Gjuha", "account": "Llogaria", "notifications": "Njoftimet",
+    "privacy": "Privatësia", "about": "Rreth aplikacionit", "logout": "Dilni", "version": "Versioni"
+  },
+  "legal": { "imprint": "Impressum", "privacy": "Privatësia", "terms": "Kushtet" }
+}

@@ -1,0 +1,110 @@
+{
+  "name": "Species",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Common name (legacy/fallback display)"
+    },
+    "name_de": {
+      "type": "string",
+      "description": "Deutscher Name"
+    },
+    "name_en": {
+      "type": "string",
+      "description": "English name"
+    },
+    "name_es": {
+      "type": "string",
+      "description": "Nombre espa\u00f1ol"
+    },
+    "name_fr": {
+      "type": "string",
+      "description": "Nom fran\u00e7ais"
+    },
+    "name_it": {
+      "type": "string",
+      "description": "Nome italiano"
+    },
+    "name_hr": {
+      "type": "string",
+      "description": "Hrvatsko ime"
+    },
+    "name_pt": {
+      "type": "string",
+      "description": "Nome portugu\u00eas"
+    },
+    "name_nl": {
+      "type": "string",
+      "description": "Nederlandse naam"
+    },
+    "name_tr": {
+      "type": "string",
+      "description": "T\u00fcrk\u00e7e ad"
+    },
+    "name_el": {
+      "type": "string",
+      "description": "\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03cc \u03cc\u03bd\u03bf\u03bc\u03b1"
+    },
+    "name_sq": {
+      "type": "string",
+      "description": "Emri shqip / Albanischer Name"
+    },
+    "scientific_name": {
+      "type": "string",
+      "description": "Scientific name (unique key)"
+    },
+    "fish_family": {
+      "type": "string",
+      "description": "Taxonomic family, e.g. Esocidae, Percidae, Salmonidae"
+    },
+    "habitat_type": {
+      "type": "string",
+      "enum": [
+        "freshwater",
+        "saltwater",
+        "brackish",
+        "anadromous"
+      ],
+      "description": "Primary habitat"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Representative photo URL"
+    },
+    "is_gamefish": {
+      "type": "boolean",
+      "default": true,
+      "description": "Gamefish vs. bycatch"
+    },
+    "base_xp": {
+      "type": "number",
+      "description": "Base XP points for catching this species",
+      "default": 10
+    },
+    "rarity": {
+      "type": "string",
+      "enum": [
+        "common",
+        "uncommon",
+        "rare",
+        "epic",
+        "legendary"
+      ],
+      "default": "common"
+    },
+    "icon_url": {
+      "type": "string",
+      "description": "Species icon/image URL"
+    },
+    "average_weight_kg": {
+      "type": "number"
+    },
+    "record_weight_kg": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}
