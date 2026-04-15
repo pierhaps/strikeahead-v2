@@ -9,8 +9,29 @@
   "catches": { "myCatches": "Meine Fänge" },
   "licenses": { "myLicenses": "Angelscheine" },
   "bookings": { "myBookings": "Meine Buchungen" },
-  "subscription": { "title": "Abo & HookPoints" },
-  "admin": { "title": "Einstellungen", "language": "Sprache" },
+  "subscription": {
+    "title": "Abo & HookPoints",
+    "current_plan": "Aktueller Plan",
+    "current": "Aktiv",
+    "expires": "Läuft ab",
+    "upgrade": "Upgraden",
+    "cancel": "Abo kündigen",
+    "history": "Transaktions-Historie",
+    "checkout_title": "Dein Kaufweg",
+    "checkout_web": "Auf dem Web kannst du direkt über Stripe Checkout upgraden.",
+    "checkout_ios": "In-App-Käufe auf iOS werden über den App Store abgewickelt.",
+    "checkout_android": "In-App-Käufe auf Android werden über Google Play abgewickelt."
+  },
+  "admin": {
+    "title": "Admin-Dashboard",
+    "language": "Sprache",
+    "no_access": "Kein Zugriff. Nur für Admins."
+  },
+  "roadmap": {
+    "title": "Roadmap",
+    "suggest": "Feature vorschlagen",
+    "empty": "Noch keine Einträge."
+  },
   "legal": { "imprint": "Impressum", "privacy": "Datenschutz", "terms": "AGB" },
   "community": {
     "teams": "Teams",

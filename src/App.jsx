@@ -43,10 +43,14 @@ import TideCatch from './pages/TideCatch';
 import AIInsights from './pages/AIInsights';
 
 // Stub pages
-import {
-  Subscription, Roadmap,
-  Admin, LandingPage, Imprint, PrivacyPolicy, TermsOfService
-} from './pages/stub/StubPages';
+import { LandingPage } from './pages/stub/StubPages';
+
+import Subscription from './pages/Subscription';
+import Roadmap from './pages/Roadmap';
+import Admin from './pages/Admin';
+import Imprint from './pages/Imprint';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 
 // Community pages (full implementations)
 import Teams from './pages/Teams';
