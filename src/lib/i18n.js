@@ -2,17 +2,17 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
-import de from '../locales/de/common.json';
-import en from '../locales/en/common.json';
-import es from '../locales/es/common.json';
-import fr from '../locales/fr/common.json';
-import it from '../locales/it/common.json';
-import hr from '../locales/hr/common.json';
-import pt from '../locales/pt/common.json';
-import nl from '../locales/nl/common.json';
-import tr from '../locales/tr/common.json';
-import el from '../locales/el/common.json';
-import sq from '../locales/sq/common.json';
+import de from '../../locales/de/common.json';
+import en from '../../locales/en/common.json';
+import es from '../../locales/es/common.json';
+import fr from '../../locales/fr/common.json';
+import it from '../../locales/it/common.json';
+import hr from '../../locales/hr/common.json';
+import pt from '../../locales/pt/common.json';
+import nl from '../../locales/nl/common.json';
+import tr from '../../locales/tr/common.json';
+import el from '../../locales/el/common.json';
+import sq from '../../locales/sq/common.json';
 
 i18n
   .use(LanguageDetector)
