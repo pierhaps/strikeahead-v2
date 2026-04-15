@@ -1,24 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronRight, Crown, Trophy, Star, Fish, Anchor, MapPin, Shield, BookOpen, Award } from 'lucide-react';
+import { ChevronRight, Crown, Trophy, Star, Fish, Anchor, MapPin, Shield, BookOpen, Award, Globe } from 'lucide-react';
 import PageTransition from '../components/ui/PageTransition';
 import { base44 } from '@/api/base44Client';
+import { useTranslation } from 'react-i18next';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 
-const menuItems = [
-  { icon: Fish, label: 'Meine Fänge', hint: '142 Einträge', path: '/mycatches', color: 'text-tide-400' },
-  { icon: Shield, label: 'Angelscheine', hint: '3 aktiv', path: '/mylicenses', color: 'text-tide-400' },
-  { icon: BookOpen, label: 'Meine Buchungen', hint: '', path: '/mybookings', color: 'text-tide-400' },
-  { icon: Trophy, label: 'Teams & Crews', hint: '', path: '/teams', color: 'text-sun-400' },
-  { icon: Anchor, label: 'Abo & HookPoints', hint: '', path: '/subscription', color: 'text-sun-400' },
-  { icon: Award, label: 'Angelschule', hint: '', path: '/angelschule', color: 'text-tide-400' },
-  { icon: MapPin, label: 'Impressum', hint: '', path: '/imprint', color: 'text-foam/40' },
-  { icon: Shield, label: 'Datenschutz', hint: '', path: '/privacypolicy', color: 'text-foam/40' },
-  { icon: BookOpen, label: 'AGB', hint: '', path: '/termsofservice', color: 'text-foam/40' },
-  { icon: Star, label: 'Einstellungen', hint: '', path: '/admin', color: 'text-foam/40' },
-];
+
 
 const achievements = [
   { icon: '🎣', filled: true, label: 'Erster Fang' },
@@ -30,10 +20,25 @@ const achievements = [
 
 export default function Profile() {
   const [user, setUser] = useState(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     base44.auth.me().then(setUser).catch(() => {});
   }, []);
+
+  const menuItems = [
+    { icon: Fish, label: t('catches.myCatches'), hint: '', path: '/mycatches', color: 'text-tide-400' },
+    { icon: Shield, label: t('licenses.myLicenses'), hint: '', path: '/mylicenses', color: 'text-tide-400' },
+    { icon: BookOpen, label: t('bookings.myBookings'), hint: '', path: '/mybookings', color: 'text-tide-400' },
+    { icon: Trophy, label: t('community.teams'), hint: '', path: '/teams', color: 'text-sun-400' },
+    { icon: Anchor, label: t('subscription.title'), hint: '', path: '/subscription', color: 'text-sun-400' },
+    { icon: Award, label: 'Angelschule', hint: '', path: '/angelschule', color: 'text-tide-400' },
+    { icon: Globe, label: t('admin.language'), hint: '', path: '/settings', color: 'text-tide-400' },
+    { icon: MapPin, label: t('legal.imprint'), hint: '', path: '/imprint', color: 'text-foam/40' },
+    { icon: Shield, label: t('legal.privacy'), hint: '', path: '/privacypolicy', color: 'text-foam/40' },
+    { icon: BookOpen, label: t('legal.terms'), hint: '', path: '/termsofservice', color: 'text-foam/40' },
+    { icon: Star, label: t('admin.title'), hint: '', path: '/admin', color: 'text-foam/40' },
+  ];
 
   const isPremium = user?.premium_plan && user.premium_plan !== 'free';
   const firstName = user?.full_name?.split(' ')[0] || 'Angler';
