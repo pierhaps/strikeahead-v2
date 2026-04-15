@@ -110,29 +110,29 @@ export default function Profile() {
             ))}
           </div>
 
-          {/* XP Bar */}
+          {/* XP Bar — tide→sun gradient milestone feel */}
           <div className="glass-card rounded-2xl p-4">
             <div className="flex justify-between mb-2">
               <span className="text-foam font-bold text-sm">Level 24 → 25</span>
-              <span className="text-tide-300 text-sm font-semibold">{fishXp.toLocaleString('de-DE')} / {xpToNext.toLocaleString('de-DE')} XP</span>
+              <span className="text-sun-gradient text-sm font-bold font-display">{fishXp.toLocaleString('de-DE')} / {xpToNext.toLocaleString('de-DE')} XP</span>
             </div>
             <div className="h-3 bg-abyss-700 rounded-full overflow-hidden relative">
               <motion.div
-                className="h-full rounded-full gradient-tide"
+                className="h-full rounded-full"
+                style={{ background: 'linear-gradient(90deg, #1FA7B8 0%, #F5C34B 100%)' }}
                 initial={{ width: 0 }}
                 animate={{ width: `${xpPct}%` }}
                 transition={{ duration: 1.4, delay: 0.3, ease: tideEase }}
               />
-              {/* Shimmer */}
-              <div className="absolute inset-0 rounded-full overflow-hidden opacity-50">
-                <div className="h-full w-1/3 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer"
+              <div className="absolute inset-0 rounded-full overflow-hidden opacity-40">
+                <div className="h-full w-1/3 bg-gradient-to-r from-transparent via-white/25 to-transparent animate-shimmer"
                   style={{ backgroundSize: '200% 100%' }} />
               </div>
             </div>
             <p className="text-foam/30 text-xs mt-1">{Math.round(xpPct)}% zum nächsten Level</p>
           </div>
 
-          {/* Achievements */}
+          {/* Achievements — unlocked get sun gradient glow */}
           <div>
             <p className="text-foam/50 text-xs uppercase tracking-widest mb-3">Erfolge</p>
             <div className="flex gap-2.5 overflow-x-auto scrollbar-hide pb-1">
@@ -144,14 +144,21 @@ export default function Profile() {
                   transition={{ duration: 0.3, delay: i * 0.07 }}
                   className="flex-shrink-0 w-16 flex flex-col items-center gap-1.5"
                 >
-                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-2xl ${
-                    a.filled
-                      ? 'bg-sun-400/20 border border-sun-400/40'
-                      : 'bg-tide-500/10 border border-tide-300/20 opacity-40'
-                  }`}>
+                  <div
+                    className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl relative"
+                    style={a.filled ? {
+                      background: 'linear-gradient(135deg, rgba(245,195,75,0.18) 0%, rgba(255,216,114,0.10) 100%)',
+                      border: '1px solid rgba(245,195,75,0.4)',
+                      boxShadow: '0 0 14px rgba(245,195,75,0.2)',
+                    } : {
+                      background: 'rgba(31,167,184,0.07)',
+                      border: '1px solid rgba(127,220,229,0.12)',
+                      opacity: 0.4,
+                    }}
+                  >
                     {a.icon}
                   </div>
-                  <p className="text-[9px] text-foam/40 text-center leading-tight">{a.label}</p>
+                  <p className={`text-[9px] text-center leading-tight ${a.filled ? 'text-sun-300/70' : 'text-foam/30'}`}>{a.label}</p>
                 </motion.div>
               ))}
             </div>

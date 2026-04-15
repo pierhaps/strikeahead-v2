@@ -129,8 +129,8 @@ module.exports = {
   },
   plugins: [require("tailwindcss-animate")],
   safelist: [
-    'text-gradient-tide', 'text-gradient-sun', 'glass-card', 'glass-strong',
-    'glow-tide', 'glow-sun', 'gradient-tide', 'gradient-sun',
+    'text-gradient-tide', 'text-gradient-sun', 'text-sun-gradient', 'glass-card', 'glass-strong',
+    'glow-tide', 'glow-sun', 'gradient-tide', 'gradient-sun', 'gradient-tide-sun', 'ring-sun',
     'bg-abyss-950', 'bg-abyss-900', 'bg-abyss-800', 'bg-abyss-700',
     'bg-tide-500', 'bg-tide-400', 'bg-tide-300',
     'bg-sun-500', 'bg-sun-400', 'bg-sun-300',

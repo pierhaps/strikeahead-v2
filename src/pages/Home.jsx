@@ -56,7 +56,7 @@ export default function Home() {
   return (
     <PageTransition>
       <div className="px-4 pt-6 pb-4 space-y-6">
-        {/* Header */}
+        {/* Header with sun-glow logo lockup */}
         <div className="flex items-start justify-between">
           <div>
             <p className="text-foam/50 text-sm font-medium">Willkommen zurück</p>
@@ -64,7 +64,8 @@ export default function Home() {
               Moin, {firstName} 🎣
             </h1>
           </div>
-          <div className="w-11 h-11 rounded-2xl gradient-tide flex items-center justify-center glow-tide">
+          <div className="w-11 h-11 rounded-2xl gradient-tide flex items-center justify-center"
+            style={{ boxShadow: '0 0 20px rgba(31,167,184,0.4), 0 0 8px rgba(245,195,75,0.25)' }}>
             <span className="text-xl">🐟</span>
           </div>
         </div>
@@ -84,36 +85,37 @@ export default function Home() {
               </p>
             </div>
             <div className="flex flex-col gap-2 items-end">
-              {/* Streak */}
+              {/* Streak — sun-gradient counter */}
               <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl"
-                style={{ background: 'rgba(245,195,75,0.12)', border: '1px solid rgba(245,195,75,0.25)' }}>
+                style={{ background: 'rgba(245,195,75,0.12)', border: '1px solid rgba(245,195,75,0.3)', boxShadow: '0 0 10px rgba(245,195,75,0.12)' }}>
                 <motion.div
                   animate={{ scale: [1, 1.2, 1] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
                 >
                   <Flame className="w-4 h-4 text-sun-400" />
                 </motion.div>
-                <span className="text-sun-300 font-bold text-sm">7 Tage</span>
+                <span className="text-sun-gradient font-bold font-display text-sm">7 Tage</span>
               </div>
-              {/* Hook Points */}
+              {/* Hook Points — always sun-gradient */}
               <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl"
-                style={{ background: 'rgba(31,167,184,0.12)', border: '1px solid rgba(31,167,184,0.25)' }}>
-                <Anchor className="w-3.5 h-3.5 text-tide-400" />
-                <span className="text-tide-300 font-bold text-sm"><AnimatedNumber value={hookPoints} /></span>
-                <span className="text-tide-400/60 text-xs">HP</span>
+                style={{ background: 'rgba(245,195,75,0.1)', border: '1px solid rgba(245,195,75,0.22)' }}>
+                <Anchor className="w-3.5 h-3.5 text-sun-400" />
+                <span className="text-sun-gradient font-bold font-display text-sm"><AnimatedNumber value={hookPoints} /></span>
+                <span className="text-sun-400/50 text-xs">HP</span>
               </div>
             </div>
           </div>
 
-          {/* XP Bar */}
+          {/* XP Bar — tide→sun gradient for premium feel */}
           <div className="mb-4">
             <div className="flex justify-between items-center mb-1">
               <span className="text-xs text-foam/50">Fish XP</span>
-              <span className="text-xs text-tide-300 font-semibold"><AnimatedNumber value={fishXp} /> XP</span>
+              <span className="text-xs text-sun-gradient font-semibold font-display"><AnimatedNumber value={fishXp} /> XP</span>
             </div>
             <div className="h-2 rounded-full bg-abyss-700 overflow-hidden">
               <motion.div
-                className="h-full rounded-full gradient-tide"
+                className="h-full rounded-full"
+                style={{ background: 'linear-gradient(90deg, #1FA7B8 0%, #F5C34B 100%)' }}
                 initial={{ width: 0 }}
                 animate={{ width: '73%' }}
                 transition={{ duration: 1.2, delay: 0.3, ease: tideEase }}
@@ -121,16 +123,17 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Mini stats */}
+          {/* Mini stats — Records get sun accent */}
           <div className="grid grid-cols-3 gap-2">
             {[
-              { label: 'Arten', value: 24, icon: '🐠' },
-              { label: 'Rekorde', value: 5, icon: '🏆' },
-              { label: 'Rang', value: '#12', icon: '⚡' },
+              { label: 'Arten', value: 24, icon: '🐠', sun: false },
+              { label: 'Rekorde', value: 5, icon: '🏆', sun: true },
+              { label: 'Rang', value: '#12', icon: '⚡', sun: false },
             ].map((stat) => (
-              <div key={stat.label} className="rounded-2xl bg-abyss-800/60 p-2.5 text-center">
+              <div key={stat.label} className={`rounded-2xl p-2.5 text-center ${stat.sun ? 'border border-sun-500/20' : 'bg-abyss-800/60'}`}
+                style={stat.sun ? { background: 'rgba(245,195,75,0.07)' } : {}}>
                 <div className="text-lg mb-0.5">{stat.icon}</div>
-                <div className="font-display font-bold text-foam text-lg leading-none">{stat.value}</div>
+                <div className={`font-display font-bold text-lg leading-none ${stat.sun ? 'text-sun-gradient' : 'text-foam'}`}>{stat.value}</div>
                 <div className="text-foam/40 text-[10px] mt-0.5">{stat.label}</div>
               </div>
             ))}

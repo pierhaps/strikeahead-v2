@@ -31,13 +31,25 @@ export default function BottomNav() {
                 to={tab.path}
                 className="relative -mt-8 flex flex-col items-center"
               >
+                {/* Sun accent ring — sits behind the button */}
+                <div
+                  className="absolute inset-0 rounded-full"
+                  style={{
+                    top: '-3px', left: '-3px', right: '-3px', bottom: '-3px',
+                    background: 'transparent',
+                    boxShadow: '0 0 0 2px rgba(245,195,75,0.55), 0 0 18px rgba(245,195,75,0.25)',
+                    borderRadius: '50%',
+                    pointerEvents: 'none',
+                  }}
+                />
                 <motion.div
                   whileTap={{ scale: 0.93 }}
-                  className="w-14 h-14 rounded-full gradient-tide glow-tide flex items-center justify-center shadow-lg"
+                  className="w-14 h-14 rounded-full gradient-tide flex items-center justify-center shadow-lg relative z-10"
+                  style={{ boxShadow: '0 0 24px rgba(31,167,184,0.45)' }}
                 >
                   <Icon className="w-7 h-7 text-white" strokeWidth={2.5} />
                 </motion.div>
-                <span className="text-[10px] mt-1 text-tide-300 font-medium">{tab.label}</span>
+                <span className="text-[10px] mt-1 text-sun-300 font-semibold">{tab.label}</span>
               </Link>
             );
           }

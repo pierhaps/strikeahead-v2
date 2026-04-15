@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Camera, Search, MapPin, ChevronRight, Loader2, Check } from 'lucide-react';
 import PageTransition from '../components/ui/PageTransition';
+import SunSparks from '../components/shared/SunSparks';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 
@@ -25,6 +26,7 @@ export default function Upload() {
   const [length, setLength] = useState(55);
   const [weight, setWeight] = useState(2.4);
   const [search, setSearch] = useState('');
+  const [showSparks, setShowSparks] = useState(false);
 
   const handlePhotoUpload = () => {
     setPhotoUploaded(true);
@@ -276,12 +278,17 @@ export default function Upload() {
                 />
               </div>
 
-              <motion.button
-                whileTap={{ scale: 0.97 }}
-                className="w-full py-4 rounded-2xl gradient-tide font-display font-bold text-white glow-tide text-lg"
-              >
-                Fang speichern 🎣
-              </motion.button>
+              <div className="relative">
+                <SunSparks active={showSparks} onComplete={() => setShowSparks(false)} count={5} originX="50%" originY="50%" />
+                <motion.button
+                  whileTap={{ scale: 0.97 }}
+                  onClick={() => setShowSparks(true)}
+                  className="w-full py-4 rounded-2xl font-display font-bold text-white text-lg"
+                  style={{ background: 'linear-gradient(90deg, #1FA7B8 0%, #F5C34B 100%)', boxShadow: '0 0 28px rgba(245,195,75,0.3)' }}
+                >
+                  Fang speichern 🎣
+                </motion.button>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

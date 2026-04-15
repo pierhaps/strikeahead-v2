@@ -97,7 +97,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* PB Cards */}
+        {/* PB Cards — sun-gradient record labels with glow */}
         <div>
           <p className="text-foam/50 text-xs uppercase tracking-widest mb-3">Persönliche Bestleistungen</p>
           <div className="space-y-2.5">
@@ -108,8 +108,10 @@ export default function Dashboard() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.4, delay: i * 0.07, ease: tideEase }}
                 className="glass-card rounded-2xl p-4 flex items-center gap-4"
+                style={{ borderColor: 'rgba(245,195,75,0.15)' }}
               >
-                <div className="w-12 h-12 rounded-2xl bg-sun-400/10 border border-sun-500/20 flex items-center justify-center text-2xl flex-shrink-0">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0"
+                  style={{ background: 'linear-gradient(135deg, rgba(245,195,75,0.15), rgba(255,216,114,0.08))', border: '1px solid rgba(245,195,75,0.3)', boxShadow: '0 0 12px rgba(245,195,75,0.15)' }}>
                   {pb.icon}
                 </div>
                 <div className="flex-1 min-w-0">
@@ -117,8 +119,8 @@ export default function Dashboard() {
                   <p className="text-foam/50 text-xs truncate">{pb.sub}</p>
                 </div>
                 <div className="text-right flex-shrink-0">
-                  <p className="font-display font-extrabold text-xl text-gradient-sun">{pb.record}</p>
-                  <p className="text-foam/30 text-xs">Rekord</p>
+                  <p className="font-display font-extrabold text-xl text-sun-gradient">{pb.record}</p>
+                  <p className="text-sun-400/40 text-xs font-medium">⭐ Rekord</p>
                 </div>
               </motion.div>
             ))}
