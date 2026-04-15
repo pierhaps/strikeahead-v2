@@ -1,0 +1,120 @@
+{
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "role": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "user"
+      ],
+      "default": "user"
+    },
+    "username": {
+      "type": "string",
+      "description": "Unique username"
+    },
+    "total_catches": {
+      "type": "number",
+      "default": 0
+    },
+    "fish_xp": {
+      "type": "number",
+      "default": 0
+    },
+    "hook_points": {
+      "type": "number",
+      "default": 0
+    },
+    "premium_expires": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "premium_plan": {
+      "type": "string",
+      "enum": [
+        "free",
+        "angler",
+        "pro",
+        "legend"
+      ],
+      "default": "free"
+    },
+    "is_coach": {
+      "type": "boolean",
+      "default": false
+    },
+    "coach_hourly_rate": {
+      "type": "number"
+    },
+    "coach_bio": {
+      "type": "string"
+    },
+    "coach_specialties": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "coach_rating": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "total_coaching_sessions": {
+      "type": "number",
+      "default": 0
+    },
+    "crew_id": {
+      "type": "string"
+    },
+    "biggest_catch_species": {
+      "type": "string"
+    },
+    "biggest_catch_weight": {
+      "type": "number"
+    },
+    "favorite_waterbody": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "region": {
+      "type": "string"
+    },
+    "profile_photo": {
+      "type": "string",
+      "description": "Profile photo URL"
+    },
+    "cover_photo": {
+      "type": "string",
+      "description": "Cover photo URL"
+    },
+    "bio": {
+      "type": "string",
+      "description": "Long text bio"
+    },
+    "eco_score_avg": {
+      "type": "number"
+    },
+    "eco_badges": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "total_cleanups": {
+      "type": "number",
+      "default": 0
+    },
+    "last_login": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "is_banned": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}
