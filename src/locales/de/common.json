@@ -1,6 +1,14 @@
 {
   "nav": { "home": "Start", "dashboard": "Dashboard", "map": "Karte", "upload": "Loggen", "profile": "Profil" },
-  "catches": { "myCatches": "Meine Fänge" },
+  "catches": {
+    "myCatches": "Meine Fänge", "subtitle": "Deine Fänge",
+    "all_species": "Alle Arten", "all_waters": "Alle Gewässer", "kept": "Behalten",
+    "empty_title": "Keine Fänge", "empty_sub": "Noch keine Fänge geloggt oder Filter anpassen",
+    "log_first": "Ersten Fang loggen",
+    "verify_unverified": "Unverifiziert", "verify_photo": "Foto", "verify_gps": "GPS", "verify_full": "Vollständig",
+    "bait_technique": "Köder & Technik", "weather_data": "Wetterdaten",
+    "air": "Luft", "water": "Wasser", "wind": "Wind"
+  },
   "licenses": { "myLicenses": "Angelscheine" },
   "bookings": { "myBookings": "Meine Buchungen" },
   "subscription": {
@@ -48,6 +56,77 @@
     "chat_warning": "Diese Nachricht könnte Kontaktinfos enthalten", "chat_send": "Senden", "chat_banned": "Gesperrt",
     "system": "HookPoints & XP System", "system_how": "Wie verdienst du HookPoints?",
     "system_xp": "Fish XP & Level", "system_eco": "Warum Eco-Score?", "system_levels": "Level-Leiter"
+  },
+  "common": {
+    "all": "Alle", "none": "Keine", "save": "Speichern", "cancel": "Abbrechen", "delete": "Löschen",
+    "edit": "Bearbeiten", "add": "Hinzufügen", "close": "Schließen", "back": "Zurück",
+    "next": "Weiter", "confirm": "Bestätigen", "skip": "Überspringen",
+    "loading": "Lädt…", "error": "Fehler", "empty": "Leer", "search": "Suchen", "filter": "Filtern",
+    "yes": "Ja", "no": "Nein", "unknown": "Unbekannt",
+    "day_mo": "Mo", "day_tu": "Di", "day_we": "Mi", "day_th": "Do", "day_fr": "Fr", "day_sa": "Sa", "day_su": "So"
+  },
+  "home": {
+    "welcome_back": "Willkommen zurück", "greeting": "Moin, {{name}} 🎣", "defaultName": "Angler",
+    "total_catches": "Fänge gesamt", "streak_days": "{{n}} Tage",
+    "stat_species": "Arten", "stat_records": "Rekorde", "stat_rank": "Rang",
+    "tile_log": "Fang loggen", "tile_log_sub": "Neuen Fang eintragen",
+    "tile_spots": "Hotspots", "tile_spots_sub": "Beste Spots finden",
+    "tile_tide": "Tide & Wetter", "tile_tide_sub": "Forecast anzeigen",
+    "tile_tournaments": "Turniere", "tile_tournaments_sub": "Aktive Turniere",
+    "recent_catches": "Letzte Fänge", "top_crews": "Top Crews diese Woche"
+  },
+  "dashboard": {
+    "title": "Dashboard", "subtitle": "Deine Statistiken",
+    "range_week": "Woche", "range_month": "Monat", "range_year": "Jahr", "range_total": "Total",
+    "activity_7d": "7 Tage Aktivität", "goals": "Ziele & Quoten",
+    "monthly_goal": "Monatsziel", "hit_rate": "Hit-Rate",
+    "personal_bests": "Persönliche Bestleistungen", "record": "Rekord"
+  },
+  "upload": {
+    "title": "Fang loggen", "subtitle": "Neuen Fang hinzufügen",
+    "step_photo": "Foto", "step_species": "Art", "step_measures": "Maße", "step_location": "Ort",
+    "ai_running": "KI-Erkennung läuft...", "ai_identifying": "Art wird identifiziert",
+    "ai_result": "KI-Erkennung: {{species}}", "photo_uploaded": "Foto hochgeladen ✓",
+    "take_or_choose": "Foto aufnehmen oder wählen", "ai_auto_detect": "KI erkennt die Fischart automatisch",
+    "continue_with_ai": "Weiter mit KI-Vorschlag",
+    "search_species": "Fischart suchen...", "length": "Länge", "weight": "Gewicht",
+    "use_location": "Aktuellen Standort verwenden", "search_water": "Gewässer / Adresse eingeben...",
+    "save_catch": "Fang speichern"
+  },
+  "map": {
+    "search_placeholder": "Gewässer oder Spot suchen...",
+    "cat_freshwater": "Süßwasser", "cat_saltwater": "Salzwasser",
+    "cat_trout": "Forelle", "cat_pike": "Hecht", "cat_perch": "Zander",
+    "heat_very_hot": "Sehr heiß", "heat_active": "Aktiv", "heat_calm": "Ruhig",
+    "catches": "Fänge", "activity": "Aktivität", "top_species": "Top Art",
+    "activity_score": "Aktivitäts-Score", "open_spot": "Spot öffnen"
+  },
+  "diary": {
+    "title": "Tagebuch", "subtitle": "Dein Anglertagebuch",
+    "new_entry": "Neuer Tagebucheintrag", "date": "Datum",
+    "title_placeholder": "Titel (optional)", "how_was_day": "Wie war der Tag?",
+    "highlights_placeholder": "Highlights des Tages...", "notes_placeholder": "Persönliche Notizen...",
+    "mood_amazing": "Fantastisch", "mood_great": "Super", "mood_good": "Gut", "mood_okay": "OK", "mood_tough": "Schwierig",
+    "empty_title": "Noch keine Einträge", "empty_sub": "Fange an deine Angelerlebnisse zu dokumentieren",
+    "create_first": "Ersten Eintrag erstellen", "ai_tip": "KI-Tipp"
+  },
+  "catchmap": {
+    "pins": "Pins", "empty_title": "Keine Fänge mit GPS",
+    "empty_sub": "Logge Fänge mit Standort um sie hier zu sehen"
+  },
+  "insights": {
+    "title": "AI Insights", "subtitle": "KI-Empfehlungen",
+    "tab_unread": "Ungelesen ({{n}})", "tab_all": "Alle ({{n}})",
+    "empty_title": "Keine Insights", "empty_sub": "Logge mehr Fänge, damit die KI dir personalisierte Tipps geben kann",
+    "confidence": "Konfidenz", "helpful_q": "War das hilfreich?",
+    "irrelevant": "Irrelevant",
+    "rated_helpful": "Als hilfreich markiert", "rated_not_helpful": "Als nicht hilfreich markiert", "rated_irrelevant": "Als irrelevant markiert",
+    "type_regulation_alert": "Vorschrift", "type_seasonal_tip": "Saison-Tipp", "type_technique_suggestion": "Technik",
+    "type_location_recommendation": "Spot", "type_species_opportunity": "Art-Chance", "type_eco_alert": "Eco",
+    "type_churn_prevention": "Hinweis", "type_challenge_suggestion": "Challenge", "type_coaching_match": "Coach",
+    "type_gear_recommendation": "Ausrüstung", "type_weather_window": "Wetterfenster", "type_trophy_chance": "Trophy",
+    "type_hint": "Hinweis",
+    "priority_low": "Info", "priority_medium": "Mittel", "priority_high": "Wichtig", "priority_urgent": "Dringend ⚡"
   },
   "landing": {
     "nav": { "features": "Features", "how": "So funktioniert's", "pricing": "Preise", "faq": "FAQ", "cta": "Jetzt starten" },

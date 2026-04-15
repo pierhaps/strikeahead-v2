@@ -1,6 +1,14 @@
 {
   "nav": { "home": "Home", "dashboard": "Dashboard", "map": "Map", "upload": "Log", "profile": "Profile" },
-  "catches": { "myCatches": "My Catches" },
+  "catches": {
+    "myCatches": "My Catches", "subtitle": "Your catches",
+    "all_species": "All species", "all_waters": "All waters", "kept": "Kept",
+    "empty_title": "No catches", "empty_sub": "No catches logged yet or adjust filters",
+    "log_first": "Log first catch",
+    "verify_unverified": "Unverified", "verify_photo": "Photo", "verify_gps": "GPS", "verify_full": "Fully verified",
+    "bait_technique": "Bait & Technique", "weather_data": "Weather data",
+    "air": "Air", "water": "Water", "wind": "Wind"
+  },
   "licenses": { "myLicenses": "My Licenses" },
   "bookings": { "myBookings": "My Bookings" },
   "subscription": {
@@ -48,6 +56,77 @@
     "chat_warning": "This message may contain contact info", "chat_send": "Send", "chat_banned": "Banned",
     "system": "HookPoints & XP System", "system_how": "How do you earn HookPoints?",
     "system_xp": "Fish XP & Levels", "system_eco": "Why Eco Score?", "system_levels": "Level Ladder"
+  },
+  "common": {
+    "all": "All", "none": "None", "save": "Save", "cancel": "Cancel", "delete": "Delete",
+    "edit": "Edit", "add": "Add", "close": "Close", "back": "Back",
+    "next": "Next", "confirm": "Confirm", "skip": "Skip",
+    "loading": "Loading…", "error": "Error", "empty": "Empty", "search": "Search", "filter": "Filter",
+    "yes": "Yes", "no": "No", "unknown": "Unknown",
+    "day_mo": "Mon", "day_tu": "Tue", "day_we": "Wed", "day_th": "Thu", "day_fr": "Fri", "day_sa": "Sat", "day_su": "Sun"
+  },
+  "home": {
+    "welcome_back": "Welcome back", "greeting": "Hey, {{name}} 🎣", "defaultName": "Angler",
+    "total_catches": "Total catches", "streak_days": "{{n}} days",
+    "stat_species": "Species", "stat_records": "Records", "stat_rank": "Rank",
+    "tile_log": "Log catch", "tile_log_sub": "Add a new catch",
+    "tile_spots": "Hotspots", "tile_spots_sub": "Find the best spots",
+    "tile_tide": "Tide & Weather", "tile_tide_sub": "Show forecast",
+    "tile_tournaments": "Tournaments", "tile_tournaments_sub": "Active tournaments",
+    "recent_catches": "Recent catches", "top_crews": "Top crews this week"
+  },
+  "dashboard": {
+    "title": "Dashboard", "subtitle": "Your statistics",
+    "range_week": "Week", "range_month": "Month", "range_year": "Year", "range_total": "Total",
+    "activity_7d": "7-day activity", "goals": "Goals & quotas",
+    "monthly_goal": "Monthly goal", "hit_rate": "Hit rate",
+    "personal_bests": "Personal bests", "record": "Record"
+  },
+  "upload": {
+    "title": "Log catch", "subtitle": "Add new catch",
+    "step_photo": "Photo", "step_species": "Species", "step_measures": "Measures", "step_location": "Location",
+    "ai_running": "AI recognition running...", "ai_identifying": "Identifying species",
+    "ai_result": "AI detected: {{species}}", "photo_uploaded": "Photo uploaded ✓",
+    "take_or_choose": "Take or choose photo", "ai_auto_detect": "AI detects species automatically",
+    "continue_with_ai": "Continue with AI suggestion",
+    "search_species": "Search species...", "length": "Length", "weight": "Weight",
+    "use_location": "Use current location", "search_water": "Search water / address...",
+    "save_catch": "Save catch"
+  },
+  "map": {
+    "search_placeholder": "Search water or spot...",
+    "cat_freshwater": "Freshwater", "cat_saltwater": "Saltwater",
+    "cat_trout": "Trout", "cat_pike": "Pike", "cat_perch": "Perch",
+    "heat_very_hot": "Very hot", "heat_active": "Active", "heat_calm": "Quiet",
+    "catches": "Catches", "activity": "Activity", "top_species": "Top species",
+    "activity_score": "Activity score", "open_spot": "Open spot"
+  },
+  "diary": {
+    "title": "Diary", "subtitle": "Your fishing diary",
+    "new_entry": "New diary entry", "date": "Date",
+    "title_placeholder": "Title (optional)", "how_was_day": "How was the day?",
+    "highlights_placeholder": "Highlights of the day...", "notes_placeholder": "Personal notes...",
+    "mood_amazing": "Amazing", "mood_great": "Great", "mood_good": "Good", "mood_okay": "OK", "mood_tough": "Tough",
+    "empty_title": "No entries yet", "empty_sub": "Start documenting your fishing experiences",
+    "create_first": "Create first entry", "ai_tip": "AI tip"
+  },
+  "catchmap": {
+    "pins": "Pins", "empty_title": "No catches with GPS",
+    "empty_sub": "Log catches with location to see them here"
+  },
+  "insights": {
+    "title": "AI Insights", "subtitle": "AI recommendations",
+    "tab_unread": "Unread ({{n}})", "tab_all": "All ({{n}})",
+    "empty_title": "No insights", "empty_sub": "Log more catches so AI can give you personalised tips",
+    "confidence": "Confidence", "helpful_q": "Was this helpful?",
+    "irrelevant": "Irrelevant",
+    "rated_helpful": "Marked as helpful", "rated_not_helpful": "Marked as not helpful", "rated_irrelevant": "Marked as irrelevant",
+    "type_regulation_alert": "Regulation", "type_seasonal_tip": "Season tip", "type_technique_suggestion": "Technique",
+    "type_location_recommendation": "Spot", "type_species_opportunity": "Species chance", "type_eco_alert": "Eco",
+    "type_churn_prevention": "Tip", "type_challenge_suggestion": "Challenge", "type_coaching_match": "Coach",
+    "type_gear_recommendation": "Gear", "type_weather_window": "Weather window", "type_trophy_chance": "Trophy",
+    "type_hint": "Tip",
+    "priority_low": "Info", "priority_medium": "Medium", "priority_high": "Important", "priority_urgent": "Urgent ⚡"
   },
   "landing": {
     "nav": { "features": "Features", "how": "How it works", "pricing": "Pricing", "faq": "FAQ", "cta": "Get started" },
