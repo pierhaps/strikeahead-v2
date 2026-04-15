@@ -116,5 +116,8 @@
       "type": "boolean",
       "default": false
     }
-  }
+  },
+  "required": [
+    "username"
+  ]
 }
