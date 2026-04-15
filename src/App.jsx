@@ -29,13 +29,24 @@ import CatchMap from './pages/CatchMap';
 import MyLicenses from './pages/MyLicenses';
 import MyBookings from './pages/MyBookings';
 
+// Knowledge pages
+import Regulations from './pages/Regulations';
+import LicenseSearch from './pages/LicenseSearch';
+import FishEncyclopediaPage from './pages/FishEncyclopedia';
+import FishFamilies from './pages/FishFamilies';
+import SeasonGuide from './pages/SeasonGuide';
+import Angelschule from './pages/Angelschule';
+import BaitCatalogPage from './pages/BaitCatalog';
+import BaitDatabase from './pages/BaitDatabase';
+import CatchForecast from './pages/CatchForecast';
+import TideCatch from './pages/TideCatch';
+import AIInsights from './pages/AIInsights';
+
 // Stub pages
 import {
-  Regulations, LicenseSearch,
   Teams, Competitions, Challenges, CleanupChallenges, Leaderboard, Tournaments,
   Coaches, BookCoach, GuideDirectory, Feed, AnglerChat, AnglerSystem,
-  FishEncyclopedia, FishFamilies, SeasonGuide, Angelschule, BaitCatalog,
-  BaitDatabase, CatchForecast, TideCatch, AIInsights, Subscription, Roadmap,
+  Subscription, Roadmap,
   Admin, LandingPage, Imprint, PrivacyPolicy, TermsOfService
 } from './pages/stub/StubPages';
 
@@ -99,11 +110,11 @@ const AuthenticatedApp = () => {
         <Route path="/feed" element={<Feed />} />
         <Route path="/anglerchat" element={<AnglerChat />} />
         <Route path="/anglersystem" element={<AnglerSystem />} />
-        <Route path="/fishencyclopedia" element={<FishEncyclopedia />} />
+        <Route path="/fishencyclopedia" element={<FishEncyclopediaPage />} />
         <Route path="/fishfamilies" element={<FishFamilies />} />
         <Route path="/seasonguide" element={<SeasonGuide />} />
         <Route path="/angelschule" element={<Angelschule />} />
-        <Route path="/baitcatalog" element={<BaitCatalog />} />
+        <Route path="/baitcatalog" element={<BaitCatalogPage />} />
         <Route path="/baitdatabase" element={<BaitDatabase />} />
         <Route path="/catchforecast" element={<CatchForecast />} />
         <Route path="/tidecatch" element={<TideCatch />} />
