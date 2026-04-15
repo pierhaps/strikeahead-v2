@@ -7,6 +7,9 @@ import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import AppShell from './components/layout/AppShell';
 
+// Landing page (public, no shell)
+import LandingPageReal from './pages/landing/LandingPage';
+
 // Core pages
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
@@ -97,12 +100,14 @@ const AuthenticatedApp = () => {
         <Route path="/subscription" element={<Subscription />} />
         <Route path="/roadmap" element={<Roadmap />} />
         <Route path="/admin" element={<Admin />} />
-        <Route path="/landingpage" element={<LandingPage />} />
+        {/* landingpage stub stays inside shell for nav links; real one below */}
         <Route path="/imprint" element={<Imprint />} />
         <Route path="/privacypolicy" element={<PrivacyPolicy />} />
         <Route path="/termsofservice" element={<TermsOfService />} />
       </Route>
 
+      {/* Public landing page — no AppShell, no auth required */}
+      <Route path="/landingpage" element={<LandingPageReal />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
