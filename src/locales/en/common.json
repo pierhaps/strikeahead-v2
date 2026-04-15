@@ -3,9 +3,17 @@
   "catches": { "myCatches": "My Catches" },
   "licenses": { "myLicenses": "My Licenses" },
   "bookings": { "myBookings": "My Bookings" },
-  "subscription": { "title": "Subscription & HookPoints" },
-  "admin": { "title": "Settings", "language": "Language" },
-  "legal": { "imprint": "Imprint", "privacy": "Privacy", "terms": "Terms" },
+  "subscription": {
+    "title": "Subscription & HookPoints", "current_plan": "Current Plan", "current": "Active",
+    "expires": "Expires", "upgrade": "Upgrade", "cancel": "Cancel Subscription",
+    "history": "Transaction History", "checkout_title": "Your Purchase Path",
+    "checkout_web": "On the web, you can upgrade directly via Stripe Checkout.",
+    "checkout_ios": "In-app purchases on iOS are handled through the App Store.",
+    "checkout_android": "In-app purchases on Android are handled through Google Play."
+  },
+  "admin": { "title": "Admin Dashboard", "language": "Language", "no_access": "Access denied. Admins only." },
+  "roadmap": { "title": "Roadmap", "suggest": "Suggest a feature", "empty": "No entries yet." },
+  "legal": { "imprint": "Imprint", "privacy": "Privacy Policy", "terms": "Terms of Service" },
   "community": {
     "teams": "Teams", "teams_mine": "My Team", "teams_all": "All Teams", "teams_found": "Create Team",
     "teams_empty": "No team yet. Create yours!", "teams_members": "Members", "teams_catches": "Catches",
@@ -40,5 +48,81 @@
     "chat_warning": "This message may contain contact info", "chat_send": "Send", "chat_banned": "Banned",
     "system": "HookPoints & XP System", "system_how": "How do you earn HookPoints?",
     "system_xp": "Fish XP & Levels", "system_eco": "Why Eco Score?", "system_levels": "Level Ladder"
+  },
+  "landing": {
+    "nav": { "features": "Features", "how": "How it works", "pricing": "Pricing", "faq": "FAQ", "cta": "Get started" },
+    "hero": {
+      "sub": "The intelligent fishing app that understands your catches. AI-powered predictions, tide tracking and community — all in one app.",
+      "cta_ios": "Download on App Store", "cta_ios_sub": "iOS 16+",
+      "cta_android": "Get it on Google Play", "cta_android_sub": "Android 10+",
+      "cta_web": "Open in Browser", "cta_web_sub": "No download needed"
+    },
+    "mockup": {
+      "welcome": "Welcome back", "greeting": "Hey, Lars",
+      "total_catches": "Total catches", "fish_xp": "Fish XP",
+      "tile_log": "Log catch", "tile_spots": "Hotspots", "tile_tide": "Tide", "tile_tournaments": "Tournaments",
+      "forecast_label": "Today · Forecast"
+    },
+    "features": {
+      "title": "Everything you need to fish smarter",
+      "1_title": "AI Catch Logger", "1_desc": "Take a photo — the AI identifies the species, logs measurements and calculates your Strike Score automatically.",
+      "2_title": "Catch Forecast & Tide Tracking", "2_desc": "Solunar phases, tide calendars, wind forecasts and barometric pressure trends for the perfect fishing moment.",
+      "3_title": "Bait Intelligence", "3_desc": "The app analyses your catches and recommends the optimal bait — based on season, water body and weather.",
+      "4_title": "Trust Score System", "4_desc": "Verified catches via GPS & photo. Transparent community rating — fair and tamper-proof.",
+      "5_title": "Licence Manager", "5_desc": "Fishing licences for 14 countries right in the app. Buy, store and show them — no paperwork needed.",
+      "6_title": "Community & Coaches", "6_desc": "Crews, tournaments, live chat and professional fishing coaches for your next session."
+    },
+    "how": {
+      "label": "How it works", "title": "Three steps to the perfect strike",
+      "1_title": "Log your catch", "1_desc": "Take a photo, confirm the species, enter measurements. In under 60 seconds your catch is documented — including weather, GPS and bait.",
+      "2_title": "AI learns your profile", "2_desc": "After each catch your personal skill profile is refined. The AI analyses patterns in your successes and failures.",
+      "3_title": "App tells you when & where", "3_desc": "Personalised Strike Score forecasts: when does which fish bite, at which spot, with which bait? StrikeAhead knows."
+    },
+    "testimonials": {
+      "label": "Testimonials", "title": "What anglers say",
+      "1_name": "Lars Bergmann", "1_role": "Hobby angler, Hamburg", "1_text": "Since I started using StrikeAhead, my catch rate has doubled. The AI predictions are uncannily accurate — my best pike came exactly in the window the app recommended.",
+      "2_name": "Maria Hoffmann", "2_role": "Sea angler, Kiel", "2_text": "The licence manager alone is worth the subscription. I fish in 5 different countries and finally have all my permits in one place. Plus the community — highly recommended!",
+      "3_name": "Stefan Kowalczyk", "3_role": "Tournament angler, Munich", "3_text": "The Trust Score has made tournaments fairer. No more fake catches — everyone can see instantly if a catch is GPS-verified. Finally an app that takes sport anglers seriously."
+    },
+    "pricing": {
+      "label": "Pricing", "title": "Find your plan", "subtitle": "Start free. Upgrade anytime. Cancel monthly.",
+      "highlight_badge": "⭐ Most Popular",
+      "free_title": "Free", "free_period": "forever", "free_cta": "Start for free",
+      "free_features": ["10 catches / month","AI species recognition","Read community feed","Basic statistics"],
+      "angler_title": "Angler", "angler_period": "per month", "angler_cta": "Become Angler",
+      "angler_features": ["Unlimited catches","Strike Score forecast","Tide & weather tracking","Fish encyclopaedia","Licence manager (3 countries)","Community & crews"],
+      "pro_title": "Pro", "pro_period": "per month", "pro_cta": "Start Pro",
+      "pro_features": ["Everything in Angler","AI bait recommendations","Licence manager (14 countries)","Tournament entry","Coach bookings","Skill profile & coaching","Export & API access"],
+      "legend_title": "Legend", "legend_period": "per month", "legend_cta": "Become Legend",
+      "legend_features": ["Everything in Pro","Create coach profile","Sponsorship features","White-label tournaments","Priority support","Beta features first"],
+      "channel_web": "Available on Web", "channel_ios": "App Store", "channel_android": "Google Play"
+    },
+    "devices": {
+      "label": "Platform", "title": "Always with you — on every device",
+      "subtitle": "One app, three platforms. Your catches are always in sync — whether you're at the lake or at your desk.",
+      "web_label": "Web App (Desktop)", "web_caption": "Full dashboard in your browser",
+      "ios_label": "iOS App", "ios_caption": "iPhone · App Store",
+      "android_label": "Android App", "android_caption": "Google Play Store"
+    },
+    "trust": { "countries": "14+ countries", "gdpr": "GDPR compliant", "encrypted": "Encrypted data", "rating": "4.9 ⭐ App Store" },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "q1": "Is StrikeAhead really free?", "a1": "Yes! The Free plan is free forever. You can log up to 10 catches per month, use AI species recognition and read the community feed. Upgrade anytime, cancel monthly.",
+      "q2": "Which platforms is the app available on?", "a2": "StrikeAhead runs as a web app in any browser (desktop & mobile), as a native iOS app on the App Store and as an Android app on Google Play. All platforms are fully synchronised.",
+      "q3": "How accurate are the AI catch predictions?", "a3": "Prediction accuracy improves with every logged catch. Our model combines your personal catch history with weather data, solunar phases, tide calendars and community data. After about 20 catches, predictions are significantly personalised.",
+      "q4": "Which countries does the Licence Manager support?", "a4": "Currently Germany, Austria, Switzerland, Netherlands, Belgium, France, Spain, Portugal, Italy, Croatia, Poland, Denmark, Sweden and Norway. More countries are being added.",
+      "q5": "Are my GPS data and fishing spots shared?", "a5": "Never without your permission. Every catch is private by default. You decide what to share with the community. GPS coordinates are encrypted and never passed to third parties.",
+      "q6": "Can I use StrikeAhead as a fishing coach?", "a6": "Yes! With the Legend plan you can create your coaching profile, take on students, manage bookings and even host your own tournaments."
+    },
+    "final_cta": {
+      "badge": "Start for free", "title": "Your next catch is waiting.",
+      "sub": "Get started now — on iOS, Android or right in your browser. No credit card needed for the Free plan.",
+      "web_sub": "Start instantly"
+    },
+    "footer": {
+      "product": "Product", "legal": "Legal", "contact": "Contact", "social": "Community",
+      "cookies": "Cookie Policy", "press": "Press", "partnerships": "Partnerships", "become_coach": "Become a coach",
+      "copyright": "© {{year}} NOMDAD LLC · Dover, Delaware, USA · All rights reserved"
+    }
   }
 }

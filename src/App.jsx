@@ -43,8 +43,6 @@ import TideCatch from './pages/TideCatch';
 import AIInsights from './pages/AIInsights';
 
 // Stub pages
-import { LandingPage } from './pages/stub/StubPages';
-
 import Subscription from './pages/Subscription';
 import Roadmap from './pages/Roadmap';
 import Admin from './pages/Admin';
@@ -138,7 +136,6 @@ const AuthenticatedApp = () => {
         <Route path="/subscription" element={<Subscription />} />
         <Route path="/roadmap" element={<Roadmap />} />
         <Route path="/admin" element={<Admin />} />
-        {/* landingpage stub stays inside shell for nav links; real one below */}
         <Route path="/imprint" element={<Imprint />} />
         <Route path="/privacypolicy" element={<PrivacyPolicy />} />
         <Route path="/termsofservice" element={<TermsOfService />} />
