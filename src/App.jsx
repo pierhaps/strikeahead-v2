@@ -17,10 +17,21 @@ import Upload from './pages/Upload';
 import MapPage from './pages/Map';
 import Profile from './pages/Profile';
 
+// Full pages (core 10)
+import Analytics from './pages/Analytics';
+import Statistics from './pages/Statistics';
+import SkillProfile from './pages/SkillProfile';
+import MyCatches from './pages/MyCatches';
+import FishingDiary from './pages/FishingDiary';
+import FishIdentify from './pages/FishIdentify';
+import FishMeasure from './pages/FishMeasure';
+import CatchMap from './pages/CatchMap';
+import MyLicenses from './pages/MyLicenses';
+import MyBookings from './pages/MyBookings';
+
 // Stub pages
 import {
-  Analytics, Statistics, SkillProfile, MyCatches, FishingDiary, FishIdentify,
-  FishMeasure, CatchMap, MyLicenses, MyBookings, Regulations, LicenseSearch,
+  Regulations, LicenseSearch,
   Teams, Competitions, Challenges, CleanupChallenges, Leaderboard, Tournaments,
   Coaches, BookCoach, GuideDirectory, Feed, AnglerChat, AnglerSystem,
   FishEncyclopedia, FishFamilies, SeasonGuide, Angelschule, BaitCatalog,
