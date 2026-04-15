@@ -44,11 +44,23 @@ import AIInsights from './pages/AIInsights';
 
 // Stub pages
 import {
-  Teams, Competitions, Challenges, CleanupChallenges, Leaderboard, Tournaments,
-  Coaches, BookCoach, GuideDirectory, Feed, AnglerChat, AnglerSystem,
   Subscription, Roadmap,
   Admin, LandingPage, Imprint, PrivacyPolicy, TermsOfService
 } from './pages/stub/StubPages';
+
+// Community pages (full implementations)
+import Teams from './pages/Teams';
+import Competitions from './pages/Competitions';
+import Challenges from './pages/Challenges';
+import CleanupChallenges from './pages/CleanupChallenges';
+import Leaderboard from './pages/Leaderboard';
+import Tournaments from './pages/Tournaments';
+import Coaches from './pages/Coaches';
+import BookCoach from './pages/BookCoach';
+import GuideDirectory from './pages/GuideDirectory';
+import Feed from './pages/Feed';
+import AnglerChat from './pages/AnglerChat';
+import AnglerSystem from './pages/AnglerSystem';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
