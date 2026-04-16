@@ -250,7 +250,8 @@
     "day_th": "Per",
     "day_fr": "Cum",
     "day_sa": "Cmt",
-    "day_su": "Paz"
+    "day_su": "Paz",
+    "details": "Detaylar"
   },
   "home": {
     "welcome_back": "Tekrar hoş geldin",
@@ -271,7 +272,31 @@
     "tile_tournaments_sub": "Aktif turnuvalar",
     "recent_catches": "Son avlar",
     "top_crews": "Bu haftanın en iyi mürettebatları",
-    "greeting_placeholder": "{{name}}"
+    "greeting_placeholder": "{{name}}",
+    "greet_dawn": "Şafak vakti",
+    "greet_morning": "Günaydın",
+    "greet_midday": "Öğle",
+    "greet_afternoon": "İyi öğleden sonra",
+    "greet_dusk": "Altın saat",
+    "greet_night": "Gece avı",
+    "tod_dawn": "Şafak",
+    "tod_morning": "Sabah",
+    "tod_midday": "Öğle",
+    "tod_afternoon": "Öğleden sonra",
+    "tod_dusk": "Alacakaranlık",
+    "tod_night": "Gece",
+    "stat_trust": "Güven",
+    "stat_verified": "Doğrulanmış",
+    "empty_catches_title": "Henüz yakalama yok",
+    "empty_catches_sub": "İlk yakalamanı kaydet ve Fish XP kazan.",
+    "empty_catches_cta": "İlk yakalama",
+    "bait_tip_title": "{{species}} için yem önerisi",
+    "bait_tip_body": "{{tod}} + mevcut hava — {{bait}} şu anda güçlü bir seçim.",
+    "bait_tip_cta": "Yem kataloğu",
+    "trust_overview": "Güven özeti",
+    "trust_avg": "Ort. puan",
+    "hot_species": "Trendde",
+    "hot_n": "{{n}} yakalama"
   },
   "dashboard": {
     "title": "Kontrol Paneli",
@@ -1075,7 +1100,16 @@
     "weight": "Ağırlık",
     "color": "Renk",
     "species_available": "Mevcut türler",
-    "bait_recommendations": "Yem önerileri"
+    "bait_recommendations": "Yem önerileri",
+    "reason": {
+      "species_match": "{{species}} ile uyumlu",
+      "low_pressure_active": "Düşük basınç — balıklar aktif",
+      "high_pressure_slow": "Yüksek basınç — doğal yem daha iyi",
+      "overcast_aggressive": "Bulutlu — avcılar agresif",
+      "cold_natural": "Soğuk — doğal yem avantajlı",
+      "golden_hour": "Altın saat — beslenme",
+      "night_natural": "Gece — doğal yem tercih"
+    }
   },
   "forecast": {
     "title": "Av tahmini",
@@ -1311,5 +1345,11 @@
     "wolfsbarsch": "Levrek",
     "thunfisch": "Ton",
     "barracuda": "Barakuda"
+  },
+  "trust": {
+    "unverified": "Doğrulanmamış",
+    "photo_verified": "Foto doğrulandı",
+    "gps_verified": "GPS doğrulandı",
+    "fully_verified": "Tamamen doğrulandı"
   }
 }

@@ -250,7 +250,8 @@
     "day_th": "Do",
     "day_fr": "Vr",
     "day_sa": "Za",
-    "day_su": "Zo"
+    "day_su": "Zo",
+    "details": "Details"
   },
   "home": {
     "welcome_back": "Welkom terug",
@@ -271,7 +272,31 @@
     "tile_tournaments_sub": "Actieve toernooien",
     "recent_catches": "Recente vangsten",
     "top_crews": "Top crews deze week",
-    "greeting_placeholder": "{{name}}"
+    "greeting_placeholder": "{{name}}",
+    "greet_dawn": "Bij dageraad",
+    "greet_morning": "Goedemorgen",
+    "greet_midday": "Middag",
+    "greet_afternoon": "Goedemiddag",
+    "greet_dusk": "Gouden uur",
+    "greet_night": "Nachtsessie",
+    "tod_dawn": "Dageraad",
+    "tod_morning": "Ochtend",
+    "tod_midday": "Middag",
+    "tod_afternoon": "Namiddag",
+    "tod_dusk": "Schemering",
+    "tod_night": "Nacht",
+    "stat_trust": "Vertrouwen",
+    "stat_verified": "Geverifieerd",
+    "empty_catches_title": "Nog geen vangsten",
+    "empty_catches_sub": "Log je eerste vangst en verdien Fish XP.",
+    "empty_catches_cta": "Eerste vangst",
+    "bait_tip_title": "Aastip voor {{species}}",
+    "bait_tip_body": "{{tod}} + huidig weer — {{bait}} is nu een sterke keuze.",
+    "bait_tip_cta": "Open aascatalogus",
+    "trust_overview": "Vertrouwen",
+    "trust_avg": "Gem. score",
+    "hot_species": "In trend",
+    "hot_n": "{{n}} vangsten"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -1075,7 +1100,16 @@
     "weight": "Gewicht",
     "color": "Kleur",
     "species_available": "Beschikbare soorten",
-    "bait_recommendations": "Aas-aanbevelingen"
+    "bait_recommendations": "Aas-aanbevelingen",
+    "reason": {
+      "species_match": "Past bij {{species}}",
+      "low_pressure_active": "Lage druk — vissen actief",
+      "high_pressure_slow": "Hoge druk — natuurlijke beter",
+      "overcast_aggressive": "Bewolkt — roofvissen agressief",
+      "cold_natural": "Koud — natuurlijke in voordeel",
+      "golden_hour": "Gouden uur — voedertijd",
+      "night_natural": "Nacht — natuurlijke voorkeur"
+    }
   },
   "forecast": {
     "title": "Vangstprognose",
@@ -1311,5 +1345,11 @@
     "wolfsbarsch": "Zeebaars",
     "thunfisch": "Tonijn",
     "barracuda": "Barracuda"
+  },
+  "trust": {
+    "unverified": "Niet geverifieerd",
+    "photo_verified": "Foto geverifieerd",
+    "gps_verified": "GPS geverifieerd",
+    "fully_verified": "Volledig geverifieerd"
   }
 }

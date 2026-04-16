@@ -250,7 +250,8 @@
     "day_th": "Jue",
     "day_fr": "Vie",
     "day_sa": "Sáb",
-    "day_su": "Dom"
+    "day_su": "Dom",
+    "details": "Detalles"
   },
   "home": {
     "welcome_back": "Bienvenido de nuevo",
@@ -271,7 +272,31 @@
     "tile_tournaments_sub": "Torneos activos",
     "recent_catches": "Capturas recientes",
     "top_crews": "Top tripulaciones esta semana",
-    "greeting_placeholder": "{{name}}"
+    "greeting_placeholder": "{{name}}",
+    "greet_dawn": "Líneas al amanecer",
+    "greet_morning": "Buenos días",
+    "greet_midday": "Mediodía",
+    "greet_afternoon": "Buenas tardes",
+    "greet_dusk": "Hora dorada",
+    "greet_night": "Sesión nocturna",
+    "tod_dawn": "Amanecer",
+    "tod_morning": "Mañana",
+    "tod_midday": "Mediodía",
+    "tod_afternoon": "Tarde",
+    "tod_dusk": "Crepúsculo",
+    "tod_night": "Noche",
+    "stat_trust": "Confianza",
+    "stat_verified": "Verificado",
+    "empty_catches_title": "Aún sin capturas",
+    "empty_catches_sub": "Registra tu primera captura y gana Fish XP.",
+    "empty_catches_cta": "Primera captura",
+    "bait_tip_title": "Cebo recomendado para {{species}}",
+    "bait_tip_body": "{{tod}} + clima actual — {{bait}} es una buena elección ahora.",
+    "bait_tip_cta": "Catálogo de cebos",
+    "trust_overview": "Confianza",
+    "trust_avg": "Puntaje medio",
+    "hot_species": "En tendencia",
+    "hot_n": "{{n}} capturas"
   },
   "dashboard": {
     "title": "Panel",
@@ -1075,7 +1100,16 @@
     "weight": "Peso",
     "color": "Color",
     "species_available": "Especies disponibles",
-    "bait_recommendations": "Recomendaciones de cebo"
+    "bait_recommendations": "Recomendaciones de cebo",
+    "reason": {
+      "species_match": "Coincide con {{species}}",
+      "low_pressure_active": "Baja presión — peces activos",
+      "high_pressure_slow": "Alta presión — cebos naturales mejores",
+      "overcast_aggressive": "Nublado — depredadores agresivos",
+      "cold_natural": "Frío — naturales tienen ventaja",
+      "golden_hour": "Hora dorada — comida",
+      "night_natural": "Noche — naturales preferidos"
+    }
   },
   "forecast": {
     "title": "Pronóstico de captura",
@@ -1311,5 +1345,11 @@
     "wolfsbarsch": "Lubina",
     "thunfisch": "Atún",
     "barracuda": "Barracuda"
+  },
+  "trust": {
+    "unverified": "No verificado",
+    "photo_verified": "Foto verificada",
+    "gps_verified": "GPS verificado",
+    "fully_verified": "Totalmente verificado"
   }
 }

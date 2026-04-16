@@ -250,7 +250,8 @@
     "day_th": "Do",
     "day_fr": "Fr",
     "day_sa": "Sa",
-    "day_su": "So"
+    "day_su": "So",
+    "details": "Details"
   },
   "home": {
     "welcome_back": "Willkommen zurück",
@@ -271,7 +272,31 @@
     "tile_tournaments_sub": "Aktive Turniere",
     "recent_catches": "Letzte Fänge",
     "top_crews": "Top Crews diese Woche",
-    "greeting_placeholder": "{{name}}"
+    "greeting_placeholder": "{{name}}",
+    "greet_dawn": "Die Ruten sind nass",
+    "greet_morning": "Guten Morgen",
+    "greet_midday": "Mittagszeit",
+    "greet_afternoon": "Guten Nachmittag",
+    "greet_dusk": "Die goldene Stunde",
+    "greet_night": "Nachtangeln",
+    "tod_dawn": "Morgendämmerung",
+    "tod_morning": "Morgens",
+    "tod_midday": "Mittags",
+    "tod_afternoon": "Nachmittags",
+    "tod_dusk": "Abenddämmerung",
+    "tod_night": "Nachts",
+    "stat_trust": "Ø Trust",
+    "stat_verified": "Verifiziert",
+    "empty_catches_title": "Noch keine Fänge",
+    "empty_catches_sub": "Lade deinen ersten Fang hoch und sammle Fish XP.",
+    "empty_catches_cta": "Ersten Fang hochladen",
+    "bait_tip_title": "Köder-Tipp für {{species}}",
+    "bait_tip_body": "{{tod}} bei aktuellem Wetter — {{bait}} ist jetzt eine starke Wahl.",
+    "bait_tip_cta": "Zum Köder-Katalog",
+    "trust_overview": "Trust Übersicht",
+    "trust_avg": "Ø Score",
+    "hot_species": "Im Trend",
+    "hot_n": "{{n}} Fänge"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -1075,7 +1100,16 @@
     "weight": "Gewicht",
     "color": "Farbe",
     "species_available": "Arten verfügbar",
-    "bait_recommendations": "Köder-Empfehlungen"
+    "bait_recommendations": "Köder-Empfehlungen",
+    "reason": {
+      "species_match": "Passt zu {{species}}",
+      "low_pressure_active": "Niederdruck — Fische sind aktiv",
+      "high_pressure_slow": "Hochdruck — Naturköder wirken besser",
+      "overcast_aggressive": "Bedeckt — Raubfische beißen aggressiver",
+      "cold_natural": "Kalt — Naturköder sind im Vorteil",
+      "golden_hour": "Goldene Stunde — Beißzeit",
+      "night_natural": "Nacht — Naturköder bevorzugt"
+    }
   },
   "forecast": {
     "title": "Fang-Prognose",
@@ -1311,5 +1345,11 @@
     "wolfsbarsch": "Wolfsbarsch",
     "thunfisch": "Thunfisch",
     "barracuda": "Barracuda"
+  },
+  "trust": {
+    "unverified": "Unverifiziert",
+    "photo_verified": "Foto verifiziert",
+    "gps_verified": "GPS verifiziert",
+    "fully_verified": "Voll verifiziert"
   }
 }

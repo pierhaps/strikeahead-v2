@@ -250,7 +250,8 @@
     "day_th": "Čet",
     "day_fr": "Pet",
     "day_sa": "Sub",
-    "day_su": "Ned"
+    "day_su": "Ned",
+    "details": "Detalji"
   },
   "home": {
     "welcome_back": "Dobrodošao natrag",
@@ -271,7 +272,31 @@
     "tile_tournaments_sub": "Aktivni turniri",
     "recent_catches": "Nedavni ulovi",
     "top_crews": "Top posade ovog tjedna",
-    "greeting_placeholder": "{{name}}"
+    "greeting_placeholder": "{{name}}",
+    "greet_dawn": "U zoru",
+    "greet_morning": "Dobro jutro",
+    "greet_midday": "Podne",
+    "greet_afternoon": "Dobar dan",
+    "greet_dusk": "Zlatni sat",
+    "greet_night": "Noćni ribolov",
+    "tod_dawn": "Zora",
+    "tod_morning": "Jutro",
+    "tod_midday": "Podne",
+    "tod_afternoon": "Poslijepodne",
+    "tod_dusk": "Sumrak",
+    "tod_night": "Noć",
+    "stat_trust": "Povjerenje",
+    "stat_verified": "Potvrđeno",
+    "empty_catches_title": "Još nema ulova",
+    "empty_catches_sub": "Prijavi prvi ulov i skupljaj Fish XP.",
+    "empty_catches_cta": "Prvi ulov",
+    "bait_tip_title": "Mamac za {{species}}",
+    "bait_tip_body": "{{tod}} + trenutno vrijeme — {{bait}} je odličan izbor sada.",
+    "bait_tip_cta": "Katalog mamaca",
+    "trust_overview": "Povjerenje",
+    "trust_avg": "Prosjek",
+    "hot_species": "U trendu",
+    "hot_n": "{{n}} ulova"
   },
   "dashboard": {
     "title": "Nadzorna ploča",
@@ -1075,7 +1100,16 @@
     "weight": "Težina",
     "color": "Boja",
     "species_available": "Dostupne vrste",
-    "bait_recommendations": "Preporuke za mamac"
+    "bait_recommendations": "Preporuke za mamac",
+    "reason": {
+      "species_match": "Odgovara {{species}}",
+      "low_pressure_active": "Niski tlak — ribe aktivne",
+      "high_pressure_slow": "Visoki tlak — prirodni mamci bolji",
+      "overcast_aggressive": "Oblačno — grabežljivci agresivni",
+      "cold_natural": "Hladno — prirodni u prednosti",
+      "golden_hour": "Zlatni sat — hranjenje",
+      "night_natural": "Noć — prirodni preferirani"
+    }
   },
   "forecast": {
     "title": "Prognoza ulova",
@@ -1311,5 +1345,11 @@
     "wolfsbarsch": "Lubin",
     "thunfisch": "Tuna",
     "barracuda": "Barakuda"
+  },
+  "trust": {
+    "unverified": "Nepotvrđeno",
+    "photo_verified": "Foto potvrđeno",
+    "gps_verified": "GPS potvrđeno",
+    "fully_verified": "Potpuno potvrđeno"
   }
 }

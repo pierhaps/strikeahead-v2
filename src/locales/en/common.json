@@ -250,7 +250,8 @@
     "day_th": "Thu",
     "day_fr": "Fri",
     "day_sa": "Sat",
-    "day_su": "Sun"
+    "day_su": "Sun",
+    "details": "Details"
   },
   "home": {
     "welcome_back": "Welcome back",
@@ -271,7 +272,31 @@
     "tile_tournaments_sub": "Active tournaments",
     "recent_catches": "Recent catches",
     "top_crews": "Top crews this week",
-    "greeting_placeholder": "{{name}}"
+    "greeting_placeholder": "{{name}}",
+    "greet_dawn": "Lines wet at dawn",
+    "greet_morning": "Good morning",
+    "greet_midday": "Midday",
+    "greet_afternoon": "Good afternoon",
+    "greet_dusk": "Golden hour",
+    "greet_night": "Night session",
+    "tod_dawn": "Dawn",
+    "tod_morning": "Morning",
+    "tod_midday": "Midday",
+    "tod_afternoon": "Afternoon",
+    "tod_dusk": "Dusk",
+    "tod_night": "Night",
+    "stat_trust": "Avg trust",
+    "stat_verified": "Verified",
+    "empty_catches_title": "No catches yet",
+    "empty_catches_sub": "Log your first catch and start earning Fish XP.",
+    "empty_catches_cta": "Log first catch",
+    "bait_tip_title": "Bait tip for {{species}}",
+    "bait_tip_body": "{{tod}} + current weather — {{bait}} is a strong pick right now.",
+    "bait_tip_cta": "Open bait catalog",
+    "trust_overview": "Trust overview",
+    "trust_avg": "Avg score",
+    "hot_species": "Trending",
+    "hot_n": "{{n}} catches"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -1075,7 +1100,16 @@
     "weight": "Weight",
     "color": "Color",
     "species_available": "Species available",
-    "bait_recommendations": "Bait recommendations"
+    "bait_recommendations": "Bait recommendations",
+    "reason": {
+      "species_match": "Matches {{species}}",
+      "low_pressure_active": "Low pressure — fish are active",
+      "high_pressure_slow": "High pressure — naturals work better",
+      "overcast_aggressive": "Overcast — predators bite aggressively",
+      "cold_natural": "Cold — naturals have the edge",
+      "golden_hour": "Golden hour — feeding time",
+      "night_natural": "Night — naturals preferred"
+    }
   },
   "forecast": {
     "title": "Catch Forecast",
@@ -1311,5 +1345,11 @@
     "wolfsbarsch": "Sea bass",
     "thunfisch": "Tuna",
     "barracuda": "Barracuda"
+  },
+  "trust": {
+    "unverified": "Unverified",
+    "photo_verified": "Photo verified",
+    "gps_verified": "GPS verified",
+    "fully_verified": "Fully verified"
   }
 }

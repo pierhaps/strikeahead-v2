@@ -250,7 +250,8 @@
     "day_th": "Gio",
     "day_fr": "Ven",
     "day_sa": "Sab",
-    "day_su": "Dom"
+    "day_su": "Dom",
+    "details": "Dettagli"
   },
   "home": {
     "welcome_back": "Bentornato",
@@ -271,7 +272,31 @@
     "tile_tournaments_sub": "Tornei attivi",
     "recent_catches": "Catture recenti",
     "top_crews": "Top equipaggi questa settimana",
-    "greeting_placeholder": "{{name}}"
+    "greeting_placeholder": "{{name}}",
+    "greet_dawn": "All'alba",
+    "greet_morning": "Buongiorno",
+    "greet_midday": "Mezzogiorno",
+    "greet_afternoon": "Buon pomeriggio",
+    "greet_dusk": "Ora dorata",
+    "greet_night": "Pesca notturna",
+    "tod_dawn": "Alba",
+    "tod_morning": "Mattina",
+    "tod_midday": "Mezzogiorno",
+    "tod_afternoon": "Pomeriggio",
+    "tod_dusk": "Crepuscolo",
+    "tod_night": "Notte",
+    "stat_trust": "Fiducia",
+    "stat_verified": "Verificato",
+    "empty_catches_title": "Nessuna cattura",
+    "empty_catches_sub": "Registra la prima cattura e ottieni Fish XP.",
+    "empty_catches_cta": "Prima cattura",
+    "bait_tip_title": "Esca consigliata per {{species}}",
+    "bait_tip_body": "{{tod}} + meteo attuale — {{bait}} è una scelta forte ora.",
+    "bait_tip_cta": "Catalogo esche",
+    "trust_overview": "Fiducia",
+    "trust_avg": "Punteggio medio",
+    "hot_species": "In tendenza",
+    "hot_n": "{{n}} catture"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -1075,7 +1100,16 @@
     "weight": "Peso",
     "color": "Colore",
     "species_available": "Specie disponibili",
-    "bait_recommendations": "Consigli di esca"
+    "bait_recommendations": "Consigli di esca",
+    "reason": {
+      "species_match": "Adatto a {{species}}",
+      "low_pressure_active": "Bassa pressione — pesci attivi",
+      "high_pressure_slow": "Alta pressione — naturali meglio",
+      "overcast_aggressive": "Nuvoloso — predatori aggressivi",
+      "cold_natural": "Freddo — naturali in vantaggio",
+      "golden_hour": "Ora dorata — pasto",
+      "night_natural": "Notte — naturali preferiti"
+    }
   },
   "forecast": {
     "title": "Previsione catture",
@@ -1311,5 +1345,11 @@
     "wolfsbarsch": "Spigola",
     "thunfisch": "Tonno",
     "barracuda": "Barracuda"
+  },
+  "trust": {
+    "unverified": "Non verificato",
+    "photo_verified": "Foto verificata",
+    "gps_verified": "GPS verificato",
+    "fully_verified": "Completamente verificato"
   }
 }

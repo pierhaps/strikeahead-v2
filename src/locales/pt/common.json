@@ -250,7 +250,8 @@
     "day_th": "Qui",
     "day_fr": "Sex",
     "day_sa": "Sáb",
-    "day_su": "Dom"
+    "day_su": "Dom",
+    "details": "Detalhes"
   },
   "home": {
     "welcome_back": "Bem-vindo de volta",
@@ -271,7 +272,31 @@
     "tile_tournaments_sub": "Torneios ativos",
     "recent_catches": "Capturas recentes",
     "top_crews": "Top tripulações esta semana",
-    "greeting_placeholder": "{{name}}"
+    "greeting_placeholder": "{{name}}",
+    "greet_dawn": "Ao amanhecer",
+    "greet_morning": "Bom dia",
+    "greet_midday": "Meio-dia",
+    "greet_afternoon": "Boa tarde",
+    "greet_dusk": "Hora dourada",
+    "greet_night": "Sessão noturna",
+    "tod_dawn": "Amanhecer",
+    "tod_morning": "Manhã",
+    "tod_midday": "Meio-dia",
+    "tod_afternoon": "Tarde",
+    "tod_dusk": "Anoitecer",
+    "tod_night": "Noite",
+    "stat_trust": "Confiança",
+    "stat_verified": "Verificado",
+    "empty_catches_title": "Sem capturas",
+    "empty_catches_sub": "Registe a primeira captura e ganhe Fish XP.",
+    "empty_catches_cta": "Primeira captura",
+    "bait_tip_title": "Isco para {{species}}",
+    "bait_tip_body": "{{tod}} + clima atual — {{bait}} é uma boa escolha agora.",
+    "bait_tip_cta": "Catálogo de iscos",
+    "trust_overview": "Confiança",
+    "trust_avg": "Média",
+    "hot_species": "Em tendência",
+    "hot_n": "{{n}} capturas"
   },
   "dashboard": {
     "title": "Painel",
@@ -1075,7 +1100,16 @@
     "weight": "Peso",
     "color": "Cor",
     "species_available": "Espécies disponíveis",
-    "bait_recommendations": "Recomendações de isco"
+    "bait_recommendations": "Recomendações de isco",
+    "reason": {
+      "species_match": "Combina com {{species}}",
+      "low_pressure_active": "Baixa pressão — peixes ativos",
+      "high_pressure_slow": "Alta pressão — naturais melhores",
+      "overcast_aggressive": "Nublado — predadores agressivos",
+      "cold_natural": "Frio — naturais em vantagem",
+      "golden_hour": "Hora dourada — alimentação",
+      "night_natural": "Noite — naturais preferidos"
+    }
   },
   "forecast": {
     "title": "Prognóstico de captura",
@@ -1311,5 +1345,11 @@
     "wolfsbarsch": "Robalo",
     "thunfisch": "Atum",
     "barracuda": "Barracuda"
+  },
+  "trust": {
+    "unverified": "Não verificado",
+    "photo_verified": "Foto verificada",
+    "gps_verified": "GPS verificado",
+    "fully_verified": "Totalmente verificado"
   }
 }

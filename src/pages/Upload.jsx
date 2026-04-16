@@ -11,6 +11,7 @@ import PageTransition from '../components/ui/PageTransition';
 import { base44 } from '@/api/base44Client';
 import { useAuth } from '@/lib/AuthContext';
 import { createPageUrl } from '@/utils';
+import { computeTrustScore } from '@/utils/trustEngine';
 
 // ---------------- Constants ----------------
 
@@ -344,12 +345,16 @@ export default function Upload() {
       photo_urls: uploadedPhotos,
       gps_lat: gpsLocation?.lat || null,
       gps_lon: gpsLocation?.lon || null,
-      verification_level: 'gps_verified',
       eco_score: ecoAnalysis?.eco_score || null,
       cleanup_photo_url: cleanupPhoto || null,
       litter_detected: ecoAnalysis?.litter_detected || [],
       eco_notes: ecoAnalysis?.eco_notes || null,
     };
+
+    // Run Trust Engine — computes score + level from all fields
+    const trust = computeTrustScore(catchData);
+    catchData.verification_level = trust.level;
+    catchData.verification_score = trust.score;
 
     const xp = calculateFishXP(catchData);
     catchData.fish_xp = xp;

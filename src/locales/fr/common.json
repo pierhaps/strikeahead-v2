@@ -250,7 +250,8 @@
     "day_th": "Jeu",
     "day_fr": "Ven",
     "day_sa": "Sam",
-    "day_su": "Dim"
+    "day_su": "Dim",
+    "details": "Détails"
   },
   "home": {
     "welcome_back": "Bon retour",
@@ -271,7 +272,31 @@
     "tile_tournaments_sub": "Tournois actifs",
     "recent_catches": "Prises récentes",
     "top_crews": "Top équipages cette semaine",
-    "greeting_placeholder": "{{name}}"
+    "greeting_placeholder": "{{name}}",
+    "greet_dawn": "À l'aube",
+    "greet_morning": "Bonjour",
+    "greet_midday": "Midi",
+    "greet_afternoon": "Bon après-midi",
+    "greet_dusk": "Heure dorée",
+    "greet_night": "Pêche de nuit",
+    "tod_dawn": "Aube",
+    "tod_morning": "Matin",
+    "tod_midday": "Midi",
+    "tod_afternoon": "Après-midi",
+    "tod_dusk": "Crépuscule",
+    "tod_night": "Nuit",
+    "stat_trust": "Confiance",
+    "stat_verified": "Vérifié",
+    "empty_catches_title": "Aucune prise",
+    "empty_catches_sub": "Enregistre ta première prise et gagne des Fish XP.",
+    "empty_catches_cta": "Première prise",
+    "bait_tip_title": "Appât conseillé pour {{species}}",
+    "bait_tip_body": "{{tod}} + météo actuelle — {{bait}} est un choix fort maintenant.",
+    "bait_tip_cta": "Catalogue d'appâts",
+    "trust_overview": "Confiance",
+    "trust_avg": "Score moyen",
+    "hot_species": "Tendance",
+    "hot_n": "{{n}} prises"
   },
   "dashboard": {
     "title": "Tableau de bord",
@@ -1075,7 +1100,16 @@
     "weight": "Poids",
     "color": "Couleur",
     "species_available": "Espèces disponibles",
-    "bait_recommendations": "Recommandations d'appât"
+    "bait_recommendations": "Recommandations d'appât",
+    "reason": {
+      "species_match": "Correspond à {{species}}",
+      "low_pressure_active": "Basse pression — poissons actifs",
+      "high_pressure_slow": "Haute pression — naturels meilleurs",
+      "overcast_aggressive": "Couvert — prédateurs agressifs",
+      "cold_natural": "Froid — naturels avantagés",
+      "golden_hour": "Heure dorée — repas",
+      "night_natural": "Nuit — naturels préférés"
+    }
   },
   "forecast": {
     "title": "Prévision de prise",
@@ -1311,5 +1345,11 @@
     "wolfsbarsch": "Bar",
     "thunfisch": "Thon",
     "barracuda": "Barracuda"
+  },
+  "trust": {
+    "unverified": "Non vérifié",
+    "photo_verified": "Photo vérifiée",
+    "gps_verified": "GPS vérifié",
+    "fully_verified": "Entièrement vérifié"
   }
 }

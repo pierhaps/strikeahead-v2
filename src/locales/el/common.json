@@ -250,7 +250,8 @@
     "day_th": "Πέμ",
     "day_fr": "Παρ",
     "day_sa": "Σάβ",
-    "day_su": "Κυρ"
+    "day_su": "Κυρ",
+    "details": "Λεπτομέρειες"
   },
   "home": {
     "welcome_back": "Καλώς επέστρεψες",
@@ -271,7 +272,31 @@
     "tile_tournaments_sub": "Ενεργά τουρνουά",
     "recent_catches": "Πρόσφατα ψαρέματα",
     "top_crews": "Κορυφαία πληρώματα αυτή την εβδομάδα",
-    "greeting_placeholder": "{{name}}"
+    "greeting_placeholder": "{{name}}",
+    "greet_dawn": "Χαραυγή",
+    "greet_morning": "Καλημέρα",
+    "greet_midday": "Μεσημέρι",
+    "greet_afternoon": "Καλό απόγευμα",
+    "greet_dusk": "Χρυσή ώρα",
+    "greet_night": "Νυχτερινό ψάρεμα",
+    "tod_dawn": "Χαραυγή",
+    "tod_morning": "Πρωί",
+    "tod_midday": "Μεσημέρι",
+    "tod_afternoon": "Απόγευμα",
+    "tod_dusk": "Σούρουπο",
+    "tod_night": "Νύχτα",
+    "stat_trust": "Εμπιστοσύνη",
+    "stat_verified": "Επαληθευμένα",
+    "empty_catches_title": "Χωρίς αλιεύματα",
+    "empty_catches_sub": "Κατέγραψε το πρώτο σου αλίευμα και κέρδισε Fish XP.",
+    "empty_catches_cta": "Πρώτο αλίευμα",
+    "bait_tip_title": "Δόλωμα για {{species}}",
+    "bait_tip_body": "{{tod}} + τρέχων καιρός — {{bait}} είναι καλή επιλογή τώρα.",
+    "bait_tip_cta": "Κατάλογος δολωμάτων",
+    "trust_overview": "Εμπιστοσύνη",
+    "trust_avg": "Μέσο σκορ",
+    "hot_species": "Σε τάση",
+    "hot_n": "{{n}} αλιεύματα"
   },
   "dashboard": {
     "title": "Πίνακας",
@@ -1075,7 +1100,16 @@
     "weight": "Βάρος",
     "color": "Χρώμα",
     "species_available": "Διαθέσιμα είδη",
-    "bait_recommendations": "Συστάσεις δολώματος"
+    "bait_recommendations": "Συστάσεις δολώματος",
+    "reason": {
+      "species_match": "Ταιριάζει με {{species}}",
+      "low_pressure_active": "Χαμηλή πίεση — ενεργά ψάρια",
+      "high_pressure_slow": "Υψηλή πίεση — φυσικά καλύτερα",
+      "overcast_aggressive": "Συννεφιά — αρπακτικά επιθετικά",
+      "cold_natural": "Κρύο — φυσικά πλεονέκτημα",
+      "golden_hour": "Χρυσή ώρα — τάισμα",
+      "night_natural": "Νύχτα — φυσικά προτιμώνται"
+    }
   },
   "forecast": {
     "title": "Πρόγνωση ψαριάς",
@@ -1311,5 +1345,11 @@
     "wolfsbarsch": "Λαβράκι",
     "thunfisch": "Τόνος",
     "barracuda": "Μπαρακούντα"
+  },
+  "trust": {
+    "unverified": "Μη επαληθευμένο",
+    "photo_verified": "Φωτο επαληθευμένο",
+    "gps_verified": "GPS επαληθευμένο",
+    "fully_verified": "Πλήρως επαληθευμένο"
   }
 }

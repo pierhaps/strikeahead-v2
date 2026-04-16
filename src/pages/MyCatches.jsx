@@ -5,18 +5,23 @@ import PageTransition from '../components/ui/PageTransition';
 import { base44 } from '@/api/base44Client';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { computeTrustScore, trustMeta } from '../utils/trustEngine';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 
 function DetailSheet({ catch: c, onClose, t }) {
   if (!c) return null;
+  // Prefer stored verification fields if present, fall back to local trust engine
+  const local = computeTrustScore(c);
+  const effectiveLevel = c.verification_level || local.level;
+  const effectiveScore = c.verification_score != null ? c.verification_score : local.score;
   const VERIFICATION_LABELS = {
     unverified: { label: t('catches.verify_unverified'), color: 'text-foam/40' },
     photo_verified: { label: t('catches.verify_photo'), color: 'text-tide-400' },
     gps_verified: { label: t('catches.verify_gps'), color: 'text-tide-300' },
     fully_verified: { label: t('catches.verify_full'), color: 'text-sun-400' },
   };
-  const vl = VERIFICATION_LABELS[c.verification_level] || VERIFICATION_LABELS.unverified;
+  const vl = VERIFICATION_LABELS[effectiveLevel] || VERIFICATION_LABELS.unverified;
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
       className="fixed inset-0 z-50 flex flex-col justify-end"
@@ -48,9 +53,7 @@ function DetailSheet({ catch: c, onClose, t }) {
           </div>
           <div className="flex items-center gap-2">
             <span className={`text-sm font-bold ${vl.color}`}>{vl.label}</span>
-            {c.verification_score != null && (
-              <span className="text-foam/60 text-xs">({c.verification_score}/100)</span>
-            )}
+            <span className="text-foam/60 text-xs">({effectiveScore}/100)</span>
           </div>
         </div>
         {(c.technique || c.bait_category) && (
@@ -172,28 +175,39 @@ export default function MyCatches() {
           </div>
         ) : (
           <div className="grid grid-cols-2 gap-3">
-            {filtered.map((c, i) => (
-              <motion.button key={c.id} onClick={() => setSelected(c)}
-                initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: i * 0.03 }} whileTap={{ scale: 0.97 }}
-                className="relative rounded-2xl overflow-hidden text-left h-44 bg-abyss-800">
-                {c.photo_urls?.[0]
-                  ? <img src={c.photo_urls[0]} alt={c.species} className="w-full h-full object-cover" />
-                  : <div className="w-full h-full flex items-center justify-center text-4xl">🐟</div>
-                }
-                <div className="absolute inset-0 bg-gradient-to-t from-abyss-950 via-transparent to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-2.5">
-                  <p className="text-white font-bold text-sm">{c.species || t('common.unknown')}</p>
-                  <div className="flex items-center gap-1.5 mt-0.5">
-                    {c.weight_kg && (
-                      <span className="px-1.5 py-0.5 rounded text-[10px] font-bold"
-                        style={{ background: 'rgba(245,195,75,0.9)', color: '#021521' }}>{c.weight_kg} kg</span>
-                    )}
-                    {c.released && <span className="text-[10px] text-tide-300">C&R</span>}
+            {filtered.map((c, i) => {
+              const { level: trustLevel } = computeTrustScore(c);
+              const tMeta = trustMeta[trustLevel] || trustMeta.unverified;
+              return (
+                <motion.button key={c.id} onClick={() => setSelected(c)}
+                  initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: i * 0.03 }} whileTap={{ scale: 0.97 }}
+                  className="relative rounded-2xl overflow-hidden text-left h-44 bg-abyss-800">
+                  {c.photo_urls?.[0]
+                    ? <img src={c.photo_urls[0]} alt={c.species} className="w-full h-full object-cover" />
+                    : <div className="w-full h-full flex items-center justify-center text-4xl">🐟</div>
+                  }
+                  <div className="absolute inset-0 bg-gradient-to-t from-abyss-950 via-transparent to-transparent" />
+                  <div className="absolute top-1.5 right-1.5">
+                    <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[10px] font-bold border ${tMeta.color} ${tMeta.border}`}
+                      style={{ background: 'rgba(2,21,33,0.55)' }}>
+                      <Shield className="w-2.5 h-2.5" />
+                      {t(tMeta.key)}
+                    </span>
                   </div>
-                </div>
-              </motion.button>
-            ))}
+                  <div className="absolute bottom-0 left-0 right-0 p-2.5">
+                    <p className="text-white font-bold text-sm">{c.species || t('common.unknown')}</p>
+                    <div className="flex items-center gap-1.5 mt-0.5">
+                      {c.weight_kg && (
+                        <span className="px-1.5 py-0.5 rounded text-[10px] font-bold"
+                          style={{ background: 'rgba(245,195,75,0.9)', color: '#021521' }}>{c.weight_kg} kg</span>
+                      )}
+                      {c.released && <span className="text-[10px] text-tide-300">C&R</span>}
+                    </div>
+                  </div>
+                </motion.button>
+              );
+            })}
           </div>
         )}
 

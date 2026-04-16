@@ -250,7 +250,8 @@
     "day_th": "Enj",
     "day_fr": "Pre",
     "day_sa": "Sht",
-    "day_su": "Die"
+    "day_su": "Die",
+    "details": "Detaje"
   },
   "home": {
     "welcome_back": "Mirë se u kthevet",
@@ -271,7 +272,31 @@
     "tile_tournaments_sub": "Turneut aktive",
     "recent_catches": "Kapjet e fundit",
     "top_crews": "Ekuipazhet kryesore këtë javë",
-    "greeting_placeholder": "{{name}}"
+    "greeting_placeholder": "{{name}}",
+    "greet_dawn": "Në agim",
+    "greet_morning": "Mirëmëngjes",
+    "greet_midday": "Mesditë",
+    "greet_afternoon": "Pasdite e mirë",
+    "greet_dusk": "Ora e artë",
+    "greet_night": "Peshkim nate",
+    "tod_dawn": "Agim",
+    "tod_morning": "Mëngjes",
+    "tod_midday": "Mesditë",
+    "tod_afternoon": "Pasdite",
+    "tod_dusk": "Muzg",
+    "tod_night": "Natë",
+    "stat_trust": "Besim",
+    "stat_verified": "Verifikuar",
+    "empty_catches_title": "Ende pa kapje",
+    "empty_catches_sub": "Regjistro kapjen e parë dhe fito Fish XP.",
+    "empty_catches_cta": "Kapja e parë",
+    "bait_tip_title": "Karrem për {{species}}",
+    "bait_tip_body": "{{tod}} + moti aktual — {{bait}} është zgjedhje e fortë tani.",
+    "bait_tip_cta": "Katalogu i karremave",
+    "trust_overview": "Besim",
+    "trust_avg": "Mesatare",
+    "hot_species": "Në trend",
+    "hot_n": "{{n}} kapje"
   },
   "dashboard": {
     "title": "Paneli",
@@ -1075,7 +1100,16 @@
     "weight": "Pesha",
     "color": "Ngjyra",
     "species_available": "Llojet e disponueshme",
-    "bait_recommendations": "Rekomandime karrem"
+    "bait_recommendations": "Rekomandime karrem",
+    "reason": {
+      "species_match": "Përputhet me {{species}}",
+      "low_pressure_active": "Presion i ulët — peshqit aktivë",
+      "high_pressure_slow": "Presion i lartë — natyralët më mirë",
+      "overcast_aggressive": "Me re — grabitqarët agresivë",
+      "cold_natural": "Ftohtë — natyralët në avantazh",
+      "golden_hour": "Ora e artë — ushqim",
+      "night_natural": "Natë — natyralët të preferuar"
+    }
   },
   "forecast": {
     "title": "Parashikimi i kapjes",
@@ -1311,5 +1345,11 @@
     "wolfsbarsch": "Levrek",
     "thunfisch": "Ton",
     "barracuda": "Barrakudë"
+  },
+  "trust": {
+    "unverified": "Pa verifikuar",
+    "photo_verified": "Foto e verifikuar",
+    "gps_verified": "GPS e verifikuar",
+    "fully_verified": "Plotësisht e verifikuar"
   }
 }
