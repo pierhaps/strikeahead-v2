@@ -1,20 +1,26 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { MoreHorizontal } from 'lucide-react';
+import { X } from 'lucide-react';
 import OceanBackground from './OceanBackground';
 import BottomNav from './BottomNav';
 import AppDrawer from './AppDrawer';
 
-const EDGE_ZONE = 24;    // px from right edge to start swipe
-const OPEN_THRESHOLD = 80; // px swipe distance to trigger open
+const EDGE_ZONE = 24;
+const OPEN_THRESHOLD = 80;
 
-/**
- * AppShell — iOS 26 Liquid Glass
- *  - Menu pill (top-right) + swipe from right edge opens AppDrawer
- *  - Page transitions via AnimatePresence
- *  - Max-lg container w/ safe-area awareness
- */
+const CAPSULE_STYLE = {
+  height: 34,
+  paddingLeft: 12,
+  paddingRight: 12,
+  borderRadius: 17,
+  background: 'linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.04) 100%)',
+  backdropFilter: 'blur(40px) saturate(180%) brightness(1.1)',
+  WebkitBackdropFilter: 'blur(40px) saturate(180%) brightness(1.1)',
+  border: '0.5px solid rgba(255,255,255,0.20)',
+  boxShadow: '0 0.5px 0 0 rgba(255,255,255,0.25) inset, 0 8px 28px rgba(0,0,0,0.25)',
+};
+
 export default function AppShell() {
   const location = useLocation();
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -49,38 +55,58 @@ export default function AppShell() {
     >
       <OceanBackground />
 
-      {/* Menu capsule — top-right, always visible */}
-      <motion.button
-        onClick={() => setDrawerOpen(true)}
-        aria-label="Menu"
-        whileTap={{ scale: 0.92 }}
-        whileHover={{ scale: 1.04 }}
-        className="fixed flex items-center gap-1.5 justify-center"
-        style={{
-          zIndex: 9999,
-          top: 'calc(env(safe-area-inset-top) + 0.75rem)',
-          right: '0.875rem',
-          height: 34,
-          paddingLeft: 12,
-          paddingRight: 12,
-          borderRadius: 17,
-          background: 'linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.04) 100%)',
-          backdropFilter: 'blur(40px) saturate(180%) brightness(1.1)',
-          WebkitBackdropFilter: 'blur(40px) saturate(180%) brightness(1.1)',
-          border: '0.5px solid rgba(255,255,255,0.20)',
-          boxShadow: '0 0.5px 0 0 rgba(255,255,255,0.25) inset, 0 8px 28px rgba(0,0,0,0.25)',
-        }}
-      >
-        <motion.div
-          className="flex gap-[3px]"
-          animate={{ opacity: [0.5, 0.85, 0.5] }}
-          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <span className="w-[4px] h-[4px] rounded-full bg-white/70" />
-          <span className="w-[4px] h-[4px] rounded-full bg-white/70" />
-          <span className="w-[4px] h-[4px] rounded-full bg-white/70" />
-        </motion.div>
-      </motion.button>
+      {/* Animated menu capsule — morphs between ··· (open) and ✕ (close) */}
+      <AnimatePresence mode="wait">
+        {!drawerOpen ? (
+          <motion.button
+            key="menu-open"
+            onClick={() => setDrawerOpen(true)}
+            aria-label="Menu"
+            whileTap={{ scale: 0.88 }}
+            initial={{ opacity: 0, scale: 0.6, rotate: -90 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            exit={{ opacity: 0, scale: 0.6, rotate: 90 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 28 }}
+            className="fixed flex items-center gap-1.5 justify-center"
+            style={{
+              zIndex: 9999,
+              top: 'calc(env(safe-area-inset-top) + 0.75rem)',
+              right: '0.875rem',
+              ...CAPSULE_STYLE,
+            }}
+          >
+            <motion.div
+              className="flex gap-[3px]"
+              animate={{ opacity: [0.5, 0.85, 0.5] }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              <span className="w-[4px] h-[4px] rounded-full bg-white/70" />
+              <span className="w-[4px] h-[4px] rounded-full bg-white/70" />
+              <span className="w-[4px] h-[4px] rounded-full bg-white/70" />
+            </motion.div>
+          </motion.button>
+        ) : (
+          <motion.button
+            key="menu-close"
+            onClick={() => setDrawerOpen(false)}
+            aria-label="Close menu"
+            whileTap={{ scale: 0.88 }}
+            initial={{ opacity: 0, scale: 0.6, rotate: -90 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            exit={{ opacity: 0, scale: 0.6, rotate: 90 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 28 }}
+            className="fixed flex items-center gap-1.5 justify-center"
+            style={{
+              zIndex: 9999,
+              top: 'calc(env(safe-area-inset-top) + 0.75rem)',
+              right: '0.875rem',
+              ...CAPSULE_STYLE,
+            }}
+          >
+            <X className="w-[15px] h-[15px] text-white/70" strokeWidth={2.5} />
+          </motion.button>
+        )}
+      </AnimatePresence>
 
       <div
         className="relative z-10 max-w-lg mx-auto page-content"

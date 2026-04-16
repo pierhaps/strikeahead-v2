@@ -115,22 +115,8 @@ export default function AppDrawer({ open, onClose }) {
                   </p>
                 )}
               </div>
-              <motion.button
-                onClick={onClose}
-                whileTap={{ scale: 0.88 }}
-                whileHover={{ scale: 1.06 }}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full"
-                style={{
-                  background: 'linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%)',
-                  border: '0.5px solid rgba(255,255,255,0.15)',
-                  boxShadow: '0 0.5px 0 0 rgba(255,255,255,0.20) inset, 0 4px 16px rgba(0,0,0,0.2)',
-                }}
-              >
-                <X className="w-4 h-4 text-white/60" />
-                <span className="text-[11px] font-medium text-white/50 tracking-wide uppercase">
-                  {t('drawer.close', { defaultValue: 'Close' })}
-                </span>
-              </motion.button>
+              {/* Close handled by AppShell capsule button (z-9999) */}
+              <div className="w-9" />
             </div>
 
             {/* ---- Nav sections ---- */}

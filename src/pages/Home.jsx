@@ -262,23 +262,40 @@ function StrikeGauge({ progress, active, minutes, type }) {
         </p>
       </div>
 
-      {/* Orbiting glow orb on the gauge arc */}
+      {/* Orbiting glow orb on the gauge arc — smooth circle, color-cycling */}
       <motion.div
         className="absolute rounded-full"
         style={{
-          width: 36,
-          height: 36,
-          background: 'radial-gradient(circle, rgba(182,240,60,0.9) 0%, rgba(182,240,60,0.5) 25%, rgba(46,224,201,0.25) 55%, transparent 80%)',
-          boxShadow: '0 0 32px rgba(182,240,60,0.9), 0 0 64px rgba(182,240,60,0.5), 0 0 96px rgba(46,224,201,0.3), 0 0 128px rgba(182,240,60,0.15)',
-          filter: 'blur(4px)',
-          top: CENTER - GAUGE_R - 18,
-          left: CENTER - 18,
-          transformOrigin: `18px ${GAUGE_R + 18}px`,
+          width: 44,
+          height: 44,
+          filter: 'blur(6px)',
+          top: CENTER - GAUGE_R - 22,
+          left: CENTER - 22,
+          transformOrigin: `22px ${GAUGE_R + 22}px`,
         }}
-        animate={{ rotate: [0, 360], scale: [1, 1.2, 1] }}
+        animate={{
+          rotate: [0, 360],
+          background: [
+            'radial-gradient(circle, rgba(37,128,195,0.95) 0%, rgba(37,128,195,0.4) 35%, transparent 75%)',
+            'radial-gradient(circle, rgba(14,189,216,0.95) 0%, rgba(14,189,216,0.4) 35%, transparent 75%)',
+            'radial-gradient(circle, rgba(46,224,201,0.95) 0%, rgba(46,224,201,0.4) 35%, transparent 75%)',
+            'radial-gradient(circle, rgba(139,231,82,0.95) 0%, rgba(139,231,82,0.4) 35%, transparent 75%)',
+            'radial-gradient(circle, rgba(183,243,71,0.95) 0%, rgba(183,243,71,0.4) 35%, transparent 75%)',
+            'radial-gradient(circle, rgba(37,128,195,0.95) 0%, rgba(37,128,195,0.4) 35%, transparent 75%)',
+          ],
+          boxShadow: [
+            '0 0 36px rgba(37,128,195,0.9), 0 0 72px rgba(37,128,195,0.4), 0 0 108px rgba(37,128,195,0.2)',
+            '0 0 36px rgba(14,189,216,0.9), 0 0 72px rgba(14,189,216,0.4), 0 0 108px rgba(14,189,216,0.2)',
+            '0 0 36px rgba(46,224,201,0.9), 0 0 72px rgba(46,224,201,0.4), 0 0 108px rgba(46,224,201,0.2)',
+            '0 0 36px rgba(139,231,82,0.9), 0 0 72px rgba(139,231,82,0.4), 0 0 108px rgba(139,231,82,0.2)',
+            '0 0 36px rgba(183,243,71,0.9), 0 0 72px rgba(183,243,71,0.4), 0 0 108px rgba(183,243,71,0.2)',
+            '0 0 36px rgba(37,128,195,0.9), 0 0 72px rgba(37,128,195,0.4), 0 0 108px rgba(37,128,195,0.2)',
+          ],
+        }}
         transition={{
           rotate: { duration: 25, repeat: Infinity, ease: 'linear' },
-          scale: { duration: 2.5, repeat: Infinity, ease: 'easeInOut' },
+          background: { duration: 8, repeat: Infinity, ease: 'easeInOut' },
+          boxShadow: { duration: 8, repeat: Infinity, ease: 'easeInOut' },
         }}
       />
     </div>
