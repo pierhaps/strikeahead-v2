@@ -49,21 +49,37 @@ export default function AppShell() {
     >
       <OceanBackground />
 
-      {/* Menu pill — top-right, always visible */}
+      {/* Menu capsule — top-right, always visible */}
       <motion.button
         onClick={() => setDrawerOpen(true)}
         aria-label="Menu"
-        whileTap={{ scale: 0.9 }}
-        className="fixed liquid-glass-heavy flex items-center justify-center rounded-full"
+        whileTap={{ scale: 0.92 }}
+        whileHover={{ scale: 1.04 }}
+        className="fixed flex items-center gap-1.5 justify-center"
         style={{
           zIndex: 9999,
           top: 'calc(env(safe-area-inset-top) + 0.75rem)',
           right: '0.875rem',
-          width: 42,
-          height: 42,
+          height: 34,
+          paddingLeft: 12,
+          paddingRight: 12,
+          borderRadius: 17,
+          background: 'linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.04) 100%)',
+          backdropFilter: 'blur(40px) saturate(180%) brightness(1.1)',
+          WebkitBackdropFilter: 'blur(40px) saturate(180%) brightness(1.1)',
+          border: '0.5px solid rgba(255,255,255,0.20)',
+          boxShadow: '0 0.5px 0 0 rgba(255,255,255,0.25) inset, 0 8px 28px rgba(0,0,0,0.25)',
         }}
       >
-        <MoreHorizontal className="w-[20px] h-[20px] text-white/70" />
+        <motion.div
+          className="flex gap-[3px]"
+          animate={{ opacity: [0.5, 0.85, 0.5] }}
+          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <span className="w-[4px] h-[4px] rounded-full bg-white/70" />
+          <span className="w-[4px] h-[4px] rounded-full bg-white/70" />
+          <span className="w-[4px] h-[4px] rounded-full bg-white/70" />
+        </motion.div>
       </motion.button>
 
       <div

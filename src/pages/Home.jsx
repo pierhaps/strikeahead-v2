@@ -262,21 +262,24 @@ function StrikeGauge({ progress, active, minutes, type }) {
         </p>
       </div>
 
-      {/* Orbiting green dot on the gauge arc */}
+      {/* Orbiting glow orb on the gauge arc */}
       <motion.div
         className="absolute rounded-full"
         style={{
-          width: 18,
-          height: 18,
-          background: 'radial-gradient(circle, #B6F03C 30%, rgba(182,240,60,0.4) 70%, transparent 100%)',
-          boxShadow: '0 0 24px rgba(182,240,60,0.8), 0 0 48px rgba(182,240,60,0.4), 0 0 72px rgba(182,240,60,0.2)',
-          filter: 'blur(1.5px)',
-          top: CENTER - GAUGE_R - 9,
-          left: CENTER - 9,
-          transformOrigin: `9px ${GAUGE_R + 9}px`,
+          width: 36,
+          height: 36,
+          background: 'radial-gradient(circle, rgba(182,240,60,0.9) 0%, rgba(182,240,60,0.5) 25%, rgba(46,224,201,0.25) 55%, transparent 80%)',
+          boxShadow: '0 0 32px rgba(182,240,60,0.9), 0 0 64px rgba(182,240,60,0.5), 0 0 96px rgba(46,224,201,0.3), 0 0 128px rgba(182,240,60,0.15)',
+          filter: 'blur(4px)',
+          top: CENTER - GAUGE_R - 18,
+          left: CENTER - 18,
+          transformOrigin: `18px ${GAUGE_R + 18}px`,
         }}
-        animate={{ rotate: [0, 360] }}
-        transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+        animate={{ rotate: [0, 360], scale: [1, 1.2, 1] }}
+        transition={{
+          rotate: { duration: 25, repeat: Infinity, ease: 'linear' },
+          scale: { duration: 2.5, repeat: Infinity, ease: 'easeInOut' },
+        }}
       />
     </div>
   );
