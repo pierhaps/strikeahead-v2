@@ -1,6 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
+import { MoreHorizontal } from 'lucide-react';
 import OceanBackground from './OceanBackground';
 import BottomNav from './BottomNav';
 import AppDrawer from './AppDrawer';
@@ -10,7 +11,7 @@ const OPEN_THRESHOLD = 80; // px swipe distance to trigger open
 
 /**
  * AppShell — iOS 26 Liquid Glass
- *  - Swipe from right edge opens AppDrawer (no hamburger button)
+ *  - Menu pill (top-right) + swipe from right edge opens AppDrawer
  *  - Page transitions via AnimatePresence
  *  - Max-lg container w/ safe-area awareness
  */
@@ -34,7 +35,6 @@ export default function AppShell() {
     const touch = e.changedTouches[0];
     const deltaX = touchRef.current.startX - touch.clientX;
     const deltaY = Math.abs(touch.clientY - touchRef.current.startY);
-    // Must swipe left (from right edge) with more horizontal than vertical motion
     if (deltaX > OPEN_THRESHOLD && deltaX > deltaY) {
       setDrawerOpen(true);
     }
@@ -48,6 +48,21 @@ export default function AppShell() {
       onTouchEnd={handleTouchEnd}
     >
       <OceanBackground />
+
+      {/* Menu pill — top-right, always visible */}
+      <motion.button
+        onClick={() => setDrawerOpen(true)}
+        aria-label="Menu"
+        whileTap={{ scale: 0.9 }}
+        className="fixed z-50 right-3 liquid-glass flex items-center justify-center rounded-full"
+        style={{
+          top: 'calc(env(safe-area-inset-top) + 0.5rem)',
+          width: 36,
+          height: 36,
+        }}
+      >
+        <MoreHorizontal className="w-[18px] h-[18px] text-foam/60" />
+      </motion.button>
 
       <div
         className="relative z-10 max-w-lg mx-auto page-content"
