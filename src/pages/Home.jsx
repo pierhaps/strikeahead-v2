@@ -2,17 +2,83 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
-  Flame, Fish, Anchor, Trophy, Target, ChevronRight, Shield, Sparkles, Zap,
-  AlertTriangle, FileCheck,
+  Fish, Anchor, Trophy, Target, ChevronRight, Sparkles, Zap,
+  Wind, Waves, Thermometer, MapPin, Navigation,
 } from 'lucide-react';
 import PageTransition from '../components/ui/PageTransition';
 import { base44 } from '@/api/base44Client';
 import { useTranslation } from 'react-i18next';
-import { computeTrustScore, aggregateTrust, trustMeta } from '../utils/trustEngine';
+import { computeTrustScore, aggregateTrust } from '../utils/trustEngine';
 import { recommendBaits, getTimeOfDay, todaysHotSpecies } from '../utils/baitIntelligence';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
+const GAUGE_R = 110;
+const GAUGE_STROKE = 7;
+const GAUGE_CIRC = 2 * Math.PI * GAUGE_R;
 
+/* ------------------------------------------------------------------ */
+/*  Solunar-based Strike Timer                                        */
+/* ------------------------------------------------------------------ */
+function getStrikeData() {
+  const now = new Date();
+  const h = now.getHours();
+  const m = now.getMinutes();
+  const mins = h * 60 + m;
+
+  // Solunar-inspired feeding windows (hh:mm → minutes)
+  const windows = [
+    { s: 300, e: 420, type: 'major' },   // 05:00 – 07:00
+    { s: 660, e: 720, type: 'minor' },   // 11:00 – 12:00
+    { s: 1020, e: 1140, type: 'major' }, // 17:00 – 19:00
+    { s: 1380, e: 1440, type: 'minor' }, // 23:00 – 24:00
+  ];
+
+  for (const w of windows) {
+    if (mins >= w.s && mins < w.e) {
+      const remaining = w.e - mins;
+      const duration = w.e - w.s;
+      return { active: true, type: w.type, minutes: remaining, progress: 1 - remaining / duration };
+    }
+  }
+
+  let next = null;
+  for (const w of windows) {
+    if (w.s > mins) { next = w; break; }
+  }
+  if (!next) next = windows[0]; // wrap to tomorrow
+
+  const until = next.s > mins ? next.s - mins : (1440 - mins) + next.s;
+  // Progress toward next window: map 0→1 across the gap between last window end and next start
+  const prevEnd = windows.reduce((acc, w) => (w.e <= mins ? w.e : acc), 0) || 0;
+  const gap = next.s > prevEnd ? next.s - prevEnd : (1440 - prevEnd) + next.s;
+  const elapsed = gap > 0 ? (gap - until) / gap : 0;
+
+  return { active: false, type: next.type, minutes: until, progress: Math.max(0, Math.min(1, elapsed)) };
+}
+
+function formatTimer(minutes) {
+  const h = Math.floor(minutes / 60);
+  const m = minutes % 60;
+  return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Simulated conditions (in a real app, from a weather API)          */
+/* ------------------------------------------------------------------ */
+function getConditions() {
+  const h = new Date().getHours();
+  const dirs = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+  const dir = dirs[Math.floor((h * 3.7) % 8)];
+  const speed = 3 + Math.round(Math.sin(h * 0.5) * 4);
+  const temp = Math.round(14 + Math.sin(h * 0.26) * 8);
+  const tidePhase = h < 6 ? 'falling' : h < 12 ? 'rising' : h < 18 ? 'falling' : 'rising';
+  const tideHeight = (Math.sin(h * 0.52) * 0.5 + 0.3).toFixed(1);
+  return { windDir: dir, windSpeed: speed, temp, tidePhase, tideHeight };
+}
+
+/* ------------------------------------------------------------------ */
+/*  Animated number counter                                           */
+/* ------------------------------------------------------------------ */
 function AnimatedNumber({ value, suffix = '' }) {
   const [display, setDisplay] = useState(0);
   useEffect(() => {
@@ -29,495 +95,444 @@ function AnimatedNumber({ value, suffix = '' }) {
   return <span>{display}{suffix}</span>;
 }
 
-// Compute streak: consecutive days with at least one catch, ending today or yesterday
-function computeStreak(catches) {
-  if (!catches?.length) return 0;
-  const days = new Set();
-  catches.forEach(c => {
-    if (c.caught_date) {
-      const d = String(c.caught_date).slice(0, 10);
-      days.add(d);
-    }
-  });
-  const dayKey = (d) => d.toISOString().slice(0, 10);
-  const today = new Date();
-  const yesterday = new Date(today.getTime() - 86400_000);
+/* ------------------------------------------------------------------ */
+/*  SVG Circular Gauge                                                */
+/* ------------------------------------------------------------------ */
+function StrikeGauge({ progress, active, minutes, type }) {
+  const { t } = useTranslation();
+  const dashOffset = GAUGE_CIRC * (1 - progress);
 
-  let cursor;
-  if (days.has(dayKey(today))) cursor = today;
-  else if (days.has(dayKey(yesterday))) cursor = yesterday;
-  else return 0;
-
-  let streak = 0;
-  while (days.has(dayKey(cursor))) {
-    streak += 1;
-    cursor = new Date(cursor.getTime() - 86400_000);
-  }
-  return streak;
-}
-
-function TrustPill({ level, t }) {
-  const meta = trustMeta[level] || trustMeta.unverified;
   return (
-    <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[10px] font-bold border ${meta.color} ${meta.border}`}
-      style={{ background: 'rgba(2,21,33,0.55)' }}>
-      <Shield className="w-2.5 h-2.5" />
-      {t(meta.key)}
-    </span>
+    <div className="relative flex items-center justify-center" style={{ width: 264, height: 264 }}>
+      {/* Ambient glow behind gauge */}
+      <motion.div
+        className="absolute rounded-full"
+        style={{
+          width: 240, height: 240,
+          background: active
+            ? 'radial-gradient(circle, rgba(46,224,201,0.25), transparent 70%)'
+            : 'radial-gradient(circle, rgba(45,168,255,0.15), transparent 70%)',
+          filter: 'blur(30px)',
+        }}
+        animate={active ? { scale: [1, 1.08, 1], opacity: [0.7, 1, 0.7] } : {}}
+        transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+      />
+
+      <svg width={264} height={264} viewBox="0 0 264 264" className="absolute">
+        <defs>
+          <linearGradient id="gauge-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#2DA8FF" />
+            <stop offset="50%" stopColor="#2EE0C9" />
+            <stop offset="100%" stopColor="#B6F03C" />
+          </linearGradient>
+          <filter id="gauge-glow">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <linearGradient id="track-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="rgba(232,240,245,0.06)" />
+            <stop offset="100%" stopColor="rgba(232,240,245,0.03)" />
+          </linearGradient>
+        </defs>
+
+        {/* Track */}
+        <circle
+          cx={132} cy={132} r={GAUGE_R}
+          fill="none"
+          stroke="url(#track-gradient)"
+          strokeWidth={GAUGE_STROKE}
+          strokeLinecap="round"
+        />
+
+        {/* Progress arc */}
+        <motion.circle
+          cx={132} cy={132} r={GAUGE_R}
+          fill="none"
+          stroke="url(#gauge-gradient)"
+          strokeWidth={GAUGE_STROKE}
+          strokeLinecap="round"
+          strokeDasharray={GAUGE_CIRC}
+          initial={{ strokeDashoffset: GAUGE_CIRC }}
+          animate={{ strokeDashoffset: dashOffset }}
+          transition={{ duration: 1.8, ease: tideEase }}
+          style={{ transform: 'rotate(-90deg)', transformOrigin: '50% 50%' }}
+          filter="url(#gauge-glow)"
+        />
+
+        {/* Tick marks around the gauge */}
+        {Array.from({ length: 60 }, (_, i) => {
+          const angle = (i / 60) * 360 - 90;
+          const rad = (angle * Math.PI) / 180;
+          const isMajor = i % 15 === 0;
+          const r1 = GAUGE_R + (isMajor ? 14 : 12);
+          const r2 = GAUGE_R + (isMajor ? 20 : 16);
+          return (
+            <line
+              key={i}
+              x1={132 + r1 * Math.cos(rad)}
+              y1={132 + r1 * Math.sin(rad)}
+              x2={132 + r2 * Math.cos(rad)}
+              y2={132 + r2 * Math.sin(rad)}
+              stroke={isMajor ? 'rgba(232,240,245,0.18)' : 'rgba(232,240,245,0.06)'}
+              strokeWidth={isMajor ? 1.5 : 0.8}
+              strokeLinecap="round"
+            />
+          );
+        })}
+      </svg>
+
+      {/* Center content */}
+      <div className="relative z-10 flex flex-col items-center">
+        {/* Hook icon — SVG */}
+        <svg width="40" height="40" viewBox="0 0 40 40" className="mb-1 opacity-70">
+          <path
+            d="M20 4 C20 4 28 8 28 18 C28 26 22 30 20 32 C18 34 14 32 14 28 C14 24 18 22 20 22 C22 22 24 24 24 26"
+            fill="none"
+            stroke="url(#gauge-gradient)"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+          />
+          <circle cx="20" cy="4" r="2" fill="#2EE0C9" />
+        </svg>
+
+        <p className="text-foam/50 text-xs font-semibold uppercase tracking-widest mb-1">
+          {active ? t('home.strike_active', { defaultValue: 'Strike Active' }) : t('home.strike_timer', { defaultValue: 'Strike Timer' })}
+        </p>
+        <motion.p
+          className="font-display font-extrabold text-[44px] leading-none tracking-tight"
+          style={{ color: active ? '#2EE0C9' : '#E8F0F5' }}
+          animate={active ? { textShadow: ['0 0 20px rgba(46,224,201,0.5)', '0 0 40px rgba(46,224,201,0.8)', '0 0 20px rgba(46,224,201,0.5)'] } : {}}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          {formatTimer(minutes)}
+        </motion.p>
+        <p className="text-foam/35 text-[10px] uppercase tracking-wider mt-1">
+          {active
+            ? t('home.strike_remaining', { defaultValue: 'remaining' })
+            : (type === 'major'
+              ? t('home.strike_until_major', { defaultValue: 'until major bite' })
+              : t('home.strike_until_minor', { defaultValue: 'until minor bite' }))}
+        </p>
+      </div>
+
+      {/* Orbiting dot */}
+      <motion.div
+        className="absolute w-2.5 h-2.5 rounded-full"
+        style={{
+          background: active ? '#B6F03C' : '#2EE0C9',
+          boxShadow: active ? '0 0 12px rgba(182,240,60,0.6)' : '0 0 10px rgba(46,224,201,0.5)',
+          top: 132 - GAUGE_R - 1,
+          left: 132 - 5,
+          transformOrigin: `5px ${GAUGE_R + 1}px`,
+        }}
+        animate={{ rotate: [0, 360] }}
+        transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+      />
+    </div>
   );
 }
 
+/* ------------------------------------------------------------------ */
+/*  Conditions row                                                     */
+/* ------------------------------------------------------------------ */
+function ConditionChip({ icon: Icon, label, value }) {
+  return (
+    <div className="flex-1 flex flex-col items-center gap-1 py-2">
+      <Icon className="w-4 h-4 text-foam/40" strokeWidth={1.5} />
+      <p className="text-foam font-semibold text-sm">{value}</p>
+      <p className="text-foam/30 text-[10px] uppercase tracking-wider">{label}</p>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Catch card (compact)                                              */
+/* ------------------------------------------------------------------ */
 function CatchCard({ c, t }) {
-  const { level } = computeTrustScore(c);
-  const img = (c.photo_urls && c.photo_urls[0]) || null;
-  const weight = c.weight_kg ? `${Number(c.weight_kg).toFixed(1)} kg` : (c.length_cm ? `${c.length_cm} cm` : '—');
+  const img = c.photo_urls?.[0] || null;
+  const w = c.weight_kg ? `${Number(c.weight_kg).toFixed(1)} kg` : (c.length_cm ? `${c.length_cm} cm` : '—');
   return (
     <Link to="/mycatches" className="flex-shrink-0">
-      <div className="relative w-28 h-36 rounded-2xl overflow-hidden bg-abyss-700">
+      <motion.div whileTap={{ scale: 0.96 }} className="relative w-24 h-32 rounded-2xl overflow-hidden">
         {img ? (
-          <img src={img} alt={c.species || t('common.unknown')} className="w-full h-full object-cover" />
+          <img src={img} alt={c.species || ''} className="w-full h-full object-cover" />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-3xl">🐟</div>
+          <div className="w-full h-full flex items-center justify-center bg-navy-700 text-2xl">🐟</div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-abyss-950 via-abyss-950/30 to-transparent" />
-        <div className="absolute top-1.5 right-1.5">
-          <TrustPill level={level} t={t} />
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-900 via-navy-900/20 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-2">
-          <p className="text-white font-bold text-xs truncate">{c.species || t('common.unknown')}</p>
-          <span className="inline-block mt-0.5 px-1.5 py-0.5 rounded-md text-[10px] font-bold"
-            style={{ background: 'rgba(245,195,75,0.85)', color: '#021521' }}>
-            {weight}
-          </span>
-        </div>
-      </div>
-    </Link>
-  );
-}
-
-function EmptyCatches({ t }) {
-  return (
-    <Link to="/upload" className="block">
-      <div className="glass-card rounded-2xl p-5 text-center">
-        <div className="w-14 h-14 rounded-2xl gradient-tide mx-auto mb-3 flex items-center justify-center">
-          <Fish className="w-7 h-7 text-white" />
-        </div>
-        <p className="font-display font-bold text-foam mb-1">{t('home.empty_catches_title')}</p>
-        <p className="text-foam/50 text-sm mb-3">{t('home.empty_catches_sub')}</p>
-        <span className="inline-flex items-center gap-1 text-tide-400 text-sm font-semibold">
-          {t('home.empty_catches_cta')} <ChevronRight className="w-4 h-4" />
-        </span>
-      </div>
-    </Link>
-  );
-}
-
-function TipCard({ icon: Icon, title, body, cta, to }) {
-  return (
-    <Link to={to || '#'} className="block">
-      <motion.div whileTap={{ scale: 0.98 }}
-        className="glass-card rounded-2xl p-4 flex items-start gap-3"
-        style={{ borderColor: 'rgba(245,195,75,0.2)' }}>
-        <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-          style={{ background: 'linear-gradient(135deg, rgba(245,195,75,0.2), rgba(31,167,184,0.15))' }}>
-          <Icon className="w-5 h-5 text-sun-400" />
-        </div>
-        <div className="flex-1 min-w-0">
-          <p className="font-display font-bold text-foam text-sm">{title}</p>
-          <p className="text-foam/60 text-xs leading-snug mt-0.5">{body}</p>
-          {cta && (
-            <span className="inline-flex items-center gap-1 text-tide-400 text-xs font-semibold mt-1.5">
-              {cta} <ChevronRight className="w-3.5 h-3.5" />
-            </span>
-          )}
+          <p className="text-white font-bold text-[11px] truncate">{c.species || '?'}</p>
+          <p className="text-foam/50 text-[10px]">{w}</p>
         </div>
       </motion.div>
     </Link>
   );
 }
 
+/* ------------------------------------------------------------------ */
+/*  Main Home                                                         */
+/* ------------------------------------------------------------------ */
 export default function Home() {
   const { t, i18n } = useTranslation();
   const [user, setUser] = useState(null);
   const [catches, setCatches] = useState([]);
-  const [licenses, setLicenses] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     Promise.all([
       base44.auth.me().catch(() => null),
       base44.entities.Catch.list('-caught_date', 50).catch(() => []),
-      base44.entities.UserLicense.list('-valid_until', 20).catch(() => []),
-    ]).then(([u, list, lic]) => {
+    ]).then(([u, list]) => {
       setUser(u);
       setCatches(Array.isArray(list) ? list : []);
-      setLicenses(Array.isArray(lic) ? lic : []);
       setLoading(false);
     });
   }, []);
 
-  // License status: find the soonest expiring or expired license
-  const licenseAlert = useMemo(() => {
-    if (!licenses.length) return null;
-    const now = new Date();
-    const msDay = 86400000;
-    let status = null;
-    for (const l of licenses) {
-      if (!l.valid_until) continue;
-      const exp = new Date(l.valid_until);
-      if (isNaN(exp)) continue;
-      const days = Math.floor((exp - now) / msDay);
-      if (days < 0) {
-        // expired
-        if (!status || status.kind === 'expiring' || days > status.days) {
-          status = { kind: 'expired', days, license: l };
-        }
-      } else if (days <= 14) {
-        // expiring soon
-        if (!status || (status.kind === 'expiring' && days < status.days)) {
-          if (status?.kind !== 'expired') {
-            status = { kind: 'expiring', days, license: l };
-          }
-        }
-      }
-    }
-    return status;
-  }, [licenses]);
-
-  const hasAnyValidLicense = useMemo(
-    () => licenses.some(l => {
-      if (!l.valid_until) return false;
-      return new Date(l.valid_until) > new Date();
-    }),
-    [licenses],
-  );
-
-  const firstName = user?.full_name?.split(' ')[0] || t('home.defaultName');
+  const strike = useMemo(() => getStrikeData(), []);
+  const conditions = useMemo(() => getConditions(), []);
+  const firstName = user?.full_name?.split(' ')[0] || t('home.defaultName', { defaultValue: 'Angler' });
   const totalCatches = catches.length;
-  const fishXp = user?.fish_xp ?? totalCatches * 27;
-  const hookPoints = user?.hook_points ?? totalCatches * 4;
-
-  const streak = useMemo(() => computeStreak(catches), [catches]);
-  const trust = useMemo(() => aggregateTrust(catches), [catches]);
   const speciesCount = useMemo(() => new Set(catches.map(c => c.species).filter(Boolean)).size, [catches]);
-  const hotSpecies = useMemo(() => todaysHotSpecies(catches, 14), [catches]);
-  const topSpecies = hotSpecies[0]?.species || null;
-
+  const trust = useMemo(() => aggregateTrust(catches), [catches]);
   const recentCatches = useMemo(() => catches.slice(0, 8), [catches]);
+  const hotSpecies = useMemo(() => todaysHotSpecies(catches, 14), [catches]);
 
-  const hour = new Date().getHours();
-  const tod = getTimeOfDay(hour);
-  const bait = useMemo(() => {
-    if (!topSpecies) return null;
-    return recommendBaits({ species: topSpecies, hour, weather: {} });
-  }, [topSpecies, hour]);
-
-  const nextLevelXp = useMemo(() => {
-    const next = Math.ceil((fishXp + 1) / 1000) * 1000;
-    const prev = Math.max(0, next - 1000);
-    const pct = Math.max(5, Math.min(100, Math.round(((fishXp - prev) / (next - prev)) * 100)));
-    return { next, pct };
-  }, [fishXp]);
-
-  const actionTiles = [
-    { labelKey: 'home.tile_log',          subKey: 'home.tile_log_sub',          path: '/upload',      icon: Fish,   primary: true },
-    { labelKey: 'home.tile_spots',        subKey: 'home.tile_spots_sub',        path: '/map',         icon: Target },
-    { labelKey: 'home.tile_tide',         subKey: 'home.tile_tide_sub',         path: '/tidecatch',   icon: Anchor },
-    { labelKey: 'home.tile_tournaments',  subKey: 'home.tile_tournaments_sub',  path: '/tournaments', icon: Trophy },
-  ];
-
-  const fmtNum = (n) => new Intl.NumberFormat(i18n.language).format(Math.round(n));
+  const tod = getTimeOfDay(new Date().getHours());
 
   return (
     <PageTransition>
-      <div className="px-4 pt-6 pb-4 space-y-6">
-        {/* Header */}
-        <div className="flex items-start justify-between">
-          <div className="min-w-0">
-            <p className="text-foam/50 text-sm font-medium">
-              {t(`home.greet_${tod}`, { defaultValue: t('home.welcome_back') })}
+      <div className="px-4 pt-4 pb-4 space-y-5">
+
+        {/* ── Location bar ── */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: tideEase }}
+          className="flex items-center justify-center gap-2"
+        >
+          <MapPin className="w-3.5 h-3.5 text-tide-400" />
+          <p className="text-foam/60 text-sm font-medium">
+            {t(`home.greet_${tod}`, { defaultValue: t('home.welcome_back', { defaultValue: 'Welcome back' }) })},{' '}
+            <span className="text-foam">{firstName}</span>
+          </p>
+        </motion.div>
+
+        {/* ── Strike Timer Hero ── */}
+        <motion.div
+          className="flex flex-col items-center"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: tideEase }}
+        >
+          <StrikeGauge
+            progress={strike.progress}
+            active={strike.active}
+            minutes={strike.minutes}
+            type={strike.type}
+          />
+        </motion.div>
+
+        {/* ── Conditions row ── */}
+        <motion.div
+          className="liquid-glass rounded-2xl flex items-center divide-x divide-foam/5"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3, ease: tideEase }}
+        >
+          <ConditionChip
+            icon={Wind}
+            label={t('home.cond_wind', { defaultValue: 'Wind' })}
+            value={`${conditions.windDir} ${conditions.windSpeed}km/h`}
+          />
+          <ConditionChip
+            icon={Waves}
+            label={t('home.cond_tide', { defaultValue: 'Tide' })}
+            value={`${t(`home.tide_${conditions.tidePhase}`, { defaultValue: conditions.tidePhase })} ${conditions.tideHeight}m`}
+          />
+          <ConditionChip
+            icon={Thermometer}
+            label={t('home.cond_temp', { defaultValue: 'Temp' })}
+            value={`${conditions.temp}°C`}
+          />
+        </motion.div>
+
+        {/* ── Stay Ready CTA ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4, ease: tideEase }}
+        >
+          <Link to="/upload">
+            <motion.button
+              whileTap={{ scale: 0.97 }}
+              className="w-full py-3.5 rounded-2xl font-display font-bold text-base text-navy-900 relative overflow-hidden sheen"
+              style={{
+                background: 'linear-gradient(135deg, #B6F03C 0%, #2EE0C9 60%, #2DA8FF 100%)',
+                boxShadow: '0 8px 28px rgba(46,224,201,0.35), 0 0 0 1px rgba(182,240,60,0.2)',
+              }}
+            >
+              {strike.active
+                ? t('home.cta_strike_now', { defaultValue: 'Strike Now — Log Catch' })
+                : t('home.cta_stay_ready', { defaultValue: 'Stay Ready' })}
+            </motion.button>
+          </Link>
+        </motion.div>
+
+        {/* ── Quick stats ── */}
+        <motion.div
+          className="grid grid-cols-3 gap-2"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.5, ease: tideEase }}
+        >
+          <div className="liquid-glass-subtle rounded-2xl p-3 text-center">
+            <p className="font-display font-extrabold text-xl text-foam">
+              <AnimatedNumber value={totalCatches} />
             </p>
-            <h1 className="font-display text-3xl font-extrabold text-gradient-tide truncate">
-              {t('home.greeting', { name: firstName })}
-            </h1>
+            <p className="text-foam/35 text-[10px] uppercase tracking-wider mt-0.5">
+              {t('home.total_catches', { defaultValue: 'Catches' })}
+            </p>
           </div>
-          <div className="w-11 h-11 rounded-2xl gradient-tide flex items-center justify-center flex-shrink-0 ml-2"
-            style={{ boxShadow: '0 0 20px rgba(31,167,184,0.4), 0 0 8px rgba(245,195,75,0.25)' }}>
-            <span className="text-xl">🐟</span>
+          <div className="liquid-glass-subtle rounded-2xl p-3 text-center">
+            <p className="font-display font-extrabold text-xl text-gradient-tide">
+              <AnimatedNumber value={speciesCount} />
+            </p>
+            <p className="text-foam/35 text-[10px] uppercase tracking-wider mt-0.5">
+              {t('home.stat_species', { defaultValue: 'Species' })}
+            </p>
           </div>
-        </div>
-
-        {/* Hero stat card */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: tideEase }} className="glass-card rounded-3xl p-5">
-          <div className="flex items-start justify-between mb-4">
-            <div>
-              <p className="text-foam/50 text-xs uppercase tracking-widest font-medium mb-1">
-                {t('home.total_catches')}
-              </p>
-              <p className="font-display font-extrabold text-5xl text-gradient-sun">
-                <AnimatedNumber value={totalCatches} />
-              </p>
-            </div>
-            <div className="flex flex-col gap-2 items-end">
-              <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl"
-                style={{ background: 'rgba(245,195,75,0.12)', border: '1px solid rgba(245,195,75,0.3)', boxShadow: '0 0 10px rgba(245,195,75,0.12)' }}>
-                <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 1.5, repeat: Infinity }}>
-                  <Flame className="w-4 h-4 text-sun-400" />
-                </motion.div>
-                <span className="text-sun-gradient font-bold font-display text-sm">
-                  {t('home.streak_days', { n: streak, count: streak })}
-                </span>
-              </div>
-              <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl"
-                style={{ background: 'rgba(245,195,75,0.1)', border: '1px solid rgba(245,195,75,0.22)' }}>
-                <Anchor className="w-3.5 h-3.5 text-sun-400" />
-                <span className="text-sun-gradient font-bold font-display text-sm">
-                  <AnimatedNumber value={hookPoints} />
-                </span>
-                <span className="text-sun-400/50 text-xs">HP</span>
-              </div>
-            </div>
-          </div>
-
-          {/* XP bar */}
-          <div className="mb-4">
-            <div className="flex justify-between items-center mb-1">
-              <span className="text-xs text-foam/50">Fish XP</span>
-              <span className="text-xs text-sun-gradient font-semibold font-display">
-                <AnimatedNumber value={fishXp} /> / {fmtNum(nextLevelXp.next)} XP
-              </span>
-            </div>
-            <div className="h-2 rounded-full bg-abyss-700 overflow-hidden">
-              <motion.div className="h-full rounded-full"
-                style={{ background: 'linear-gradient(90deg, #1FA7B8 0%, #F5C34B 100%)' }}
-                initial={{ width: 0 }}
-                animate={{ width: `${nextLevelXp.pct}%` }}
-                transition={{ duration: 1.2, delay: 0.3, ease: tideEase }} />
-            </div>
-          </div>
-
-          {/* Micro stats */}
-          <div className="grid grid-cols-3 gap-2">
-            <div className="rounded-2xl p-2.5 text-center bg-abyss-800/60">
-              <div className="text-lg mb-0.5">🐠</div>
-              <div className="font-display font-bold text-lg leading-none text-foam">{speciesCount}</div>
-              <div className="text-foam/40 text-[10px] mt-0.5">{t('home.stat_species')}</div>
-            </div>
-            <div className="rounded-2xl p-2.5 text-center border border-sun-500/20"
-              style={{ background: 'rgba(245,195,75,0.07)' }}>
-              <div className="text-lg mb-0.5">🛡️</div>
-              <div className="font-display font-bold text-lg leading-none text-sun-gradient">
-                {trust.avgScore}
-              </div>
-              <div className="text-foam/40 text-[10px] mt-0.5">{t('home.stat_trust')}</div>
-            </div>
-            <div className="rounded-2xl p-2.5 text-center bg-abyss-800/60">
-              <div className="text-lg mb-0.5">🏆</div>
-              <div className="font-display font-bold text-lg leading-none text-foam">
-                {trust.fullCount}
-              </div>
-              <div className="text-foam/40 text-[10px] mt-0.5">{t('home.stat_verified')}</div>
-            </div>
+          <div className="liquid-glass-subtle rounded-2xl p-3 text-center">
+            <p className="font-display font-extrabold text-xl text-gradient-sun">
+              {trust.avgScore}
+            </p>
+            <p className="text-foam/35 text-[10px] uppercase tracking-wider mt-0.5">
+              {t('home.stat_trust', { defaultValue: 'Trust' })}
+            </p>
           </div>
         </motion.div>
 
-        {/* License alert */}
-        {licenseAlert && (
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ease: tideEase }}>
-            <Link to="/mylicenses" className="block">
-              <div className="rounded-2xl p-3.5 border flex items-start gap-3"
-                style={{
-                  background: licenseAlert.kind === 'expired' ? 'rgba(239,92,106,0.1)' : 'rgba(245,195,75,0.08)',
-                  borderColor: licenseAlert.kind === 'expired' ? 'rgba(239,92,106,0.35)' : 'rgba(245,195,75,0.32)',
-                }}>
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                  style={{
-                    background: licenseAlert.kind === 'expired' ? 'rgba(239,92,106,0.18)' : 'rgba(245,195,75,0.18)',
-                  }}>
-                  <AlertTriangle className={`w-4 h-4 ${licenseAlert.kind === 'expired' ? 'text-coral-400' : 'text-sun-400'}`} />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className={`font-display font-bold text-sm ${licenseAlert.kind === 'expired' ? 'text-coral-300' : 'text-sun-gradient'}`}>
-                    {licenseAlert.kind === 'expired'
-                      ? t('home.license_expired_title', { name: licenseAlert.license.license_name || t('home.license_generic') })
-                      : t('home.license_expiring_title', { n: licenseAlert.days, count: licenseAlert.days })}
-                  </p>
-                  <p className="text-foam/60 text-xs mt-0.5 truncate">
-                    {licenseAlert.kind === 'expired'
-                      ? t('home.license_expired_sub')
-                      : t('home.license_expiring_sub', { name: licenseAlert.license.license_name || t('home.license_generic') })}
-                  </p>
-                </div>
-                <ChevronRight className="w-4 h-4 text-foam/40 mt-2.5 flex-shrink-0" />
-              </div>
-            </Link>
-          </motion.div>
-        )}
-
-        {/* No license at all — only show if user has logged some catches (meaningful context) */}
-        {!licenseAlert && !loading && licenses.length === 0 && totalCatches > 0 && (
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ease: tideEase }}>
-            <Link to="/mylicenses" className="block">
-              <div className="rounded-2xl p-3.5 border flex items-start gap-3"
-                style={{
-                  background: 'rgba(31,167,184,0.08)',
-                  borderColor: 'rgba(31,167,184,0.28)',
-                }}>
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 bg-tide-500/20">
-                  <FileCheck className="w-4 h-4 text-tide-400" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="font-display font-bold text-sm text-tide-300">
-                    {t('home.license_none_title')}
-                  </p>
-                  <p className="text-foam/60 text-xs mt-0.5">{t('home.license_none_sub')}</p>
-                </div>
-                <ChevronRight className="w-4 h-4 text-foam/40 mt-2.5 flex-shrink-0" />
-              </div>
-            </Link>
-          </motion.div>
-        )}
-
-        {/* Action tiles */}
-        <div className="grid grid-cols-2 gap-3">
-          {actionTiles.map((tile, i) => {
-            const Icon = tile.icon;
-            return (
-              <motion.div key={tile.path} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.1 + i * 0.07, ease: tideEase }}>
-                <Link to={tile.path}>
-                  <motion.div whileTap={{ scale: 0.97 }}
-                    className={`rounded-2xl p-4 h-24 flex flex-col justify-between ${tile.primary ? 'gradient-tide glow-tide' : 'bg-abyss-700 border border-tide-300/20'}`}>
-                    <Icon className={`w-6 h-6 ${tile.primary ? 'text-white' : 'text-tide-400'}`} />
-                    <div>
-                      <p className="font-display font-bold text-white text-sm leading-tight">{t(tile.labelKey)}</p>
-                      <p className={`text-xs ${tile.primary ? 'text-white/70' : 'text-foam/40'}`}>{t(tile.subKey)}</p>
-                    </div>
-                  </motion.div>
-                </Link>
-              </motion.div>
-            );
-          })}
-        </div>
-
-        {/* Bait Intelligence tip — only shown if we have enough data */}
-        {bait && bait.baits && bait.baits.length > 0 && (
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.3, ease: tideEase }}>
-            <TipCard
-              icon={Sparkles}
-              title={t('home.bait_tip_title', { species: topSpecies })}
-              body={t('home.bait_tip_body', {
-                bait: bait.baits[0].name,
-                tod: t(`home.tod_${tod}`, { defaultValue: tod }),
-              })}
-              cta={t('home.bait_tip_cta')}
-              to="/baitcatalog"
-            />
-          </motion.div>
-        )}
-
-        {/* Recent catches */}
-        <div>
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="font-display font-bold text-foam text-lg">{t('home.recent_catches')}</h2>
-            {totalCatches > 0 && (
-              <Link to="/mycatches" className="text-tide-400 text-sm flex items-center gap-1">
-                {t('common.all')} <ChevronRight className="w-4 h-4" />
-              </Link>
-            )}
-          </div>
-          {loading ? (
-            <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-1">
-              {[0, 1, 2].map(i => (
-                <div key={`skel-${i}`} className="flex-shrink-0 w-28 h-36 rounded-2xl bg-abyss-800 animate-pulse" />
-              ))}
-            </div>
-          ) : recentCatches.length === 0 ? (
-            <EmptyCatches t={t} />
-          ) : (
-            <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-1">
-              {recentCatches.map((c) => (
-                <CatchCard key={c.id || `${c.species}-${c.caught_date}-${c.created_date}`} c={c} t={t} />
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Trust overview */}
-        {totalCatches > 0 && (
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3, ease: tideEase }} className="glass-card rounded-3xl p-4">
+        {/* ── Recent catches (horizontal scroll) ── */}
+        {recentCatches.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.6, ease: tideEase }}
+          >
             <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <Shield className="w-4 h-4 text-tide-400" />
-                <h2 className="font-display font-bold text-foam">{t('home.trust_overview')}</h2>
-              </div>
-              <Link to="/statistics" className="text-tide-400 text-sm flex items-center gap-1">
-                {t('common.details')} <ChevronRight className="w-4 h-4" />
+              <h2 className="font-display font-bold text-foam text-base">
+                {t('home.recent_catches', { defaultValue: 'Recent Catches' })}
+              </h2>
+              <Link to="/mycatches" className="text-tide-400 text-xs flex items-center gap-0.5">
+                {t('common.all', { defaultValue: 'All' })} <ChevronRight className="w-3.5 h-3.5" />
               </Link>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="text-center">
-                <p className="font-display font-extrabold text-3xl text-gradient-tide leading-none">
-                  {trust.avgScore}
-                </p>
-                <p className="text-foam/40 text-[10px] uppercase tracking-wider mt-1">{t('home.trust_avg')}</p>
-              </div>
-              <div className="flex-1 space-y-1.5">
-                {[
-                  { key: 'fully_verified', pct: trust.pct.full, color: 'bg-sun-400' },
-                  { key: 'gps_verified', pct: trust.pct.gps, color: 'bg-tide-300' },
-                  { key: 'photo_verified', pct: trust.pct.photo, color: 'bg-tide-400' },
-                  { key: 'unverified', pct: trust.pct.unverified, color: 'bg-foam/20' },
-                ].map(row => (
-                  <div key={row.key} className="flex items-center gap-2">
-                    <div className="flex-1 h-2 rounded-full bg-abyss-800 overflow-hidden">
-                      <motion.div className={`h-full rounded-full ${row.color}`}
-                        initial={{ width: 0 }} animate={{ width: `${row.pct}%` }}
-                        transition={{ duration: 0.8, delay: 0.2, ease: tideEase }} />
-                    </div>
-                    <span className="text-foam/50 text-[10px] w-24 text-right">{t(`trust.${row.key}`)}</span>
-                  </div>
-                ))}
-              </div>
+            <div className="flex gap-2.5 overflow-x-auto scrollbar-hide pb-1">
+              {recentCatches.map((c, i) => (
+                <motion.div
+                  key={c.id || `${c.species}-${i}`}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4, delay: 0.7 + i * 0.05, ease: tideEase }}
+                >
+                  <CatchCard c={c} t={t} />
+                </motion.div>
+              ))}
             </div>
           </motion.div>
         )}
 
-        {/* Hot species band */}
+        {/* ── Hot species ── */}
         {hotSpecies.length > 0 && (
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4, ease: tideEase }} className="glass-card rounded-3xl p-4">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <Zap className="w-4 h-4 text-sun-400" />
-                <h2 className="font-display font-bold text-foam">{t('home.hot_species')}</h2>
-              </div>
-              <Link to="/fishencyclopedia" className="text-tide-400 text-sm flex items-center gap-1">
-                {t('common.all')} <ChevronRight className="w-4 h-4" />
-              </Link>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.7, ease: tideEase }}
+          >
+            <div className="flex items-center gap-2 mb-3">
+              <Zap className="w-4 h-4 text-sun-400" />
+              <h2 className="font-display font-bold text-foam text-base">
+                {t('home.hot_species', { defaultValue: 'Hot Species' })}
+              </h2>
             </div>
             <div className="flex gap-2 overflow-x-auto scrollbar-hide">
-              {hotSpecies.slice(0, 6).map((s, i) => (
-                <div key={s.species} className="flex-shrink-0 flex items-center gap-2 px-3 py-2 rounded-xl"
-                  style={{
-                    background: i === 0 ? 'rgba(245,195,75,0.12)' : 'rgba(31,167,184,0.08)',
-                    border: i === 0 ? '1px solid rgba(245,195,75,0.3)' : '1px solid rgba(31,167,184,0.2)',
-                  }}>
-                  <span className="text-lg">{i === 0 ? '🔥' : '🐟'}</span>
+              {hotSpecies.slice(0, 5).map((s, i) => (
+                <motion.div
+                  key={s.species}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3, delay: 0.8 + i * 0.06, ease: tideEase }}
+                  className="flex-shrink-0 liquid-glass-subtle rounded-xl px-3 py-2 flex items-center gap-2"
+                >
+                  <span className="text-base">{i === 0 ? '🔥' : '🐟'}</span>
                   <div>
-                    <p className={`font-display font-bold text-sm ${i === 0 ? 'text-sun-gradient' : 'text-foam'}`}>
+                    <p className={`font-display font-bold text-xs ${i === 0 ? 'text-gradient-sun' : 'text-foam'}`}>
                       {s.species}
                     </p>
-                    <p className="text-foam/40 text-[10px]">{t('home.hot_n', { n: s.count, count: s.count })}</p>
+                    <p className="text-foam/30 text-[10px]">
+                      {t('home.hot_n', { n: s.count, count: s.count, defaultValue: `${s.count}×` })}
+                    </p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
+          </motion.div>
+        )}
+
+        {/* ── Action tiles ── */}
+        <motion.div
+          className="grid grid-cols-2 gap-2.5"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.8, ease: tideEase }}
+        >
+          {[
+            { path: '/map',         icon: Target,   label: t('home.tile_spots', { defaultValue: 'Spots' }),       sub: t('home.tile_spots_sub', { defaultValue: 'Find fishing spots' }) },
+            { path: '/dashboard',   icon: Sparkles,  label: t('home.tile_stats', { defaultValue: 'Stats' }),        sub: t('home.tile_stats_sub', { defaultValue: 'Your analytics' }) },
+            { path: '/fishencyclopedia', icon: Fish,  label: t('home.tile_wiki', { defaultValue: 'Fish Wiki' }),    sub: t('home.tile_wiki_sub', { defaultValue: 'Species guide' }) },
+            { path: '/tournaments', icon: Trophy,    label: t('home.tile_tournaments', { defaultValue: 'Events' }), sub: t('home.tile_tournaments_sub', { defaultValue: 'Compete & win' }) },
+          ].map((tile, i) => {
+            const Icon = tile.icon;
+            return (
+              <Link key={tile.path} to={tile.path}>
+                <motion.div
+                  whileTap={{ scale: 0.97 }}
+                  className="liquid-glass-subtle rounded-2xl p-3.5 h-[76px] flex flex-col justify-between"
+                >
+                  <Icon className="w-5 h-5 text-tide-400" strokeWidth={1.8} />
+                  <div>
+                    <p className="font-display font-bold text-foam text-sm leading-tight">{tile.label}</p>
+                    <p className="text-foam/30 text-[10px]">{tile.sub}</p>
+                  </div>
+                </motion.div>
+              </Link>
+            );
+          })}
+        </motion.div>
+
+        {/* ── Empty state for new users ── */}
+        {!loading && totalCatches === 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.5, ease: tideEase }}
+          >
+            <Link to="/upload">
+              <div className="liquid-glass rounded-2xl p-6 text-center">
+                <div className="w-14 h-14 rounded-2xl gradient-tide mx-auto mb-3 flex items-center justify-center">
+                  <Fish className="w-7 h-7 text-white" />
+                </div>
+                <p className="font-display font-bold text-foam mb-1">
+                  {t('home.empty_catches_title', { defaultValue: 'Log your first catch' })}
+                </p>
+                <p className="text-foam/40 text-sm">
+                  {t('home.empty_catches_sub', { defaultValue: 'Start building your fishing journal' })}
+                </p>
+              </div>
+            </Link>
           </motion.div>
         )}
 
