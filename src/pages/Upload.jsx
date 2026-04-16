@@ -1,20 +1,60 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
-  Camera, Upload as UploadIcon, MapPin, Loader2, Check, Search, X, Sparkles,
-  Thermometer, Wind, Droplets, Sun, Moon, Clock, Fish,
+  Upload as UploadIcon, MapPin, Loader2, CheckCircle,
+  Leaf, Sparkles, Zap, Fish, Clock, Cloud, Anchor,
 } from 'lucide-react';
 import { toast } from 'sonner';
-import PageTransition from '../components/ui/PageTransition';
-import SunSparks from '../components/shared/SunSparks';
 import { useTranslation } from 'react-i18next';
+import PageTransition from '../components/ui/PageTransition';
 import { base44 } from '@/api/base44Client';
 import { useAuth } from '@/lib/AuthContext';
+import { createPageUrl } from '@/utils';
 
-const tideEase = [0.2, 0.8, 0.2, 1];
+// ---------------- Constants ----------------
 
-// --- Helpers ------------------------------------------------------------
+const COMMON_SPECIES = [
+  'Hecht', 'Zander', 'Barsch', 'Karpfen', 'Forelle', 'Wels', 'Aal',
+  'Dorsch', 'Makrele', 'Thunfisch', 'Wolfsbarsch', 'Barracuda', 'Bonito',
+  'Brasse', 'Rotauge', 'Schleie', 'Lachs', 'Saibling', 'Hering', 'Scholle',
+  'Seezunge', 'Goldbrasse', 'Seehecht', 'Rotbarbe',
+];
+
+const COMMON_BAITS = [
+  'Gummifisch', 'Wobbler', 'Spinner', 'Blinker', 'Jig', 'Popper',
+  'Crankbait', 'Softbait', 'Fliege', 'Twister', 'Metalljig', 'Streamer',
+  'Tauwurm', 'Maden', 'Mais', 'Boilie', 'Köderfisch', 'Sardine', 'Shrimp',
+];
+
+const MOON_PHASES = [
+  { value: 'Neumond', label_key: 'upload.moon.new', icon: '🌑' },
+  { value: 'Zunehmend', label_key: 'upload.moon.waxing', icon: '🌒' },
+  { value: 'Halbmond', label_key: 'upload.moon.half', icon: '🌓' },
+  { value: 'Vollmond', label_key: 'upload.moon.full', icon: '🌕' },
+  { value: 'Abnehmend', label_key: 'upload.moon.waning', icon: '🌖' },
+];
+
+const WIND_DIRECTIONS = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+
+const TIDE_PHASES = [
+  { value: 'Auflaufend (Flut)', label_key: 'upload.tide.rising' },
+  { value: 'Hochwasser', label_key: 'upload.tide.high' },
+  { value: 'Ablaufend (Ebbe)', label_key: 'upload.tide.falling' },
+  { value: 'Niedrigwasser', label_key: 'upload.tide.low' },
+  { value: 'Gezeitenwechsel', label_key: 'upload.tide.slack' },
+];
+
+const SUN_POSITIONS = [
+  { value: 'before_sunrise', label_key: 'upload.sun.before_sunrise' },
+  { value: 'morning', label_key: 'upload.sun.morning' },
+  { value: 'midday', label_key: 'upload.sun.midday' },
+  { value: 'afternoon', label_key: 'upload.sun.afternoon' },
+  { value: 'evening', label_key: 'upload.sun.evening' },
+  { value: 'after_sunset', label_key: 'upload.sun.after_sunset' },
+];
+
+// ---------------- Helpers ----------------
 
 function getSunPosition(hour) {
   if (hour < 6) return 'before_sunrise';
@@ -46,108 +86,81 @@ function getMoonPhase() {
   return 'Abnehmend';
 }
 
-// Species (id = Base44 key, localised via t())
-const SPECIES = [
-  { id: 'hecht',      latin: 'Esox lucius',        emoji: '🐟' },
-  { id: 'zander',     latin: 'Sander lucioperca',  emoji: '🐠' },
-  { id: 'barsch',     latin: 'Perca fluviatilis',  emoji: '🐡' },
-  { id: 'karpfen',    latin: 'Cyprinus carpio',    emoji: '🎣' },
-  { id: 'forelle',    latin: 'Salmo trutta',       emoji: '🐟' },
-  { id: 'wels',       latin: 'Silurus glanis',     emoji: '🐠' },
-  { id: 'aal',        latin: 'Anguilla anguilla',  emoji: '🐍' },
-  { id: 'dorsch',     latin: 'Gadus morhua',       emoji: '🐟' },
-  { id: 'makrele',    latin: 'Scomber scombrus',   emoji: '🐟' },
-  { id: 'wolfsbarsch', latin: 'Dicentrarchus labrax', emoji: '🐟' },
-  { id: 'thunfisch',  latin: 'Thunnus thynnus',    emoji: '🐡' },
-  { id: 'barracuda',  latin: 'Sphyraena',          emoji: '🐟' },
-];
+function calculateFishXP(c) {
+  let xp = 10;
+  if ((c.length_cm || 0) > 30) xp += 5;
+  if ((c.length_cm || 0) > 50) xp += 10;
+  if ((c.weight_kg || 0) > 2) xp += 5;
+  if ((c.weight_kg || 0) > 5) xp += 15;
+  if (c.photo_urls?.length > 0) xp += 5;
+  if (c.gps_lat && c.gps_lon) xp += 5;
+  if (c.eco_score >= 4) xp += 10;
+  return xp;
+}
 
-const STEPS = ['photo', 'species', 'measures', 'location'];
-
-// --- Component ----------------------------------------------------------
+// ---------------- Component ----------------
 
 export default function Upload() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const fileInputRef = useRef(null);
 
-  const [step, setStep] = useState(0);
-  const [saving, setSaving] = useState(false);
-  const [showSparks, setShowSparks] = useState(false);
+  const now = new Date();
+  const todayStr = now.toISOString().slice(0, 10);
+  const timeStr = now.toTimeString().slice(0, 5);
 
-  // Photo
+  const [uploadedPhotos, setUploadedPhotos] = useState([]);
+  const [cleanupPhoto, setCleanupPhoto] = useState(null);
   const [uploading, setUploading] = useState(false);
-  const [uploadedPhotos, setUploadedPhotos] = useState([]); // urls
-  const [aiLoading, setAiLoading] = useState(false);
-  const [aiAnalysis, setAiAnalysis] = useState(null); // { species_detected, strike_score, ... }
-
-  // Species & measures
-  const [selectedSpeciesId, setSelectedSpeciesId] = useState(null);
-  const [search, setSearch] = useState('');
-  const [length, setLength] = useState(55);
-  const [weight, setWeight] = useState(2.4);
-  const [waterbody, setWaterbody] = useState('');
-
-  // Location & weather
-  const [gpsLocation, setGpsLocation] = useState(null);
+  const [analyzingEco, setAnalyzingEco] = useState(false);
   const [fetchingWeather, setFetchingWeather] = useState(false);
-  const [weather, setWeather] = useState(null); // { air_temp_c, wind_speed_kmh, wind_direction, pressure, ... }
+  const [gpsLocation, setGpsLocation] = useState(null);
+  const [ecoAnalysis, setEcoAnalysis] = useState(null);
+  const [autoFields, setAutoFields] = useState({});
+  const [submitting, setSubmitting] = useState(false);
 
-  // --- Photo upload ---
-  const handlePhotoUpload = async (e) => {
-    const files = Array.from(e.target.files || []);
-    if (!files.length) return;
-    setUploading(true);
-    try {
-      const results = await Promise.all(
-        files.map((f) => base44.integrations.Core.UploadFile({ file: f }))
-      );
-      const urls = results.map((r) => r.file_url).filter(Boolean);
-      setUploadedPhotos((prev) => [...prev, ...urls]);
-      if (urls[0]) {
-        setAiLoading(true);
-        try {
-          const ai = await base44.integrations.Core.InvokeLLM({
-            prompt:
-              'Analyze this fish catch photo. Identify the species (German name if possible), estimate length_cm and weight_kg, and return a strike_score 0-100 for how notable the catch is. Return JSON.',
-            response_json_schema: {
-              type: 'object',
-              properties: {
-                species_detected: { type: 'string' },
-                length_cm: { type: 'number' },
-                weight_kg: { type: 'number' },
-                strike_score: { type: 'number' },
-                strike_tips: { type: 'string' },
-              },
-            },
-            file_urls: [urls[0]],
-          });
-          setAiAnalysis(ai);
-          // pre-fill from AI (but don't overwrite if user typed)
-          if (ai?.length_cm && length === 55) setLength(Math.round(ai.length_cm));
-          if (ai?.weight_kg && weight === 2.4) setWeight(Math.round(ai.weight_kg * 10) / 10);
-          // try to pre-select species (case-insensitive match)
-          const det = (ai?.species_detected || '').toLowerCase();
-          const match = SPECIES.find((s) => det.includes(s.id));
-          if (match && !selectedSpeciesId) setSelectedSpeciesId(match.id);
-          toast.success(t('upload.ai_detected', { defaultValue: 'KI-Analyse fertig' }));
-        } catch {
-          toast.error(t('upload.ai_failed', { defaultValue: 'KI-Analyse fehlgeschlagen' }));
-        } finally {
-          setAiLoading(false);
-        }
-      }
-    } catch (err) {
-      toast.error(t('upload.photo_failed', { defaultValue: 'Foto-Upload fehlgeschlagen' }));
-    } finally {
-      setUploading(false);
-    }
+  const urlParams = new URLSearchParams(window.location.search);
+  const preselectedSpecies = urlParams.get('species') || '';
+
+  const [formData, setFormData] = useState({
+    species: preselectedSpecies,
+    length_cm: '',
+    weight_kg: '',
+    bait: '',
+    bait_brand: '',
+    waterbody: '',
+    description: '',
+    caught_date: todayStr,
+    caught_time: timeStr,
+    air_temp_c: '',
+    water_temp_c: '',
+    wind_speed_kmh: '',
+    wind_direction: '',
+    barometric_pressure_hpa: '',
+    pressure_trend: '',
+    tide_phase: '',
+    cloud_cover_pct: '',
+    uv_index: '',
+    visibility_km: '',
+    sunrise_time: '',
+    sunset_time: '',
+    sun_position: getSunPosition(now.getHours()),
+    fishing_depth_m: '',
+    moon_phase: getMoonPhase(),
+    released: false,
+  });
+
+  const set = (key, val) => setFormData((prev) => ({ ...prev, [key]: val }));
+  const setAuto = (updates) => {
+    setFormData((prev) => ({ ...prev, ...updates }));
+    setAutoFields((prev) => ({
+      ...prev,
+      ...Object.fromEntries(Object.keys(updates).map((k) => [k, true])),
+    }));
   };
 
-  const removePhoto = (i) => setUploadedPhotos((prev) => prev.filter((_, idx) => idx !== i));
+  // ---------- Weather / GPS ----------
 
-  // --- GPS + weather ---
   const fetchWeather = async (lat, lon) => {
     setFetchingWeather(true);
     try {
@@ -156,601 +169,654 @@ export default function Upload() {
       const data = await res.json();
       const cur = data.current || {};
       const daily = data.daily || {};
-      setWeather({
-        air_temp_c: cur.temperature_2m != null ? Math.round(cur.temperature_2m * 10) / 10 : null,
-        wind_speed_kmh: cur.wind_speed_10m != null ? Math.round(cur.wind_speed_10m) : null,
-        wind_direction: cur.wind_direction_10m != null ? degToDirection(cur.wind_direction_10m) : null,
-        barometric_pressure_hpa: cur.surface_pressure != null ? Math.round(cur.surface_pressure) : null,
-        cloud_cover_pct: cur.cloud_cover != null ? Math.round(cur.cloud_cover) : null,
-        uv_index: cur.uv_index != null ? Math.round(cur.uv_index * 10) / 10 : null,
-        visibility_km: cur.visibility != null ? Math.round((cur.visibility / 1000) * 10) / 10 : null,
-        sunrise_time: daily.sunrise?.[0]?.slice(11, 16) || null,
-        sunset_time: daily.sunset?.[0]?.slice(11, 16) || null,
+
+      const sunrise = daily.sunrise?.[0]?.slice(11, 16) || '';
+      const sunset = daily.sunset?.[0]?.slice(11, 16) || '';
+
+      setAuto({
+        air_temp_c: cur.temperature_2m != null ? Math.round(cur.temperature_2m * 10) / 10 : '',
+        wind_speed_kmh: cur.wind_speed_10m != null ? Math.round(cur.wind_speed_10m) : '',
+        wind_direction: cur.wind_direction_10m != null ? degToDirection(cur.wind_direction_10m) : '',
+        barometric_pressure_hpa: cur.surface_pressure != null ? Math.round(cur.surface_pressure) : '',
+        cloud_cover_pct: cur.cloud_cover != null ? Math.round(cur.cloud_cover) : '',
+        uv_index: cur.uv_index != null ? Math.round(cur.uv_index * 10) / 10 : '',
+        visibility_km: cur.visibility != null ? Math.round((cur.visibility / 1000) * 10) / 10 : '',
+        sunrise_time: sunrise,
+        sunset_time: sunset,
         moon_phase: getMoonPhase(),
       });
-      toast.success(t('upload.weather_fetched', { defaultValue: 'Wetterdaten erfasst' }));
+      toast.success(`🌤️ ${t('upload.weather_fetched')}`);
     } catch {
-      toast.error(t('upload.weather_failed', { defaultValue: 'Wetter konnte nicht geladen werden' }));
+      toast.error(t('upload.weather_failed'));
     } finally {
       setFetchingWeather(false);
     }
   };
 
-  const getLocation = () => {
-    if (!navigator.geolocation) {
-      toast.error(t('upload.gps_unavailable', { defaultValue: 'GPS nicht verfügbar' }));
-      return;
+  const checkNearWater = async (lat, lon) => {
+    try {
+      const query = `[out:json];(way["natural"="water"](around:100,${lat},${lon});way["waterway"](around:100,${lat},${lon});relation["natural"="water"](around:100,${lat},${lon});node["natural"="water"](around:100,${lat},${lon});node["waterway"](around:100,${lat},${lon}););out count;`;
+      const res = await fetch(`https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`);
+      const data = await res.json();
+      const count = data?.elements?.[0]?.tags?.total ?? data?.elements?.length ?? 0;
+      return count > 0;
+    } catch {
+      return true; // fail open if API unreachable
     }
+  };
+
+  const getLocation = async () => {
+    if (!navigator.geolocation) return toast.error(t('upload.gps_unavailable'));
     navigator.geolocation.getCurrentPosition(
-      (pos) => {
+      async (pos) => {
         const loc = { lat: pos.coords.latitude, lon: pos.coords.longitude };
+        toast.loading(`🌊 ${t('upload.checking_water')}`, { id: 'water-check' });
+        const nearWater = await checkNearWater(loc.lat, loc.lon);
+        toast.dismiss('water-check');
+        if (!nearWater) {
+          toast.error(`⚠️ ${t('upload.not_near_water')}`);
+          return;
+        }
         setGpsLocation(loc);
-        toast.success(t('upload.gps_captured', { defaultValue: 'Standort erfasst' }));
-        fetchWeather(loc.lat, loc.lon);
+        setAutoFields((prev) => ({ ...prev, gps: true }));
+        toast.success(`📍 ${t('upload.gps_captured')}`);
+        await fetchWeather(loc.lat, loc.lon);
       },
-      () => toast.error(t('upload.gps_failed', { defaultValue: 'Standort konnte nicht ermittelt werden' }))
+      () => toast.error(t('upload.gps_failed')),
     );
   };
 
-  // --- XP calc ---
-  const calculateFishXP = ({ length_cm, weight_kg, hasPhoto, hasGps }) => {
-    let xp = 10;
-    if (length_cm > 30) xp += 5;
-    if (length_cm > 50) xp += 10;
-    if (weight_kg > 2) xp += 5;
-    if (weight_kg > 5) xp += 15;
-    if (hasPhoto) xp += 5;
-    if (hasGps) xp += 5;
-    return xp;
+  // ---------- AI analysis ----------
+
+  const analyzeEcoScore = async (photoUrl) => {
+    setAnalyzingEco(true);
+    try {
+      const result = await base44.integrations.Core.InvokeLLM({
+        prompt: 'Analyze this fishing spot photo for environmental cleanliness. Score 1-5. Return JSON: { eco_score: number, litter_detected: string[], eco_notes: string }',
+        response_json_schema: {
+          type: 'object',
+          properties: {
+            eco_score: { type: 'number' },
+            litter_detected: { type: 'array', items: { type: 'string' } },
+            eco_notes: { type: 'string' },
+          },
+        },
+        file_urls: [photoUrl],
+      });
+      setEcoAnalysis(result);
+      toast.success(`🌱 ${t('upload.eco_score')}: ${result.eco_score}/5`);
+      return result;
+    } catch {
+      toast.error(t('upload.eco_failed'));
+      return null;
+    } finally {
+      setAnalyzingEco(false);
+    }
   };
 
-  // --- Submit ---
-  const handleSubmit = async () => {
-    if (!selectedSpeciesId) {
-      toast.error(t('upload.species_required', { defaultValue: 'Bitte Fischart wählen' }));
-      setStep(1);
-      return;
+  const analyzeStrike = async (photoUrl) => {
+    try {
+      const result = await base44.integrations.Core.InvokeLLM({
+        prompt: 'Analyze this fish catch photo. Return JSON with the detected species name (German), estimated conditions, a strike score 0-100, and a one-sentence tip. Keep tips under 80 chars. Schema: { species_detected: string, conditions: string, strike_score: number, strike_tips: string }',
+        response_json_schema: {
+          type: 'object',
+          properties: {
+            species_detected: { type: 'string' },
+            conditions: { type: 'string' },
+            strike_score: { type: 'number' },
+            strike_tips: { type: 'string' },
+          },
+        },
+        file_urls: [photoUrl],
+      });
+      if (result.species_detected && !formData.species) {
+        set('species', result.species_detected);
+      }
+      toast.success(`🎯 ${t('upload.strike_score')}: ${result.strike_score}/100`);
+      return result;
+    } catch {
+      return null;
     }
-    if (!gpsLocation) {
-      toast.error(t('upload.gps_required', { defaultValue: 'GPS-Standort erforderlich' }));
-      return;
+  };
+
+  // ---------- Photo upload ----------
+
+  const handlePhotoUpload = async (e) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+    setUploading(true);
+    try {
+      const results = await Promise.all(
+        files.map((f) => base44.integrations.Core.UploadFile({ file: f })),
+      );
+      const urls = results.map((r) => r.file_url);
+      setUploadedPhotos((prev) => [...prev, ...urls]);
+      if (urls.length > 0) await analyzeStrike(urls[0]);
+    } catch {
+      toast.error(t('upload.photo_failed'));
+    } finally {
+      setUploading(false);
     }
-    setSaving(true);
-    const now = new Date();
-    const speciesObj = SPECIES.find((s) => s.id === selectedSpeciesId);
-    const speciesName = t(`species.${selectedSpeciesId}`, {
-      defaultValue: speciesObj?.id?.charAt(0).toUpperCase() + speciesObj?.id?.slice(1),
-    });
-    const fishXP = calculateFishXP({
-      length_cm: length,
-      weight_kg: weight,
-      hasPhoto: uploadedPhotos.length > 0,
-      hasGps: !!gpsLocation,
-    });
-    const catchData = {
-      species: speciesName,
-      length_cm: length,
-      weight_kg: weight,
-      waterbody,
-      caught_date: now.toISOString().slice(0, 10),
-      caught_time: now.toTimeString().slice(0, 5),
-      photo_urls: uploadedPhotos,
-      gps_lat: gpsLocation.lat,
-      gps_lon: gpsLocation.lon,
-      verification_level: 'gps_verified',
-      air_temp_c: weather?.air_temp_c ?? null,
-      wind_speed_kmh: weather?.wind_speed_kmh ?? null,
-      wind_direction: weather?.wind_direction ?? null,
-      barometric_pressure_hpa: weather?.barometric_pressure_hpa ?? null,
-      cloud_cover_pct: weather?.cloud_cover_pct ?? null,
-      uv_index: weather?.uv_index ?? null,
-      visibility_km: weather?.visibility_km ?? null,
-      sunrise_time: weather?.sunrise_time ?? null,
-      sunset_time: weather?.sunset_time ?? null,
-      moon_phase: weather?.moon_phase ?? getMoonPhase(),
-      sun_position: getSunPosition(now.getHours()),
-      strike_score: aiAnalysis?.strike_score ?? null,
-      fish_xp: fishXP,
-      hook_points_earned: fishXP,
+  };
+
+  const handleCleanupPhoto = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    try {
+      const { file_url } = await base44.integrations.Core.UploadFile({ file });
+      setCleanupPhoto(file_url);
+      await analyzeEcoScore(file_url);
+    } catch {
+      toast.error(t('upload.photo_failed'));
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  // ---------- Submit ----------
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.species) return toast.error(t('upload.species_required'));
+    if (uploadedPhotos.length === 0) return toast.error(t('upload.photo_required'));
+    if (!gpsLocation) return toast.error(t('upload.gps_required'));
+
+    setSubmitting(true);
+
+    const toNum = (v) => {
+      const n = parseFloat(v);
+      return Number.isFinite(n) ? n : null;
     };
+
+    const catchData = {
+      ...formData,
+      length_cm: toNum(formData.length_cm),
+      weight_kg: toNum(formData.weight_kg),
+      air_temp_c: toNum(formData.air_temp_c),
+      water_temp_c: toNum(formData.water_temp_c),
+      wind_speed_kmh: toNum(formData.wind_speed_kmh),
+      barometric_pressure_hpa: toNum(formData.barometric_pressure_hpa),
+      cloud_cover_pct: toNum(formData.cloud_cover_pct),
+      uv_index: toNum(formData.uv_index),
+      visibility_km: toNum(formData.visibility_km),
+      fishing_depth_m: toNum(formData.fishing_depth_m),
+      photo_urls: uploadedPhotos,
+      gps_lat: gpsLocation?.lat || null,
+      gps_lon: gpsLocation?.lon || null,
+      verification_level: 'gps_verified',
+      eco_score: ecoAnalysis?.eco_score || null,
+      cleanup_photo_url: cleanupPhoto || null,
+      litter_detected: ecoAnalysis?.litter_detected || [],
+      eco_notes: ecoAnalysis?.eco_notes || null,
+    };
+
+    const xp = calculateFishXP(catchData);
+    catchData.fish_xp = xp;
+    catchData.hook_points_earned = xp + (ecoAnalysis?.eco_score >= 4 ? 20 : 0);
+
     try {
       await base44.entities.Catch.create(catchData);
-      if (user) {
-        try {
-          await base44.auth.updateMe({
-            total_catches: (user.total_catches || 0) + 1,
-            fish_xp: (user.fish_xp || 0) + fishXP,
-            hook_points: (user.hook_points || 0) + fishXP,
-            biggest_catch_weight: Math.max(user.biggest_catch_weight || 0, weight),
-          });
-        } catch {
-          // non-blocking
-        }
-      }
-      setShowSparks(true);
-      toast.success(t('upload.saved', { defaultValue: 'Fang eingetragen!' }));
-      setTimeout(() => navigate('/mycatches'), 900);
+      await base44.auth.updateMe({
+        total_catches: (user?.total_catches || 0) + 1,
+        fish_xp: (user?.fish_xp || 0) + xp,
+        hook_points: (user?.hook_points || 0) + catchData.hook_points_earned,
+        biggest_catch_weight: Math.max(user?.biggest_catch_weight || 0, catchData.weight_kg || 0),
+        total_cleanups: cleanupPhoto ? (user?.total_cleanups || 0) + 1 : (user?.total_cleanups || 0),
+      });
+      toast.success(`🎣 ${t('upload.saved')}`);
+      navigate(createPageUrl('Statistics'));
     } catch (err) {
-      toast.error(t('upload.save_failed', { defaultValue: 'Speichern fehlgeschlagen' }));
-      setSaving(false);
+      console.error(err);
+      toast.error(t('upload.save_failed'));
+    } finally {
+      setSubmitting(false);
     }
   };
 
-  const filteredSpecies = SPECIES.filter((s) => {
-    const label = t(`species.${s.id}`, { defaultValue: s.id });
-    return (
-      label.toLowerCase().includes(search.toLowerCase()) ||
-      s.latin.toLowerCase().includes(search.toLowerCase())
-    );
-  });
+  // ---------- Styles ----------
 
-  const canAdvance = () => {
-    if (step === 0) return true; // photo optional
-    if (step === 1) return !!selectedSpeciesId;
-    if (step === 2) return length > 0 && weight > 0;
-    return true;
-  };
+  const inputCls = 'w-full rounded-xl px-3 py-2 text-sm text-foam outline-none bg-abyss-700/40 border border-tide-300/10 focus:border-tide-400/40 transition-colors placeholder-foam/30';
+  const selectCls = `${inputCls} appearance-none`;
+
+  const AutoTag = () => (
+    <span
+      className="ml-1.5 text-[9px] px-1.5 py-0.5 rounded-full font-bold"
+      style={{ background: 'rgba(46,224,201,0.12)', color: '#2EE0C9', border: '1px solid rgba(46,224,201,0.22)' }}
+    >
+      📡 {t('upload.auto')}
+    </span>
+  );
+
+  const FieldLabel = ({ children, auto }) => (
+    <p className="text-[11px] text-foam/50 mb-1 font-medium flex items-center">
+      {children}
+      {auto && autoFields[auto] ? <AutoTag /> : null}
+    </p>
+  );
+
+  const SectionCard = ({ icon: Icon, iconClass = 'text-tide-400', title, children, accent }) => (
+    <div
+      className="glass-card rounded-2xl p-4 space-y-3"
+      style={accent ? { background: accent.bg, border: accent.border } : undefined}
+    >
+      <p className="text-sm font-bold text-foam flex items-center gap-2">
+        {Icon ? <Icon className={`w-4 h-4 ${iconClass}`} /> : null}
+        {title}
+      </p>
+      {children}
+    </div>
+  );
+
+  // ---------- Render ----------
 
   return (
     <PageTransition>
-      <div className="px-4 pt-6 pb-4">
-        <div className="mb-6">
-          <p className="text-foam/50 text-sm">{t('upload.subtitle', { defaultValue: 'Fang dokumentieren' })}</p>
-          <h1 className="font-display text-2xl font-extrabold text-foam">
-            {t('upload.title', { defaultValue: 'Neuer Fang' })}
-          </h1>
+      <div className="px-4 pt-6 pb-28 space-y-4 max-w-xl mx-auto">
+        {/* Header */}
+        <div>
+          <p className="text-foam/50 text-sm">{t('upload.subtitle')}</p>
+          <h1 className="font-display text-2xl font-extrabold text-foam">{t('upload.title')}</h1>
         </div>
 
-        {/* Stepper */}
-        <div className="flex items-center gap-0 mb-8">
-          {STEPS.map((s, i) => (
-            <React.Fragment key={s}>
-              <div className="flex flex-col items-center gap-1">
-                <motion.div
-                  animate={i <= step ? { scale: [1, 1.15, 1] } : {}}
-                  transition={{ duration: 0.3 }}
-                  className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
-                    i < step
-                      ? 'gradient-tide text-white'
-                      : i === step
-                      ? 'border-2 border-tide-400 text-tide-400'
-                      : 'bg-abyss-700 text-foam/30'
-                  }`}
-                >
-                  {i < step ? <Check className="w-4 h-4" /> : i + 1}
-                </motion.div>
-                <span
-                  className={`text-[9px] font-medium ${i === step ? 'text-tide-400' : 'text-foam/30'}`}
-                >
-                  {t(`upload.step_${s}`, { defaultValue: s })}
-                </span>
-              </div>
-              {i < STEPS.length - 1 && (
-                <div className="flex-1 h-0.5 mx-1 mb-4 rounded-full overflow-hidden bg-abyss-700">
-                  <motion.div
-                    className="h-full gradient-tide"
-                    animate={{ width: i < step ? '100%' : '0%' }}
-                    transition={{ duration: 0.5, ease: tideEase }}
-                  />
-                </div>
-              )}
-            </React.Fragment>
-          ))}
-        </div>
-
-        <AnimatePresence mode="wait">
-          {/* STEP 0 — PHOTO */}
-          {step === 0 && (
-            <motion.div
-              key="s0"
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -30 }}
-              transition={{ duration: 0.35, ease: tideEase }}
-              className="space-y-4"
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* 1. Fotos */}
+          <SectionCard icon={Sparkles} iconClass="text-tide-400" title={`${t('upload.section_photos')} *`}>
+            <label
+              htmlFor="photo-upload"
+              className="flex flex-col items-center justify-center h-28 rounded-xl cursor-pointer transition-all hover:bg-tide-400/5"
+              style={{ border: '2px dashed rgba(77,195,209,0.25)', background: 'rgba(77,195,209,0.04)' }}
             >
               <input
-                ref={fileInputRef}
                 type="file"
+                multiple
                 accept="image/*"
                 capture="environment"
-                multiple
                 onChange={handlePhotoUpload}
                 className="hidden"
+                id="photo-upload"
               />
-
-              {uploadedPhotos.length === 0 ? (
-                <motion.button
-                  whileTap={{ scale: 0.97 }}
-                  onClick={() => fileInputRef.current?.click()}
-                  disabled={uploading}
-                  className="w-full h-52 rounded-3xl flex flex-col items-center justify-center gap-3 transition-all border-2 border-dashed border-tide-400/30 bg-abyss-800/30"
-                >
-                  {uploading ? (
-                    <>
-                      <Loader2 className="w-10 h-10 text-tide-400 animate-spin" />
-                      <p className="text-tide-300 font-medium">
-                        {t('upload.uploading', { defaultValue: 'Foto wird hochgeladen...' })}
-                      </p>
-                    </>
-                  ) : (
-                    <>
-                      <div className="w-16 h-16 rounded-2xl bg-tide-500/10 border border-tide-400/20 flex items-center justify-center">
-                        <Camera className="w-8 h-8 text-tide-400" />
-                      </div>
-                      <p className="text-foam font-semibold">
-                        {t('upload.take_or_choose', { defaultValue: 'Foto aufnehmen oder wählen' })}
-                      </p>
-                      <p className="text-foam/30 text-xs">
-                        {t('upload.ai_auto_detect', { defaultValue: 'KI erkennt die Fischart automatisch' })}
-                      </p>
-                    </>
-                  )}
-                </motion.button>
+              {uploading ? (
+                <Loader2 className="w-8 h-8 animate-spin text-tide-400" />
               ) : (
-                <div className="space-y-3">
-                  <div className="grid grid-cols-3 gap-2">
-                    {uploadedPhotos.map((url, i) => (
-                      <div key={i} className="relative aspect-square rounded-2xl overflow-hidden glass-card border border-tide-400/30">
-                        <img src={url} alt="" className="w-full h-full object-cover" />
-                        <button
-                          onClick={() => removePhoto(i)}
-                          className="absolute top-1 right-1 w-6 h-6 rounded-full bg-abyss-900/80 text-foam/80 flex items-center justify-center hover:bg-red-500/60"
-                        >
-                          <X className="w-3 h-3" />
-                        </button>
-                      </div>
-                    ))}
+                <UploadIcon className="w-8 h-8 text-foam/30" />
+              )}
+              <p className="text-xs text-foam/40 mt-2">
+                {uploading ? t('upload.uploading') : t('upload.photo_hint')}
+              </p>
+            </label>
+            {uploadedPhotos.length > 0 && (
+              <div className="grid grid-cols-3 gap-2">
+                {uploadedPhotos.map((url, i) => (
+                  <div key={url} className="relative aspect-square rounded-xl overflow-hidden">
+                    <img src={url} alt="" className="w-full h-full object-cover" />
+                    <div className="absolute top-1 right-1 w-5 h-5 rounded-full flex items-center justify-center bg-mint-400 border border-white/20">
+                      <CheckCircle className="w-3 h-3 text-navy-900" />
+                    </div>
                     <button
-                      onClick={() => fileInputRef.current?.click()}
-                      disabled={uploading}
-                      className="aspect-square rounded-2xl border-2 border-dashed border-tide-400/30 flex items-center justify-center text-tide-400"
+                      type="button"
+                      onClick={() => setUploadedPhotos((p) => p.filter((_, j) => j !== i))}
+                      className="absolute bottom-1 right-1 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold bg-navy-900/80 text-foam hover:bg-coral-500/80"
+                      aria-label="remove"
                     >
-                      {uploading ? <Loader2 className="w-6 h-6 animate-spin" /> : <Camera className="w-6 h-6" />}
+                      ✕
                     </button>
                   </div>
+                ))}
+              </div>
+            )}
+          </SectionCard>
 
-                  {aiLoading && (
-                    <div className="glass-card rounded-2xl p-3 flex items-center gap-3">
-                      <Loader2 className="w-4 h-4 text-tide-400 animate-spin" />
-                      <p className="text-sm text-foam/70">
-                        {t('upload.ai_running', { defaultValue: 'KI analysiert…' })}
-                      </p>
-                    </div>
-                  )}
-                  {aiAnalysis && !aiLoading && (
-                    <div className="glass-card rounded-2xl p-4 border border-tide-400/20 space-y-1.5">
-                      <div className="flex items-center gap-2">
-                        <Sparkles className="w-4 h-4 text-tide-400" />
-                        <p className="text-sm font-bold text-foam">
-                          {t('upload.ai_result', {
-                            species: aiAnalysis.species_detected,
-                            defaultValue: 'Erkannt: {{species}}',
-                          })}
-                        </p>
-                      </div>
-                      {aiAnalysis.strike_score != null && (
-                        <p className="text-xs text-foam/60">
-                          🎯 Strike Score: <span className="text-sun-400 font-bold">{aiAnalysis.strike_score}/100</span>
-                        </p>
-                      )}
-                      {aiAnalysis.strike_tips && (
-                        <p className="text-xs text-foam/50 leading-relaxed pt-1">{aiAnalysis.strike_tips}</p>
-                      )}
-                    </div>
-                  )}
-                </div>
-              )}
-
-              <motion.button
-                whileTap={{ scale: 0.97 }}
-                onClick={() => setStep(1)}
-                className="w-full py-4 rounded-2xl gradient-tide font-display font-bold text-white glow-tide"
-              >
-                {aiAnalysis
-                  ? t('upload.continue_with_ai', { defaultValue: 'Mit KI-Analyse fortfahren' })
-                  : uploadedPhotos.length
-                  ? t('common.next', { defaultValue: 'Weiter' })
-                  : t('common.skip', { defaultValue: 'Überspringen' })}
-              </motion.button>
-            </motion.div>
-          )}
-
-          {/* STEP 1 — SPECIES */}
-          {step === 1 && (
-            <motion.div
-              key="s1"
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -30 }}
-              transition={{ duration: 0.35, ease: tideEase }}
-              className="space-y-4"
+          {/* 2. GPS + Auto-Wetter */}
+          <SectionCard icon={MapPin} iconClass="text-mint-400" title={t('upload.section_location')}>
+            <button
+              type="button"
+              onClick={getLocation}
+              disabled={fetchingWeather}
+              className="w-full py-2.5 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all"
+              style={
+                gpsLocation
+                  ? { background: 'rgba(46,224,201,0.12)', color: '#2EE0C9', border: '1px solid rgba(46,224,201,0.3)' }
+                  : { background: 'rgba(77,195,209,0.08)', color: '#4DC3D1', border: '1px solid rgba(77,195,209,0.25)' }
+              }
             >
-              <div className="glass-card rounded-2xl flex items-center gap-3 px-4 py-3">
-                <Search className="w-4 h-4 text-tide-400 flex-shrink-0" />
+              {fetchingWeather ? <Loader2 className="w-4 h-4 animate-spin" /> : <MapPin className="w-4 h-4" />}
+              {fetchingWeather
+                ? t('upload.weather_loading')
+                : gpsLocation
+                ? `✓ ${t('upload.gps_ok')}`
+                : t('upload.gps_capture')}
+            </button>
+            {gpsLocation && (
+              <p className="text-[10px] text-foam/40 text-center">
+                📍 {gpsLocation.lat.toFixed(4)}, {gpsLocation.lon.toFixed(4)}
+              </p>
+            )}
+          </SectionCard>
+
+          {/* 3. Fischart + Maße */}
+          <SectionCard icon={Fish} iconClass="text-sun-400" title={t('upload.section_species')}>
+            <div>
+              <FieldLabel>{t('upload.species')} *</FieldLabel>
+              <select
+                value={formData.species}
+                onChange={(e) => set('species', e.target.value)}
+                className={selectCls}
+              >
+                <option value="">-- {t('upload.species_placeholder')} --</option>
+                {COMMON_SPECIES.map((s) => (
+                  <option key={s} value={s}>{s}</option>
+                ))}
+              </select>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <FieldLabel>{t('upload.length_cm')}</FieldLabel>
                 <input
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder={t('upload.search_species', { defaultValue: 'Fischart suchen…' })}
-                  className="bg-transparent flex-1 text-foam placeholder-foam/30 text-sm outline-none"
+                  type="number"
+                  step="0.1"
+                  value={formData.length_cm}
+                  onChange={(e) => set('length_cm', e.target.value)}
+                  placeholder="45"
+                  className={inputCls}
                 />
               </div>
-              <div className="grid grid-cols-2 gap-2.5">
-                {filteredSpecies.map((s) => {
-                  const label = t(`species.${s.id}`, {
-                    defaultValue: s.id.charAt(0).toUpperCase() + s.id.slice(1),
-                  });
-                  const active = selectedSpeciesId === s.id;
-                  return (
-                    <motion.button
-                      key={s.id}
-                      whileTap={{ scale: 0.96 }}
-                      onClick={() => setSelectedSpeciesId(s.id)}
-                      className={`p-4 rounded-2xl text-left transition-all ${
-                        active ? 'gradient-tide glow-tide' : 'glass-card border border-tide-300/10'
-                      }`}
-                    >
-                      <div className="text-2xl mb-2">{s.emoji}</div>
-                      <p className={`font-bold text-sm ${active ? 'text-white' : 'text-foam'}`}>{label}</p>
-                      <p className={`text-xs italic ${active ? 'text-white/70' : 'text-foam/30'}`}>
-                        {s.latin}
-                      </p>
-                    </motion.button>
-                  );
-                })}
+              <div>
+                <FieldLabel>{t('upload.weight_kg')}</FieldLabel>
+                <input
+                  type="number"
+                  step="0.01"
+                  value={formData.weight_kg}
+                  onChange={(e) => set('weight_kg', e.target.value)}
+                  placeholder="2.5"
+                  className={inputCls}
+                />
               </div>
-              <motion.button
-                whileTap={{ scale: 0.97 }}
-                onClick={() => setStep(2)}
-                disabled={!selectedSpeciesId}
-                className={`w-full py-4 rounded-2xl font-display font-bold text-white transition-all ${
-                  selectedSpeciesId ? 'gradient-tide glow-tide' : 'bg-abyss-700 text-foam/30'
-                }`}
-              >
-                {t('common.next', { defaultValue: 'Weiter' })}
-              </motion.button>
-            </motion.div>
-          )}
+              <div>
+                <FieldLabel>{t('upload.depth_m')}</FieldLabel>
+                <input
+                  type="number"
+                  step="0.5"
+                  value={formData.fishing_depth_m}
+                  onChange={(e) => set('fishing_depth_m', e.target.value)}
+                  placeholder="5"
+                  className={inputCls}
+                />
+              </div>
+              <div>
+                <FieldLabel>{t('upload.waterbody')}</FieldLabel>
+                <input
+                  value={formData.waterbody}
+                  onChange={(e) => set('waterbody', e.target.value)}
+                  placeholder={t('upload.waterbody_placeholder')}
+                  className={inputCls}
+                />
+              </div>
+            </div>
+            <label className="flex items-center gap-2 pt-1 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={formData.released}
+                onChange={(e) => set('released', e.target.checked)}
+                className="w-4 h-4 accent-mint-400"
+              />
+              <span className="text-xs text-foam/70">{t('upload.released')}</span>
+            </label>
+          </SectionCard>
 
-          {/* STEP 2 — MEASURES */}
-          {step === 2 && (
-            <motion.div
-              key="s2"
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -30 }}
-              transition={{ duration: 0.35, ease: tideEase }}
-              className="space-y-5"
-            >
+          {/* 4. Datum + Uhrzeit */}
+          <SectionCard icon={Clock} iconClass="text-tide-400" title={t('upload.section_datetime')}>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <FieldLabel>{t('upload.date')}</FieldLabel>
+                <input
+                  type="date"
+                  value={formData.caught_date}
+                  onChange={(e) => set('caught_date', e.target.value)}
+                  className={inputCls}
+                />
+              </div>
+              <div>
+                <FieldLabel>{t('upload.time')}</FieldLabel>
+                <input
+                  type="time"
+                  value={formData.caught_time}
+                  onChange={(e) => set('caught_time', e.target.value)}
+                  className={inputCls}
+                />
+              </div>
+            </div>
+          </SectionCard>
+
+          {/* 5. Umweltbedingungen */}
+          <SectionCard icon={Cloud} iconClass="text-tide-400" title={t('upload.section_weather')}>
+            {Object.keys(autoFields).length > 0 && (
+              <span
+                className="inline-block text-[10px] px-2 py-0.5 rounded-full"
+                style={{ background: 'rgba(46,224,201,0.12)', color: '#2EE0C9' }}
+              >
+                📡 {t('upload.auto_via_gps')}
+              </span>
+            )}
+            <div className="grid grid-cols-2 gap-3">
               {[
-                { key: 'length', value: length, setValue: setLength, unit: 'cm', min: 5, max: 200, stepSize: 1 },
-                { key: 'weight', value: weight, setValue: setWeight, unit: 'kg', min: 0.1, max: 50, stepSize: 0.1 },
-              ].map((sl) => (
-                <div key={sl.key} className="glass-card rounded-2xl p-5">
-                  <div className="flex justify-between items-center mb-4">
-                    <p className="text-foam font-bold">
-                      {t(`upload.${sl.key}`, { defaultValue: sl.key })}
-                    </p>
-                    <div className="px-3 py-1.5 rounded-xl gradient-tide">
-                      <span className="text-white font-display font-bold">
-                        {sl.value} {sl.unit}
-                      </span>
-                    </div>
-                  </div>
+                { key: 'air_temp_c', label: t('upload.air_temp'), ph: '20', auto: true },
+                { key: 'water_temp_c', label: t('upload.water_temp'), ph: '18' },
+                { key: 'wind_speed_kmh', label: t('upload.wind_speed'), ph: '15', auto: true },
+                { key: 'barometric_pressure_hpa', label: t('upload.pressure'), ph: '1013', auto: true },
+                { key: 'cloud_cover_pct', label: t('upload.cloud_cover'), ph: '40', auto: true },
+                { key: 'uv_index', label: t('upload.uv_index'), ph: '5', auto: true },
+                { key: 'visibility_km', label: t('upload.visibility'), ph: '10', auto: true },
+              ].map(({ key, label, ph, auto }) => (
+                <div key={key}>
+                  <FieldLabel auto={auto ? key : null}>{label}</FieldLabel>
                   <input
-                    type="range"
-                    min={sl.min}
-                    max={sl.max}
-                    step={sl.stepSize}
-                    value={sl.value}
-                    onChange={(e) => sl.setValue(Number(e.target.value))}
-                    className="w-full h-2 rounded-full appearance-none cursor-pointer"
-                    style={{
-                      background: `linear-gradient(to right, #1FA7B8 0%, #4DC3D1 ${
-                        ((sl.value - sl.min) / (sl.max - sl.min)) * 100
-                      }%, rgba(10,50,68,0.8) ${
-                        ((sl.value - sl.min) / (sl.max - sl.min)) * 100
-                      }%, rgba(10,50,68,0.8) 100%)`,
-                    }}
+                    type="number"
+                    step="0.1"
+                    value={formData[key]}
+                    onChange={(e) => set(key, e.target.value)}
+                    placeholder={ph}
+                    className={inputCls}
                   />
-                  <div className="flex justify-between mt-1">
-                    <span className="text-foam/30 text-xs">
-                      {sl.min} {sl.unit}
-                    </span>
-                    <span className="text-foam/30 text-xs">
-                      {sl.max} {sl.unit}
-                    </span>
-                  </div>
                 </div>
               ))}
-
-              <div className="glass-card rounded-2xl p-4">
-                <p className="text-foam/50 text-xs font-medium mb-2">
-                  {t('upload.waterbody', { defaultValue: 'Gewässer (optional)' })}
-                </p>
-                <input
-                  value={waterbody}
-                  onChange={(e) => setWaterbody(e.target.value)}
-                  placeholder={t('upload.waterbody_placeholder', { defaultValue: 'See, Fluss, Meeresspot' })}
-                  className="w-full bg-transparent text-foam placeholder-foam/30 text-sm outline-none"
-                />
-              </div>
-
-              <motion.button
-                whileTap={{ scale: 0.97 }}
-                onClick={() => setStep(3)}
-                className="w-full py-4 rounded-2xl gradient-tide font-display font-bold text-white glow-tide"
-              >
-                {t('common.next', { defaultValue: 'Weiter' })}
-              </motion.button>
-            </motion.div>
-          )}
-
-          {/* STEP 3 — LOCATION & WEATHER & SAVE */}
-          {step === 3 && (
-            <motion.div
-              key="s3"
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -30 }}
-              transition={{ duration: 0.35, ease: tideEase }}
-              className="space-y-4"
-            >
-              {/* Radar */}
-              <div className="h-40 rounded-3xl overflow-hidden relative glass-card">
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background:
-                      'radial-gradient(ellipse at 50% 50%, rgba(14,64,84,0.8) 0%, rgba(2,21,33,0.95) 100%)',
-                  }}
+              <div>
+                <FieldLabel auto="wind_direction">{t('upload.wind_direction')}</FieldLabel>
+                <select
+                  value={formData.wind_direction}
+                  onChange={(e) => set('wind_direction', e.target.value)}
+                  className={selectCls}
                 >
-                  {[40, 50, 60, 70, 80].map((r) => (
-                    <div
-                      key={r}
-                      className="absolute rounded-full border border-tide-500/10"
-                      style={{
-                        width: `${r}%`,
-                        height: `${r}%`,
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                      }}
-                    />
+                  <option value="">--</option>
+                  {WIND_DIRECTIONS.map((d) => (
+                    <option key={d} value={d}>{d}</option>
                   ))}
-                </div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="relative">
-                    <motion.div
-                      animate={{ scale: [1, 2.5, 1], opacity: [0.6, 0, 0.6] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                      className="absolute inset-0 rounded-full bg-tide-400"
-                    />
-                    <div className="w-10 h-10 rounded-full gradient-tide glow-tide flex items-center justify-center relative">
-                      <MapPin className="w-5 h-5 text-white" />
-                    </div>
-                  </div>
-                </div>
-                {gpsLocation && (
-                  <div className="absolute bottom-2 left-0 right-0 text-center">
-                    <span className="text-[10px] text-foam/60 bg-abyss-900/60 px-2 py-1 rounded-full">
-                      📍 {gpsLocation.lat.toFixed(4)}, {gpsLocation.lon.toFixed(4)}
-                    </span>
-                  </div>
-                )}
+                </select>
               </div>
-
-              <motion.button
-                whileTap={{ scale: 0.97 }}
-                onClick={getLocation}
-                disabled={fetchingWeather}
-                className={`w-full py-3.5 rounded-2xl flex items-center justify-center gap-2 font-semibold transition-all ${
-                  gpsLocation
-                    ? 'bg-mint-400/10 text-mint-400 border border-mint-400/30'
-                    : 'glass-card border border-tide-400/30 text-tide-400'
-                }`}
-              >
-                {fetchingWeather ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
-                  <MapPin className="w-4 h-4" />
-                )}
-                {fetchingWeather
-                  ? t('upload.weather_loading', { defaultValue: 'Wetter wird geladen…' })
-                  : gpsLocation
-                  ? t('upload.gps_ok', { defaultValue: 'GPS + Wetter erfasst' })
-                  : t('upload.use_location', { defaultValue: 'Standort & Wetter erfassen' })}
-              </motion.button>
-
-              {weather && (
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  {weather.air_temp_c != null && (
-                    <StatChip icon={Thermometer} label={`${weather.air_temp_c}°C`} tint="text-sun-400" />
-                  )}
-                  {weather.wind_speed_kmh != null && (
-                    <StatChip
-                      icon={Wind}
-                      label={`${weather.wind_speed_kmh} km/h ${weather.wind_direction || ''}`}
-                      tint="text-tide-400"
-                    />
-                  )}
-                  {weather.barometric_pressure_hpa && (
-                    <StatChip icon={Droplets} label={`${weather.barometric_pressure_hpa} hPa`} tint="text-tide-300" />
-                  )}
-                  {weather.uv_index != null && (
-                    <StatChip icon={Sun} label={`UV ${weather.uv_index}`} tint="text-sun-400" />
-                  )}
-                  {weather.moon_phase && (
-                    <StatChip icon={Moon} label={weather.moon_phase} tint="text-foam/70" />
-                  )}
-                  {weather.sunrise_time && weather.sunset_time && (
-                    <StatChip
-                      icon={Clock}
-                      label={`☀ ${weather.sunrise_time} – ${weather.sunset_time}`}
-                      tint="text-foam/70"
-                    />
-                  )}
-                </div>
-              )}
-
-              <div className="relative pt-2">
-                <SunSparks
-                  active={showSparks}
-                  onComplete={() => setShowSparks(false)}
-                  count={6}
-                  originX="50%"
-                  originY="50%"
-                />
-                <motion.button
-                  whileTap={{ scale: 0.97 }}
-                  onClick={handleSubmit}
-                  disabled={saving || !gpsLocation || !selectedSpeciesId}
-                  className="w-full py-4 rounded-2xl font-display font-bold text-white text-lg disabled:opacity-50 flex items-center justify-center gap-2"
-                  style={{
-                    background: 'linear-gradient(90deg, #1FA7B8 0%, #F5C34B 100%)',
-                    boxShadow: '0 0 28px rgba(245,195,75,0.3)',
-                  }}
+              <div>
+                <FieldLabel>{t('upload.pressure_trend')}</FieldLabel>
+                <select
+                  value={formData.pressure_trend}
+                  onChange={(e) => set('pressure_trend', e.target.value)}
+                  className={selectCls}
                 >
-                  {saving ? (
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                  ) : (
-                    <Fish className="w-5 h-5" />
-                  )}
-                  {saving
-                    ? t('upload.saving', { defaultValue: 'Wird gespeichert…' })
-                    : t('upload.save_catch', { defaultValue: 'Fang speichern' })}{' '}
-                  🎣
-                </motion.button>
+                  <option value="">--</option>
+                  <option value="rising">↑ {t('upload.rising')}</option>
+                  <option value="stable">→ {t('upload.stable')}</option>
+                  <option value="falling">↓ {t('upload.falling')}</option>
+                </select>
               </div>
+              <div>
+                <FieldLabel auto="sun_position">{t('upload.sun_position')}</FieldLabel>
+                <select
+                  value={formData.sun_position}
+                  onChange={(e) => set('sun_position', e.target.value)}
+                  className={selectCls}
+                >
+                  {SUN_POSITIONS.map((s) => (
+                    <option key={s.value} value={s.value}>{t(s.label_key)}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <FieldLabel>{t('upload.tide_phase')}</FieldLabel>
+                <select
+                  value={formData.tide_phase}
+                  onChange={(e) => set('tide_phase', e.target.value)}
+                  className={selectCls}
+                >
+                  <option value="">--</option>
+                  {TIDE_PHASES.map((tide) => (
+                    <option key={tide.value} value={tide.value}>{t(tide.label_key)}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <FieldLabel auto="sunrise_time">{t('upload.sunrise')}</FieldLabel>
+                <input
+                  type="time"
+                  value={formData.sunrise_time}
+                  onChange={(e) => set('sunrise_time', e.target.value)}
+                  className={inputCls}
+                />
+              </div>
+              <div>
+                <FieldLabel auto="sunset_time">{t('upload.sunset')}</FieldLabel>
+                <input
+                  type="time"
+                  value={formData.sunset_time}
+                  onChange={(e) => set('sunset_time', e.target.value)}
+                  className={inputCls}
+                />
+              </div>
+            </div>
+            <div>
+              <FieldLabel auto="moon_phase">{t('upload.moon_phase')}</FieldLabel>
+              <div className="flex gap-1.5 flex-wrap">
+                {MOON_PHASES.map((mp) => (
+                  <button
+                    key={mp.value}
+                    type="button"
+                    onClick={() => set('moon_phase', mp.value)}
+                    className="flex flex-col items-center gap-0.5 px-2.5 py-1.5 rounded-xl text-center transition-all"
+                    style={
+                      formData.moon_phase === mp.value
+                        ? { background: 'rgba(245,195,75,0.18)', border: '1px solid rgba(245,195,75,0.45)', color: '#F5C34B' }
+                        : { background: 'rgba(232,240,245,0.05)', border: '1px solid rgba(232,240,245,0.08)', color: 'rgba(232,240,245,0.55)' }
+                    }
+                  >
+                    <span className="text-xl">{mp.icon}</span>
+                    <span className="text-[9px] font-medium">{t(mp.label_key)}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </SectionCard>
 
-              {!gpsLocation && (
-                <p className="text-[11px] text-sun-400/80 text-center">
-                  ⚠️ {t('upload.gps_hint', { defaultValue: 'Fang muss per GPS verifiziert werden.' })}
-                </p>
-              )}
-            </motion.div>
-          )}
-        </AnimatePresence>
+          {/* 6. Köder + Notizen */}
+          <SectionCard icon={Anchor} iconClass="text-mint-400" title={t('upload.section_bait')}>
+            <div>
+              <FieldLabel>{t('upload.bait')}</FieldLabel>
+              <select
+                value={formData.bait}
+                onChange={(e) => set('bait', e.target.value)}
+                className={selectCls}
+              >
+                <option value="">-- {t('upload.bait_placeholder')} --</option>
+                {COMMON_BAITS.map((b) => (
+                  <option key={b} value={b}>{b}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <FieldLabel>{t('upload.bait_brand')}</FieldLabel>
+              <input
+                value={formData.bait_brand}
+                onChange={(e) => set('bait_brand', e.target.value)}
+                placeholder={t('upload.bait_brand_placeholder')}
+                className={inputCls}
+              />
+            </div>
+            <div>
+              <FieldLabel>{t('upload.description')}</FieldLabel>
+              <textarea
+                value={formData.description}
+                onChange={(e) => set('description', e.target.value)}
+                placeholder={t('upload.description_placeholder')}
+                className={`${inputCls} resize-none`}
+                style={{ minHeight: 80 }}
+              />
+            </div>
+          </SectionCard>
 
-        {step > 0 && (
-          <button
-            onClick={() => setStep((s) => s - 1)}
-            className="mt-4 text-foam/40 text-sm flex items-center gap-1"
+          {/* 7. Spot-Cleanup Eco */}
+          <SectionCard
+            icon={Leaf}
+            iconClass="text-mint-400"
+            title={t('upload.section_cleanup')}
+            accent={{ bg: 'rgba(46,224,201,0.06)', border: '1px solid rgba(46,224,201,0.18)' }}
           >
-            ← {t('common.back', { defaultValue: 'Zurück' })}
-          </button>
-        )}
-        <div className="h-4" />
+            <label
+              htmlFor="cleanup-upload"
+              className="flex flex-col items-center justify-center h-20 rounded-xl cursor-pointer"
+              style={{ border: '2px dashed rgba(46,224,201,0.3)', background: 'rgba(46,224,201,0.04)' }}
+            >
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleCleanupPhoto}
+                className="hidden"
+                id="cleanup-upload"
+              />
+              {analyzingEco ? (
+                <Loader2 className="w-6 h-6 animate-spin text-mint-400" />
+              ) : (
+                <Leaf className="w-6 h-6 text-mint-400" />
+              )}
+              <p className="text-xs text-mint-400 mt-1">{t('upload.cleanup_hint')}</p>
+            </label>
+            {ecoAnalysis && (
+              <div
+                className="flex items-center gap-2 rounded-xl p-2.5"
+                style={{ background: 'rgba(46,224,201,0.08)' }}
+              >
+                <span className="text-lg">{ecoAnalysis.eco_score >= 4 ? '🌟' : '🌿'}</span>
+                <div>
+                  <p className="text-xs font-bold text-mint-400">
+                    {t('upload.eco_score')}: {ecoAnalysis.eco_score}/5
+                  </p>
+                  <p className="text-[10px] text-foam/50">{ecoAnalysis.eco_notes}</p>
+                </div>
+              </div>
+            )}
+          </SectionCard>
+
+          {/* Submit actions */}
+          <div className="flex gap-3 pt-2">
+            <button
+              type="button"
+              onClick={() => navigate(createPageUrl('Dashboard'))}
+              className="flex-1 py-3 rounded-2xl text-sm font-bold"
+              style={{ background: 'rgba(232,240,245,0.06)', color: 'rgba(232,240,245,0.6)' }}
+            >
+              {t('upload.cancel')}
+            </button>
+            <motion.button
+              type="submit"
+              disabled={submitting}
+              whileTap={{ scale: 0.97 }}
+              className="flex-1 py-3 rounded-2xl text-sm font-black flex items-center justify-center gap-2 text-navy-900 disabled:opacity-60"
+              style={{
+                background: 'linear-gradient(225deg, #B6F03C 0%, #2EE0C9 55%, #2DA8FF 100%)',
+                boxShadow: '0 10px 28px rgba(46,224,201,0.35)',
+              }}
+            >
+              {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4" />}
+              {submitting ? t('upload.saving') : t('upload.save_catch')}
+            </motion.button>
+          </div>
+        </form>
       </div>
     </PageTransition>
-  );
-}
-
-function StatChip({ icon: Icon, label, tint = 'text-foam/70' }) {
-  return (
-    <div className="glass-card rounded-xl px-3 py-2 flex items-center gap-2">
-      <Icon className={`w-3.5 h-3.5 ${tint}`} />
-      <span className="text-foam/80 text-xs font-medium">{label}</span>
-    </div>
   );
 }
