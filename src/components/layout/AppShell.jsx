@@ -54,14 +54,16 @@ export default function AppShell() {
         onClick={() => setDrawerOpen(true)}
         aria-label="Menu"
         whileTap={{ scale: 0.9 }}
-        className="fixed z-50 right-3 liquid-glass flex items-center justify-center rounded-full"
+        className="fixed liquid-glass-heavy flex items-center justify-center rounded-full"
         style={{
-          top: 'calc(env(safe-area-inset-top) + 0.5rem)',
-          width: 36,
-          height: 36,
+          zIndex: 9999,
+          top: 'calc(env(safe-area-inset-top) + 0.75rem)',
+          right: '0.875rem',
+          width: 42,
+          height: 42,
         }}
       >
-        <MoreHorizontal className="w-[18px] h-[18px] text-foam/60" />
+        <MoreHorizontal className="w-[20px] h-[20px] text-white/70" />
       </motion.button>
 
       <div

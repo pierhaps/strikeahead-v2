@@ -264,13 +264,16 @@ function StrikeGauge({ progress, active, minutes, type }) {
 
       {/* Orbiting green dot on the gauge arc */}
       <motion.div
-        className="absolute w-3 h-3 rounded-full"
+        className="absolute rounded-full"
         style={{
-          background: '#B6F03C',
-          boxShadow: '0 0 14px rgba(182,240,60,0.7)',
-          top: CENTER - GAUGE_R - 6,
-          left: CENTER - 6,
-          transformOrigin: `6px ${GAUGE_R + 6}px`,
+          width: 18,
+          height: 18,
+          background: 'radial-gradient(circle, #B6F03C 30%, rgba(182,240,60,0.4) 70%, transparent 100%)',
+          boxShadow: '0 0 24px rgba(182,240,60,0.8), 0 0 48px rgba(182,240,60,0.4), 0 0 72px rgba(182,240,60,0.2)',
+          filter: 'blur(1.5px)',
+          top: CENTER - GAUGE_R - 9,
+          left: CENTER - 9,
+          transformOrigin: `9px ${GAUGE_R + 9}px`,
         }}
         animate={{ rotate: [0, 360] }}
         transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
