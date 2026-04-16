@@ -27,7 +27,8 @@
     "section_users": "Utilizadores",
     "system_info": "Info do sistema",
     "title": "Painel de administração",
-    "user_search_placeholder": "Pesquisar usuários..."
+    "user_search_placeholder": "Pesquisar usuários...",
+    "no_moderation": "Sem casos de moderação"
   },
   "analytics": {
     "catches_label": "Capturas",
@@ -237,16 +238,25 @@
     "continue_button": "Continuar",
     "date": "Data",
     "email_confirmation": "Receberás uma confirmação por email.",
-    "hour_short": "h",
+    "hour_short": "hrs",
     "next": "Seguinte",
-    "note_placeholder": "Os teus objetivos, perguntas...",
+    "note_placeholder": "Notas (opcional)",
     "step1_heading": "Escolher Treinador",
     "step2_heading": "Data e Hora",
     "step3_heading": "Detalhes",
     "step4_heading": "Resumo",
     "success_message": "Você receberá uma confirmação por email.",
     "time": "Hora",
-    "total": "Total"
+    "total": "Total",
+    "btn_next": "Seguinte",
+    "btn_back": "Voltar",
+    "label_date": "Data",
+    "label_time": "Hora",
+    "summary_coach": "Coach",
+    "summary_date": "Data",
+    "summary_time": "Hora",
+    "summary_total": "Total",
+    "confirmation_email": "Confirmação por email"
   },
   "bookings": {
     "myBookings": "As minhas reservas"
@@ -1107,14 +1117,17 @@
     "valid": "Válida",
     "valid_from": "Válida a partir de",
     "valid_until": "Válida até",
-    "valid_until_prefix": "até"
+    "valid_until_prefix": "até",
+    "form_license": "Licença"
   },
   "nav": {
     "dashboard": "Painel",
     "home": "Início",
     "map": "Mapa",
     "profile": "Perfil",
-    "upload": "Registar"
+    "upload": "Registar",
+    "stats": "Estat.",
+    "log": "Registar"
   },
   "paywall": {
     "benefit_bait": "Bait Intelligence – 85 combinações",
@@ -1124,10 +1137,18 @@
     "cta_later": "Mais tarde",
     "cta_upgrade": "Atualizar agora",
     "description": "Esta funcionalidade faz parte do seu plano premium.",
-    "title": "Funcionalidade Premium",
+    "title": "Função Premium",
     "title_angler": "Plano Angler necessário",
     "title_legend": "Plano Legend necessário",
-    "title_pro": "Plano Pro necessário"
+    "title_pro": "Plano Pro necessário",
+    "subtitle": "Esta função faz parte da sua assinatura premium",
+    "upgrade_cta": "Atualizar agora",
+    "feature_bait_intelligence": "Inteligência de iscas — 85 combinações",
+    "feature_heatmap": "Mapa de calor e tempo ao vivo",
+    "feature_analytics": "Análises avançadas",
+    "feature_ai_insights": "Insights de IA",
+    "feature_bait_database": "Base de dados de iscas",
+    "feature_catch_forecast": "Previsão de pesca"
   },
   "privacy": {
     "last_updated": "Última atualização: abril 2026 · Conforme com RGPD",
@@ -1275,7 +1296,7 @@
     "skill_spinning": "Spinning",
     "skill_technique_mastery": "Técnica",
     "skill_trophy_hunting": "Troféu",
-    "skill_weather_reading": "Leitura meteorológica",
+    "skill_weather_reading": "Leitura do tempo",
     "skills": {
       "casting_technique": "Técnica de lançamento",
       "catch_release": "Catch & Release",
@@ -1296,7 +1317,11 @@
     "top_percentile": "Top {{pct}}%",
     "trend_declining": "em declínio",
     "trend_improving": "melhorando",
-    "trend_stable": "estável"
+    "trend_stable": "estável",
+    "skill_bait_selection": "Seleção de isca",
+    "your_skills": "Suas habilidades",
+    "page_title": "Perfil de habilidade",
+    "empty_state": "Registe capturas para construir o seu perfil"
   },
   "species": {
     "aal": "Enguia",

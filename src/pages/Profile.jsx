@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
-  ChevronRight, Crown, Trophy, Star, Fish, Anchor, MapPin, Shield, BookOpen, Award, Globe,
+  ChevronRight, Crown, Trophy, Star, Fish, Anchor, MapPin, Shield, BookOpen, Award,
   Hash, Target, Sparkles, Flame, Scale, Weight, Mountain, Ruler, Heart, MessageSquare, Zap,
 } from 'lucide-react';
 import PageTransition from '../components/ui/PageTransition';
@@ -76,7 +76,6 @@ export default function Profile() {
     { icon: Trophy, label: t('community.teams'), hint: '', path: '/teams', color: 'text-sun-400' },
     { icon: Anchor, label: t('subscription.title'), hint: '', path: '/subscription', color: 'text-sun-400' },
     { icon: Award, label: t('profile.angelschule'), hint: '', path: '/angelschule', color: 'text-tide-400' },
-    { icon: Globe, label: t('admin.language'), hint: '', path: '/settings', color: 'text-tide-400' },
     { icon: MapPin, label: t('legal.imprint'), hint: '', path: '/imprint', color: 'text-foam/40' },
     { icon: Shield, label: t('legal.privacy'), hint: '', path: '/privacypolicy', color: 'text-foam/40' },
     { icon: BookOpen, label: t('legal.terms'), hint: '', path: '/termsofservice', color: 'text-foam/40' },

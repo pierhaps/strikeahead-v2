@@ -10,7 +10,7 @@
     "language": "Dil",
     "manage": "Yönet",
     "manage_button": "Yönet",
-    "metric_catches": "Yakalamalar",
+    "metric_catches": "Avlar",
     "metric_moderation": "Moderasyonlar",
     "metric_moderations": "Moderasyonlar",
     "metric_revenue": "Gelir",
@@ -27,7 +27,8 @@
     "section_users": "Kullanıcılar",
     "system_info": "Sistem bilgisi",
     "title": "Yönetici Paneli",
-    "user_search_placeholder": "Kullanıcıları ara..."
+    "user_search_placeholder": "Kullanıcıları ara...",
+    "no_moderation": "Moderasyon vakası yok"
   },
   "analytics": {
     "catches_label": "Avlar",
@@ -237,16 +238,25 @@
     "continue_button": "Devam",
     "date": "Tarih",
     "email_confirmation": "E-posta ile bir onay alacaksınız.",
-    "hour_short": "sa",
+    "hour_short": "saat",
     "next": "İleri",
-    "note_placeholder": "Hedeflerin, soruların...",
+    "note_placeholder": "Notlar (isteğe bağlı)",
     "step1_heading": "Koç Seç",
     "step2_heading": "Tarih ve Saat",
     "step3_heading": "Detaylar",
     "step4_heading": "Özet",
     "success_message": "E-posta yoluyla bir onay alacaksınız.",
     "time": "Saat",
-    "total": "Toplam"
+    "total": "Toplam",
+    "btn_next": "İleri",
+    "btn_back": "Geri",
+    "label_date": "Tarih",
+    "label_time": "Saat",
+    "summary_coach": "Koç",
+    "summary_date": "Tarih",
+    "summary_time": "Saat",
+    "summary_total": "Toplam",
+    "confirmation_email": "E-posta ile onay"
   },
   "bookings": {
     "myBookings": "Rezervasyonlarım"
@@ -935,7 +945,7 @@
   },
   "leaderboard": {
     "empty_message": "Giriş yok.",
-    "metric_catches": "Yakalamalar",
+    "metric_catches": "Avlar",
     "metric_hp": "HP",
     "metric_xp": "XP",
     "you": "Sen"
@@ -1107,14 +1117,17 @@
     "valid": "Geçerli",
     "valid_from": "Geçerli başlangıç",
     "valid_until": "Geçerli bitiş",
-    "valid_until_prefix": "kadar"
+    "valid_until_prefix": "kadar",
+    "form_license": "Lisans"
   },
   "nav": {
     "dashboard": "Kontrol Paneli",
     "home": "Ana Sayfa",
     "map": "Harita",
     "profile": "Profil",
-    "upload": "Kaydet"
+    "upload": "Kaydet",
+    "stats": "İstat.",
+    "log": "Kaydet"
   },
   "paywall": {
     "benefit_bait": "Bait Intelligence – 85 kombinasyon",
@@ -1124,10 +1137,18 @@
     "cta_later": "Daha sonra",
     "cta_upgrade": "Şimdi yükselt",
     "description": "Bu özellik premium aboneliğinin parçasıdır.",
-    "title": "Premium özellik",
+    "title": "Premium Özellik",
     "title_angler": "Angler planı gerekli",
     "title_legend": "Legend planı gerekli",
-    "title_pro": "Pro plan gerekli"
+    "title_pro": "Pro plan gerekli",
+    "subtitle": "Bu özellik premium aboneliğinizin bir parçasıdır",
+    "upgrade_cta": "Şimdi yükselt",
+    "feature_bait_intelligence": "Yem zekası — 85 kombinasyon",
+    "feature_heatmap": "Isı haritası ve canlı hava durumu",
+    "feature_analytics": "Gelişmiş analitik",
+    "feature_ai_insights": "AI içgörüleri",
+    "feature_bait_database": "Yem veritabanı",
+    "feature_catch_forecast": "Av tahmini"
   },
   "privacy": {
     "last_updated": "Son güncelleme: Nisan 2026 · KVKK uyumlu",
@@ -1296,7 +1317,11 @@
     "top_percentile": "İlk %{{pct}}",
     "trend_declining": "düşüş",
     "trend_improving": "iyileşiyor",
-    "trend_stable": "sabit"
+    "trend_stable": "sabit",
+    "skill_bait_selection": "Yem seçimi",
+    "your_skills": "Yeteneklerin",
+    "page_title": "Beceri profili",
+    "empty_state": "Beceri profilini oluşturmak için avları kaydet"
   },
   "species": {
     "aal": "Yılan balığı",

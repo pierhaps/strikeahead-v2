@@ -27,7 +27,8 @@
     "section_users": "Gebruikers",
     "system_info": "Systeeminfo",
     "title": "Beheerderspaneel",
-    "user_search_placeholder": "Zoek gebruikers..."
+    "user_search_placeholder": "Zoek gebruikers...",
+    "no_moderation": "Geen moderatiegevallen"
   },
   "analytics": {
     "catches_label": "Vangsten",
@@ -239,14 +240,23 @@
     "email_confirmation": "Je ontvangt een bevestiging per e-mail.",
     "hour_short": "uur",
     "next": "Volgende",
-    "note_placeholder": "Je doelen, vragen...",
+    "note_placeholder": "Opmerkingen (optioneel)",
     "step1_heading": "Kies Coach",
     "step2_heading": "Datum en Tijd",
     "step3_heading": "Details",
     "step4_heading": "Samenvatting",
     "success_message": "Je ontvangt een bevestiging per e-mail.",
     "time": "Tijd",
-    "total": "Totaal"
+    "total": "Totaal",
+    "btn_next": "Volgende",
+    "btn_back": "Terug",
+    "label_date": "Datum",
+    "label_time": "Tijd",
+    "summary_coach": "Coach",
+    "summary_date": "Datum",
+    "summary_time": "Tijd",
+    "summary_total": "Totaal",
+    "confirmation_email": "Bevestiging per e-mail"
   },
   "bookings": {
     "myBookings": "Mijn boekingen"
@@ -1107,14 +1117,17 @@
     "valid": "Geldig",
     "valid_from": "Geldig vanaf",
     "valid_until": "Geldig tot",
-    "valid_until_prefix": "tot"
+    "valid_until_prefix": "tot",
+    "form_license": "Vergunning"
   },
   "nav": {
     "dashboard": "Dashboard",
     "home": "Start",
     "map": "Kaart",
     "profile": "Profiel",
-    "upload": "Registreren"
+    "upload": "Registreren",
+    "stats": "Stats",
+    "log": "Loggen"
   },
   "paywall": {
     "benefit_bait": "Bait Intelligence – 85 combinaties",
@@ -1127,7 +1140,15 @@
     "title": "Premium functie",
     "title_angler": "Angler plan vereist",
     "title_legend": "Legend plan vereist",
-    "title_pro": "Pro plan vereist"
+    "title_pro": "Pro plan vereist",
+    "subtitle": "Deze functie maakt deel uit van je premium abonnement",
+    "upgrade_cta": "Nu upgraden",
+    "feature_bait_intelligence": "Aas-intelligentie — 85 combinaties",
+    "feature_heatmap": "Heatmap en live weer",
+    "feature_analytics": "Geavanceerde analyse",
+    "feature_ai_insights": "AI-inzichten",
+    "feature_bait_database": "Aas-database",
+    "feature_catch_forecast": "Vangstvoorspelling"
   },
   "privacy": {
     "last_updated": "Laatst bijgewerkt: april 2026 · AVG-conform",
@@ -1296,7 +1317,11 @@
     "top_percentile": "Top {{pct}}%",
     "trend_declining": "dalend",
     "trend_improving": "verbeterend",
-    "trend_stable": "stabiel"
+    "trend_stable": "stabiel",
+    "skill_bait_selection": "Aaskeuze",
+    "your_skills": "Jouw vaardigheden",
+    "page_title": "Vaardigheidsprofiel",
+    "empty_state": "Log vangsten om je vaardigheidsprofiel op te bouwen"
   },
   "species": {
     "aal": "Paling",

@@ -27,7 +27,8 @@
     "section_users": "Utilisateurs",
     "system_info": "Info système",
     "title": "Tableau de bord admin",
-    "user_search_placeholder": "Chercher des utilisateurs..."
+    "user_search_placeholder": "Chercher des utilisateurs...",
+    "no_moderation": "Aucun cas de modération"
   },
   "analytics": {
     "catches_label": "Prises",
@@ -239,14 +240,23 @@
     "email_confirmation": "Tu recevras une confirmation par e-mail.",
     "hour_short": "h",
     "next": "Suivant",
-    "note_placeholder": "Tes objectifs, questions...",
+    "note_placeholder": "Notes (facultatif)",
     "step1_heading": "Choisir un Coach",
     "step2_heading": "Date et Heure",
     "step3_heading": "Détails",
     "step4_heading": "Résumé",
     "success_message": "Vous recevrez une confirmation par email.",
     "time": "Heure",
-    "total": "Total"
+    "total": "Total",
+    "btn_next": "Suivant",
+    "btn_back": "Retour",
+    "label_date": "Date",
+    "label_time": "Heure",
+    "summary_coach": "Coach",
+    "summary_date": "Date",
+    "summary_time": "Heure",
+    "summary_total": "Total",
+    "confirmation_email": "Confirmation par e-mail"
   },
   "bookings": {
     "myBookings": "Mes réservations"
@@ -1107,14 +1117,17 @@
     "valid": "Valide",
     "valid_from": "Valide à partir de",
     "valid_until": "Valide jusqu'au",
-    "valid_until_prefix": "jusqu'à"
+    "valid_until_prefix": "jusqu'à",
+    "form_license": "Licence"
   },
   "nav": {
     "dashboard": "Tableau de bord",
     "home": "Accueil",
     "map": "Carte",
     "profile": "Profil",
-    "upload": "Enregistrer"
+    "upload": "Enregistrer",
+    "stats": "Stats",
+    "log": "Journal"
   },
   "paywall": {
     "benefit_bait": "Bait Intelligence – 85 combos",
@@ -1127,7 +1140,15 @@
     "title": "Fonction Premium",
     "title_angler": "Plan Angler requis",
     "title_legend": "Plan Legend requis",
-    "title_pro": "Plan Pro requis"
+    "title_pro": "Plan Pro requis",
+    "subtitle": "Cette fonction fait partie de votre abonnement premium",
+    "upgrade_cta": "Mettre à niveau",
+    "feature_bait_intelligence": "Intelligence appâts — 85 combinaisons",
+    "feature_heatmap": "Carte thermique et météo en direct",
+    "feature_analytics": "Analytiques avancées",
+    "feature_ai_insights": "Aperçus IA",
+    "feature_bait_database": "Base de données d'appâts",
+    "feature_catch_forecast": "Prévision de pêche"
   },
   "privacy": {
     "last_updated": "Dernière mise à jour : avril 2026 · Conforme RGPD",
@@ -1296,7 +1317,11 @@
     "top_percentile": "Top {{pct}} %",
     "trend_declining": "en déclin",
     "trend_improving": "en amélioration",
-    "trend_stable": "stable"
+    "trend_stable": "stable",
+    "skill_bait_selection": "Choix d'appât",
+    "your_skills": "Vos compétences",
+    "page_title": "Profil de compétence",
+    "empty_state": "Enregistrez des prises pour construire votre profil"
   },
   "species": {
     "aal": "Anguille",

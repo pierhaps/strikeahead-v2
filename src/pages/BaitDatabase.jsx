@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Search } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import PageTransition from '../components/ui/PageTransition';
+import PaywallModal from '../components/shared/PaywallModal';
+import { useEntitlement } from '@/hooks/useEntitlement';
 import { base44 } from '@/api/base44Client';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
@@ -23,6 +25,8 @@ function EffectivenessBar({ score }) {
 
 export default function BaitDatabase() {
   const { t } = useTranslation();
+  const { canAccess, requiredTier } = useEntitlement();
+  const hasAccess = canAccess('bait_database');
   const { t: tCommon } = useTranslation('common');
   
   const CATEGORY_DE = {
@@ -56,6 +60,10 @@ export default function BaitDatabase() {
 
   return (
     <PageTransition>
+      {!hasAccess && (
+        <PaywallModal open={true} onClose={() => window.history.back()} featureKey="bait_database" requiredTier={requiredTier('bait_database')} />
+      )}
+      {hasAccess && (
       <div className="px-4 pt-6 pb-4 space-y-4">
         <div>
           <p className="text-foam/50 text-sm">{t('bait.database_title')}</p>
@@ -164,6 +172,7 @@ export default function BaitDatabase() {
         </AnimatePresence>
         <div className="h-4" />
       </div>
+      )}
     </PageTransition>
   );
 }

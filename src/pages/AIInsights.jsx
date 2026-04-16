@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ThumbsUp, ThumbsDown, Bell, Leaf, TrendingUp, MapPin, Fish, BookOpen, Trophy, Zap, CloudRain, Star } from 'lucide-react';
 import PageTransition from '../components/ui/PageTransition';
+import PaywallModal from '../components/shared/PaywallModal';
+import { useEntitlement } from '@/hooks/useEntitlement';
 import { base44 } from '@/api/base44Client';
 import { useTranslation } from 'react-i18next';
 
@@ -22,6 +24,8 @@ const INSIGHT_COLOR_MAP = {
 
 export default function AIInsights() {
   const { t } = useTranslation();
+  const { canAccess, requiredTier } = useEntitlement();
+  const hasAccess = canAccess('ai_insights');
   const [insights, setInsights] = useState([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
@@ -60,6 +64,10 @@ export default function AIInsights() {
 
   return (
     <PageTransition>
+      {!hasAccess && (
+        <PaywallModal open={true} onClose={() => window.history.back()} featureKey="ai_insights" requiredTier={requiredTier('ai_insights')} />
+      )}
+      {hasAccess && (
       <div className="px-4 pt-6 pb-4 space-y-4">
         <div className="flex items-start justify-between">
           <div>
@@ -167,6 +175,7 @@ export default function AIInsights() {
         )}
         <div className="h-4" />
       </div>
+      )}
     </PageTransition>
   );
 }

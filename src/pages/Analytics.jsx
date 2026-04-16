@@ -4,6 +4,8 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pi
 import { Fish, Anchor, Trophy, TrendingUp } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import PageTransition from '../components/ui/PageTransition';
+import PaywallModal from '../components/shared/PaywallModal';
+import { useEntitlement } from '@/hooks/useEntitlement';
 import { base44 } from '@/api/base44Client';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
@@ -33,6 +35,8 @@ const HOURS = ['00-06','06-09','09-12','12-15','15-18','18-21','21-24'];
 
 export default function Analytics() {
   const { t } = useTranslation();
+  const { canAccess, requiredTier } = useEntitlement();
+  const hasAccess = canAccess('analytics');
   const ta = (k, opts) => t(`analytics.${k}`, opts);
   const MONTH_LABELS = [
     t('common.month_jan'), t('common.month_feb'), t('common.month_mar'),
@@ -40,7 +44,7 @@ export default function Analytics() {
     t('common.month_jul'), t('common.month_aug'), t('common.month_sep'),
     t('common.month_oct'), t('common.month_nov'), t('common.month_dec'),
   ];
-  const catchesName = t('analytics.catches_label', { defaultValue: 'Fänge' });
+  const catchesName = t('analytics.catches_label');
 
   const [catches, setCatches] = useState([]);
   const [range, setRange] = useState('30d');
@@ -71,7 +75,7 @@ export default function Analytics() {
     : '—';
 
   const speciesCounts = filtered.reduce((acc, c) => {
-    acc[c.species || t('common.unknown', { defaultValue: 'Unbekannt' })] = (acc[c.species || t('common.unknown', { defaultValue: 'Unbekannt' })] || 0) + 1;
+    acc[c.species || t('common.unknown')] = (acc[c.species || t('common.unknown')] || 0) + 1;
     return acc;
   }, {});
   const topSpecies = Object.entries(speciesCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || '—';
@@ -109,6 +113,10 @@ export default function Analytics() {
 
   return (
     <PageTransition>
+      {!hasAccess && (
+        <PaywallModal open={true} onClose={() => window.history.back()} featureKey="analytics" requiredTier={requiredTier('analytics')} />
+      )}
+      {hasAccess && (
       <div className="px-4 pt-6 pb-4 space-y-6">
         <div>
           <p className="text-foam/50 text-sm">{ta('subtitle')}</p>
@@ -202,6 +210,7 @@ export default function Analytics() {
 
         <div className="h-4" />
       </div>
+      )}
     </PageTransition>
   );
 }

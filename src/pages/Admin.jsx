@@ -95,10 +95,10 @@ export default function Admin() {
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-3">
                 {[
-                  { label: t('admin.metric_users',       { defaultValue: 'Nutzer' }),       value: metrics.totalUsers, icon: '👥' },
-                  { label: t('admin.metric_catches',     { defaultValue: 'Fänge' }),        value: metrics.totalCatches, icon: '🎣' },
-                  { label: t('admin.metric_moderations', { defaultValue: 'Moderationen' }), value: metrics.totalMods, icon: '🛡' },
-                  { label: t('admin.metric_revenue',     { defaultValue: 'Revenue' }),      value: '–', icon: '💰' },
+                  { label: t('admin.metric_users'),       value: metrics.totalUsers, icon: '👥' },
+                  { label: t('admin.metric_catches'),        value: metrics.totalCatches, icon: '🎣' },
+                  { label: t('admin.metric_moderations'), value: metrics.totalMods, icon: '🛡' },
+                  { label: t('admin.metric_revenue'),      value: '–', icon: '💰' },
                 ].map(m => (
                   <div key={m.label} className="glass-card rounded-2xl p-4 text-center">
                     <p className="text-2xl mb-1">{m.icon}</p>
@@ -108,7 +108,7 @@ export default function Admin() {
                 ))}
               </div>
               <div className="glass-card rounded-2xl p-4">
-                <p className="text-foam/50 text-xs mb-2">{t('admin.system_info', { defaultValue: 'System-Info' })}</p>
+                <p className="text-foam/50 text-xs mb-2">{t('admin.system_info')}</p>
                 <p className="text-foam/70 text-sm">StrikeAhead v2.0 · NOMDAD LLC · {new Date().toLocaleDateString(i18n.language || 'de-DE')}</p>
               </div>
             </div>
@@ -119,7 +119,7 @@ export default function Admin() {
             <div className="space-y-3">
               <div className="glass-card rounded-2xl flex items-center gap-3 px-4 py-3">
                 <Search className="w-4 h-4 text-tide-400 flex-shrink-0" />
-                <input value={search} onChange={e => setSearch(e.target.value)} placeholder={t('admin.search_users', { defaultValue: 'User suchen...' })} className="bg-transparent flex-1 text-foam placeholder-foam/30 text-sm outline-none" />
+                <input value={search} onChange={e => setSearch(e.target.value)} placeholder={t('admin.search_users')} className="bg-transparent flex-1 text-foam placeholder-foam/30 text-sm outline-none" />
               </div>
               {filteredUsers.map(u => (
                 <div key={u.id || u.email} className="glass-card rounded-xl px-4 py-3 flex items-center gap-3">
@@ -161,7 +161,7 @@ export default function Admin() {
           {/* MODERATION */}
           {section === 'moderation' && !loading && (
             <div className="space-y-2">
-              {mods.length === 0 && <p className="text-foam/40 text-center py-8 text-sm">{t('admin.no_mod_cases', { defaultValue: 'Keine Moderationsfälle.' })}</p>}
+              {mods.length === 0 && <p className="text-foam/40 text-center py-8 text-sm">{t('admin.no_moderation')}</p>}
               {mods.map(mod => (
                 <div key={mod.id} className="glass-card rounded-xl px-4 py-3 space-y-2">
                   <div className="flex items-center justify-between gap-2">
@@ -171,7 +171,7 @@ export default function Admin() {
                         W{mod.warning_level || 0}
                       </span>
                       <button onClick={() => escalateMod(mod)} className="px-2 py-1 rounded-lg bg-tide-500/10 text-tide-400 text-xs font-semibold">
-                        {t('admin.escalate', { defaultValue: 'Eskalieren' })}
+                        {t('admin.escalate')}
                       </button>
                     </div>
                   </div>
@@ -190,7 +190,7 @@ export default function Admin() {
                 <div key={entity} className="glass-card rounded-xl px-4 py-3.5 flex items-center justify-between">
                   <p className="text-foam font-semibold text-sm">{entity}</p>
                   <div className="flex gap-2">
-                    <button className="px-3 py-1.5 rounded-lg bg-tide-500/10 text-tide-400 text-xs font-semibold">{t('admin.manage', { defaultValue: 'Verwalten' })}</button>
+                    <button className="px-3 py-1.5 rounded-lg bg-tide-500/10 text-tide-400 text-xs font-semibold">{t('admin.manage')}</button>
                   </div>
                 </div>
               ))}
@@ -200,8 +200,8 @@ export default function Admin() {
           {/* COMPETITIONS */}
           {section === 'competitions' && !loading && (
             <div className="space-y-3">
-              <button className="w-full py-3 rounded-xl gradient-tide text-white text-sm font-bold">+ {t('admin.create_competition', { defaultValue: 'Wettkampf erstellen' })}</button>
-              <button className="w-full py-3 rounded-xl glass-card border border-tide-400/30 text-tide-300 text-sm font-bold">+ {t('admin.create_tournament', { defaultValue: 'Turnier erstellen' })}</button>
+              <button className="w-full py-3 rounded-xl gradient-tide text-white text-sm font-bold">+ {t('admin.create_competition')}</button>
+              <button className="w-full py-3 rounded-xl glass-card border border-tide-400/30 text-tide-300 text-sm font-bold">+ {t('admin.create_tournament')}</button>
             </div>
           )}
         </div>

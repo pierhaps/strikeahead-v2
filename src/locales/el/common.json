@@ -10,7 +10,7 @@
     "language": "Γλώσσα",
     "manage": "Διαχείριση",
     "manage_button": "Διαχείρηση",
-    "metric_catches": "Ψαριές",
+    "metric_catches": "Ψαρέματα",
     "metric_moderation": "Μετριοπάθειες",
     "metric_moderations": "Εποπτείες",
     "metric_revenue": "Έσοδα",
@@ -25,9 +25,10 @@
     "section_moderation": "Εποπτεία",
     "section_reports": "Αναφορές",
     "section_users": "Χρήστες",
-    "system_info": "Πληροφ. συστήματος",
+    "system_info": "Πληροφορίες συστήματος",
     "title": "Πίνακας διαχείρισης",
-    "user_search_placeholder": "Αναζήτηση χρηστών..."
+    "user_search_placeholder": "Αναζήτηση χρηστών...",
+    "no_moderation": "Χωρίς υποθέσεις μετριασμού"
   },
   "analytics": {
     "catches_label": "Ψαριές",
@@ -237,16 +238,25 @@
     "continue_button": "Συνέχεια",
     "date": "Ημερομηνία",
     "email_confirmation": "Θα λάβετε επιβεβαίωση μέσω email.",
-    "hour_short": "ώρα",
+    "hour_short": "ώρες",
     "next": "Επόμενο",
-    "note_placeholder": "Οι στόχοι σου, ερωτήσεις...",
+    "note_placeholder": "Σημειώσεις (προαιρετικό)",
     "step1_heading": "Επιλέξτε Coach",
     "step2_heading": "Ημερομηνία και Ώρα",
     "step3_heading": "Λεπτομέρειες",
     "step4_heading": "Περίληψη",
     "success_message": "Θα λάβετε επιβεβαίωση μέσω email.",
     "time": "Ώρα",
-    "total": "Σύνολο"
+    "total": "Σύνολο",
+    "btn_next": "Επόμενο",
+    "btn_back": "Πίσω",
+    "label_date": "Ημερομηνία",
+    "label_time": "Ώρα",
+    "summary_coach": "Προπονητής",
+    "summary_date": "Ημερομηνία",
+    "summary_time": "Ώρα",
+    "summary_total": "Σύνολο",
+    "confirmation_email": "Επιβεβαίωση μέσω email"
   },
   "bookings": {
     "myBookings": "Οι κρατήσεις μου"
@@ -935,7 +945,7 @@
   },
   "leaderboard": {
     "empty_message": "Χωρίς καταχωρήσεις.",
-    "metric_catches": "Ψαριές",
+    "metric_catches": "Ψαρέματα",
     "metric_hp": "HP",
     "metric_xp": "XP",
     "you": "Εσύ"
@@ -1107,14 +1117,17 @@
     "valid": "Έγκυρη",
     "valid_from": "Ισχύ από",
     "valid_until": "Ισχύ έως",
-    "valid_until_prefix": "έως"
+    "valid_until_prefix": "έως",
+    "form_license": "Άδεια"
   },
   "nav": {
     "dashboard": "Πίνακας",
     "home": "Αρχική",
     "map": "Χάρτης",
     "profile": "Προφίλ",
-    "upload": "Καταχώρηση"
+    "upload": "Καταχώρηση",
+    "stats": "Στατ.",
+    "log": "Καταγραφή"
   },
   "paywall": {
     "benefit_bait": "Bait Intelligence – 85 συνδυασμοί",
@@ -1124,10 +1137,18 @@
     "cta_later": "Αργότερα",
     "cta_upgrade": "Αναβάθμιση",
     "description": "Αυτή η λειτουργία είναι μέρος του premium πλάνου σας.",
-    "title": "Λειτουργία Premium",
+    "title": "Premium Λειτουργία",
     "title_angler": "Απαιτείται πλάνο Angler",
     "title_legend": "Απαιτείται πλάνο Legend",
-    "title_pro": "Απαιτείται πλάνο Pro"
+    "title_pro": "Απαιτείται πλάνο Pro",
+    "subtitle": "Αυτή η λειτουργία είναι μέρος της premium συνδρομής σου",
+    "upgrade_cta": "Αναβάθμιση τώρα",
+    "feature_bait_intelligence": "Νοημοσύνη δολωμάτων — 85 συνδυασμοί",
+    "feature_heatmap": "Θερμικός χάρτης & ζωντανός καιρός",
+    "feature_analytics": "Προχωρημένη ανάλυση",
+    "feature_ai_insights": "AI πληροφορίες",
+    "feature_bait_database": "Βάση δολωμάτων",
+    "feature_catch_forecast": "Πρόβλεψη ψαρέματος"
   },
   "privacy": {
     "last_updated": "Τελευταία ενημέρωση: Απρίλιος 2026 · Συμμόρφωση GDPR",
@@ -1296,7 +1317,11 @@
     "top_percentile": "Κορυφαίο {{pct}}%",
     "trend_declining": "πτώση",
     "trend_improving": "βελτιούμενο",
-    "trend_stable": "σταθερό"
+    "trend_stable": "σταθερό",
+    "skill_bait_selection": "Επιλογή δολώματος",
+    "your_skills": "Οι ικανότητές σου",
+    "page_title": "Προφίλ ικανοτήτων",
+    "empty_state": "Καταγράψε ψαρέματα για να χτίσεις το προφίλ σου"
   },
   "species": {
     "aal": "Χέλι",

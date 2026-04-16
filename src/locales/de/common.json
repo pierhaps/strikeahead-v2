@@ -27,7 +27,8 @@
     "section_users": "Nutzer",
     "system_info": "System-Info",
     "title": "Admin-Dashboard",
-    "user_search_placeholder": "User suchen..."
+    "user_search_placeholder": "User suchen...",
+    "no_moderation": "Keine Moderationsfälle"
   },
   "analytics": {
     "catches_label": "Fänge",
@@ -237,16 +238,25 @@
     "continue_button": "Weiter",
     "date": "Datum",
     "email_confirmation": "Du erhältst eine Bestätigung per E-Mail.",
-    "hour_short": "Std",
+    "hour_short": "Std.",
     "next": "Weiter",
-    "note_placeholder": "Deine Ziele, Fragen...",
+    "note_placeholder": "Anmerkungen (optional)",
     "step1_heading": "Coach wählen",
     "step2_heading": "Datum & Uhrzeit",
     "step3_heading": "Details",
     "step4_heading": "Zusammenfassung",
     "success_message": "Du erhältst eine Bestätigung per E-Mail.",
     "time": "Uhrzeit",
-    "total": "Gesamt"
+    "total": "Gesamt",
+    "btn_next": "Weiter",
+    "btn_back": "Zurück",
+    "label_date": "Datum",
+    "label_time": "Uhrzeit",
+    "summary_coach": "Coach",
+    "summary_date": "Datum",
+    "summary_time": "Uhrzeit",
+    "summary_total": "Gesamt",
+    "confirmation_email": "Bestätigung per E-Mail"
   },
   "bookings": {
     "myBookings": "Meine Buchungen"
@@ -1107,14 +1117,17 @@
     "valid": "Gültig",
     "valid_from": "Gültig ab",
     "valid_until": "Gültig bis",
-    "valid_until_prefix": "bis"
+    "valid_until_prefix": "bis",
+    "form_license": "Lizenz"
   },
   "nav": {
     "dashboard": "Dashboard",
     "home": "Start",
     "map": "Karte",
     "profile": "Profil",
-    "upload": "Loggen"
+    "upload": "Loggen",
+    "stats": "Stats",
+    "log": "Loggen"
   },
   "paywall": {
     "benefit_bait": "Bait Intelligence – 85 Köder-Kombis",
@@ -1127,7 +1140,15 @@
     "title": "Premium-Feature",
     "title_angler": "Angler-Plan nötig",
     "title_legend": "Legend-Plan nötig",
-    "title_pro": "Pro-Plan nötig"
+    "title_pro": "Pro-Plan nötig",
+    "subtitle": "Dieses Feature ist Teil deines Premium-Abos",
+    "upgrade_cta": "Jetzt upgraden",
+    "feature_bait_intelligence": "Bait Intelligence — 85 Köder-Kombis",
+    "feature_heatmap": "Hotspot-Heatmap & Live-Wetter",
+    "feature_analytics": "Erweiterte Analytik",
+    "feature_ai_insights": "KI-Einsichten",
+    "feature_bait_database": "Köder-Datenbank",
+    "feature_catch_forecast": "Fangvorhersage"
   },
   "privacy": {
     "last_updated": "Zuletzt aktualisiert: April 2026 · DSGVO-konform",
@@ -1296,7 +1317,11 @@
     "top_percentile": "Top {{pct}}%",
     "trend_declining": "rückläufig",
     "trend_improving": "verbessernd",
-    "trend_stable": "stabil"
+    "trend_stable": "stabil",
+    "skill_bait_selection": "Köder-Wahl",
+    "your_skills": "Dein Können",
+    "page_title": "Skill-Profil",
+    "empty_state": "Logge Fänge, um dein Skill-Profil aufzubauen"
   },
   "species": {
     "aal": "Aal",

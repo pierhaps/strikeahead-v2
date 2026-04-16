@@ -16,10 +16,10 @@ export default function BottomNav() {
 
   const tabs = [
     { path: '/',          icon: Home,     label: t('nav.home',      { defaultValue: 'Home' }) },
-    { path: '/dashboard', icon: BarChart2,label: t('nav.stats',     { defaultValue: 'Stats' }) },
-    { path: '/upload',    icon: Plus,     label: t('nav.log',       { defaultValue: 'Log' }), isCenter: true },
-    { path: '/map',       icon: MapPin,   label: t('nav.map',       { defaultValue: 'Map' }) },
-    { path: '/profile',   icon: User,     label: t('nav.profile',   { defaultValue: 'Profil' }) },
+    { path: '/dashboard', icon: BarChart2,label: t('nav.stats') },
+    { path: '/upload',    icon: Plus,     label: t('nav.log'), isCenter: true },
+    { path: '/map',       icon: MapPin,   label: t('nav.map') },
+    { path: '/profile',   icon: User,     label: t('nav.profile') },
   ];
 
   return (

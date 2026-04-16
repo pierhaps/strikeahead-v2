@@ -25,9 +25,10 @@
     "section_moderation": "Moderimi",
     "section_reports": "Raporte",
     "section_users": "Përdoruesit",
-    "system_info": "Info sistemi",
+    "system_info": "Info e sistemit",
     "title": "Paneli i administratorit",
-    "user_search_placeholder": "Kërko përdorues..."
+    "user_search_placeholder": "Kërko përdorues...",
+    "no_moderation": "Asnjë rast moderimi"
   },
   "analytics": {
     "catches_label": "Kapje",
@@ -239,14 +240,23 @@
     "email_confirmation": "Do të merrni konfirmim me email.",
     "hour_short": "orë",
     "next": "Tjetër",
-    "note_placeholder": "Qëllimet e tua, pyetjet...",
+    "note_placeholder": "Shënime (opsionale)",
     "step1_heading": "Zgjidh Koçin",
     "step2_heading": "Data dhe Ora",
     "step3_heading": "Detaje",
     "step4_heading": "Përmbledhje",
     "success_message": "Do të marrësh një konfirmim nëpërmjet email-it.",
     "time": "Ora",
-    "total": "Totali"
+    "total": "Totali",
+    "btn_next": "Tjetër",
+    "btn_back": "Prapa",
+    "label_date": "Data",
+    "label_time": "Ora",
+    "summary_coach": "Trajner",
+    "summary_date": "Data",
+    "summary_time": "Ora",
+    "summary_total": "Totali",
+    "confirmation_email": "Konfirmim me email"
   },
   "bookings": {
     "myBookings": "Rezervimet e mia"
@@ -1107,14 +1117,17 @@
     "valid": "E vlefshme",
     "valid_from": "E vlefshme nga",
     "valid_until": "E vlefshme deri",
-    "valid_until_prefix": "deri"
+    "valid_until_prefix": "deri",
+    "form_license": "Leje"
   },
   "nav": {
     "dashboard": "Paneli",
     "home": "Kryefaqja",
     "map": "Harta",
     "profile": "Profili",
-    "upload": "Regjistro"
+    "upload": "Regjistro",
+    "stats": "Stat.",
+    "log": "Regjistro"
   },
   "paywall": {
     "benefit_bait": "Bait Intelligence – 85 kombinime",
@@ -1127,7 +1140,15 @@
     "title": "Funksion Premium",
     "title_angler": "Kërkohet plani Angler",
     "title_legend": "Kërkohet plani Legend",
-    "title_pro": "Kërkohet plani Pro"
+    "title_pro": "Kërkohet plani Pro",
+    "subtitle": "Ky funksion është pjesë e abonimit tënd premium",
+    "upgrade_cta": "Përditëso tani",
+    "feature_bait_intelligence": "Inteligjenca e karremave — 85 kombinime",
+    "feature_heatmap": "Hartë termike dhe moti live",
+    "feature_analytics": "Analitikë e avancuar",
+    "feature_ai_insights": "Njohuri AI",
+    "feature_bait_database": "Baza e karremave",
+    "feature_catch_forecast": "Parashikimi i peshkimit"
   },
   "privacy": {
     "last_updated": "Përditësimi i fundit: Prill 2026 · Në përputhje me GDPR",
@@ -1296,7 +1317,11 @@
     "top_percentile": "Top {{pct}}%",
     "trend_declining": "në rënie",
     "trend_improving": "në përmirësim",
-    "trend_stable": "stabil"
+    "trend_stable": "stabil",
+    "skill_bait_selection": "Zgjedhja e karremit",
+    "your_skills": "Aftësitë tua",
+    "page_title": "Profili i aftësive",
+    "empty_state": "Regjistro kapje për të ndërtuar profilin e aftësive"
   },
   "species": {
     "aal": "Ngjalë",

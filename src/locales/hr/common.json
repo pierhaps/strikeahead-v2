@@ -25,9 +25,10 @@
     "section_moderation": "Moderacija",
     "section_reports": "Izvješća",
     "section_users": "Korisnici",
-    "system_info": "Sistemske info",
+    "system_info": "Info o sustavu",
     "title": "Administratorska ploča",
-    "user_search_placeholder": "Pretraži korisnike..."
+    "user_search_placeholder": "Pretraži korisnike...",
+    "no_moderation": "Nema slučajeva moderacije"
   },
   "analytics": {
     "catches_label": "Ulovi",
@@ -237,16 +238,25 @@
     "continue_button": "Nastavi",
     "date": "Datum",
     "email_confirmation": "Primit ćeš potvrdu na e-mail.",
-    "hour_short": "h",
+    "hour_short": "sati",
     "next": "Dalje",
-    "note_placeholder": "Tvoji ciljevi, pitanja...",
+    "note_placeholder": "Napomene (neobavezno)",
     "step1_heading": "Odaberi Trenera",
     "step2_heading": "Datum i Vrijeme",
     "step3_heading": "Detalji",
     "step4_heading": "Sažetak",
     "success_message": "Dobit ćeš potvrdu putem e-maila.",
     "time": "Vrijeme",
-    "total": "Ukupno"
+    "total": "Ukupno",
+    "btn_next": "Dalje",
+    "btn_back": "Natrag",
+    "label_date": "Datum",
+    "label_time": "Vrijeme",
+    "summary_coach": "Trener",
+    "summary_date": "Datum",
+    "summary_time": "Vrijeme",
+    "summary_total": "Ukupno",
+    "confirmation_email": "Potvrda e-mailom"
   },
   "bookings": {
     "myBookings": "Moje rezervacije"
@@ -1107,14 +1117,17 @@
     "valid": "Važeća",
     "valid_from": "Važeća od",
     "valid_until": "Važeća do",
-    "valid_until_prefix": "do"
+    "valid_until_prefix": "do",
+    "form_license": "Dozvola"
   },
   "nav": {
     "dashboard": "Nadzorna ploča",
     "home": "Početna",
     "map": "Karta",
     "profile": "Profil",
-    "upload": "Zabilježi"
+    "upload": "Zabilježi",
+    "stats": "Stat",
+    "log": "Unos"
   },
   "paywall": {
     "benefit_bait": "Bait Intelligence – 85 kombinacija",
@@ -1124,10 +1137,18 @@
     "cta_later": "Kasnije",
     "cta_upgrade": "Nadogradi sada",
     "description": "Ova funkcija dio je tvog premium plana.",
-    "title": "Premium funkcija",
+    "title": "Premium značajka",
     "title_angler": "Potreban Angler plan",
     "title_legend": "Potreban Legend plan",
-    "title_pro": "Potreban Pro plan"
+    "title_pro": "Potreban Pro plan",
+    "subtitle": "Ova značajka je dio tvoje premium pretplate",
+    "upgrade_cta": "Nadogradi sada",
+    "feature_bait_intelligence": "Inteligencija mamaca — 85 kombinacija",
+    "feature_heatmap": "Toplinska karta i vrijeme uživo",
+    "feature_analytics": "Napredna analitika",
+    "feature_ai_insights": "AI uvidi",
+    "feature_bait_database": "Baza mamaca",
+    "feature_catch_forecast": "Prognoza ulova"
   },
   "privacy": {
     "last_updated": "Zadnje ažurirano: travanj 2026. · GDPR usklađeno",
@@ -1296,7 +1317,11 @@
     "top_percentile": "Top {{pct}}%",
     "trend_declining": "opadajući",
     "trend_improving": "poboljšavanje",
-    "trend_stable": "stabilan"
+    "trend_stable": "stabilan",
+    "skill_bait_selection": "Odabir mamca",
+    "your_skills": "Tvoje vještine",
+    "page_title": "Profil vještina",
+    "empty_state": "Zabilježi ulove za izgradnju profila vještina"
   },
   "species": {
     "aal": "Jegulja",

@@ -243,7 +243,7 @@ export default function MyLicenses() {
               </div>
               {selected.document_thumbnail_url && (
                 <div className="h-48 rounded-2xl overflow-hidden mb-4">
-                  <img src={selected.document_thumbnail_url} alt="Lizenz" className="w-full h-full object-cover" />
+                  <img src={selected.document_thumbnail_url} alt={t('mylicenses.form_license')} className="w-full h-full object-cover" />
                 </div>
               )}
               <div className="space-y-2 mb-4">

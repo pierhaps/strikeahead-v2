@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Loader2, Wind, Thermometer, Moon, Anchor, Clock, Zap } from 'lucide-react';
 import PageTransition from '../components/ui/PageTransition';
+import PaywallModal from '../components/shared/PaywallModal';
+import { useEntitlement } from '@/hooks/useEntitlement';
 import { base44 } from '@/api/base44Client';
 import { useTranslation } from 'react-i18next';
 
@@ -42,6 +44,8 @@ function ScoreRing({ score }) {
 
 export default function CatchForecast() {
   const { t } = useTranslation();
+  const { canAccess, requiredTier } = useEntitlement();
+  const hasAccess = canAccess('catch_forecast');
   const [forecasts, setForecasts] = useState([]);
   const [species, setSpecies] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -99,6 +103,10 @@ export default function CatchForecast() {
 
   return (
     <PageTransition>
+      {!hasAccess && (
+        <PaywallModal open={true} onClose={() => window.history.back()} featureKey="catch_forecast" requiredTier={requiredTier('catch_forecast')} />
+      )}
+      {hasAccess && (
       <div className="px-4 pt-6 pb-4 space-y-5">
         <div>
           <p className="text-foam/50 text-sm">{t('catch_forecast.subtitle')}</p>
@@ -219,6 +227,7 @@ export default function CatchForecast() {
 
         <div className="h-4" />
       </div>
+      )}
     </PageTransition>
   );
 }

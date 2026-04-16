@@ -63,8 +63,8 @@ export default function FishMeasure() {
     <PageTransition>
       <div className="px-4 pt-6 pb-4 space-y-6">
         <div>
-          <p className="text-foam/50 text-sm">{t('measure:subtitle')}</p>
-          <h1 className="font-display text-2xl font-extrabold text-foam">{t('measure:title')}</h1>
+          <p className="text-foam/50 text-sm">{t('measure.subtitle')}</p>
+          <h1 className="font-display text-2xl font-extrabold text-foam">{t('measure.title')}</h1>
         </div>
 
         <AnimatePresence mode="wait">
@@ -74,16 +74,16 @@ export default function FishMeasure() {
               <div className="glass-card rounded-3xl p-6 text-center"
                 style={{ border: '2px dashed rgba(127,220,229,0.25)' }}>
                 <Ruler className="w-12 h-12 text-tide-400 mx-auto mb-4" />
-                <p className="font-display font-bold text-foam text-lg mb-2">{t('measure:capture_fish')}</p>
-                <p className="text-foam/40 text-sm mb-6">{t('measure:step_side_photo')}</p>
+                <p className="font-display font-bold text-foam text-lg mb-2">{t('measure.capture_fish')}</p>
+                <p className="text-foam/40 text-sm mb-6">{t('measure.step_side_photo')}</p>
                 <div className="flex flex-col gap-3">
                   <button onClick={() => fileRef.current?.click()}
                     className="flex items-center justify-center gap-2 py-3.5 rounded-2xl gradient-tide text-white font-display font-bold glow-tide">
-                    <Camera className="w-5 h-5" /> {t('measure:photo_capture')}
+                    <Camera className="w-5 h-5" /> {t('measure.photo_capture')}
                   </button>
                   <button onClick={() => fileRef.current?.click()}
                     className="flex items-center justify-center gap-2 py-3.5 rounded-2xl glass-strong border border-tide-300/20 text-foam font-semibold">
-                    <Image className="w-5 h-5 text-tide-400" /> {t('measure:from_gallery')}
+                    <Image className="w-5 h-5 text-tide-400" /> {t('measure.from_gallery')}
                   </button>
                 </div>
                 <input ref={fileRef} type="file" accept="image/*" capture="environment"
@@ -91,11 +91,11 @@ export default function FishMeasure() {
               </div>
 
               <div className="glass-card rounded-2xl p-4">
-                <p className="text-foam font-semibold text-sm mb-3">{t('measure:how_it_works')}</p>
+                <p className="text-foam font-semibold text-sm mb-3">{t('measure.how_it_works')}</p>
                 {[
-                  { n: '1', label: t('measure:step_1_label'), sub: t('measure:step_1_sub') },
-                  { n: '2', label: t('measure:step_2_label'), sub: t('measure:step_2_sub') },
-                  { n: '3', label: t('measure:step_3_label'), sub: t('measure:step_3_sub') },
+                  { n: '1', label: t('measure.step_1_label'), sub: t('measure.step_1_sub') },
+                  { n: '2', label: t('measure.step_2_label'), sub: t('measure.step_2_sub') },
+                  { n: '3', label: t('measure.step_3_label'), sub: t('measure.step_3_sub') },
                 ].map(step => (
                   <div key={step.n} className="flex items-start gap-3 mb-3 last:mb-0">
                     <div className="w-6 h-6 rounded-full gradient-tide flex items-center justify-center text-white text-xs font-bold flex-shrink-0">{step.n}</div>
@@ -111,15 +111,15 @@ export default function FishMeasure() {
               className="space-y-4">
               <div className="glass-card rounded-2xl p-3 text-center">
                 <p className="text-foam/60 text-sm">
-                  {loading ? t('measure:calculating') :
-                    points.length === 0 ? t('measure:tap_head') :
-                    points.length === 1 ? t('measure:tap_tail') : t('measure:measurement_done')}
+                  {loading ? t('measure.calculating') :
+                    points.length === 0 ? t('measure.tap_head') :
+                    points.length === 1 ? t('measure.tap_tail') : t('measure.measurement_done')}
                 </p>
               </div>
 
               <div className="relative rounded-3xl overflow-hidden cursor-crosshair"
                 onClick={handleTap} style={{ userSelect: 'none' }}>
-                <img ref={imgRef} src={photoUrl} alt="Fisch" className="w-full"
+                <img ref={imgRef} src={photoUrl} alt="Fish" className="w-full"
                   onLoad={handleImgLoad} draggable={false} />
 
                 {/* Measurement points */}
@@ -152,7 +152,7 @@ export default function FishMeasure() {
               </div>
 
               <button onClick={reset} className="w-full py-3 rounded-2xl glass-card text-foam/50 text-sm">
-                {t('measure:new_photo')}
+                {t('measure.new_photo')}
               </button>
             </motion.div>
           )}
@@ -161,7 +161,7 @@ export default function FishMeasure() {
             <motion.div key="result" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
               className="space-y-4">
               <div className="relative rounded-3xl overflow-hidden">
-                <img src={photoUrl} alt="Fisch" className="w-full" />
+                <img src={photoUrl} alt="Fish" className="w-full" />
                 <div className="absolute inset-0 bg-gradient-to-t from-abyss-950 to-transparent" />
                 {points.length === 2 && (
                   <svg className="absolute inset-0 w-full h-full">
@@ -174,24 +174,24 @@ export default function FishMeasure() {
 
               <div className="glass-card rounded-3xl p-6 text-center"
                 style={{ border: '1px solid rgba(245,195,75,0.25)', boxShadow: '0 0 24px rgba(245,195,75,0.1)' }}>
-                <p className="text-foam/50 text-sm mb-2">{t('measure:estimated_length')}</p>
+                <p className="text-foam/50 text-sm mb-2">{t('measure.estimated_length')}</p>
                 <p className="font-display font-extrabold text-sun-400 text-6xl mb-1">{result.length_cm}</p>
-                <p className="text-foam/60 text-lg font-display">{t('measure:unit_cm')}</p>
+                <p className="text-foam/60 text-lg font-display">{t('measure.unit_cm')}</p>
                 <div className="mt-4 flex justify-center">
                   <div className="px-3 py-1.5 rounded-xl text-xs"
                     style={{ background: 'rgba(31,167,184,0.12)', color: '#4DC3D1', border: '1px solid rgba(31,167,184,0.2)' }}>
-                    {t('measure:confidence_label')}: {result.confidence}%
+                    {t('measure.confidence_label')}: {result.confidence}%
                   </div>
                 </div>
-                <p className="text-foam/30 text-xs mt-3">{t('measure:estimate_note')}</p>
+                <p className="text-foam/30 text-xs mt-3">{t('measure.estimate_note')}</p>
               </div>
 
               <div className="flex gap-3">
                 <button onClick={reset} className="flex-1 py-3.5 rounded-2xl glass-card text-foam/70 font-semibold">
-                  {t('measure:measure_again')}
+                  {t('measure.measure_again')}
                 </button>
                 <button className="flex-1 py-3.5 rounded-2xl gradient-tide text-white font-display font-bold glow-tide flex items-center justify-center gap-2">
-                  {t('measure:to_catchcard')} <ChevronRight className="w-4 h-4" />
+                  {t('measure.to_catchcard')} <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
             </motion.div>

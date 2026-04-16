@@ -27,7 +27,8 @@
     "section_users": "Usuarios",
     "system_info": "Info del sistema",
     "title": "Panel de administración",
-    "user_search_placeholder": "Buscar usuarios..."
+    "user_search_placeholder": "Buscar usuarios...",
+    "no_moderation": "Sin casos de moderación"
   },
   "analytics": {
     "catches_label": "Capturas",
@@ -237,16 +238,25 @@
     "continue_button": "Continuar",
     "date": "Fecha",
     "email_confirmation": "Recibirás una confirmación por correo.",
-    "hour_short": "h",
+    "hour_short": "hrs",
     "next": "Siguiente",
-    "note_placeholder": "Tus objetivos, preguntas...",
+    "note_placeholder": "Notas (opcional)",
     "step1_heading": "Elegir Entrenador",
     "step2_heading": "Fecha y Hora",
     "step3_heading": "Detalles",
     "step4_heading": "Resumen",
     "success_message": "Recibirás una confirmación por correo electrónico.",
     "time": "Hora",
-    "total": "Total"
+    "total": "Total",
+    "btn_next": "Siguiente",
+    "btn_back": "Atrás",
+    "label_date": "Fecha",
+    "label_time": "Hora",
+    "summary_coach": "Coach",
+    "summary_date": "Fecha",
+    "summary_time": "Hora",
+    "summary_total": "Total",
+    "confirmation_email": "Confirmación por correo"
   },
   "bookings": {
     "myBookings": "Mis reservas"
@@ -1107,14 +1117,17 @@
     "valid": "Válida",
     "valid_from": "Válida desde",
     "valid_until": "Válida hasta",
-    "valid_until_prefix": "hasta"
+    "valid_until_prefix": "hasta",
+    "form_license": "Licencia"
   },
   "nav": {
     "dashboard": "Panel",
     "home": "Inicio",
     "map": "Mapa",
     "profile": "Perfil",
-    "upload": "Registrar"
+    "upload": "Registrar",
+    "stats": "Stats",
+    "log": "Registrar"
   },
   "paywall": {
     "benefit_bait": "Bait Intelligence – 85 combos",
@@ -1127,7 +1140,15 @@
     "title": "Función Premium",
     "title_angler": "Se requiere plan Angler",
     "title_legend": "Se requiere plan Legend",
-    "title_pro": "Se requiere plan Pro"
+    "title_pro": "Se requiere plan Pro",
+    "subtitle": "Esta función es parte de tu suscripción premium",
+    "upgrade_cta": "Actualizar ahora",
+    "feature_bait_intelligence": "Inteligencia de cebos — 85 combinaciones",
+    "feature_heatmap": "Mapa de calor y tiempo en vivo",
+    "feature_analytics": "Analíticas avanzadas",
+    "feature_ai_insights": "Perspectivas de IA",
+    "feature_bait_database": "Base de datos de cebos",
+    "feature_catch_forecast": "Pronóstico de pesca"
   },
   "privacy": {
     "last_updated": "Última actualización: abril 2026 · Conforme con RGPD",
@@ -1296,7 +1317,11 @@
     "top_percentile": "Top {{pct}}%",
     "trend_declining": "disminuyendo",
     "trend_improving": "mejorando",
-    "trend_stable": "estable"
+    "trend_stable": "estable",
+    "skill_bait_selection": "Selección de cebo",
+    "your_skills": "Tus habilidades",
+    "page_title": "Perfil de habilidad",
+    "empty_state": "Registra capturas para construir tu perfil de habilidad"
   },
   "species": {
     "aal": "Anguila",

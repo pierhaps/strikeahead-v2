@@ -27,7 +27,8 @@
     "section_users": "Utenti",
     "system_info": "Info sistema",
     "title": "Pannello amministratore",
-    "user_search_placeholder": "Cerca utenti..."
+    "user_search_placeholder": "Cerca utenti...",
+    "no_moderation": "Nessun caso di moderazione"
   },
   "analytics": {
     "catches_label": "Catture",
@@ -237,16 +238,25 @@
     "continue_button": "Continua",
     "date": "Data",
     "email_confirmation": "Riceverai una conferma via email.",
-    "hour_short": "h",
+    "hour_short": "ore",
     "next": "Avanti",
-    "note_placeholder": "I tuoi obiettivi, domande...",
+    "note_placeholder": "Note (facoltativo)",
     "step1_heading": "Scegli Coach",
     "step2_heading": "Data e Ora",
     "step3_heading": "Dettagli",
     "step4_heading": "Riepilogo",
     "success_message": "Riceverai una conferma via email.",
     "time": "Ora",
-    "total": "Totale"
+    "total": "Totale",
+    "btn_next": "Avanti",
+    "btn_back": "Indietro",
+    "label_date": "Data",
+    "label_time": "Ora",
+    "summary_coach": "Coach",
+    "summary_date": "Data",
+    "summary_time": "Ora",
+    "summary_total": "Totale",
+    "confirmation_email": "Conferma via email"
   },
   "bookings": {
     "myBookings": "Le mie prenotazioni"
@@ -1107,14 +1117,17 @@
     "valid": "Valida",
     "valid_from": "Valida da",
     "valid_until": "Valida fino",
-    "valid_until_prefix": "fino a"
+    "valid_until_prefix": "fino a",
+    "form_license": "Licenza"
   },
   "nav": {
     "dashboard": "Dashboard",
     "home": "Home",
     "map": "Mappa",
     "profile": "Profilo",
-    "upload": "Registra"
+    "upload": "Registra",
+    "stats": "Stat",
+    "log": "Registra"
   },
   "paywall": {
     "benefit_bait": "Bait Intelligence – 85 combo",
@@ -1127,7 +1140,15 @@
     "title": "Funzione Premium",
     "title_angler": "Piano Angler richiesto",
     "title_legend": "Piano Legend richiesto",
-    "title_pro": "Piano Pro richiesto"
+    "title_pro": "Piano Pro richiesto",
+    "subtitle": "Questa funzione fa parte del tuo abbonamento premium",
+    "upgrade_cta": "Aggiorna ora",
+    "feature_bait_intelligence": "Intelligenza esche — 85 combinazioni",
+    "feature_heatmap": "Mappa termica e meteo live",
+    "feature_analytics": "Analisi avanzate",
+    "feature_ai_insights": "Approfondimenti IA",
+    "feature_bait_database": "Database esche",
+    "feature_catch_forecast": "Previsione di pesca"
   },
   "privacy": {
     "last_updated": "Ultimo aggiornamento: aprile 2026 · Conforme GDPR",
@@ -1296,7 +1317,11 @@
     "top_percentile": "Top {{pct}}%",
     "trend_declining": "in calo",
     "trend_improving": "in miglioramento",
-    "trend_stable": "stabile"
+    "trend_stable": "stabile",
+    "skill_bait_selection": "Scelta dell'esca",
+    "your_skills": "Le tue abilità",
+    "page_title": "Profilo abilità",
+    "empty_state": "Registra catture per costruire il tuo profilo"
   },
   "species": {
     "aal": "Anguilla",

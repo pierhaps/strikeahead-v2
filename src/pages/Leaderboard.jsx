@@ -22,15 +22,15 @@ export default function Leaderboard() {
   const [loading, setLoading] = useState(true);
 
   const sorts = useMemo(() => ([
-    { key: 'fish_xp',       label: t('leaderboard.metric_xp',      { defaultValue: 'XP' }),    icon: TrendingUp },
-    { key: 'hook_points',   label: t('leaderboard.metric_hp',      { defaultValue: 'HP' }),    icon: Anchor },
-    { key: 'total_catches', label: t('leaderboard.metric_catches', { defaultValue: 'Fänge' }), icon: Fish },
+    { key: 'fish_xp',       label: t('leaderboard.metric_xp'),    icon: TrendingUp },
+    { key: 'hook_points',   label: t('leaderboard.metric_hp'),    icon: Anchor },
+    { key: 'total_catches', label: t('leaderboard.metric_catches'), icon: Fish },
   ]), [t]);
 
   const metricLabel = useMemo(() => {
-    if (sortKey === 'fish_xp')       return t('leaderboard.metric_xp',      { defaultValue: 'XP' });
-    if (sortKey === 'hook_points')   return t('leaderboard.metric_hp',      { defaultValue: 'HP' });
-    return t('leaderboard.metric_catches', { defaultValue: 'Fänge' });
+    if (sortKey === 'fish_xp')       return t('leaderboard.metric_xp');
+    if (sortKey === 'hook_points')   return t('leaderboard.metric_hp');
+    return t('leaderboard.metric_catches');
   }, [sortKey, t]);
 
   useEffect(() => {
@@ -80,7 +80,7 @@ export default function Leaderboard() {
               #{myRank}
             </div>
             <div className="flex-1">
-              <p className="text-foam font-bold text-sm">{me.full_name} ({t('leaderboard.you', { defaultValue: 'Du' })})</p>
+              <p className="text-foam font-bold text-sm">{me.full_name} ({t('leaderboard.you')})</p>
               <p className="text-foam/40 text-xs">{formatNum(myScore, lang)} {metricLabel}</p>
             </div>
             <Trophy className="w-5 h-5 text-sun-400" />

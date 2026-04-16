@@ -25,9 +25,10 @@
     "section_moderation": "Moderation",
     "section_reports": "Reports",
     "section_users": "Users",
-    "system_info": "System Info",
+    "system_info": "System info",
     "title": "Admin Dashboard",
-    "user_search_placeholder": "Search users..."
+    "user_search_placeholder": "Search users...",
+    "no_moderation": "No moderation cases"
   },
   "analytics": {
     "catches_label": "Catches",
@@ -237,16 +238,25 @@
     "continue_button": "Continue",
     "date": "Date",
     "email_confirmation": "You'll receive a confirmation by email.",
-    "hour_short": "hr",
+    "hour_short": "hrs",
     "next": "Next",
-    "note_placeholder": "Your goals, questions...",
+    "note_placeholder": "Notes (optional)",
     "step1_heading": "Choose Coach",
     "step2_heading": "Date & Time",
     "step3_heading": "Details",
     "step4_heading": "Summary",
     "success_message": "You'll receive a confirmation via email.",
     "time": "Time",
-    "total": "Total"
+    "total": "Total",
+    "btn_next": "Next",
+    "btn_back": "Back",
+    "label_date": "Date",
+    "label_time": "Time",
+    "summary_coach": "Coach",
+    "summary_date": "Date",
+    "summary_time": "Time",
+    "summary_total": "Total",
+    "confirmation_email": "Confirmation via email"
   },
   "bookings": {
     "myBookings": "My Bookings"
@@ -1107,14 +1117,17 @@
     "valid": "Valid",
     "valid_from": "Valid From",
     "valid_until": "Valid Until",
-    "valid_until_prefix": "until"
+    "valid_until_prefix": "until",
+    "form_license": "License"
   },
   "nav": {
     "dashboard": "Dashboard",
     "home": "Home",
     "map": "Map",
     "profile": "Profile",
-    "upload": "Log"
+    "upload": "Log",
+    "stats": "Stats",
+    "log": "Log"
   },
   "paywall": {
     "benefit_bait": "Bait Intelligence – 85 combos",
@@ -1124,10 +1137,18 @@
     "cta_later": "Later",
     "cta_upgrade": "Upgrade now",
     "description": "This feature is part of your premium plan. Upgrade to unlock all analysis tools.",
-    "title": "Premium feature",
+    "title": "Premium Feature",
     "title_angler": "Angler plan required",
     "title_legend": "Legend plan required",
-    "title_pro": "Pro plan required"
+    "title_pro": "Pro plan required",
+    "subtitle": "This feature is part of your premium subscription",
+    "upgrade_cta": "Upgrade now",
+    "feature_bait_intelligence": "Bait Intelligence — 85 bait combos",
+    "feature_heatmap": "Hotspot heatmap & live weather",
+    "feature_analytics": "Advanced analytics",
+    "feature_ai_insights": "AI insights",
+    "feature_bait_database": "Bait database",
+    "feature_catch_forecast": "Catch forecast"
   },
   "privacy": {
     "last_updated": "Last updated: April 2026 · GDPR compliant",
@@ -1275,7 +1296,7 @@
     "skill_spinning": "Spinning",
     "skill_technique_mastery": "Technique",
     "skill_trophy_hunting": "Trophy",
-    "skill_weather_reading": "Weather Reading",
+    "skill_weather_reading": "Weather reading",
     "skills": {
       "casting_technique": "Casting Technique",
       "catch_release": "Catch & Release",
@@ -1296,7 +1317,11 @@
     "top_percentile": "Top {{pct}}%",
     "trend_declining": "declining",
     "trend_improving": "improving",
-    "trend_stable": "stable"
+    "trend_stable": "stable",
+    "skill_bait_selection": "Bait selection",
+    "your_skills": "Your skills",
+    "page_title": "Skill profile",
+    "empty_state": "Log catches to build your skill profile"
   },
   "species": {
     "aal": "Eel",
