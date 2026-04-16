@@ -6,6 +6,11 @@ import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import AppShell from './components/layout/AppShell';
+import VisualEditAgent from '@/lib/VisualEditAgent';
+import NavigationTracker from '@/lib/NavigationTracker';
+import { setupIframeMessaging } from './lib/iframe-messaging';
+
+setupIframeMessaging();
 
 // Landing page (public, no shell)
 import LandingPageReal from './pages/landing/LandingPage';
@@ -153,9 +158,11 @@ function App() {
     <AuthProvider>
       <QueryClientProvider client={queryClientInstance}>
         <Router>
+          <NavigationTracker />
           <AuthenticatedApp />
         </Router>
         <Toaster />
+        <VisualEditAgent />
       </QueryClientProvider>
     </AuthProvider>
   );
