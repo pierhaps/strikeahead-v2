@@ -934,51 +934,63 @@
     "lessons": {
       "equipment_beginner": {
         "title": "Equipo de pesca para principiantes",
-        "duration": "8 min"
+        "duration": "8 min",
+        "body": "**Tu kit básico**\n\nNo necesitas mucho para empezar: una caña polivalente (2,40–2,70 m), un carrete adecuado (tamaño 3000–4000) y un sedal monofilamento (0,25–0,30 mm) o trenzado (0,15 mm) para mayor sensibilidad.\n\n**Accesorios**\n\nUna cajita con anzuelos de varios tamaños (6–12), plomos, giratorios, flotadores y unos alicates basta para las primeras salidas. No olvides: sacadera, cinta métrica, desanzuelador y tu licencia de pesca."
       },
       "first_license": {
         "title": "Obtener la primera licencia de pesca",
-        "duration": "5 min"
+        "duration": "5 min",
+        "body": "**La licencia de pesca**\n\nEn la mayoría de regiones necesitas una licencia. Incluye un examen teórico (biología, agua, material, derecho, protección animal) y una prueba práctica de montaje.\n\n**En el lugar**\n\nTambién necesitas un permiso para el coto concreto (diario, semanal o anual). Se consigue en el club, tienda o online. Sin ambos, cada jornada es ilegal — los controles son frecuentes."
       },
       "knots_beginner": {
         "title": "Nudos para principiantes",
-        "duration": "6 min"
+        "duration": "6 min",
+        "body": "**El nudo Clinch**\n\nEl nudo clásico para principiantes: pasa el sedal por la anilla del anzuelo, da 5–6 vueltas sobre la línea principal, pasa el cabo libre por el bucle junto al ojal y luego por el bucle grande. Humedece y aprieta.\n\n**El nudo de bucle**\n\nPara unir bajos de línea: haz un bucle simple, da dos vueltas, pasa el cabo y aprieta. El bucle permite cambiar bajos rápido — ideal ante condiciones cambiantes."
       },
       "spinning_basics": {
         "title": "Pesca con spinning — Técnica básica",
-        "duration": "10 min"
+        "duration": "10 min",
+        "body": "**¿Qué es el spinning?**\n\nPesca activa con señuelo artificial: lanzas un giratorio, crankbait o vinilo y lo recuperas de forma intencionada. Variando la velocidad y añadiendo pausas imitas peces heridos.\n\n**Especies típicas**\n\nLucio, perca, lucioperca y trucha responden bien. Las mejores horas: amanecer y atardecer. Peina la zona en abanico — el primer lanzamiento debe caer donde podría estar el pez, no donde te resulte cómodo."
       },
       "bottom_fishing": {
         "title": "Pesca de fondo",
-        "duration": "7 min"
+        "duration": "7 min",
+        "body": "**El aparejo de fondo**\n\nEn la pesca al fondo el cebo descansa en el lecho. Montaje clásico: plomo corredizo sobre un emerillón, seguido de un bajo de 50–80 cm con anzuelo. El pez no nota resistencia al picar.\n\n**La paciencia recompensa**\n\nIdeal para carpa, brema, tenca y anguila. Cebos: maíz, boilies, lombrices o gusanos. La ubicación manda: bordes de vegetación, hoyos profundos y desembocaduras son zonas prometedoras."
       },
       "fly_fishing_intro": {
         "title": "Pesca con mosca — Introducción",
-        "duration": "12 min"
+        "duration": "12 min",
+        "body": "**La esencia de la pesca a mosca**\n\nEn lugar del señuelo lanzas la línea — la mosca artificial llega casi ingrávida al final del bajo. El ritmo de adelante y atrás carga la caña hasta que el sedal se desenrolla elegante.\n\n**Primeros pasos**\n\nUn equipo AFTM 5/6 es ideal para trucha y tímalo. Empieza en aguas tranquilas sin viento, a 8–10 m. La precisión supera la distancia — una mosca a 20 cm del pez vale más que una a 30 m."
       },
       "palomar_knot": {
         "title": "El nudo Palomar",
-        "duration": "3 min"
+        "duration": "3 min",
+        "body": "**¿Por qué el Palomar?**\n\nFácil y muy resistente — conserva hasta el 95 % de la resistencia del hilo. Muy usado para trenzado, donde muchos nudos resbalan.\n\n**Paso a paso**\n\nDobla el hilo, pásalo por la anilla. Haz un nudo simple flojo con el bucle doble. Pasa el bucle por encima del anzuelo. Humedece, aprieta despacio, recorta el cabo a 2 mm."
       },
       "fg_knot": {
         "title": "Nudo FG (Braid-Fluoro)",
-        "duration": "5 min"
+        "duration": "5 min",
+        "body": "**El nudo FG para trenza y fluorocarbono**\n\nEl FG une línea principal y bajo de choque casi invisiblemente y pasa suave por las anillas. Permite combinar trenza fina con un bajo más fuerte.\n\n**Merece la práctica**\n\nMás complicado que otros pero muy fiable una vez aprendido. Consejo: mantén el fluorocarbono tenso y enrolla el trenzado en direcciones alternas — al menos 20 vueltas. Asegura con dos medias vueltas."
       },
       "rod_guide": {
         "title": "Guía de cañas: la opción correcta",
-        "duration": "9 min"
+        "duration": "9 min",
+        "body": "**Elegir según uso**\n\nLa longitud determina alcance y control: 2,10 m para trucha de río, 2,70 m polivalente, 3,60 m+ para carpa y feeder. El peso de lanzamiento (WG) debe encajar con el señuelo.\n\n**Acción**\n\nFast (acción de punta) = detección sensible, rígida. Moderate (semiparabólica) = universal, indulgente. Slow (parabólica) = suave, lanza señuelos ligeros. Para empezar, elige moderada."
       },
       "reel_setup": {
         "title": "Configurar carretes correctamente",
-        "duration": "6 min"
+        "duration": "6 min",
+        "body": "**Montar el carrete**\n\nAtornilla el carrete, abre la pica, pasa el sedal por todas las anillas y fíjalo al carrete con un nudo arbor. No sobrellenes — 2 mm de margen evita enredos.\n\n**Ajustar el freno**\n\nEl freno debe ceder al 25–30 % de la resistencia del hilo. Regla: al tirar del hilo, el carrete debe soltar antes de que el hilo se rompa. Revisa antes de cada lance."
       },
       "catch_release": {
         "title": "Catch & Release hecho correctamente",
-        "duration": "4 min"
+        "duration": "4 min",
+        "body": "**Manejo respetuoso**\n\nUsa sacadera de goma — protege la mucosa. Trabaja el pez con rapidez para no agotarlo. Sujétalo horizontal, nunca vertical por la mandíbula — dañas la columna.\n\n**Devolución**\n\nDesanzuela en el agua si puedes. Si tragó el anzuelo: corta el bajo, se oxidará. Sujeta el pez sumergido hasta que nade por sí solo. Nunca lo lances."
       },
       "clean_fishing": {
         "title": "Pesca sin residuos",
-        "duration": "3 min"
+        "duration": "3 min",
+        "body": "**Un puesto limpio**\n\nCada trozo de hilo viejo, plomo o anzuelo abandonado pone en riesgo a aves y peces. Lleva siempre una bolsita — para tu basura y la ajena. Deja el sitio más limpio que como lo encontraste.\n\n**Alternativas sin plomo**\n\nEl plomo es tóxico para aves acuáticas. Elige tungsteno, acero o wolframio. Igual con los cebos: opciones biodegradables y cajas reutilizables reducen plástico. Pequeños gestos, gran impacto."
       },
       "reading_weather": {
         "title": "Leer el clima",
@@ -986,11 +998,13 @@
       },
       "moon_phases": {
         "title": "Fases lunares en la pesca",
-        "duration": "5 min"
+        "duration": "5 min",
+        "body": "**Luna nueva y llena**\n\nMareas fuertes y actividad elevada, sobre todo en depredadores costeros. Las horas de crepúsculo en estos días pueden ser excepcionales.\n\n**En agua dulce**\n\nLa luna también afecta a las aguas interiores — de forma más sutil. Muchos expertos confían en los 3 días antes y después de luna llena. Lleva un diario y correlaciona capturas con la fase."
       },
       "barometer_activity": {
         "title": "Presión barométrica y actividad de peces",
-        "duration": "6 min"
+        "duration": "6 min",
+        "body": "**Presión y actividad**\n\nLa presión en descenso (antes de cambios climáticos) activa muchos peces — comen antes de la tormenta. Presión alta y estable suele dar actividad lenta.\n\n**En la práctica**\n\nVigila 12–24 horas antes. Cambios rápidos (> 3 hPa / 3h) son momentos de oro. Combínalo con fase lunar y temperatura para mejores pronósticos."
       }
     },
     "category_basics_label": "Fundamentos",
@@ -1003,7 +1017,10 @@
     "article_basics_license_title": "Obtener tu Primer Licencia de Pesca",
     "article_reading_weather_body": "La presión del aire influye significativamente en el comportamiento de los peces.\n\nPresión Creciente (Alta Presión):\n• Los peces se vuelven más activos\n• Condiciones ideales después del aumento de presión\n• Los peces salen de aguas profundas\n\nPresión Decreciente (Frente de Baja Presión):\n• Los peces se retiran a capas más profundas\n• A menudo buenas capturas justo antes del frente\n• Usualmente lento después del paso del frente\n\nPresión Estable: Actividad consistente, predecible.",
     "article_catch_release_title": "Captura y Suelta Hecha Correctamente",
-    "article_clean_fishing_title": "Pesca Libre de Basura"
+    "article_clean_fishing_title": "Pesca Libre de Basura",
+    "articles_count": "{{count}} artículos",
+    "reading_time": "tiempo de lectura",
+    "body_coming_soon": "Artículo completo próximamente."
   },
   "regulations": {
     "title": "Regulaciones de captura",
@@ -1092,6 +1109,13 @@
       "price": "Precio",
       "special_conditions": "Condiciones especiales",
       "close": "Cerrar"
+    },
+    "form": {
+      "name": "Nombre",
+      "country": "País",
+      "country_placeholder": "p. ej. España",
+      "valid_from": "Válida desde",
+      "valid_until": "Válida hasta"
     }
   },
   "mybookings": {
@@ -1106,7 +1130,19 @@
     "no_completed": "Sin sesiones completadas aún",
     "confirmed": "Confirmada",
     "upcoming": "Próxima",
-    "past": "Pasada"
+    "past": "Pasada",
+    "role_student": "Tu coach",
+    "role_coach": "Tu alumno",
+    "status": {
+      "pending": "Pendiente",
+      "confirmed": "Confirmada",
+      "completed": "Completada",
+      "cancelled": "Cancelada"
+    },
+    "detail": {
+      "date": "Fecha",
+      "total": "Total"
+    }
   },
   "bait": {
     "catalog_title": "Catálogo de cebos",

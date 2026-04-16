@@ -934,51 +934,63 @@
     "lessons": {
       "equipment_beginner": {
         "title": "Equipamento de pesca para iniciantes",
-        "duration": "8 min"
+        "duration": "8 min",
+        "body": "**Teu kit inicial**\n\nNão precisas de muito para começar: uma cana polivalente (2,40–2,70 m), um carreto adequado (tamanho 3000–4000), fio monofilamento (0,25–0,30 mm) ou trançado (0,15 mm) para maior sensibilidade.\n\n**Acessórios**\n\nUma caixinha com anzóis de tamanhos variados (6–12), chumbos, girelas, flutuadores e um alicate chega para as primeiras saídas. Não esqueças: camaroeiro, fita métrica, desanzolador e a tua licença."
       },
       "first_license": {
         "title": "Obter a primeira licença de pesca",
-        "duration": "5 min"
+        "duration": "5 min",
+        "body": "**A licença de pesca**\n\nNa maioria das regiões é precisa uma licença. Na Alemanha exige-se exame sobre biologia, águas, material, direito e proteção animal, além de uma prova prática de montagem.\n\n**No local**\n\nTambém é necessária uma autorização local (diária, semanal ou anual) para o plano de água. Obtém-se no clube, loja ou online. Sem ambas, cada dia é ilegal — as fiscalizações são frequentes."
       },
       "knots_beginner": {
         "title": "Nós para iniciantes",
-        "duration": "6 min"
+        "duration": "6 min",
+        "body": "**O nó Clinch**\n\nO clássico para iniciantes: passa o fio pelo olhal do anzol, dá 5–6 voltas à linha-mãe, passa a ponta pela argola junto ao olhal e depois pela argola grande. Humedece e aperta.\n\n**O nó de laço**\n\nPara ligar avanços: forma um laço simples, duas voltas, passa a ponta e aperta. O laço permite trocar avanço depressa — ideal quando as condições mudam."
       },
       "spinning_basics": {
         "title": "Pesca de rotor — técnica básica",
-        "duration": "10 min"
+        "duration": "10 min",
+        "body": "**O que é spinning?**\n\nPesca ativa com isco artificial: lanças uma colher, crankbait ou shad e recolhes com intenção. Variando velocidade e pausas imitas um peixe ferido.\n\n**Espécies típicas**\n\nLúcio, perca, lucioperca e truta reagem bem. Melhores horas: amanhecer e anoitecer. Peneira em leque — o primeiro lance cai onde o peixe pode estar, não onde é cómodo."
       },
       "bottom_fishing": {
         "title": "Pesca de fundo",
-        "duration": "7 min"
+        "duration": "7 min",
+        "body": "**A montagem de fundo**\n\nNa pesca de fundo o isco pousa no leito. Montagem clássica: chumbo corrediço sobre uma girela, avanço de 50–80 cm com anzol. O peixe não sente resistência à picada.\n\n**Paciência compensa**\n\nIdeal para carpa, brema, tenca e enguia. Iscos: milho, boilies, minhocas ou larvas. O posto é tudo: orlas de vegetação, buracos fundos e focos de afluentes prometem."
       },
       "fly_fishing_intro": {
         "title": "Pesca à mosca — introdução",
-        "duration": "12 min"
+        "duration": "12 min",
+        "body": "**A essência da pesca à mosca**\n\nEm vez do isco lanças a linha — a mosca artificial chega quase sem peso ao fim do terminal. O ritmo ida e volta carrega a cana até a linha se desenrolar com elegância.\n\n**Primeiros passos**\n\nUm conjunto AFTM 5/6 serve para truta e escalo-do-norte. Começa em água parada sem vento, 8–10 m. Precisão bate distância — uma mosca a 20 cm do peixe vale mais que a 30 m."
       },
       "palomar_knot": {
         "title": "O nó de Palomar",
-        "duration": "3 min"
+        "duration": "3 min",
+        "body": "**Porquê o Palomar?**\n\nFácil e muito forte — mantém até 95 % da resistência do fio. Muito usado para trançado, onde muitos nós escorregam.\n\n**Passo a passo**\n\nDuplica o fio, passa pelo olhal. Faz um nó simples solto com o laço duplo. Passa o laço por cima do anzol. Humedece, aperta devagar, corta a 2 mm."
       },
       "fg_knot": {
         "title": "Nó FG (Braid-Fluoro)",
-        "duration": "5 min"
+        "duration": "5 min",
+        "body": "**O nó FG para trançado e fluorocarbono**\n\nO FG une linha-mãe e shock leader quase invisivelmente e passa bem nos passadores. Permite combinar trançado fino com avanço mais forte.\n\n**Treino compensa**\n\nMais complicado que outros, mas muito fiável depois de aprendido. Dica: mantém o fluorocarbono em tensão e enrola o trançado em direções alternadas — pelo menos 20 voltas. Remata com duas meias-voltas."
       },
       "rod_guide": {
         "title": "Guia de varas: a escolha certa",
-        "duration": "9 min"
+        "duration": "9 min",
+        "body": "**Escolher conforme o uso**\n\nO comprimento determina alcance e controlo: 2,10 m para truta de ribeiro, 2,70 m polivalente, 3,60 m+ para carpa e feeder. A potência (WG) deve combinar com o isco.\n\n**Ação**\n\nFast (ação de ponta) = deteção sensível, rígida. Moderate (semi-parabólica) = universal, tolerante. Slow (parabólica) = suave, lança iscos leves. Para começar, moderada."
       },
       "reel_setup": {
         "title": "Configurar rolos corretamente",
-        "duration": "6 min"
+        "duration": "6 min",
+        "body": "**Montar o carreto**\n\nAperta o carreto, abre o arame, passa o fio por todos os passadores e fixa-o à bobine com um nó arbor. Nunca encher demais — 2 mm de margem evita emaranhados.\n\n**Afinar o freio**\n\nO freio deve ceder aos 25–30 % da resistência do fio. Regra: ao puxar a linha, o carreto deve soltá-la antes de partir. Verifica antes de cada combate."
       },
       "catch_release": {
         "title": "Catch & Release feito corretamente",
-        "duration": "4 min"
+        "duration": "4 min",
+        "body": "**Manuseamento cuidado**\n\nUsa camaroeiro emborrachado — protege o muco. Trabalha o peixe depressa para não o esgotar. Segura na horizontal, nunca vertical pela boca — danifica a coluna.\n\n**Devolução**\n\nDesanzola na água se possível. Se engoliu fundo: corta o avanço, o anzol enferruja. Segura o peixe submerso até nadar sozinho. Nunca o atires."
       },
       "clean_fishing": {
         "title": "Pesca limpa",
-        "duration": "3 min"
+        "duration": "3 min",
+        "body": "**Um posto limpo**\n\nCada pedaço de fio velho, chumbo ou anzol no meio ambiente põe em risco aves e peixes. Leva sempre um saquinho — para o teu lixo e o alheio. Deixa o local mais limpo do que encontraste.\n\n**Alternativas sem chumbo**\n\nO chumbo é tóxico para aves aquáticas. Escolhe tungsténio, aço ou pedra. Idem para iscos: opções biodegradáveis e caixas reutilizáveis reduzem plástico."
       },
       "reading_weather": {
         "title": "Ler o tempo",
@@ -986,11 +998,13 @@
       },
       "moon_phases": {
         "title": "Fases da lua na pesca",
-        "duration": "5 min"
+        "duration": "5 min",
+        "body": "**Lua nova e cheia**\n\nMarés fortes e atividade elevada, sobretudo em predadores costeiros. Os crepúsculos nestes dias podem ser excecionais.\n\n**Em água doce**\n\nA lua influencia também o interior — mais subtilmente. Muitos experientes juram pelos 3 dias antes e depois da lua cheia. Leva diário e correlaciona capturas com a fase."
       },
       "barometer_activity": {
         "title": "Pressão barométrica e atividade de peixes",
-        "duration": "6 min"
+        "duration": "6 min",
+        "body": "**Pressão e atividade**\n\nPressão a cair (antes de mudanças) ativa muitos peixes — comem antes da tempestade. Pressão alta e estável costuma dar atividade lenta.\n\n**Na prática**\n\nObserva 12–24 horas antes. Mudanças rápidas (> 3 hPa / 3h) são momentos de ouro. Combina com fase lunar e temperatura da água para melhores previsões."
       }
     },
     "category_basics_label": "Fundamentos",
@@ -1003,7 +1017,10 @@
     "article_basics_license_title": "Obtendo sua Primeira Licença de Pesca",
     "article_reading_weather_body": "A pressão atmosférica influencia significativamente o comportamento dos peixes.\n\nPressão Crescente (Alta Pressão):\n• Os peixes se tornam mais ativos\n• Condições ideais de pesca após o aumento de pressão\n• Os peixes saem de águas profundas\n\nPressão Decrescente (Frente de Baixa Pressão):\n• Os peixes se retiram para camadas mais profundas\n• Frequentemente boas capturas pouco antes da frente\n• Geralmente lento após a passagem da frente\n\nPressão Estável: Atividade consistente, previsível.",
     "article_catch_release_title": "Captura e Liberação Feita Corretamente",
-    "article_clean_fishing_title": "Pesca Sem Lixo"
+    "article_clean_fishing_title": "Pesca Sem Lixo",
+    "articles_count": "{{count}} artigos",
+    "reading_time": "tempo de leitura",
+    "body_coming_soon": "Artigo completo em breve."
   },
   "regulations": {
     "title": "Regulamentos de captura",
@@ -1092,6 +1109,13 @@
       "price": "Preço",
       "special_conditions": "Condições especiais",
       "close": "Fechar"
+    },
+    "form": {
+      "name": "Nome",
+      "country": "País",
+      "country_placeholder": "ex. Portugal",
+      "valid_from": "Válida desde",
+      "valid_until": "Válida até"
     }
   },
   "mybookings": {
@@ -1106,7 +1130,19 @@
     "no_completed": "Sem sessões concluídas ainda",
     "confirmed": "Confirmado",
     "upcoming": "Próximo",
-    "past": "Passado"
+    "past": "Passado",
+    "role_student": "O teu coach",
+    "role_coach": "O teu aluno",
+    "status": {
+      "pending": "Pendente",
+      "confirmed": "Confirmada",
+      "completed": "Concluída",
+      "cancelled": "Cancelada"
+    },
+    "detail": {
+      "date": "Data",
+      "total": "Total"
+    }
   },
   "bait": {
     "catalog_title": "Catálogo de iscos",

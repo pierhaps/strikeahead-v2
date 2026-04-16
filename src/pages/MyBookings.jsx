@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, Clock, Euro, MessageCircle, Send, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import PageTransition from '../components/ui/PageTransition';
 import { base44 } from '@/api/base44Client';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 
-const STATUS_CONFIG = {
-  pending: { label: 'Ausstehend', bg: 'rgba(245,195,75,0.12)', color: '#F5C34B', border: 'rgba(245,195,75,0.3)' },
-  confirmed: { label: 'Bestätigt', bg: 'rgba(31,167,184,0.12)', color: '#4DC3D1', border: 'rgba(31,167,184,0.3)' },
-  completed: { label: 'Abgeschlossen', bg: 'rgba(31,167,184,0.08)', color: '#1FA7B8', border: 'rgba(31,167,184,0.2)' },
-  cancelled: { label: 'Storniert', bg: 'rgba(255,107,91,0.1)', color: '#FF6B5B', border: 'rgba(255,107,91,0.25)' },
-};
+const getStatusConfig = (t) => ({
+  pending:   { label: t('mybookings.status.pending'),   bg: 'rgba(245,195,75,0.12)', color: '#F5C34B', border: 'rgba(245,195,75,0.3)' },
+  confirmed: { label: t('mybookings.status.confirmed'), bg: 'rgba(31,167,184,0.12)', color: '#4DC3D1', border: 'rgba(31,167,184,0.3)' },
+  completed: { label: t('mybookings.status.completed'), bg: 'rgba(31,167,184,0.08)', color: '#1FA7B8', border: 'rgba(31,167,184,0.2)' },
+  cancelled: { label: t('mybookings.status.cancelled'), bg: 'rgba(255,107,91,0.1)',  color: '#FF6B5B', border: 'rgba(255,107,91,0.25)' },
+});
 
 function BookingDetail({ booking, onClose, userEmail }) {
+  const { t } = useTranslation();
+  const STATUS_CONFIG = React.useMemo(() => getStatusConfig(t), [t]);
   const [messages, setMessages] = useState([]);
   const [msg, setMsg] = useState('');
   const [sending, setSending] = useState(false);
@@ -59,7 +62,7 @@ function BookingDetail({ booking, onClose, userEmail }) {
           <div className="text-center">
             <Calendar className="w-4 h-4 text-tide-400 mx-auto mb-1" />
             <p className="text-foam font-semibold text-xs">{booking.date}</p>
-            <p className="text-foam/40 text-[10px]">Datum</p>
+            <p className="text-foam/40 text-[10px]">{t('mybookings.detail.date')}</p>
           </div>
           <div className="text-center">
             <Clock className="w-4 h-4 text-tide-400 mx-auto mb-1" />
@@ -69,7 +72,7 @@ function BookingDetail({ booking, onClose, userEmail }) {
           <div className="text-center">
             <Euro className="w-4 h-4 text-sun-400 mx-auto mb-1" />
             <p className="font-display font-bold text-sun-400 text-sm">{booking.total_amount}€</p>
-            <p className="text-foam/40 text-[10px]">Gesamt</p>
+            <p className="text-foam/40 text-[10px]">{t('mybookings.detail.total')}</p>
           </div>
         </div>
         {booking.location && (
@@ -80,7 +83,7 @@ function BookingDetail({ booking, onClose, userEmail }) {
       {/* Messages */}
       <div className="flex-1 overflow-y-auto px-4 py-2 space-y-2">
         {messages.length === 0 ? (
-          <div className="flex items-center justify-center h-24 text-foam/30 text-sm">Noch keine Nachrichten</div>
+          <div className="flex items-center justify-center h-24 text-foam/30 text-sm">{t('mybookings.no_messages')}</div>
         ) : messages.map(m => (
           <div key={m.id} className={`flex ${m.from_email === userEmail ? 'justify-end' : 'justify-start'}`}>
             <div className={`max-w-xs px-3.5 py-2.5 rounded-2xl text-sm ${
@@ -99,7 +102,7 @@ function BookingDetail({ booking, onClose, userEmail }) {
       <div className="p-4 pb-safe flex items-center gap-3 border-t border-tide-300/10">
         <input value={msg} onChange={e => setMsg(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && !e.shiftKey && sendMsg()}
-          placeholder="Nachricht senden..."
+          placeholder={t('mybookings.message_placeholder')}
           className="flex-1 glass-card rounded-2xl px-4 py-3 text-foam placeholder-foam/30 text-sm outline-none" />
         <button onClick={sendMsg} disabled={sending || !msg.trim()}
           className={`w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 ${msg.trim() ? 'gradient-tide glow-tide' : 'bg-abyss-700'}`}>
@@ -111,6 +114,8 @@ function BookingDetail({ booking, onClose, userEmail }) {
 }
 
 export default function MyBookings() {
+  const { t } = useTranslation();
+  const STATUS_CONFIG = React.useMemo(() => getStatusConfig(t), [t]);
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
@@ -144,13 +149,13 @@ export default function MyBookings() {
     <PageTransition>
       <div className="px-4 pt-6 pb-4 space-y-4">
         <div>
-          <p className="text-foam/50 text-sm">Deine Coach-Sessions</p>
-          <h1 className="font-display text-2xl font-extrabold text-foam">Meine Buchungen</h1>
+          <p className="text-foam/50 text-sm">{t('mybookings.subtitle')}</p>
+          <h1 className="font-display text-2xl font-extrabold text-foam">{t('mybookings.title')}</h1>
         </div>
 
         {/* Tabs */}
         <div className="flex gap-2">
-          {[['upcoming', `Kommende (${upcoming.length})`], ['past', `Vergangene (${past.length})`]].map(([key, label]) => (
+          {[['upcoming', `${t('mybookings.upcoming')} (${upcoming.length})`], ['past', `${t('mybookings.past')} (${past.length})`]].map(([key, label]) => (
             <button key={key} onClick={() => setTab(key)}
               className={`flex-1 py-2.5 rounded-2xl text-sm font-bold transition-all ${tab === key ? 'gradient-tide text-white glow-tide' : 'glass-card text-foam/60'}`}>
               {label}
@@ -161,13 +166,13 @@ export default function MyBookings() {
         {shown.length === 0 ? (
           <div className="glass-card rounded-3xl p-10 text-center mt-8">
             <div className="text-5xl mb-4">📅</div>
-            <p className="font-display font-bold text-foam text-lg">Keine Buchungen</p>
+            <p className="font-display font-bold text-foam text-lg">{t('mybookings.empty_title')}</p>
             <p className="text-foam/40 text-sm mt-2 mb-6">
-              {tab === 'upcoming' ? 'Buche eine Session mit einem Coach' : 'Noch keine abgeschlossenen Sitzungen'}
+              {tab === 'upcoming' ? t('mybookings.book_session') : t('mybookings.no_completed')}
             </p>
             {tab === 'upcoming' && (
               <a href="/coaches" className="inline-block px-6 py-3 rounded-2xl gradient-tide text-white font-bold text-sm glow-tide">
-                Coach finden
+                {t('mybookings.find_coach')}
               </a>
             )}
           </div>
@@ -189,7 +194,7 @@ export default function MyBookings() {
                           {b.coach_email === user?.email ? b.student_email : b.coach_email}
                         </p>
                         <p className="text-foam/40 text-xs">
-                          {b.coach_email === user?.email ? 'Student' : 'Coach'}
+                          {b.coach_email === user?.email ? t('mybookings.role_student') : t('mybookings.role_coach')}
                         </p>
                       </div>
                     </div>
@@ -207,7 +212,7 @@ export default function MyBookings() {
                   {b.notes && <p className="text-foam/40 text-xs mt-2 truncate">{b.notes}</p>}
                   <div className="flex items-center gap-1.5 mt-2">
                     <MessageCircle className="w-3.5 h-3.5 text-tide-400" />
-                    <span className="text-tide-400 text-xs">Nachricht senden</span>
+                    <span className="text-tide-400 text-xs">{t('mybookings.send_message')}</span>
                   </div>
                 </motion.button>
               );

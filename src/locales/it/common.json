@@ -934,51 +934,63 @@
     "lessons": {
       "equipment_beginner": {
         "title": "Attrezzatura da pesca per principianti",
-        "duration": "8 min"
+        "duration": "8 min",
+        "body": "**Il tuo kit base**\n\nNon serve molto per iniziare: una canna polivalente (2,40–2,70 m), un mulinello adatto (misura 3000–4000), filo monofilo (0,25–0,30 mm) oppure trecciato (0,15 mm) per più sensibilità.\n\n**Accessori**\n\nUna scatolina con ami di misure varie (6–12), piombi, girelle, galleggianti e una pinza basta per le prime uscite. Non dimenticare: guadino, metro, slamatore e la licenza di pesca."
       },
       "first_license": {
         "title": "Ottenere la prima licenza di pesca",
-        "duration": "5 min"
+        "duration": "5 min",
+        "body": "**La licenza di pesca**\n\nNella maggior parte delle regioni serve una licenza. In Germania un esame copre biologia, acque, attrezzature, diritto e tutela degli animali, più una prova pratica di montaggio.\n\n**Sul posto**\n\nServe anche un permesso giornaliero, settimanale o annuale per lo specchio d'acqua. Lo trovi al circolo, in negozio o online. Senza entrambi, ogni giornata è illegale — i controlli sono frequenti."
       },
       "knots_beginner": {
         "title": "Nodi per principianti",
-        "duration": "6 min"
+        "duration": "6 min",
+        "body": "**Il nodo Clinch**\n\nIl classico per iniziare: passa il filo nell'occhiello dell'amo, avvolgi 5–6 volte sulla lenza madre, fai passare l'estremità nella piccola asola vicino all'occhiello e poi nell'asola grande. Bagna e stringi.\n\n**Il nodo ad asola**\n\nPer attaccare i finali: forma un'asola semplice, due giri, passa il capo e stringi. L'asola permette di cambiare finale in fretta — perfetto se le condizioni cambiano."
       },
       "spinning_basics": {
         "title": "Spinning — Tecnica base",
-        "duration": "10 min"
+        "duration": "10 min",
+        "body": "**Cos'è lo spinning?**\n\nPesca attiva con esca artificiale: lanci un rotante, crankbait o artificiale morbido e lo recuperi con intenzione. Variando velocità e pause imiti un pesce ferito.\n\n**Specie tipiche**\n\nLuccio, persico, sandra e trota rispondono bene. I momenti migliori: alba e tramonto. Spazzola a ventaglio — il primo lancio cade dove può esserci un pesce, non dove è comodo."
       },
       "bottom_fishing": {
         "title": "Pesca a fondo",
-        "duration": "7 min"
+        "duration": "7 min",
+        "body": "**La montatura di fondo**\n\nNella pesca a fondo l'esca posa sul fondale. Montaggio classico: piombo scorrevole sopra una girella, finale di 50–80 cm con amo. Il pesce non sente resistenza all'abboccata.\n\n**La pazienza paga**\n\nIdeale per carpa, abramide, tinca e anguilla. Esche: mais, boilies, lombrichi o bigattini. Il posto è tutto: bordi d'alghe, buche profonde e sbocchi di affluenti promettono."
       },
       "fly_fishing_intro": {
         "title": "Pesca a mosca — Introduzione",
-        "duration": "12 min"
+        "duration": "12 min",
+        "body": "**L'essenza della pesca a mosca**\n\nNon lanci l'esca ma la coda — la mosca artificiale arriva quasi senza peso. Il ritmo avanti-indietro carica la canna finché la coda si srotola elegante.\n\n**Primi passi**\n\nUn set AFTM 5/6 è ideale per trota e temolo. Inizia in acque ferme senza vento a 8–10 m. La precisione batte la distanza — una mosca a 20 cm dal pesce vale più di una a 30 m."
       },
       "palomar_knot": {
         "title": "Il nodo Palomar",
-        "duration": "3 min"
+        "duration": "3 min",
+        "body": "**Perché il Palomar?**\n\nFacile e molto resistente — mantiene fino al 95 % della resistenza del filo. Molto amato per il trecciato, dove tanti nodi scivolano.\n\n**Passo dopo passo**\n\nRaddoppia il filo, passalo nell'occhiello. Fai un nodo semplice lento con l'ansa doppia. Fai passare l'asola sopra l'amo. Bagna, stringi piano, taglia a 2 mm."
       },
       "fg_knot": {
         "title": "Nodo FG (Braid-Fluoro)",
-        "duration": "5 min"
+        "duration": "5 min",
+        "body": "**Il nodo FG per treccia e fluorocarbon**\n\nL'FG unisce lenza madre e shock leader quasi invisibilmente e scorre benissimo negli anelli. Puoi usare treccia fine e finale più robusto.\n\n**L'allenamento ripaga**\n\nPiù difficile di altri ma molto affidabile. Suggerimento: tieni il fluoro in tensione e avvolgi la treccia in direzioni alterne — almeno 20 giri. Assicura con due mezzi colli."
       },
       "rod_guide": {
         "title": "Guida alle canne: la scelta giusta",
-        "duration": "9 min"
+        "duration": "9 min",
+        "body": "**Scegliere in base all'uso**\n\nLa lunghezza determina portata e controllo: 2,10 m per trota di torrente, 2,70 m polivalente, 3,60 m+ per carpa e feeder. La potenza (WG) deve combaciare con l'esca.\n\n**Azione**\n\nFast (azione di punta) = rilevamento sensibile, rigida. Moderate (semi-parabolica) = universale, indulgente. Slow (parabolica) = morbida, lancia esche leggere. Per iniziare, moderata."
       },
       "reel_setup": {
         "title": "Configurazione corretta del mulinello",
-        "duration": "6 min"
+        "duration": "6 min",
+        "body": "**Montare il mulinello**\n\nAvvita il mulinello, apri l'archetto, passa il filo in tutti gli anelli e fissalo alla bobina con un nodo arbor. Non riempire troppo — 2 mm di margine evita garbugli.\n\n**Regolare la frizione**\n\nDeve cedere al 25–30 % della resistenza del filo. Regola: tirando il filo il mulinello deve cederlo prima che si spezzi. Controlla prima di ogni combattimento."
       },
       "catch_release": {
         "title": "Catch & Release fatto bene",
-        "duration": "4 min"
+        "duration": "4 min",
+        "body": "**Manipolazione rispettosa**\n\nUsa un guadino gommato — protegge il muco. Porta il pesce a riva rapidamente per non sfinirlo. Tienilo orizzontale, mai verticale per la bocca — danneggi la colonna.\n\n**Rilascio**\n\nSlama in acqua se puoi. Se ha inghiottito l'amo: taglia il finale, arrugginirà. Sostieni il pesce in acqua finché non nuota da solo. Non lanciarlo mai."
       },
       "clean_fishing": {
         "title": "Pesca senza rifiuti",
-        "duration": "3 min"
+        "duration": "3 min",
+        "body": "**Un posto pulito**\n\nOgni filo vecchio, piombo o amo abbandonato mette in pericolo uccelli e pesci. Porta sempre una busta — per i tuoi rifiuti e quelli altrui. Lascia il posto più pulito di come l'hai trovato.\n\n**Alternative senza piombo**\n\nIl piombo è tossico per gli uccelli acquatici. Scegli tungsteno, acciaio o pietra. Lo stesso per le esche: alternative biodegradabili e scatole riutilizzabili riducono la plastica. Piccoli gesti, grande impatto."
       },
       "reading_weather": {
         "title": "Lettura del meteo",
@@ -986,11 +998,13 @@
       },
       "moon_phases": {
         "title": "Fasi lunari nella pesca",
-        "duration": "5 min"
+        "duration": "5 min",
+        "body": "**Luna nuova e piena**\n\nMaree forti e attività elevata, soprattutto per i predatori costieri. I crepuscoli di questi giorni possono essere eccezionali.\n\n**In acqua dolce**\n\nLa luna incide anche nell'entroterra — in modo più sottile. Molti esperti giurano sui 3 giorni prima e dopo la luna piena. Tieni un diario e correla le catture con la fase."
       },
       "barometer_activity": {
         "title": "Pressione barometrica e attività dei pesci",
-        "duration": "6 min"
+        "duration": "6 min",
+        "body": "**Pressione e attività**\n\nPressione in calo (prima dei cambi) attiva molti pesci — mangiano prima della tempesta. Pressione alta e stabile spesso significa attività lenta.\n\n**In pratica**\n\nControlla 12–24 ore prima. I cambi rapidi (> 3 hPa / 3h) sono oro. Combina con fase lunare e temperatura per previsioni migliori."
       }
     },
     "category_basics_label": "Nozioni Fondamentali",
@@ -1003,7 +1017,10 @@
     "article_basics_license_title": "Ottenere la Tua Prima Licenza di Pesca",
     "article_reading_weather_body": "La pressione atmosferica influenza significativamente il comportamento dei pesci.\n\nPressione Crescente (Alta Pressione):\n• I pesci diventano più attivi\n• Condizioni di pesca ideali dopo l'aumento di pressione\n• I pesci escono dalle acque profonde\n\nPressione Decrescente (Fronte di Bassa Pressione):\n• I pesci si ritirano negli strati più profondi\n• Spesso buone catture appena prima del fronte\n• Solitamente lento dopo il passaggio del fronte\n\nPressione Stabile: Attività coerente, prevedibile.",
     "article_catch_release_title": "Cattura e Rilascio Fatto Bene",
-    "article_clean_fishing_title": "Pesca Senza Rifiuti"
+    "article_clean_fishing_title": "Pesca Senza Rifiuti",
+    "articles_count": "{{count}} articoli",
+    "reading_time": "tempo di lettura",
+    "body_coming_soon": "Articolo completo in arrivo."
   },
   "regulations": {
     "title": "Regolamenti di cattura",
@@ -1092,6 +1109,13 @@
       "price": "Prezzo",
       "special_conditions": "Condizioni speciali",
       "close": "Chiudi"
+    },
+    "form": {
+      "name": "Nome",
+      "country": "Paese",
+      "country_placeholder": "es. Italia",
+      "valid_from": "Valida dal",
+      "valid_until": "Valida fino al"
     }
   },
   "mybookings": {
@@ -1106,7 +1130,19 @@
     "no_completed": "Nessuna sessione completata ancora",
     "confirmed": "Confermata",
     "upcoming": "Prossima",
-    "past": "Passata"
+    "past": "Passata",
+    "role_student": "Il tuo coach",
+    "role_coach": "Il tuo allievo",
+    "status": {
+      "pending": "In attesa",
+      "confirmed": "Confermata",
+      "completed": "Completata",
+      "cancelled": "Annullata"
+    },
+    "detail": {
+      "date": "Data",
+      "total": "Totale"
+    }
   },
   "bait": {
     "catalog_title": "Catalogo esche",

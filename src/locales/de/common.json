@@ -934,51 +934,63 @@
     "lessons": {
       "equipment_beginner": {
         "title": "Angelausrüstung für Anfänger",
-        "duration": "8 min"
+        "duration": "8 min",
+        "body": "**Deine Grundausrüstung**\n\nFür den Einstieg brauchst du nicht viel: Eine Allround-Rute (2,40–2,70 m), eine passende Stationärrolle (Größe 3000–4000), dazu monofile Schnur (0,25–0,30 mm) oder eine geflochtene Schnur (0,15 mm) für mehr Sensibilität.\n\n**Zubehör**\n\nEin kleiner Köfferchen mit Haken in verschiedenen Größen (6–12), Bleien, Wirbeln, Posen und einer Zange reicht für die ersten Ausflüge. Nicht vergessen: Kescher, Maßband, Hakenlöser und deinen Angelschein."
       },
       "first_license": {
         "title": "Den ersten Angelschein machen",
-        "duration": "5 min"
+        "duration": "5 min",
+        "body": "**Der Fischereischein in Deutschland**\n\nIn den meisten Bundesländern brauchst du einen Fischereischein, für den du eine Prüfung ablegst. Sie umfasst Theorie (Biologie, Gewässerkunde, Geräte, Recht, Tier- und Naturschutz) und eine Praxisprüfung mit Rutenaufbau.\n\n**Vor Ort**\n\nZusätzlich benötigst du eine Erlaubniskarte (Gastkarte, Wochen- oder Jahreskarte) für dein konkretes Gewässer. Diese bekommst du beim Verein, Angelgeschäft oder online. Ohne beides ist jeder Angeltag illegal — Kontrollen sind häufig."
       },
       "knots_beginner": {
         "title": "Knoten für Anfänger",
-        "duration": "6 min"
+        "duration": "6 min",
+        "body": "**Der Clinch-Knoten**\n\nDer klassische Einsteigerknoten: Schnur durchs Hakenöhr, 5–6 Mal um die Hauptschnur wickeln, dann das freie Ende durch die Schlaufe am Öhr führen und zurück durch die große Schlaufe. Anfeuchten und fest ziehen.\n\n**Der Schlaufenknoten**\n\nZum Einbinden von Vorfächern: Einfache Überhandschlaufe bilden, zweimal umschlagen, das Ende durchziehen und festziehen. Die Schlaufe ermöglicht es, Vorfächer schnell zu tauschen — perfekt bei wechselnden Bedingungen."
       },
       "spinning_basics": {
         "title": "Spinnfischen — Grundtechnik",
-        "duration": "10 min"
+        "duration": "10 min",
+        "body": "**Was ist Spinnfischen?**\n\nAktive Angelei mit Kunstköder: Du wirfst einen Spinner, Wobbler oder Gummifisch aus und führst ihn gezielt zurück. Durch variable Einholgeschwindigkeit und Pausen imitierst du verletzte Beutefische.\n\n**Typische Zielfische**\n\nHecht, Barsch, Zander und Forelle reagieren besonders gut auf Kunstköder. Morgens und abends sind die besten Zeiten. Fächere den Bereich systematisch ab — der erste Wurf landet dort, wo ein Fisch stehen könnte, nicht dort, wo es bequem ist."
       },
       "bottom_fishing": {
         "title": "Grundangeln",
-        "duration": "7 min"
+        "duration": "7 min",
+        "body": "**Grundmontage**\n\nBeim Grundangeln liegt der Köder am Gewässerboden. Klassisch mit Laufblei über einem Wirbel, dahinter ein 50–80 cm Vorfach mit Haken. Der Fisch merkt keinen Widerstand beim Anbiss.\n\n**Geduld zahlt sich aus**\n\nIdeal für Karpfen, Brassen, Schleien und Aale. Köder sind Mais, Boilies, Tauwürmer oder Maden. Platzwahl ist entscheidend: Krautkanten, tiefe Löcher und einmündende Zuflüsse sind Erfolg versprechend."
       },
       "fly_fishing_intro": {
         "title": "Fliegenfischen — Einführung",
-        "duration": "12 min"
+        "duration": "12 min",
+        "body": "**Die Essenz des Fliegenfischens**\n\nAnstatt des Köders wirfst du die Schnur — die künstliche Fliege schwebt fast gewichtslos am Ende des Vorfachs. Der Rhythmus von Vor- und Rückschwung lädt die Rute auf, bis die Schnur elegant ausrollt.\n\n**Erste Schritte**\n\nEine AFTM 5/6 Kombination eignet sich für Forelle und Äsche. Beginne im Stillwasser ohne Wind mit Weiten von 8–10 Metern. Präzision schlägt Weite — eine Fliege 20 cm neben dem Fisch ist besser als 30 Meter daneben."
       },
       "palomar_knot": {
         "title": "Der Palomar-Knoten",
-        "duration": "3 min"
+        "duration": "3 min",
+        "body": "**Warum der Palomar?**\n\nEinfach zu binden und extrem tragfähig — der Palomar erreicht bis zu 95 % der Schnurbruchlast. Besonders beliebt für geflochtene Schnüre, wo viele Knoten rutschen.\n\n**Schritt für Schritt**\n\nSchnur doppelt legen, durch das Öhr schlaufen. Mit der Doppelschlaufe einen lockeren Überhandknoten binden. Die Schlaufe über den Haken führen. Anfeuchten, langsam festziehen, überstehendes Ende auf 2 mm kürzen."
       },
       "fg_knot": {
         "title": "FG-Knoten (Braid-Fluoro)",
-        "duration": "5 min"
+        "duration": "5 min",
+        "body": "**Der FG-Knoten für Geflecht und Fluorocarbon**\n\nDer FG verbindet Hauptschnur und Shockleader fast unsichtbar und läuft perfekt durch Rutenringe. Dadurch kannst du mit dünner geflochtener Hauptschnur und stärkerem Vorfach arbeiten.\n\n**Übung lohnt sich**\n\nDer Knoten ist kniffliger als andere, aber einmal gelernt extrem zuverlässig. Tipp: Das Fluorocarbon unter Spannung halten, das Geflecht in abwechselnden Richtungen darum wickeln — mindestens 20 Wicklungen. Zwei Halbschläge sichern."
       },
       "rod_guide": {
         "title": "Ruten-Guide: Die richtige Wahl",
-        "duration": "9 min"
+        "duration": "9 min",
+        "body": "**Rutenwahl nach Einsatz**\n\nDie Rutenlänge bestimmt Wurfweite und Kontrolle: 2,10 m für Bachforelle am kleinen Fluss, 2,70 m Allround, 3,60 m+ für Karpfen- und Feederangeln. Das Wurfgewicht (WG) sollte zum Köder passen.\n\n**Action**\n\nFast (Spitzenaktion) = sensible Bissanzeige, hart. Moderate (Semi-parabol) = universell, fehlerverzeihend. Slow (Parabol) = weich, wirft leichte Köder. Für Einsteiger ist moderate Action die beste Wahl."
       },
       "reel_setup": {
         "title": "Rollen richtig einstellen",
-        "duration": "6 min"
+        "duration": "6 min",
+        "body": "**Rolle montieren**\n\nRolle an die Rute schrauben, Bügel öffnen, Schnur durch alle Ringe fädeln und mit Arborknoten an der Spule befestigen. Spulenkante niemals überfüllen — 2 mm Freiraum verhindert Perücken.\n\n**Bremse richtig einstellen**\n\nDie Bremse sollte bei etwa 25–30 % der Schnurbruchlast greifen. Faustregel: Beim Ziehen an der Schnur gibt die Rolle gleichmäßig Schnur frei, bevor die Schnur reißt. Vor jedem Drill überprüfen."
       },
       "catch_release": {
         "title": "Catch & Release richtig gemacht",
-        "duration": "4 min"
+        "duration": "4 min",
+        "body": "**Fisch-schonende Landung**\n\nVerwende einen gummierten Kescher — er schützt die Schleimhaut. Drille zügig, damit der Fisch nicht überlastet. Halte ihn horizontal, niemals senkrecht am Kiefer — das verletzt den Rückgrat.\n\n**Zurück ins Wasser**\n\nHaken möglichst im Wasser lösen. Wenn der Fisch tief geschluckt hat: Vorfach abschneiden, Haken rostet aus. Vor dem Freilassen im Wasser halten, bis er selbstständig wegschwimmt. Nie werfen."
       },
       "clean_fishing": {
         "title": "Müllfreies Angeln",
-        "duration": "3 min"
+        "duration": "3 min",
+        "body": "**Saubere Angelstelle**\n\nJede alte Schnur, jedes Blei, jeder Haken im Wasser gefährdet Vögel und Fische. Nimm immer eine kleine Tasche für Müll mit — dein eigener und fremder. Du hinterlässt den Platz sauberer, als du ihn vorgefunden hast.\n\n**Bleifreie Alternativen**\n\nBlei ist giftig für Wasservögel. Setze auf Tungsten, Stahl oder Wolfram. Auch beim Köder: Bio-abbaubare Alternativen und wiederverwertbare Boxen reduzieren Plastikmüll. Kleine Gesten, große Wirkung."
       },
       "reading_weather": {
         "title": "Wetter lesen",
@@ -986,11 +998,13 @@
       },
       "moon_phases": {
         "title": "Mondphasen beim Angeln",
-        "duration": "5 min"
+        "duration": "5 min",
+        "body": "**Neumond und Vollmond**\n\nStarke Gezeiten und verstärkte Aktivität, vor allem bei Raubfischen in küstennahen Gewässern. Die Dämmerungsstunden an diesen Tagen sind oft besonders fängig.\n\n**Im Süßwasser**\n\nAuch in Binnengewässern wirkt sich der Mond aus — wenn auch subtiler. Viele erfahrene Angler schwören auf die 3 Tage vor und nach Vollmond. Führe ein Angeltagebuch und korrelier deine Fänge mit der Mondphase."
       },
       "barometer_activity": {
         "title": "Barometerdruck und Fischaktivität",
-        "duration": "6 min"
+        "duration": "6 min",
+        "body": "**Luftdruck und Beißverhalten**\n\nFallender Luftdruck (meist vor Wetterumschwüngen) aktiviert viele Fische — sie fressen vor dem Sturm. Hoher, stabiler Druck liefert oft ruhige Bedingungen mit langsamer Aktivität.\n\n**Praxis**\n\nBeobachte 12–24 Stunden vor deinem Angeltag. Rapide Druckänderungen (> 3 hPa / 3h) sind Goldzeit. Kombiniere mit Mondphasen und Wassertemperatur für noch bessere Vorhersagen."
       }
     },
     "category_basics_label": "Grundlagen",
@@ -1003,7 +1017,10 @@
     "article_basics_license_title": "Den ersten Angelschein machen",
     "article_reading_weather_body": "Der Luftdruck beeinflusst das Verhalten von Fischen erheblich.\n\nSteigender Druck (Hochdruck):\n• Fische werden aktiver\n• Ideale Angelbedingungen nach dem Druckanstieg\n• Fische kommen aus der Tiefe\n\nFallender Druck (Tiefdruckfront):\n• Fische ziehen sich in tiefere Schichten zurück\n• Kurz vor der Front oft gute Fänge\n• Hinter der Front meist Beißflaute\n\nStabiler Druck: Gleichmäßige Aktivität, vorhersagbar.",
     "article_catch_release_title": "Catch & Release richtig gemacht",
-    "article_clean_fishing_title": "Müllfreies Angeln"
+    "article_clean_fishing_title": "Müllfreies Angeln",
+    "articles_count": "{{count}} Artikel",
+    "reading_time": "Lesezeit",
+    "body_coming_soon": "Ausführlicher Artikel folgt in Kürze."
   },
   "regulations": {
     "title": "Fangbestimmungen",
@@ -1092,6 +1109,13 @@
       "price": "Preis",
       "special_conditions": "Besondere Bedingungen",
       "close": "Schließen"
+    },
+    "form": {
+      "name": "Name",
+      "country": "Land",
+      "country_placeholder": "z.B. Deutschland",
+      "valid_from": "Gültig ab",
+      "valid_until": "Gültig bis"
     }
   },
   "mybookings": {
@@ -1106,7 +1130,19 @@
     "no_completed": "Noch keine abgeschlossenen Sitzungen",
     "confirmed": "Bestätigt",
     "upcoming": "Bevorstehend",
-    "past": "Vergangen"
+    "past": "Vergangen",
+    "role_student": "Dein Coach",
+    "role_coach": "Dein Schüler",
+    "status": {
+      "pending": "Offen",
+      "confirmed": "Bestätigt",
+      "completed": "Abgeschlossen",
+      "cancelled": "Storniert"
+    },
+    "detail": {
+      "date": "Datum",
+      "total": "Gesamt"
+    }
   },
   "bait": {
     "catalog_title": "Köder-Katalog",

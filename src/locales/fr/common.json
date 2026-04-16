@@ -934,51 +934,63 @@
     "lessons": {
       "equipment_beginner": {
         "title": "Équipement de pêche pour débutants",
-        "duration": "8 min"
+        "duration": "8 min",
+        "body": "**Ton kit de départ**\n\nPas besoin de grand-chose pour débuter : une canne polyvalente (2,40–2,70 m), un moulinet adapté (taille 3000–4000), du monofil (0,25–0,30 mm) ou de la tresse (0,15 mm) pour plus de sensibilité.\n\n**Accessoires**\n\nUne petite boîte avec hameçons de tailles variées (6–12), plombs, émerillons, flotteurs et une pince suffit pour les premières sorties. N'oublie pas : épuisette, mètre ruban, dégorgeoir et ton permis de pêche."
       },
       "first_license": {
         "title": "Obtenir ton premier permis de pêche",
-        "duration": "5 min"
+        "duration": "5 min",
+        "body": "**Le permis de pêche**\n\nDans la plupart des régions, un permis est exigé. En Allemagne, un examen couvre biologie, milieux, matériel, droit et protection animale, avec un test pratique de montage.\n\n**Sur place**\n\nIl faut aussi une carte journalière, hebdomadaire ou annuelle pour le plan d'eau concerné. Elle s'obtient auprès du club, du détaillant ou en ligne. Sans les deux, chaque journée est illégale — les contrôles sont fréquents."
       },
       "knots_beginner": {
         "title": "Nœuds pour débutants",
-        "duration": "6 min"
+        "duration": "6 min",
+        "body": "**Le nœud Clinch**\n\nLe grand classique : passe le fil dans l'œillet, fais 5–6 tours autour du corps de ligne, fais repasser l'extrémité par la petite boucle près de l'œillet, puis par la grande boucle. Humidifie et serre.\n\n**Le nœud de boucle**\n\nPour fixer un bas de ligne : forme une simple boucle, fais deux tours, fais passer l'extrémité et serre. La boucle permet de changer vite le bas de ligne — idéal quand les conditions changent."
       },
       "spinning_basics": {
         "title": "Pêche à la cuillère — Technique de base",
-        "duration": "10 min"
+        "duration": "10 min",
+        "body": "**Qu'est-ce que la pêche au lancer ?**\n\nPêche active au leurre : tu lances une cuillère, un crankbait ou un leurre souple et tu le ramènes de manière volontaire. En variant la vitesse et les pauses, tu imites un poisson blessé.\n\n**Espèces typiques**\n\nBrochet, perche, sandre et truite réagissent bien. Les meilleurs moments : aube et crépuscule. Ratisser en éventail — le premier lancer doit atteindre un poste potentiel, pas le plus confortable."
       },
       "bottom_fishing": {
         "title": "Pêche au fond",
-        "duration": "7 min"
+        "duration": "7 min",
+        "body": "**Le montage de fond**\n\nEn pêche au fond, l'appât repose sur le substrat. Montage classique : plomb coulissant au-dessus d'un émerillon, bas de ligne de 50–80 cm avec hameçon. Le poisson ne sent aucune résistance.\n\n**La patience paie**\n\nIdéal pour carpe, brème, tanche et anguille. Appâts : maïs, bouillettes, vers de terre ou asticots. Le poste est clé : bordures herbeuses, trous profonds et embouchures promettent."
       },
       "fly_fishing_intro": {
         "title": "Pêche à la mouche — Introduction",
-        "duration": "12 min"
+        "duration": "12 min",
+        "body": "**L'essence de la pêche à la mouche**\n\nTu ne lances pas le leurre mais la soie — la mouche artificielle arrive presque sans poids. Le rythme des mouvements avant-arrière charge la canne jusqu'à ce que la ligne se déroule élégamment.\n\n**Premiers pas**\n\nUn ensemble AFTM 5/6 convient pour truite et ombre. Commence en eau calme sans vent à 8–10 m. La précision prime sur la distance — une mouche à 20 cm du poisson vaut mieux qu'à 30 m."
       },
       "palomar_knot": {
         "title": "Le nœud Palomar",
-        "duration": "3 min"
+        "duration": "3 min",
+        "body": "**Pourquoi le Palomar ?**\n\nFacile et très résistant — il garde jusqu'à 95 % de la résistance du fil. Très apprécié pour la tresse où beaucoup de nœuds glissent.\n\n**Pas à pas**\n\nDouble le fil, passe-le dans l'œillet. Fais un nœud simple lâche avec la double boucle. Fais passer la boucle par-dessus l'hameçon. Humidifie, serre doucement, coupe à 2 mm."
       },
       "fg_knot": {
         "title": "Nœud FG (Tresse-Fluoro)",
-        "duration": "5 min"
+        "duration": "5 min",
+        "body": "**Le nœud FG pour tresse et fluorocarbone**\n\nLe FG unit corps de ligne et bas de choc presque invisiblement et passe parfaitement dans les anneaux. Tu peux associer tresse fine et bas plus solide.\n\n**L'entraînement vaut la peine**\n\nPlus technique mais très fiable une fois maîtrisé. Astuce : garde le fluoro en tension et enroule la tresse en alternant les directions — au moins 20 tours. Sécurise par deux demi-clefs."
       },
       "rod_guide": {
         "title": "Guide des cannes : le bon choix",
-        "duration": "9 min"
+        "duration": "9 min",
+        "body": "**Choisir selon l'usage**\n\nLa longueur détermine portée et contrôle : 2,10 m pour truite de ruisseau, 2,70 m polyvalent, 3,60 m+ pour carpe et feeder. La puissance (WG) doit correspondre au leurre.\n\n**Action**\n\nFast (action de pointe) = détection sensible, ferme. Moderate (semi-parabolique) = universelle, indulgente. Slow (parabolique) = souple, lance léger. Pour débuter, choisis modérée."
       },
       "reel_setup": {
         "title": "Régler correctement les moulins",
-        "duration": "6 min"
+        "duration": "6 min",
+        "body": "**Monter le moulinet**\n\nVisse le moulinet, ouvre le pick-up, passe le fil dans tous les anneaux et fixe-le à la bobine avec un nœud d'arbor. Ne surremplis jamais — 2 mm de marge évite les perruques.\n\n**Régler le frein**\n\nLe frein doit céder à 25–30 % de la résistance du fil. Règle : en tirant sur le fil, le moulinet doit libérer avant rupture. Vérifie avant chaque combat."
       },
       "catch_release": {
         "title": "Prise & Remise bien faite",
-        "duration": "4 min"
+        "duration": "4 min",
+        "body": "**Manipulation respectueuse**\n\nUtilise une épuisette caoutchoutée — elle protège le mucus. Combattre vite évite d'épuiser. Tiens horizontal, jamais vertical par la mâchoire — ça blesse la colonne.\n\n**Remise à l'eau**\n\nDéhamechonne dans l'eau si possible. Si l'hameçon est profond : coupe le bas, il rouillera. Maintiens le poisson sous l'eau jusqu'à ce qu'il reparte seul. Ne le lance jamais."
       },
       "clean_fishing": {
         "title": "Pêche sans déchets",
-        "duration": "3 min"
+        "duration": "3 min",
+        "body": "**Un poste propre**\n\nChaque bout de vieux fil, plomb, hameçon abandonné menace oiseaux et poissons. Emmène toujours un petit sac — pour tes déchets et ceux des autres. Laisse le lieu plus propre qu'avant.\n\n**Alternatives sans plomb**\n\nLe plomb est toxique pour les oiseaux d'eau. Préfère tungstène, acier ou pierre. Idem pour les appâts : options biodégradables et boîtes réutilisables réduisent le plastique. Petits gestes, grand impact."
       },
       "reading_weather": {
         "title": "Lire la météo",
@@ -986,11 +998,13 @@
       },
       "moon_phases": {
         "title": "Phases de la lune à la pêche",
-        "duration": "5 min"
+        "duration": "5 min",
+        "body": "**Nouvelle lune et pleine lune**\n\nGrandes marées et activité accrue, surtout les prédateurs côtiers. Les crépuscules de ces jours peuvent être exceptionnels.\n\n**En eau douce**\n\nLa lune agit aussi à l'intérieur — plus discrètement. Beaucoup d'experts jurent par les 3 jours avant et après la pleine lune. Tiens un carnet et corrèle tes prises à la phase."
       },
       "barometer_activity": {
         "title": "Pression barométrique et activité des poissons",
-        "duration": "6 min"
+        "duration": "6 min",
+        "body": "**Pression et activité**\n\nUne pression qui baisse (avant un changement) active beaucoup de poissons — ils mangent avant la tempête. Une pression haute et stable donne souvent de la lenteur.\n\n**En pratique**\n\nSurveille 12–24 h avant. Les variations rapides (> 3 hPa / 3h) sont en or. Combine avec la lune et la température pour affiner."
       }
     },
     "category_basics_label": "Fondamentaux",
@@ -1003,7 +1017,10 @@
     "article_basics_license_title": "Obtenir Votre Premier Permis de Pêche",
     "article_reading_weather_body": "La pression atmosphérique influence considérablement le comportement des poissons.\n\nPression Croissante (Haute Pression):\n• Les poissons deviennent plus actifs\n• Conditions de pêche idéales après la montée de pression\n• Les poissons sortent des eaux profondes\n\nPression Décroissante (Front de Basse Pression):\n• Les poissons se retirent dans les couches plus profondes\n• Souvent de bonnes prises juste avant le front\n• Généralement lent après le passage du front\n\nPression Stable: Activité constante, prévisible.",
     "article_catch_release_title": "Capture et Libération Faites Correctement",
-    "article_clean_fishing_title": "Pêche sans Déchet"
+    "article_clean_fishing_title": "Pêche sans Déchet",
+    "articles_count": "{{count}} articles",
+    "reading_time": "temps de lecture",
+    "body_coming_soon": "Article complet bientôt disponible."
   },
   "regulations": {
     "title": "Réglementation des prises",
@@ -1092,6 +1109,13 @@
       "price": "Prix",
       "special_conditions": "Conditions spéciales",
       "close": "Fermer"
+    },
+    "form": {
+      "name": "Nom",
+      "country": "Pays",
+      "country_placeholder": "par ex. France",
+      "valid_from": "Valide à partir du",
+      "valid_until": "Valide jusqu'au"
     }
   },
   "mybookings": {
@@ -1106,7 +1130,19 @@
     "no_completed": "Aucune session terminée pour le moment",
     "confirmed": "Confirmé",
     "upcoming": "À venir",
-    "past": "Passé"
+    "past": "Passé",
+    "role_student": "Ton coach",
+    "role_coach": "Ton élève",
+    "status": {
+      "pending": "En attente",
+      "confirmed": "Confirmée",
+      "completed": "Terminée",
+      "cancelled": "Annulée"
+    },
+    "detail": {
+      "date": "Date",
+      "total": "Total"
+    }
   },
   "bait": {
     "catalog_title": "Catalogue d'appâts",

@@ -6,42 +6,45 @@ import PageTransition from '../components/ui/PageTransition';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 
-const CATEGORIES = [
-  { id: 'basics', icon: '🎣', labelKey: 'angelschule.category_basics_label', color: '#1FA7B8', articles: [
-    { titleKey: 'angelschule.article_basics_intro_title', durationKey: 'angelschule.lessons.equipment_beginner.duration', contentKey: 'Not in key yet - kept inline' },
-    { titleKey: 'angelschule.article_basics_license_title', durationKey: 'angelschule.lessons.first_license.duration' },
-    { title: 'Knoten für Anfänger', duration: '6 min', content: 'Die 3 wichtigsten Angelknoten...' },
+// Each article refers to 3 keys under angelschule.lessons.<slug>: title, duration, body
+const buildCategories = () => [
+  { id: 'basics', icon: '🎣', labelKey: 'angelschule.category_basics_label', color: '#1FA7B8', lessons: [
+    'equipment_beginner',
+    'first_license',
+    'knots_beginner',
   ]},
-  { id: 'techniques', icon: '🎯', labelKey: 'angelschule.category_techniques_label', color: '#F5C34B', articles: [
-    { title: 'Spinnfischen — Grundtechnik', duration: '10 min', content: 'Das Spinnfischen...' },
-    { title: 'Grundangeln', duration: '7 min', content: 'Beim Grundangeln...' },
-    { title: 'Fliegenfischen — Einführung', duration: '12 min', content: 'Fliegenfischen ist eine...' },
+  { id: 'techniques', icon: '🎯', labelKey: 'angelschule.category_techniques_label', color: '#F5C34B', lessons: [
+    'spinning_basics',
+    'bottom_fishing',
+    'fly_fishing_intro',
   ]},
-  { id: 'knots', icon: '🪢', labelKey: 'angelschule.category_knots_label', color: '#4DC3D1', articles: [
-    { title: 'Der Palomar-Knoten', duration: '3 min', content: 'Der Palomar-Knoten ist der zuverlässigste...' },
-    { title: 'FG-Knoten (Braid-Fluoro)', duration: '5 min', content: 'Der FG-Knoten verbindet...' },
+  { id: 'knots', icon: '🪢', labelKey: 'angelschule.category_knots_label', color: '#4DC3D1', lessons: [
+    'palomar_knot',
+    'fg_knot',
   ]},
-  { id: 'equipment', icon: '⚙️', labelKey: 'angelschule.category_equipment_label', color: '#7FDCE5', articles: [
-    { title: 'Ruten-Guide: Die richtige Wahl', duration: '9 min', content: 'Die Wahl der richtigen Rute...' },
-    { title: 'Rollen richtig einstellen', duration: '6 min', content: 'Die Bremseinstellung deiner Rolle...' },
+  { id: 'equipment', icon: '⚙️', labelKey: 'angelschule.category_equipment_label', color: '#7FDCE5', lessons: [
+    'rod_guide',
+    'reel_setup',
   ]},
-  { id: 'weather', icon: '🌤️', labelKey: 'angelschule.category_weather_label', color: '#FFD872', articles: [
-    { titleKey: 'angelschule.lessons.barometer_activity.title', durationKey: 'angelschule.lessons.barometer_activity.duration', contentKey: 'angelschule.article_reading_weather_body' },
-    { title: 'Mondphasen beim Angeln', duration: '7 min', content: 'Solunartheorie: Während Voll- und Neumond...' },
+  { id: 'weather', icon: '🌤️', labelKey: 'angelschule.category_weather_label', color: '#FFD872', lessons: [
+    'barometer_activity',
+    'moon_phases',
   ]},
-  { id: 'ethics', icon: '🌿', labelKey: 'angelschule.category_ethics_label', color: '#4DC3D1', articles: [
-    { titleKey: 'angelschule.article_catch_release_title', durationKey: 'angelschule.lessons.catch_release.duration' },
-    { titleKey: 'angelschule.article_clean_fishing_title', durationKey: 'angelschule.lessons.clean_fishing.duration' },
+  { id: 'ethics', icon: '🌿', labelKey: 'angelschule.category_ethics_label', color: '#4DC3D1', lessons: [
+    'catch_release',
+    'clean_fishing',
   ]},
 ];
 
-function ArticleView({ article, category, onBack }) {
+const CATEGORIES = buildCategories();
+
+function ArticleView({ lessonSlug, category, onBack }) {
   const { t } = useTranslation();
-  const title = article.titleKey ? t(article.titleKey) : article.title;
-  const duration = article.durationKey ? t(article.durationKey) : article.duration;
-  const content = article.contentKey ? t(article.contentKey) : article.content;
-  const paragraphs = content.split('\n\n');
-  
+  const title = t(`angelschule.lessons.${lessonSlug}.title`);
+  const duration = t(`angelschule.lessons.${lessonSlug}.duration`);
+  const content = t(`angelschule.lessons.${lessonSlug}.body`, { defaultValue: '' });
+  const paragraphs = content ? content.split('\n\n') : [];
+
   return (
     <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }}
       transition={{ duration: 0.3, ease: tideEase }}>
@@ -50,18 +53,20 @@ function ArticleView({ article, category, onBack }) {
           <ChevronLeft className="w-4 h-4 text-foam/60" />
         </button>
         <div>
-          <p className="text-foam/40 text-xs">{t(`community.${category.labelKey.split('.')[1]}`)}</p>
+          <p className="text-foam/40 text-xs">{t(category.labelKey)}</p>
           <h2 className="font-display font-bold text-foam text-lg leading-tight">{title}</h2>
         </div>
       </div>
 
       <div className="glass-card rounded-2xl p-4 mb-4 flex items-center gap-2">
         <BookOpen className="w-4 h-4 text-tide-400" />
-        <span className="text-foam/60 text-sm">{duration} Lesezeit</span>
+        <span className="text-foam/60 text-sm">{duration} {t('angelschule.reading_time')}</span>
       </div>
 
       <div className="space-y-4">
-        {paragraphs.map((para, i) => {
+        {paragraphs.length === 0 ? (
+          <p className="text-foam/50 text-sm italic">{t('angelschule.body_coming_soon')}</p>
+        ) : paragraphs.map((para, i) => {
           if (para.startsWith('**') || para.startsWith('#')) {
             return <h3 key={i} className="font-display font-bold text-foam text-base">{para.replace(/\*\*/g, '').replace(/^#+\s/, '')}</h3>;
           }
@@ -75,13 +80,13 @@ function ArticleView({ article, category, onBack }) {
 export default function Angelschule() {
   const { t } = useTranslation();
   const [selectedCat, setSelectedCat] = useState(null);
-  const [selectedArticle, setSelectedArticle] = useState(null);
+  const [selectedLesson, setSelectedLesson] = useState(null);
 
   return (
     <PageTransition>
       <div className="px-4 pt-6 pb-4">
         <AnimatePresence mode="wait">
-          {!selectedCat && !selectedArticle && (
+          {!selectedCat && !selectedLesson && (
             <motion.div key="categories" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               <div className="mb-6">
                 <p className="text-foam/50 text-sm">{t('angelschule.subtitle')}</p>
@@ -98,7 +103,7 @@ export default function Angelschule() {
                     <span className="text-3xl">{cat.icon}</span>
                     <div>
                       <p className="font-display font-bold text-foam text-sm">{t(cat.labelKey)}</p>
-                      <p className="text-foam/40 text-xs">{cat.articles.length} Artikel</p>
+                      <p className="text-foam/40 text-xs">{t('angelschule.articles_count', { count: cat.lessons.length })}</p>
                     </div>
                   </motion.button>
                 ))}
@@ -106,7 +111,7 @@ export default function Angelschule() {
             </motion.div>
           )}
 
-          {selectedCat && !selectedArticle && (
+          {selectedCat && !selectedLesson && (
             <motion.div key="articles" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }}>
               <div className="flex items-center gap-3 mb-6">
                 <button onClick={() => setSelectedCat(null)} className="w-9 h-9 rounded-xl glass-card flex items-center justify-center">
@@ -118,34 +123,30 @@ export default function Angelschule() {
                 </div>
               </div>
               <div className="space-y-3">
-                {selectedCat.articles.map((art, i) => {
-                  const artTitle = art.titleKey ? t(art.titleKey) : art.title;
-                  const artDuration = art.durationKey ? t(art.durationKey) : art.duration;
-                  return (
-                    <motion.button key={art.titleKey || art.title} onClick={() => setSelectedArticle(art)}
-                      initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: i * 0.07 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="w-full glass-card rounded-2xl p-4 text-left flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-xl"
-                        style={{ background: `${selectedCat.color}18`, border: `1px solid ${selectedCat.color}30` }}>
-                        {selectedCat.icon}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-foam text-sm">{artTitle}</p>
-                        <p className="text-foam/40 text-xs mt-0.5">{artDuration} Lesezeit</p>
-                      </div>
-                      <ChevronLeft className="w-4 h-4 text-foam/30 rotate-180" />
-                    </motion.button>
-                  );
-                })}
+                {selectedCat.lessons.map((slug, i) => (
+                  <motion.button key={slug} onClick={() => setSelectedLesson(slug)}
+                    initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.07 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="w-full glass-card rounded-2xl p-4 text-left flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-xl"
+                      style={{ background: `${selectedCat.color}18`, border: `1px solid ${selectedCat.color}30` }}>
+                      {selectedCat.icon}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-semibold text-foam text-sm">{t(`angelschule.lessons.${slug}.title`)}</p>
+                      <p className="text-foam/40 text-xs mt-0.5">{t(`angelschule.lessons.${slug}.duration`)} {t('angelschule.reading_time')}</p>
+                    </div>
+                    <ChevronLeft className="w-4 h-4 text-foam/30 rotate-180" />
+                  </motion.button>
+                ))}
               </div>
             </motion.div>
           )}
 
-          {selectedArticle && (
+          {selectedLesson && (
             <motion.div key="article-content">
-              <ArticleView article={selectedArticle} category={selectedCat} onBack={() => setSelectedArticle(null)} />
+              <ArticleView lessonSlug={selectedLesson} category={selectedCat} onBack={() => setSelectedLesson(null)} />
             </motion.div>
           )}
         </AnimatePresence>

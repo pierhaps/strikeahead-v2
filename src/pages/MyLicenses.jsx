@@ -25,6 +25,7 @@ const COUNTRY_FLAGS = {
 };
 
 function UploadModal({ onClose, onSave }) {
+  const { t } = useTranslation();
   const [phase, setPhase] = useState('upload'); // upload | analyzing | form
   const [form, setForm] = useState({ license_name: '', country: '', valid_from: '', valid_until: '', license_type: 'yearly' });
   const [saving, setSaving] = useState(false);
@@ -78,24 +79,24 @@ function UploadModal({ onClose, onSave }) {
         className="glass-strong rounded-t-3xl p-5 space-y-4 max-h-[90vh] overflow-y-auto"
         onClick={e => e.stopPropagation()}>
         <div className="w-10 h-1 bg-foam/20 rounded-full mx-auto" />
-        <h3 className="font-display font-bold text-foam text-lg">Lizenz hinzufügen</h3>
+        <h3 className="font-display font-bold text-foam text-lg">{t('mylicenses.add_license')}</h3>
 
         {phase === 'upload' && (
           <div className="space-y-3">
             <div className="glass-card rounded-2xl p-6 text-center" style={{ border: '2px dashed rgba(127,220,229,0.2)' }}>
               <Shield className="w-10 h-10 text-tide-400 mx-auto mb-3" />
-              <p className="font-bold text-foam mb-1">Lizenz fotografieren oder hochladen</p>
-              <p className="text-foam/40 text-sm mb-4">KI extrahiert alle Daten automatisch</p>
+              <p className="font-bold text-foam mb-1">{t('mylicenses.capture_or_upload')}</p>
+              <p className="text-foam/40 text-sm mb-4">{t('mylicenses.ai_extract_info')}</p>
               <button onClick={() => fileRef.current?.click()}
                 className="w-full py-3.5 rounded-2xl gradient-tide text-white font-bold glow-tide">
-                Foto / PDF hochladen
+                {t('mylicenses.upload_photo_pdf')}
               </button>
               <input ref={fileRef} type="file" accept="image/*,.pdf" className="hidden"
                 onChange={e => handleFile(e.target.files?.[0])} />
             </div>
             <button onClick={() => setPhase('form')}
               className="w-full py-3 rounded-2xl glass-card text-foam/60 text-sm">
-              Manuell eingeben
+              {t('mylicenses.manual_entry')}
             </button>
           </div>
         )}
@@ -103,18 +104,18 @@ function UploadModal({ onClose, onSave }) {
         {phase === 'analyzing' && (
           <div className="flex flex-col items-center gap-4 py-8">
             <Loader2 className="w-10 h-10 text-tide-400 animate-spin" />
-            <p className="font-bold text-foam">KI analysiert Lizenz...</p>
-            <p className="text-foam/40 text-sm">Daten werden extrahiert</p>
+            <p className="font-bold text-foam">{t('mylicenses.analyzing')}</p>
+            <p className="text-foam/40 text-sm">{t('mylicenses.extracting')}</p>
           </div>
         )}
 
         {phase === 'form' && (
           <div className="space-y-3">
             {[
-              { key: 'license_name', label: 'Bezeichnung', type: 'text', placeholder: 'z.B. Jahresangellizenz Bayern' },
-              { key: 'country', label: 'Land', type: 'text', placeholder: 'Deutschland' },
-              { key: 'valid_from', label: 'Gültig ab', type: 'date' },
-              { key: 'valid_until', label: 'Gültig bis', type: 'date' },
+              { key: 'license_name', label: t('mylicenses.form.name'),         type: 'text', placeholder: t('mylicenses.placeholder_name') },
+              { key: 'country',      label: t('mylicenses.form.country'),      type: 'text', placeholder: t('mylicenses.form.country_placeholder') },
+              { key: 'valid_from',   label: t('mylicenses.form.valid_from'),   type: 'date' },
+              { key: 'valid_until',  label: t('mylicenses.form.valid_until'),  type: 'date' },
             ].map(f => (
               <div key={f.key} className="glass-card rounded-2xl px-4 py-3 flex items-center justify-between">
                 <span className="text-foam/50 text-sm">{f.label}</span>
@@ -124,10 +125,10 @@ function UploadModal({ onClose, onSave }) {
               </div>
             ))}
             <div className="flex gap-3 mt-2">
-              <button onClick={onClose} className="flex-1 py-3.5 rounded-2xl glass-card text-foam/60 font-semibold">Abbrechen</button>
+              <button onClick={onClose} className="flex-1 py-3.5 rounded-2xl glass-card text-foam/60 font-semibold">{t('common.cancel')}</button>
               <button onClick={handleSave} disabled={saving || !form.license_name}
                 className={`flex-1 py-3.5 rounded-2xl font-display font-bold ${form.license_name ? 'gradient-tide text-white glow-tide' : 'bg-abyss-700 text-foam/30'}`}>
-                {saving ? '…' : 'Speichern'}
+                {saving ? '…' : t('common.save')}
               </button>
             </div>
           </div>

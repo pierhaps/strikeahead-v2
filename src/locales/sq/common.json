@@ -934,51 +934,63 @@
     "lessons": {
       "equipment_beginner": {
         "title": "Pajisjet e peshkimit për fillestarët",
-        "duration": "8 min"
+        "duration": "8 min",
+        "body": "**Kiti yt fillestar**\n\nNuk të duhet shumë për të filluar: një kallam universal (2,40–2,70 m), një makinë e përshtatshme (madhësi 3000–4000), fill monofilament (0,25–0,30 mm) ose fill të endur (0,15 mm) për ndjeshmëri më të madhe.\n\n**Aksesorë**\n\nNjë kuti e vogël me grepa në madhësi të ndryshme (6–12), plumba, vrull-shkëmbyes, notues dhe një klamp mjafton për daljet e para. Mos harro: rrjetë, matës, heqës grepi dhe lejen tënde të peshkimit."
       },
       "first_license": {
         "title": "Merr licencën tuaj të parë të peshkimit",
-        "duration": "5 min"
+        "duration": "5 min",
+        "body": "**Leja e peshkimit**\n\nNë shumicën e rajoneve nevojitet leje. Në Gjermani bëhet provim mbi biologji, ujëra, pajisje, drejtësi dhe mbrojtje të kafshëve, plus një test praktik montimi.\n\n**Në vend**\n\nNevojitet edhe një leje lokale (ditore, javore ose vjetore) për ujin konkret. E merr te klubi, dyqani ose online. Pa të dyja, çdo ditë është e paligjshme — kontrollet janë të shpeshta."
       },
       "knots_beginner": {
         "title": "Nyjet për fillestarët",
-        "duration": "6 min"
+        "duration": "6 min",
+        "body": "**Nyja Clinch**\n\nNyja klasike për fillestarët: kalo fillin përmes syrit të grepit, mbështill 5–6 herë rreth fillit kryesor, kalo majën e lirë përmes syzës së vogël pranë syrit dhe më pas përmes syzës së madhe. Lage dhe shtrëngo.\n\n**Nyja me syzë**\n\nPër të lidhur parapërgatitjet: bëj një syzë të thjeshtë, dy rrotullime, kalo majën dhe shtrëngo. Syza të lejon të ndryshosh shpejt — ideale kur kushtet ndryshojnë."
       },
       "spinning_basics": {
         "title": "Peshkimi me spinner — Bazat",
-        "duration": "10 min"
+        "duration": "10 min",
+        "body": "**Çfarë është spinning?**\n\nPeshkim aktiv me karrem artificial: hedh një spinner, crankbait ose soft plastic dhe e tërheq me qëllim. Duke ndryshuar shpejtësinë dhe pushimet imiton një peshk të plagosur.\n\n**Specie tipike**\n\nKrapi i egër, perka, lucioperka dhe trofta reagojnë mirë. Orët më të mira: agu dhe muzgu. Skano zonën në formë ylbere — hedhja e parë bie aty ku mund të jetë peshku, jo aty ku është rehat për ty."
       },
       "bottom_fishing": {
         "title": "Peshkimi në fund",
-        "duration": "7 min"
+        "duration": "7 min",
+        "body": "**Montimi i fundit**\n\nNë peshkimin në fund, karremi shtrihet në shtrat. Montimi klasik: plumb rrëshqitës mbi një vrull-shkëmbyes, parapërgatitje 50–80 cm me grep. Peshku nuk ndien rezistencë gjatë kafshimit.\n\n**Durimi shpërblehet**\n\nIdeal për krap, brama, tenkë dhe ngjalë. Karreme: misër, boilies, krimba ose larva. Vendi është gjithçka: buzët e bimësisë, gropat e thella dhe grykat e përrenjve premtojnë."
       },
       "fly_fishing_intro": {
         "title": "Peshkimi me fluturim — Hyrje",
-        "duration": "12 min"
+        "duration": "12 min",
+        "body": "**Thelbi i peshkimit me mizë**\n\nNë vend të karremit hedh filin — miza artificiale arrin pothuajse pa peshë në fund të parapërgatitjes. Ritmi para-prapa ngarkon kallamin derisa filini të shpaloset elegant.\n\n**Hapat e parë**\n\nNjë kombinim AFTM 5/6 i përshtatet troftës dhe tymushës. Fillo në ujë të qetë pa erë në 8–10 m. Saktësia mposht largësinë — një mizë 20 cm nga peshku vlen më shumë se një në 30 m."
       },
       "palomar_knot": {
         "title": "Nyja Palomar",
-        "duration": "3 min"
+        "duration": "3 min",
+        "body": "**Pse Palomar?**\n\nI lehtë për t'u lidhur dhe shumë i fortë — ruan deri në 95% të rezistencës së fillit. Shumë i njohur për fijet e endur, ku shumë nyje rrëshqasin.\n\n**Hap pas hapi**\n\nPalose fillin, kaloje përmes syrit. Bëj një nyjë të thjeshtë të lirshme me syzën e dyfishtë. Kaloje syzën mbi grep. Lage, shtrëngo ngadalë, pre majën në 2 mm."
       },
       "fg_knot": {
         "title": "Nyja FG (Braid-Fluoro)",
-        "duration": "5 min"
+        "duration": "5 min",
+        "body": "**Nyja FG për fill të endur dhe fluorokarbon**\n\nFG lidh fillin kryesor dhe shock leader thuajse padukshëm dhe kalon mirë përmes udhëzuesve. Të lejon të kombinosh fill të endur të hollë me parapërgatitje më të fortë.\n\n**Stërvitja paguhet**\n\nMë i ndërlikuar se të tjerët por shumë i besueshëm sapo mësohet. Këshillë: mbaje fluorokarbonin nën tension dhe mbështill të endurin në drejtime alternative — të paktën 20 rrotullime. Siguro me dy gjysmëlidhje."
       },
       "rod_guide": {
         "title": "Udhëzues për shkopin: Zgjedhja e duhur",
-        "duration": "9 min"
+        "duration": "9 min",
+        "body": "**Zgjedhja sipas përdorimit**\n\nGjatësia përcakton distancën e hedhjes dhe kontrollin: 2,10 m për troftë të përrenjve, 2,70 m universale, 3,60 m+ për krap dhe feeder. Pesha e hedhjes (WG) duhet t'i përshtatet karremit.\n\n**Veprimi**\n\nFast (veprim maje) = ndjeshmëri e lartë, i ngurtë. Moderate (gjysmë-parabolik) = universal, falës. Slow (parabolik) = i butë, hedh karrem të lehtë. Për fillestarët, i moderuar."
       },
       "reel_setup": {
         "title": "Rregolle e duhur e bobinave",
-        "duration": "6 min"
+        "duration": "6 min",
+        "body": "**Montimi i makinës**\n\nVendose makinën, hap harkun, kalo fillin përmes të gjithë udhëzuesve dhe lidhe me nyjë arbor te bobina. Asnjëherë mos e mbush tej — 2 mm liri parandalon ngatërresat.\n\n**Rregullimi i frenës**\n\nFrena duhet të lirojë në rreth 25–30% të rezistencës së fillit. Rregull: kur tërheq fillin, makina duhet të lirojë filin pa u thyer. Kontrollo para çdo beteje."
       },
       "catch_release": {
         "title": "Kapje dhe lëshim i bërë siç duhet",
-        "duration": "4 min"
+        "duration": "4 min",
+        "body": "**Trajtim miqësor për peshkun**\n\nPërdor rrjetë të gomuar — mbron mukusin. Luftoje peshkun shpejt që të mos lodhet. Mbaje horizontal, kurrë vertikal nga nofulla — kjo dëmton shtyllën kurrizore.\n\n**Kthim në ujë**\n\nNëse mundesh hiq grepin në ujë. Nëse është gllabëruar thellë: pre parapërgatitjen, grepi do të ndryshket. Mbaje peshkun nën ujë derisa të notojë vetë. Kurrë mos e hidh."
       },
       "clean_fishing": {
         "title": "Peshkimi pa mbeturina",
-        "duration": "3 min"
+        "duration": "3 min",
+        "body": "**Vend i pastër**\n\nÇdo fill i vjetër, plumb dhe grep i hedhur rrezikon shpendët dhe peshqit. Mbaj gjithmonë një qese të vogël — për mbeturinat e tua dhe të të tjerëve. Lëre vendin më të pastër se e gjete.\n\n**Alternativa pa plumb**\n\nPlumbi është toksik për shpendët ujorë. Zgjidh tungsten, çelik ose gur. E njëjta gjë për karremet: opsione biodegradabël dhe kuti të ripërdorshme reduktojnë plastikën."
       },
       "reading_weather": {
         "title": "Leximi i motit",
@@ -986,11 +998,13 @@
       },
       "moon_phases": {
         "title": "Fazat e hënës gjatë peshkimit",
-        "duration": "5 min"
+        "duration": "5 min",
+        "body": "**Hënë e re dhe hënë e plotë**\n\nBaticat e forta dhe aktiviteti i rritur, veçanërisht te grabitqarët bregdetarë. Muzgjet e këtyre ditëve mund të jenë jashtëzakonshme.\n\n**Në ujëra të ëmbla**\n\nHëna ndikon edhe brenda vendit — më në mënyrë të hollë. Shumë peshkatarë me përvojë betohen për 3 ditët para dhe pas hënës së plotë. Mbaj ditar dhe lidh kapjet me fazën."
       },
       "barometer_activity": {
         "title": "Presioni barometrik dhe aktiviteti i peshkut",
-        "duration": "6 min"
+        "duration": "6 min",
+        "body": "**Presioni dhe aktiviteti**\n\nPresioni në rënie (zakonisht para ndryshimeve të motit) aktivizon shumë peshq — hanë para stuhisë. Presioni i lartë dhe i qëndrueshëm zakonisht jep aktivitet të ngadaltë.\n\n**Në praktikë**\n\nVëzhgo 12–24 orë para daljes. Ndryshimet e shpejta (> 3 hPa / 3h) janë ari. Kombino me fazën e hënës dhe temperaturën e ujit për parashikime më të mira."
       }
     },
     "category_basics_label": "Bazat",
@@ -1003,7 +1017,10 @@
     "article_basics_license_title": "Marrja e Licencës të Parë të Peshkimit",
     "article_reading_weather_body": "Presioni atmosferik ndikon ndjeshëm në sjelljen e peshkut.\n\nRritja e Presionit (Presioni i Lartë):\n• Peshku bëhet më aktiv\n• Kushte ideale peshkimi pas rritjes së presionit\n• Peshku del nga ujërat më të thella\n\nRrënia e Presionit (Kryepjesu e Presionit të Ulët):\n• Peshku tërhiqet në shtresa më të thella\n• Shpesh kapje të mira pak përpara kryepjesës\n• Zakonisht e ngadaltë pas kalimit të kryepjesës\n\nPresioni i Qëndrueshëm: Aktivitet konsistent, i parashikueshëm.",
     "article_catch_release_title": "Kapja dhe Lirimi i Bërë Saktë",
-    "article_clean_fishing_title": "Peshkimi pa Mbeturina"
+    "article_clean_fishing_title": "Peshkimi pa Mbeturina",
+    "articles_count": "{{count}} artikuj",
+    "reading_time": "koha e leximit",
+    "body_coming_soon": "Artikulli i plotë së shpejti."
   },
   "regulations": {
     "title": "Rregullat e kapjes",
@@ -1092,6 +1109,13 @@
       "price": "Çmimi",
       "special_conditions": "Kushte të veçanta",
       "close": "Mbyll"
+    },
+    "form": {
+      "name": "Emri",
+      "country": "Shteti",
+      "country_placeholder": "p.sh. Shqipëri",
+      "valid_from": "Vlen nga",
+      "valid_until": "Vlen deri"
     }
   },
   "mybookings": {
@@ -1106,7 +1130,19 @@
     "no_completed": "Ende pa sesione të përfunduara",
     "confirmed": "Konfirmuar",
     "upcoming": "Ardhmadhënie",
-    "past": "E kaluar"
+    "past": "E kaluar",
+    "role_student": "Trajneri yt",
+    "role_coach": "Nxënësi yt",
+    "status": {
+      "pending": "Në pritje",
+      "confirmed": "E konfirmuar",
+      "completed": "E përfunduar",
+      "cancelled": "E anuluar"
+    },
+    "detail": {
+      "date": "Data",
+      "total": "Totali"
+    }
   },
   "bait": {
     "catalog_title": "Katalogu i karremeve",

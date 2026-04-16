@@ -934,51 +934,63 @@
     "lessons": {
       "equipment_beginner": {
         "title": "Başlayanlar için balık avı ekipmanı",
-        "duration": "8 dak"
+        "duration": "8 dak",
+        "body": "**Başlangıç takımın**\n\nBaşlamak için çok şeye ihtiyacın yok: çok amaçlı bir olta (2,40–2,70 m), uygun bir makine (3000–4000 boy), misina (0,25–0,30 mm) ya da hassasiyet için örgü ip (0,15 mm).\n\n**Aksesuarlar**\n\nÇeşitli boylarda iğneler (6–12), kurşunlar, fırdöndüler, şamandıralar ve bir pense içeren küçük bir kutu ilk çıkışların için yeter. Unutma: kepçe, metre, iğne çıkarıcı ve balık ruhsatın."
       },
       "first_license": {
         "title": "İlk balık avı ruhsatını almak",
-        "duration": "5 dak"
+        "duration": "5 dak",
+        "body": "**Balık ruhsatı**\n\nÇoğu bölgede ruhsat gerekir. Almanya'da biyoloji, sular, ekipman, hukuk ve hayvan koruma konularında sınav yapılır; ayrıca pratik takım kurma testi vardır.\n\n**Yerinde**\n\nBelirli su için ayrı izin (günlük, haftalık veya yıllık) da gereklidir. Kulüpten, dükkândan veya internetten alınır. İkisi olmadan her gün yasadışıdır — denetimler sık."
       },
       "knots_beginner": {
         "title": "Başlayanlar için düğümler",
-        "duration": "6 dak"
+        "duration": "6 dak",
+        "body": "**Clinch düğümü**\n\nKlasik başlangıç düğümü: ipi iğnenin halkasından geçir, ana ipe 5–6 kez sar, uç kısmı halka yanındaki küçük ilmikten ve sonra büyük ilmikten geçir. Islatıp sık.\n\n**İlmik düğümü**\n\nKösteği takmak için: basit bir ilmik yap, iki kez döndür, ucu çek ve sık. İlmik kösteği hızlı değiştirmeyi sağlar — değişken koşullarda ideal."
       },
       "spinning_basics": {
         "title": "Döner balık avı — temel teknik",
-        "duration": "10 dak"
+        "duration": "10 dak",
+        "body": "**Spin nedir?**\n\nYapay yemlerle aktif balık avı: döner kaşık, crankbait veya soft plastik atıp bilinçli şekilde çekersin. Hız ve duraklamalarla yaralı yem balığını taklit edersin.\n\n**Tipik türler**\n\nTurna, tatlısu levreği, sudak ve alabalık iyi tepki verir. En iyi saatler: şafak ve alacakaranlık. Alanı yelpaze şeklinde tara — ilk atış balığın olabileceği yere düşsün, sana kolay olan yere değil."
       },
       "bottom_fishing": {
         "title": "Taban balık avı",
-        "duration": "7 dak"
+        "duration": "7 dak",
+        "body": "**Dip takımı**\n\nDip balıkçılığında yem dipte yatar. Klasik kurulum: fırdöndünün üstünde kayar kurşun, ardından 50–80 cm'lik iğneli köstek. Balık ısırma anında direnç hissetmez.\n\n**Sabır kazandırır**\n\nSazan, çapak, kadife ve yılanbalığı için idealdir. Yemler: mısır, boilie, solucan veya kurtçuk. Yer seçimi her şey: ot kenarları, derin çukurlar, yan kol ağızları umut vaat eder."
       },
       "fly_fishing_intro": {
         "title": "Sinek balık avı — giriş",
-        "duration": "12 dak"
+        "duration": "12 dak",
+        "body": "**Sinek balıkçılığının özü**\n\nYem yerine ipi atarsın — yapay sinek, tippet ucunda neredeyse ağırlıksız süzülür. Öne-arkaya ritim, ipin zarif şekilde açılmasına kadar oltayı yükler.\n\n**İlk adımlar**\n\nAFTM 5/6 takım alabalık ve izmarit için uygundur. Durgun suda rüzgarsız 8–10 m ile başla. Hassasiyet mesafeyi yener — balığa 20 cm mesafedeki sinek, 30 m uzaktakinden iyidir."
       },
       "palomar_knot": {
         "title": "Palomar düğümü",
-        "duration": "3 dak"
+        "duration": "3 dak",
+        "body": "**Neden Palomar?**\n\nBağlaması kolay ve çok sağlam — misinenin kopma yükünün %95'ine kadar korur. Özellikle düğümlerin kaydığı örgü ipler için popüler.\n\n**Adım adım**\n\nMisinayı ikiye katla, halkadan geç. Çift ilmekle gevşek bir düğüm yap. İlmeği iğnenin üzerinden geçir. Islat, yavaşça sık, uç kısmı 2 mm'ye kırp."
       },
       "fg_knot": {
         "title": "FG düğümü (örme-floro)",
-        "duration": "5 dak"
+        "duration": "5 dak",
+        "body": "**Örgü ve fluorokarbon için FG düğümü**\n\nFG ana ipi ve shock leader'ı neredeyse görünmez bağlar ve oltaların halkalarından kusursuz geçer. İnce örgü ile daha güçlü köstek kombinasyonuna olanak tanır.\n\n**Pratik gerekli**\n\nDiğerlerinden zor ama bir kez öğrenilince çok güvenilir. İpucu: fluoroyu gergin tut ve örgüyü değişen yönlerde sar — en az 20 sarım. İki yarım düğüm ile kilitle."
       },
       "rod_guide": {
         "title": "Olta rehberi: doğru seçim",
-        "duration": "9 dak"
+        "duration": "9 dak",
+        "body": "**Kullanıma göre seçim**\n\nUzunluk mesafe ve kontrolü belirler: dere alabalığı için 2,10 m, çok amaçlı 2,70 m, sazan ve feeder için 3,60 m+. Atış ağırlığı (WG) yeme uymalı.\n\n**Aksiyon**\n\nFast (uç aksiyon) = hassas vuruş algısı, sert. Moderate (yarı parabolik) = evrensel, affedici. Slow (parabolik) = yumuşak, hafif yem atar. Başlayanlar için orta aksiyon."
       },
       "reel_setup": {
         "title": "Makaraları düzgün ayarla",
-        "duration": "6 dak"
+        "duration": "6 dak",
+        "body": "**Makineyi monte et**\n\nMakineyi tak, bücrümü aç, ipi tüm halkalardan geçir ve arbor düğümü ile makaraya bağla. Asla fazla doldurma — 2 mm boşluk karışıklığı önler.\n\n**Freni ayarla**\n\nFren, ipin kopma yükünün yaklaşık %25–30'unda kaymalı. Kural: ipi çekince makine ip kopmadan önce ip bırakmalı. Her dövüşten önce kontrol et."
       },
       "catch_release": {
         "title": "Av & Bırak doğru yapılır",
-        "duration": "4 dak"
+        "duration": "4 dak",
+        "body": "**Balık dostu indirme**\n\nKauçuk kepçe kullan — mukusu korur. Balığı yorucu şekilde çekmemek için hızlı çalış. Yatay tut, asla çeneden dik — bu omurgayı zedeler.\n\n**Suya geri bırakma**\n\nMümkünse iğneyi suda çıkar. Derin yutulduysa kösteği kes, iğne paslanır. Balık kendi gücüyle yüzene kadar su altında tut. Asla fırlatma."
       },
       "clean_fishing": {
         "title": "Çöpten arınmış balık avı",
-        "duration": "3 dak"
+        "duration": "3 dak",
+        "body": "**Temiz bir mevki**\n\nHer eski misina, kurşun ve atılan iğne kuşlar ve balıklar için tehlikelidir. Her zaman küçük bir çöp poşeti taşı — kendininki ve başkalarının. Mekânı bulduğundan daha temiz bırak.\n\n**Kurşunsuz alternatifler**\n\nKurşun su kuşları için zehirlidir. Tungsten, çelik veya taş seç. Yemlerde de: biyobozunur seçenekler ve tekrar kullanılabilir kutular plastiği azaltır."
       },
       "reading_weather": {
         "title": "Hava tahmini okuma",
@@ -986,11 +998,13 @@
       },
       "moon_phases": {
         "title": "Balık avında ay evreleri",
-        "duration": "5 dak"
+        "duration": "5 dak",
+        "body": "**Yeni ay ve dolunay**\n\nGüçlü gelgitler ve artan aktivite, özellikle kıyı sularındaki yırtıcılar için. Bu günlerdeki alacakaranlık saatleri olağanüstü olabilir.\n\n**Tatlı suda**\n\nAy iç sularda da etkilidir — daha hafif biçimde. Birçok deneyimli balıkçı dolunaydan önceki ve sonraki 3 güne yemin eder. Günlük tut ve avlarını ay evresiyle ilişkilendir."
       },
       "barometer_activity": {
         "title": "Barometre basıncı ve balık aktivitesi",
-        "duration": "6 dak"
+        "duration": "6 dak",
+        "body": "**Basınç ve aktivite**\n\nDüşen basınç (genellikle hava değişikliklerinden önce) birçok balığı aktif eder — fırtınadan önce yerler. Yüksek ve sabit basınç genellikle yavaş aktivite demektir.\n\n**Pratikte**\n\nÇıkıştan 12–24 saat önce izle. Hızlı değişimler (> 3 hPa / 3s) altın zamandır. Daha iyi tahminler için ay evresi ve su sıcaklığıyla birleştir."
       }
     },
     "category_basics_label": "Temel Bilgiler",
@@ -1003,7 +1017,10 @@
     "article_basics_license_title": "İlk Balık Avı Ruhsatını Almak",
     "article_reading_weather_body": "Hava basıncı balık davranışını önemli ölçüde etkiler.\n\nYükselen Basınç (Yüksek Basınç):\n• Balıklar daha aktif olur\n• Basınç yükseldikten sonra ideal balık avı koşulları\n• Balıklar derin sulardan çıkar\n\nDüşen Basınç (Düşük Basınç Cephesi):\n• Balıklar daha derin katmanlara çekilir\n• Cephe öncesinde sıklıkla iyi avlar\n• Cephe geçtikten sonra genellikle yavaş\n\nİstikrarlı Basınç: Tutarlı aktivite, öngörülebilir.",
     "article_catch_release_title": "Yakala ve Bırak Doğru Yapılmış",
-    "article_clean_fishing_title": "Çöpsüz Balık Avı"
+    "article_clean_fishing_title": "Çöpsüz Balık Avı",
+    "articles_count": "{{count}} makale",
+    "reading_time": "okuma süresi",
+    "body_coming_soon": "Tam makale yakında."
   },
   "regulations": {
     "title": "Avlanma kuralları",
@@ -1092,6 +1109,13 @@
       "price": "Fiyat",
       "special_conditions": "Özel koşullar",
       "close": "Kapat"
+    },
+    "form": {
+      "name": "Ad",
+      "country": "Ülke",
+      "country_placeholder": "örn. Türkiye",
+      "valid_from": "Geçerlilik başlangıcı",
+      "valid_until": "Geçerlilik bitişi"
     }
   },
   "mybookings": {
@@ -1106,7 +1130,19 @@
     "no_completed": "Henüz tamamlanan seans yok",
     "confirmed": "Onaylandı",
     "upcoming": "Yaklaşan",
-    "past": "Geçmiş"
+    "past": "Geçmiş",
+    "role_student": "Koçun",
+    "role_coach": "Öğrencin",
+    "status": {
+      "pending": "Beklemede",
+      "confirmed": "Onaylandı",
+      "completed": "Tamamlandı",
+      "cancelled": "İptal edildi"
+    },
+    "detail": {
+      "date": "Tarih",
+      "total": "Toplam"
+    }
   },
   "bait": {
     "catalog_title": "Yem kataloğu",

@@ -934,51 +934,63 @@
     "lessons": {
       "equipment_beginner": {
         "title": "Fishing Equipment for Beginners",
-        "duration": "8 min"
+        "duration": "8 min",
+        "body": "**Your starter kit**\n\nYou don't need much to get going: an all-round rod (2.40–2.70 m), a matching spinning reel (size 3000–4000), plus monofilament line (0.25–0.30 mm) or braided line (0.15 mm) for better sensitivity.\n\n**Accessories**\n\nA small box with hooks in different sizes (6–12), sinkers, swivels, floats, and pliers is plenty for your first trips. Don't forget: landing net, measuring tape, hook remover, and your fishing license."
       },
       "first_license": {
         "title": "Getting Your First Fishing License",
-        "duration": "5 min"
+        "duration": "5 min",
+        "body": "**The fishing license in Germany**\n\nIn most German states you need a Fischereischein, which requires passing an exam covering biology, water science, gear, law, and animal protection — plus a practical test on rigging.\n\n**On site**\n\nYou also need a permit card (guest, weekly, or yearly) for the specific water you fish. Get it from the club, tackle shop, or online. Without both, every fishing day is illegal — checks are frequent."
       },
       "knots_beginner": {
         "title": "Knots for Beginners",
-        "duration": "6 min"
+        "duration": "6 min",
+        "body": "**The Clinch Knot**\n\nThe classic beginner knot: pass the line through the hook eye, wrap 5–6 times around the main line, then feed the tag end through the small loop at the eye and back through the large loop. Wet it and pull tight.\n\n**The Loop Knot**\n\nFor attaching leaders: form a simple overhand loop, wrap twice, pull the end through, and tighten. The loop lets you swap leaders fast — perfect for changing conditions."
       },
       "spinning_basics": {
         "title": "Spin Fishing — Basic Technique",
-        "duration": "10 min"
+        "duration": "10 min",
+        "body": "**What is spin fishing?**\n\nActive fishing with artificial lures: you cast a spinner, crankbait, or soft plastic and retrieve it purposefully. By varying retrieve speed and adding pauses, you mimic wounded baitfish.\n\n**Typical target species**\n\nPike, perch, zander, and trout respond well to lures. Dawn and dusk are prime. Fan-cast the area systematically — your first cast should land where a fish might be holding, not where it's comfortable."
       },
       "bottom_fishing": {
         "title": "Bottom Fishing",
-        "duration": "7 min"
+        "duration": "7 min",
+        "body": "**The bottom rig**\n\nIn bottom fishing the bait sits on the waterbed. Classic setup: a running lead above a swivel, followed by a 50–80 cm leader with a hook. The fish feels no resistance when it bites.\n\n**Patience pays off**\n\nIdeal for carp, bream, tench, and eel. Baits: corn, boilies, lobworms, or maggots. Location matters: weed edges, deep holes, and tributary mouths all promise fish."
       },
       "fly_fishing_intro": {
         "title": "Fly Fishing — Introduction",
-        "duration": "12 min"
+        "duration": "12 min",
+        "body": "**The essence of fly fishing**\n\nInstead of casting the lure, you cast the line — the artificial fly drifts almost weightlessly at the tippet's end. The rhythm of forward and back casts loads the rod until the line rolls out elegantly.\n\n**First steps**\n\nAn AFTM 5/6 combo suits trout and grayling. Start on still water without wind, distances of 8–10 meters. Precision beats distance — a fly 20 cm from a fish beats one 30 meters away."
       },
       "palomar_knot": {
         "title": "The Palomar Knot",
-        "duration": "3 min"
+        "duration": "3 min",
+        "body": "**Why the Palomar?**\n\nEasy to tie and extremely strong — the Palomar retains up to 95% of line strength. Especially popular for braided lines where many knots slip.\n\n**Step by step**\n\nDouble the line, loop it through the eye. Tie a loose overhand knot with the double loop. Pass the loop over the hook. Wet, pull slowly tight, trim tag to 2 mm."
       },
       "fg_knot": {
         "title": "FG Knot (Braid-Fluoro)",
-        "duration": "5 min"
+        "duration": "5 min",
+        "body": "**The FG knot for braid and fluorocarbon**\n\nThe FG links mainline and shock leader almost invisibly and runs smoothly through guides. Lets you pair thin braid with a stronger leader.\n\n**Practice pays**\n\nTrickier than other knots but extremely reliable once learned. Tip: keep the fluorocarbon under tension and wrap the braid around it in alternating directions — at least 20 wraps. Secure with two half-hitches."
       },
       "rod_guide": {
         "title": "Rod Guide: Choosing the Right One",
-        "duration": "9 min"
+        "duration": "9 min",
+        "body": "**Choosing by application**\n\nLength determines casting distance and control: 2.10 m for stream trout, 2.70 m all-round, 3.60 m+ for carp and feeder. The casting weight (WG) should match your lure.\n\n**Action**\n\nFast (tip action) = sensitive bite detection, stiff. Moderate (semi-parabolic) = universal, forgiving. Slow (parabolic) = soft, casts light baits. Beginners should pick moderate."
       },
       "reel_setup": {
         "title": "Setting Up Your Reel",
-        "duration": "6 min"
+        "duration": "6 min",
+        "body": "**Mounting the reel**\n\nScrew the reel to the rod, open the bail, thread the line through all guides, and secure it to the spool with an arbor knot. Never overfill the spool — 2 mm clearance prevents wind knots.\n\n**Setting the drag**\n\nThe drag should slip at about 25–30% of line strength. Rule of thumb: pulling the line should release line evenly before it breaks. Check before every fight."
       },
       "catch_release": {
         "title": "Catch & Release Done Right",
-        "duration": "4 min"
+        "duration": "4 min",
+        "body": "**Fish-friendly landing**\n\nUse a rubberized landing net — it protects the slime coat. Play the fish briskly so it doesn't exhaust. Hold horizontally, never vertically by the jaw — that damages the spine.\n\n**Back in the water**\n\nUnhook in the water if possible. If the hook is deep: cut the leader; the hook will rust out. Hold the fish underwater until it swims off under its own power. Never throw it."
       },
       "clean_fishing": {
         "title": "Trash-Free Fishing",
-        "duration": "3 min"
+        "duration": "3 min",
+        "body": "**A clean swim**\n\nEvery bit of old line, lead, and discarded hook endangers birds and fish. Always carry a small trash bag — yours and others'. Leave the spot cleaner than you found it.\n\n**Lead-free alternatives**\n\nLead is toxic to waterfowl. Choose tungsten, steel, or stone. Same for bait: biodegradable options and reusable boxes cut plastic waste. Small gestures, big impact."
       },
       "reading_weather": {
         "title": "Reading Weather",
@@ -986,11 +998,13 @@
       },
       "moon_phases": {
         "title": "Moon Phases in Fishing",
-        "duration": "5 min"
+        "duration": "5 min",
+        "body": "**New moon and full moon**\n\nStrong tides and elevated activity, especially among predators in coastal waters. The twilight hours on these days can be extraordinary.\n\n**In freshwater**\n\nThe moon affects inland waters too — more subtly. Many experienced anglers swear by the 3 days before and after a full moon. Keep a log and correlate your catches with moon phase."
       },
       "barometer_activity": {
         "title": "Barometric Pressure and Fish Activity",
-        "duration": "6 min"
+        "duration": "6 min",
+        "body": "**Pressure and bite behavior**\n\nFalling pressure (usually before weather changes) activates many fish — they feed before the storm. High, stable pressure often means calm conditions and slow activity.\n\n**In practice**\n\nWatch 12–24 hours ahead of your trip. Rapid changes (> 3 hPa / 3h) are prime time. Combine with moon phase and water temperature for sharper forecasts."
       }
     },
     "category_basics_label": "Basics",
@@ -1003,7 +1017,10 @@
     "article_basics_license_title": "Getting Your First Fishing License",
     "article_reading_weather_body": "Air pressure significantly influences fish behavior.\n\nRising Pressure (High Pressure):\n• Fish become more active\n• Ideal fishing conditions after pressure rises\n• Fish come from deeper waters\n\nFalling Pressure (Low Pressure Front):\n• Fish retreat to deeper layers\n• Often good catches just before the front\n• Usually slow after the front passes\n\nStable Pressure: Consistent activity, predictable.",
     "article_catch_release_title": "Catch & Release Done Right",
-    "article_clean_fishing_title": "Trash-Free Fishing"
+    "article_clean_fishing_title": "Trash-Free Fishing",
+    "articles_count": "{{count}} articles",
+    "reading_time": "reading time",
+    "body_coming_soon": "Full article coming soon."
   },
   "regulations": {
     "title": "Catch regulations",
@@ -1092,6 +1109,13 @@
       "price": "Price",
       "special_conditions": "Special conditions",
       "close": "Close"
+    },
+    "form": {
+      "name": "Name",
+      "country": "Country",
+      "country_placeholder": "e.g. Germany",
+      "valid_from": "Valid from",
+      "valid_until": "Valid until"
     }
   },
   "mybookings": {
@@ -1106,7 +1130,19 @@
     "no_completed": "No Completed Sessions Yet",
     "confirmed": "Confirmed",
     "upcoming": "Upcoming",
-    "past": "Past"
+    "past": "Past",
+    "role_student": "Your coach",
+    "role_coach": "Your student",
+    "status": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "detail": {
+      "date": "Date",
+      "total": "Total"
+    }
   },
   "bait": {
     "catalog_title": "Bait Catalog",

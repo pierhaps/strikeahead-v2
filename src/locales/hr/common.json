@@ -934,51 +934,63 @@
     "lessons": {
       "equipment_beginner": {
         "title": "Ribolovna oprema za početnike",
-        "duration": "8 min"
+        "duration": "8 min",
+        "body": "**Tvoj početni komplet**\n\nNe treba ti puno za početak: univerzalni štap (2,40–2,70 m), odgovarajuća mašinica (veličina 3000–4000), monofilni najlon (0,25–0,30 mm) ili pleteni (0,15 mm) za veću osjetljivost.\n\n**Pribor**\n\nMala kutija s udicama raznih veličina (6–12), olovima, vrtilicama, plovcima i kliještima dovoljna je za prve izlete. Ne zaboravi: mrežu, metar, vaditelj udica i ribolovnu dozvolu."
       },
       "first_license": {
         "title": "Kako dobiti prvu ribolovnu dozvolu",
-        "duration": "5 min"
+        "duration": "5 min",
+        "body": "**Ribolovna dozvola**\n\nU većini regija potrebna je ribolovna dozvola. U Njemačkoj se polaže ispit iz biologije, voda, opreme, prava i zaštite životinja, uz praktični test montaže.\n\n**Na licu mjesta**\n\nPotrebna je i lokalna dozvola (dnevna, tjedna ili godišnja) za određenu vodu. Dobiva se u klubu, dućanu ili online. Bez oboje, svaki dan je ilegalan — kontrole su česte."
       },
       "knots_beginner": {
         "title": "Čvorovi za početnike",
-        "duration": "6 min"
+        "duration": "6 min",
+        "body": "**Clinch čvor**\n\nKlasika za početnike: provuci najlon kroz ušicu udice, omotaj 5–6 puta oko glavnog najlona, provuci kraj kroz malu omču pokraj ušice i natrag kroz veliku omču. Navlaži i zategni.\n\n**Čvor s omčom**\n\nZa spajanje predveza: napravi jednostavnu omču, dva okreta, provuci kraj i zategni. Omča omogućuje brzu zamjenu predveza — idealno kad se uvjeti mijenjaju."
       },
       "spinning_basics": {
         "title": "Spinningfishing — Osnovne tehnike",
-        "duration": "10 min"
+        "duration": "10 min",
+        "body": "**Što je spinning?**\n\nAktivan ribolov umjetnim mamcima: bacaš spinner, crankbait ili gumu i privlačiš ih namjerno. Mijenjanjem brzine i pauza oponašaš ranjenu ribu.\n\n**Tipične vrste**\n\nŠtuka, grgeč, smuđ i pastrva dobro reagiraju. Najbolja vremena: zora i sumrak. Lepezasto pročešljaj područje — prvi hitac pada tamo gdje je riba, ne gdje je tebi udobno."
       },
       "bottom_fishing": {
         "title": "Donski ribolov",
-        "duration": "7 min"
+        "duration": "7 min",
+        "body": "**Dno postava**\n\nKod ribolova na dnu mamac leži na dnu. Klasična postava: klizno olovo iznad vrtilice, predvez 50–80 cm s udicom. Riba ne osjeća otpor pri uzimanju.\n\n**Strpljenje se isplati**\n\nIdealno za šarana, deveriku, linjaka i jegulju. Mamci: kukuruz, bojli, gliste ili crvi. Mjesto je ključno: rubovi raslinja, duboke rupe i ušća pritoka obećavaju."
       },
       "fly_fishing_intro": {
         "title": "Muvarijatni ribolov — Uvod",
-        "duration": "12 min"
+        "duration": "12 min",
+        "body": "**Bit mušičarenja**\n\nUmjesto mamca bacaš liniju — umjetna mušica stiže gotovo bez težine na kraju predveza. Ritam naprijed-natrag puni štap dok se linija elegantno ne razvije.\n\n**Prvi koraci**\n\nAFTM 5/6 kombinacija odgovara za pastrvu i lipljena. Počni u mirnoj vodi bez vjetra na 8–10 m. Preciznost pobjeđuje daljinu — mušica 20 cm od ribe vrijedi više od one na 30 m."
       },
       "palomar_knot": {
         "title": "Palomarin čvor",
-        "duration": "3 min"
+        "duration": "3 min",
+        "body": "**Zašto Palomar?**\n\nJednostavan i vrlo čvrst — zadržava do 95 % snage najlona. Vrlo popularan za pletenicu, gdje mnogi čvorovi kliznu.\n\n**Korak po korak**\n\nUdvostruči najlon, provuci kroz ušicu. Napravi labav jednostavan čvor s dvostrukom omčom. Prebaci omču preko udice. Navlaži, polako zategni, skrati kraj na 2 mm."
       },
       "fg_knot": {
         "title": "FG čvor (Braid-Fluoro)",
-        "duration": "5 min"
+        "duration": "5 min",
+        "body": "**FG čvor za pletenicu i fluorocarbon**\n\nFG spaja glavnu liniju i shock leader gotovo nevidljivo i savršeno prolazi kroz vodilice. Možeš kombinirati tanku pletenicu s jačim predvezom.\n\n**Vježba se isplati**\n\nTeži od drugih, ali vrlo pouzdan jednom savladan. Savjet: fluorokarbon drži napet i omotaj pletenicu u izmjeničnim smjerovima — najmanje 20 omota. Osiguraj s dva poluugla."
       },
       "rod_guide": {
         "title": "Vodič za štapove: Pravi izbor",
-        "duration": "9 min"
+        "duration": "9 min",
+        "body": "**Izbor po namjeni**\n\nDuljina određuje domet i kontrolu: 2,10 m za potočne pastrve, 2,70 m univerzalno, 3,60 m+ za šarana i feeder. Težina bacanja (WG) mora odgovarati mamcu.\n\n**Akcija**\n\nFast (vršna) = osjetljiva indikacija, kruta. Moderate (polu-parabolična) = univerzalna, popustljiva. Slow (parabolična) = meka, baca lagane mamce. Za početnike, umjerena."
       },
       "reel_setup": {
         "title": "Pravilno postavljanje valjka",
-        "duration": "6 min"
+        "duration": "6 min",
+        "body": "**Montiranje mašinice**\n\nPričvrsti mašinicu, otvori luk, provuci najlon kroz sve vodilice i veži ga za kalem arbor čvorom. Nikad ne prepuni — 2 mm razmaka sprječava zapetljavanje.\n\n**Podešavanje kočnice**\n\nKočnica treba popustiti na 25–30 % otpornosti najlona. Pravilo: povlačenjem najlona mašinica treba pustiti ravnomjerno prije pucanja. Provjeri prije svake borbe."
       },
       "catch_release": {
         "title": "Catch & Release pravilno",
-        "duration": "4 min"
+        "duration": "4 min",
+        "body": "**Pažljivo vađenje**\n\nKoristi gumiranu mrežu — štiti sluznicu. Vadi ribu brzo kako se ne bi iscrpila. Drži je vodoravno, nikad okomito za čeljust — oštećuje kralježnicu.\n\n**Povratak u vodu**\n\nIzvadi udicu u vodi ako možeš. Ako je duboko progutana: presijeci predvez, udica će zahrđati. Drži ribu pod vodom dok sama ne otpliva. Nikad je ne bacaj."
       },
       "clean_fishing": {
         "title": "Čist ribolov bez smeća",
-        "duration": "3 min"
+        "duration": "3 min",
+        "body": "**Čisto mjesto**\n\nSvaka stara linija, olovo i odbačena udica u vodi ugrožavaju ptice i ribe. Uvijek nosi malu vrećicu — za svoje i tuđe smeće. Ostavi mjesto čišćim nego što si ga našao.\n\n**Alternative bez olova**\n\nOlovo je otrovno za vodene ptice. Biraj volfram, čelik ili kamen. Isto i za mamce: biorazgradive opcije i kutije za višekratnu upotrebu smanjuju plastični otpad."
       },
       "reading_weather": {
         "title": "Čitanje vremenske prognoze",
@@ -986,11 +998,13 @@
       },
       "moon_phases": {
         "title": "Mjesečeve faze i ribolov",
-        "duration": "5 min"
+        "duration": "5 min",
+        "body": "**Mlad i pun Mjesec**\n\nJaki plimni ciklusi i povećana aktivnost, osobito predatora u priobalju. Sumraci na ovim danima mogu biti izvanredni.\n\n**U slatkoj vodi**\n\nMjesec utječe i u unutrašnjosti — suptilnije. Mnogi iskusni ribolovci vjeruju u 3 dana prije i poslije punog Mjeseca. Vodi dnevnik i poveži ulove s mijenom."
       },
       "barometer_activity": {
         "title": "Barometarski pritisak i aktivnost riba",
-        "duration": "6 min"
+        "duration": "6 min",
+        "body": "**Tlak i aktivnost**\n\nPad tlaka (prije vremenskih promjena) aktivira mnoge ribe — jedu prije oluje. Visok i stabilan tlak često daje sporu aktivnost.\n\n**U praksi**\n\nPrati 12–24 sata unaprijed. Brze promjene (> 3 hPa / 3h) su zlatna vremena. Kombiniraj s Mjesečevom mijenom i temperaturom vode za bolje prognoze."
       }
     },
     "category_basics_label": "Osnove",
@@ -1003,7 +1017,10 @@
     "article_basics_license_title": "Dobivanje Prve Dozvole za Ribolov",
     "article_reading_weather_body": "Atmosferski tlak značajno utječe na ponašanje riba.\n\nRastući Tlak (Visoki Tlak):\n• Ribe postaju aktivnije\n• Idealni uvjeti za ribolov nakon porasta tlaka\n• Ribe izlaze iz dubokih voda\n\nPadajući Tlak (Fronta Niskog Tlaka):\n• Ribe se povlače u dublje slojeve\n• Često dobre hvatnje neposredno prije fronte\n• Obično spora nakon prolaska fronte\n\nStabilni Tlak: Konzistentna aktivnost, predvidiva.",
     "article_catch_release_title": "Hvatanje i Otpuštanje Urađeno Ispravno",
-    "article_clean_fishing_title": "Ribolov Bez Smeća"
+    "article_clean_fishing_title": "Ribolov Bez Smeća",
+    "articles_count": "{{count}} članaka",
+    "reading_time": "vrijeme čitanja",
+    "body_coming_soon": "Puni članak uskoro."
   },
   "regulations": {
     "title": "Propisi o ulovu",
@@ -1092,6 +1109,13 @@
       "price": "Cijena",
       "special_conditions": "Posebni uvjeti",
       "close": "Zatvori"
+    },
+    "form": {
+      "name": "Naziv",
+      "country": "Zemlja",
+      "country_placeholder": "npr. Hrvatska",
+      "valid_from": "Vrijedi od",
+      "valid_until": "Vrijedi do"
     }
   },
   "mybookings": {
@@ -1106,7 +1130,19 @@
     "no_completed": "Nema završenih sesija",
     "confirmed": "Potvrđeno",
     "upcoming": "Predstoji",
-    "past": "Prošle"
+    "past": "Prošle",
+    "role_student": "Tvoj trener",
+    "role_coach": "Tvoj učenik",
+    "status": {
+      "pending": "Na čekanju",
+      "confirmed": "Potvrđeno",
+      "completed": "Završeno",
+      "cancelled": "Otkazano"
+    },
+    "detail": {
+      "date": "Datum",
+      "total": "Ukupno"
+    }
   },
   "bait": {
     "catalog_title": "Katalog mame",
