@@ -38,8 +38,14 @@ function detectPlatform() {
   return 'web';
 }
 
+
+const localeTag = (code) => {
+  const map = { de: 'de-DE', en: 'en-US', es: 'es-ES', fr: 'fr-FR', it: 'it-IT', hr: 'hr-HR', pt: 'pt-PT', nl: 'nl-NL', tr: 'tr-TR', el: 'el-GR', sq: 'sq-AL' };
+  return map[code] || 'de-DE';
+};
+
 export default function Subscription() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const PLANS = React.useMemo(() => getPlans(t), [t]);
   const [user, setUser] = useState(null);
   const [transactions, setTransactions] = useState([]);
@@ -54,7 +60,7 @@ export default function Subscription() {
   }, []);
 
   const currentPlan = user?.premium_plan || 'free';
-  const expires = user?.premium_expires ? new Date(user.premium_expires).toLocaleDateString('de-DE') : null;
+  const expires = user?.premium_expires ? new Date(user.premium_expires).toLocaleDateString(localeTag(i18n.language)) : null;
   const hookPoints = user?.hook_points ?? 0;
 
   const handleUpgrade = (planKey) => {
@@ -90,7 +96,7 @@ export default function Subscription() {
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div className="glass-card rounded-xl p-3 text-center">
-                <p className="text-sun-400 font-display font-bold text-lg">{hookPoints.toLocaleString('de-DE')}</p>
+                <p className="text-sun-400 font-display font-bold text-lg">{hookPoints.toLocaleString(localeTag(i18n.language))}</p>
                 <p className="text-foam/40 text-xs">HookPoints</p>
               </div>
               <div className="glass-card rounded-xl p-3 text-center">
@@ -164,7 +170,7 @@ export default function Subscription() {
               <div key={tx.id} className="glass-card rounded-xl px-4 py-3 flex items-center justify-between">
                 <div>
                   <p className="text-foam text-sm font-semibold">{tx.description}</p>
-                  <p className="text-foam/40 text-xs">{tx.created_date ? new Date(tx.created_date).toLocaleDateString('de-DE') : ''}</p>
+                  <p className="text-foam/40 text-xs">{tx.created_date ? new Date(tx.created_date).toLocaleDateString(localeTag(i18n.language)) : ''}</p>
                 </div>
                 <p className={`font-display font-bold text-sm ${tx.amount > 0 ? 'text-sun-400' : 'text-coral-500'}`}>
                   {tx.amount > 0 ? '+' : ''}{tx.amount} HP

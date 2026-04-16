@@ -35,8 +35,14 @@ function Countdown({ endDate }) {
   return <span className="text-sun-400 font-display font-bold text-sm">{label}</span>;
 }
 
+
+const localeTag = (code) => {
+  const map = { de: 'de-DE', en: 'en-US', es: 'es-ES', fr: 'fr-FR', it: 'it-IT', hr: 'hr-HR', pt: 'pt-PT', nl: 'nl-NL', tr: 'tr-TR', el: 'el-GR', sq: 'sq-AL' };
+  return map[code] || 'de-DE';
+};
+
 export default function Competitions() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [tab, setTab] = useState('active');
   const [comps, setComps] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -98,7 +104,7 @@ export default function Competitions() {
                 <div className="flex items-center justify-between">
                   <div className="flex gap-4">
                     <div className="flex items-center gap-1 text-foam/50 text-xs"><Users className="w-3 h-3" />{comp.participants_count || 0}</div>
-                    <div className="flex items-center gap-1 text-sun-400 text-xs"><Anchor className="w-3 h-3" />{(comp.prize_hook_points || 0).toLocaleString('de-DE')} HP</div>
+                    <div className="flex items-center gap-1 text-sun-400 text-xs"><Anchor className="w-3 h-3" />{(comp.prize_hook_points || 0).toLocaleString(localeTag(i18n.language))} HP</div>
                     {comp.end_date && <div className="flex items-center gap-1 text-xs"><Clock className="w-3 h-3 text-foam/30" /><Countdown endDate={comp.end_date} /></div>}
                   </div>
                   {comp.status === 'active' && (

@@ -28,8 +28,14 @@ const getLevels = (t) => [
   { level: 50, name: t('anglersystem.levels.legend'), xp: 200000 },
 ];
 
+
+const localeTag = (code) => {
+  const map = { de: 'de-DE', en: 'en-US', es: 'es-ES', fr: 'fr-FR', it: 'it-IT', hr: 'hr-HR', pt: 'pt-PT', nl: 'nl-NL', tr: 'tr-TR', el: 'el-GR', sq: 'sq-AL' };
+  return map[code] || 'de-DE';
+};
+
 export default function AnglerSystem() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const HP_TYPES = React.useMemo(() => getHPTypes(t), [t]);
   const LEVELS = React.useMemo(() => getLevels(t), [t]);
 
@@ -78,7 +84,7 @@ export default function AnglerSystem() {
                 <div className="flex-1">
                   <p className="text-foam font-semibold text-sm">{lv.name}</p>
                 </div>
-                <p className="text-foam/40 text-xs font-display">{lv.xp.toLocaleString('de-DE')} XP</p>
+                <p className="text-foam/40 text-xs font-display">{lv.xp.toLocaleString(localeTag(i18n.language))} XP</p>
               </div>
             ))}
           </div>

@@ -5,8 +5,14 @@ import { useTranslation } from 'react-i18next';
 import { base44 } from '@/api/base44Client';
 import PageTransition from '../components/ui/PageTransition';
 
+
+const localeTag = (code) => {
+  const map = { de: 'de-DE', en: 'en-US', es: 'es-ES', fr: 'fr-FR', it: 'it-IT', hr: 'hr-HR', pt: 'pt-PT', nl: 'nl-NL', tr: 'tr-TR', el: 'el-GR', sq: 'sq-AL' };
+  return map[code] || 'de-DE';
+};
+
 export default function CleanupChallenges() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [challenges, setChallenges] = useState([]);
   const [selected, setSelected] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -76,8 +82,8 @@ export default function CleanupChallenges() {
                 </div>
 
                 <div className="flex justify-between text-xs text-foam/30">
-                  <span>{new Date(ch.start_date).toLocaleDateString('de-DE')}</span>
-                  <span>→ {new Date(ch.end_date).toLocaleDateString('de-DE')}</span>
+                  <span>{new Date(ch.start_date).toLocaleDateString(localeTag(i18n.language))}</span>
+                  <span>→ {new Date(ch.end_date).toLocaleDateString(localeTag(i18n.language))}</span>
                 </div>
               </motion.div>
             ))}

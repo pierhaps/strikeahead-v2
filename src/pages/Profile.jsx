@@ -25,6 +25,12 @@ const RARITY_GLOW = {
   legendary: { border: 'rgba(182,240,60,0.55)',  glow: 'rgba(182,240,60,0.3)',   text: 'text-lime-300' },
 };
 
+
+const localeTag = (code) => {
+  const map = { de: 'de-DE', en: 'en-US', es: 'es-ES', fr: 'fr-FR', it: 'it-IT', hr: 'hr-HR', pt: 'pt-PT', nl: 'nl-NL', tr: 'tr-TR', el: 'el-GR', sq: 'sq-AL' };
+  return map[code] || 'de-DE';
+};
+
 export default function Profile() {
   const [user, setUser] = useState(null);
   const [allAchievements, setAllAchievements] = useState([]);
@@ -156,7 +162,7 @@ export default function Profile() {
           <div className="glass-card rounded-2xl p-4">
             <div className="flex justify-between mb-2">
               <span className="text-foam font-bold text-sm">{t('profile.level_progress', { current: 24, next: 25 })}</span>
-              <span className="text-sun-gradient text-sm font-bold font-display">{fishXp.toLocaleString('de-DE')} / {xpToNext.toLocaleString('de-DE')} XP</span>
+              <span className="text-sun-gradient text-sm font-bold font-display">{fishXp.toLocaleString(localeTag(i18n.language))} / {xpToNext.toLocaleString(localeTag(i18n.language))} XP</span>
             </div>
             <div className="h-3 bg-abyss-700 rounded-full overflow-hidden relative">
               <motion.div

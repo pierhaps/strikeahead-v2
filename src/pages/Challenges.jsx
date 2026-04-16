@@ -22,8 +22,14 @@ function ProgressBar({ value, max }) {
   );
 }
 
+
+const localeTag = (code) => {
+  const map = { de: 'de-DE', en: 'en-US', es: 'es-ES', fr: 'fr-FR', it: 'it-IT', hr: 'hr-HR', pt: 'pt-PT', nl: 'nl-NL', tr: 'tr-TR', el: 'el-GR', sq: 'sq-AL' };
+  return map[code] || 'de-DE';
+};
+
 export default function Challenges() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [tab, setTab] = useState('daily');
   const [challenges, setChallenges] = useState([]);
   const [user, setUser] = useState(null);
@@ -99,7 +105,7 @@ export default function Challenges() {
                   {ch.end_date && (
                     <div className="flex items-center gap-1 text-foam/30 text-xs">
                       <Clock className="w-3 h-3" />
-                      {new Date(ch.end_date).toLocaleDateString('de-DE')}
+                      {new Date(ch.end_date).toLocaleDateString(localeTag(i18n.language))}
                     </div>
                   )}
                 </motion.div>

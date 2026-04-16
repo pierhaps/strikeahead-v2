@@ -7,8 +7,14 @@ import PageTransition from '../components/ui/PageTransition';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 
+
+const localeTag = (code) => {
+  const map = { de: 'de-DE', en: 'en-US', es: 'es-ES', fr: 'fr-FR', it: 'it-IT', hr: 'hr-HR', pt: 'pt-PT', nl: 'nl-NL', tr: 'tr-TR', el: 'el-GR', sq: 'sq-AL' };
+  return map[code] || 'de-DE';
+};
+
 export default function Teams() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [tab, setTab] = useState('all');
   const [teams, setTeams] = useState([]);
   const [myTeam, setMyTeam] = useState(null);
@@ -72,7 +78,7 @@ export default function Teams() {
         <div className="flex gap-3 mt-1">
           <span className="text-tide-400 text-xs flex items-center gap-1"><Users className="w-3 h-3" />{(team.members || []).length}</span>
           <span className="text-foam/40 text-xs flex items-center gap-1"><Fish className="w-3 h-3" />{team.total_catches || 0}</span>
-          <span className="text-sun-400 text-xs flex items-center gap-1"><Trophy className="w-3 h-3" />{(team.total_hook_points || 0).toLocaleString('de-DE')}</span>
+          <span className="text-sun-400 text-xs flex items-center gap-1"><Trophy className="w-3 h-3" />{(team.total_hook_points || 0).toLocaleString(localeTag(i18n.language))}</span>
         </div>
       </div>
     </motion.div>
@@ -144,7 +150,7 @@ export default function Teams() {
           <div className="space-y-3">
             <div className="glass-card rounded-2xl flex items-center gap-3 px-4 py-3">
               <Search className="w-4 h-4 text-tide-400 flex-shrink-0" />
-              <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Team suchen..." className="bg-transparent flex-1 text-foam placeholder-foam/30 text-sm outline-none" />
+              <input value={search} onChange={e => setSearch(e.target.value)} placeholder={t('teams.search_placeholder', { defaultValue: 'Team suchen...' })} className="bg-transparent flex-1 text-foam placeholder-foam/30 text-sm outline-none" />
             </div>
             {loading ? (
               <div className="text-center py-12"><div className="w-8 h-8 border-2 border-tide-400 border-t-transparent rounded-full animate-spin mx-auto" /></div>

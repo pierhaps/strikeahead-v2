@@ -8,8 +8,14 @@ import PageTransition from '../components/ui/PageTransition';
 
 const FILTERS = ['feed_all','feed_followed','feed_region','feed_my_species'];
 
+
+const localeTag = (code) => {
+  const map = { de: 'de-DE', en: 'en-US', es: 'es-ES', fr: 'fr-FR', it: 'it-IT', hr: 'hr-HR', pt: 'pt-PT', nl: 'nl-NL', tr: 'tr-TR', el: 'el-GR', sq: 'sq-AL' };
+  return map[code] || 'de-DE';
+};
+
 export default function Feed() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [filter, setFilter] = useState('feed_all');
   const [posts, setPosts] = useState([]);
   const [user, setUser] = useState(null);
@@ -157,7 +163,7 @@ export default function Feed() {
                     </div>
                     <div>
                       <p className="text-foam font-semibold text-sm">{post.created_by || 'Angler'}</p>
-                      <p className="text-foam/30 text-xs">{post.created_date ? new Date(post.created_date).toLocaleDateString('de-DE') : ''}</p>
+                      <p className="text-foam/30 text-xs">{post.created_date ? new Date(post.created_date).toLocaleDateString(localeTag(i18n.language)) : ''}</p>
                     </div>
                   </div>
 
