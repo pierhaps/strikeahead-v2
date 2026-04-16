@@ -556,7 +556,6 @@ export default function Upload() {
                 type="file"
                 multiple
                 accept="image/*"
-                capture="environment"
                 onChange={handlePhotoUpload}
                 className="hidden"
                 id="photo-upload"
