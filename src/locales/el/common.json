@@ -1410,7 +1410,9 @@
     "upgrade": "Αναβάθμιση"
   },
   "teams": {
-    "search_placeholder": "Αναζήτηση ομάδων..."
+    "search_placeholder": "Αναζήτηση ομάδων...",
+    "name_placeholder": "Όνομα ομάδας *",
+    "desc_placeholder": "Περιγραφή (προαιρετικό)"
   },
   "terms": {
     "last_updated": "Ημερομηνία: Απρίλιος 2026 · StrikeAhead by NOMDAD LLC",

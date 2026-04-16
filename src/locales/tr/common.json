@@ -1410,7 +1410,9 @@
     "upgrade": "Yükselt"
   },
   "teams": {
-    "search_placeholder": "Takım ara..."
+    "search_placeholder": "Takım ara...",
+    "name_placeholder": "Takım adı *",
+    "desc_placeholder": "Açıklama (isteğe bağlı)"
   },
   "terms": {
     "last_updated": "Tarih: Nisan 2026 · StrikeAhead by NOMDAD LLC",

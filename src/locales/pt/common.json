@@ -1410,7 +1410,9 @@
     "upgrade": "Atualizar plano"
   },
   "teams": {
-    "search_placeholder": "Pesquisar equipas..."
+    "search_placeholder": "Pesquisar equipas...",
+    "name_placeholder": "Nome da equipa *",
+    "desc_placeholder": "Descrição (opcional)"
   },
   "terms": {
     "last_updated": "Data: abril 2026 · StrikeAhead by NOMDAD LLC",

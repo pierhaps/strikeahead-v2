@@ -1410,7 +1410,9 @@
     "upgrade": "Nadogradnja"
   },
   "teams": {
-    "search_placeholder": "Pretraži timove..."
+    "search_placeholder": "Pretraži timove...",
+    "name_placeholder": "Naziv tima *",
+    "desc_placeholder": "Opis (neobavezno)"
   },
   "terms": {
     "last_updated": "Stanje: travanj 2026. · StrikeAhead by NOMDAD LLC",

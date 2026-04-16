@@ -1410,7 +1410,9 @@
     "upgrade": "Upgraden"
   },
   "teams": {
-    "search_placeholder": "Teams zoeken..."
+    "search_placeholder": "Teams zoeken...",
+    "name_placeholder": "Teamnaam *",
+    "desc_placeholder": "Beschrijving (optioneel)"
   },
   "terms": {
     "last_updated": "Stand: april 2026 · StrikeAhead by NOMDAD LLC",

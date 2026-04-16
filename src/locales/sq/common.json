@@ -1410,7 +1410,9 @@
     "upgrade": "Përmirëso"
   },
   "teams": {
-    "search_placeholder": "Kërko ekipe..."
+    "search_placeholder": "Kërko ekipe...",
+    "name_placeholder": "Emri i ekipit *",
+    "desc_placeholder": "Përshkrimi (opsionale)"
   },
   "terms": {
     "last_updated": "Datë: Prill 2026 · StrikeAhead by NOMDAD LLC",

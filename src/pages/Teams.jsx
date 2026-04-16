@@ -171,9 +171,9 @@ export default function Teams() {
               <motion.div initial={{ y: 100 }} animate={{ y: 0 }} exit={{ y: 100 }}
                 className="w-full max-w-lg glass-strong rounded-t-3xl p-6 space-y-4">
                 <h2 className="font-display font-bold text-foam text-lg">{t('community.teams_found')}</h2>
-                <input value={newTeamName} onChange={e => setNewTeamName(e.target.value)} placeholder="Team-Name *"
+                <input value={newTeamName} onChange={e => setNewTeamName(e.target.value)} placeholder={t('teams.name_placeholder')}
                   className="w-full glass-card rounded-xl px-4 py-3 text-foam placeholder-foam/30 text-sm outline-none" />
-                <input value={newTeamDesc} onChange={e => setNewTeamDesc(e.target.value)} placeholder="Beschreibung (optional)"
+                <input value={newTeamDesc} onChange={e => setNewTeamDesc(e.target.value)} placeholder={t('teams.desc_placeholder')}
                   className="w-full glass-card rounded-xl px-4 py-3 text-foam placeholder-foam/30 text-sm outline-none" />
                 <button onClick={handleCreate} className="w-full py-4 rounded-2xl gradient-tide text-white font-display font-bold">{t('community.teams_found')}</button>
               </motion.div>
