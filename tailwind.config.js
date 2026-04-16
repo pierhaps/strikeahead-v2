@@ -20,6 +20,7 @@ module.exports = {
     'ring-strike-lime','ring-strike-teal','ring-strike-cyan',
     'shadow-card','shadow-floating',
     'animate-strike-pulse','animate-aurora','animate-breathe','animate-rise-fade',
+    'liquid-glass','liquid-glass-heavy','liquid-glass-subtle','liquid-glass-tab',
   ],
   theme: {
     extend: {

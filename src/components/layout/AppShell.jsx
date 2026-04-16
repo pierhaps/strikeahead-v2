@@ -1,39 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Menu } from 'lucide-react';
 import OceanBackground from './OceanBackground';
 import BottomNav from './BottomNav';
 import AppDrawer from './AppDrawer';
 
+const EDGE_ZONE = 24;    // px from right edge to start swipe
+const OPEN_THRESHOLD = 80; // px swipe distance to trigger open
+
 /**
- * AppShell — Brand v3
- *  - Navy gradient surface (handled by OceanBackground)
- *  - Page transition: rise-fade, tide easing
+ * AppShell — iOS 26 Liquid Glass
+ *  - Swipe from right edge opens AppDrawer (no hamburger button)
+ *  - Page transitions via AnimatePresence
  *  - Max-lg container w/ safe-area awareness
- *  - Burger button (top-right) opens AppDrawer with access to all 30+ pages
  */
 export default function AppShell() {
   const location = useLocation();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const touchRef = useRef({ startX: 0, startY: 0, isEdge: false });
+
+  const handleTouchStart = useCallback((e) => {
+    const touch = e.touches[0];
+    const fromRight = window.innerWidth - touch.clientX;
+    touchRef.current = {
+      startX: touch.clientX,
+      startY: touch.clientY,
+      isEdge: fromRight <= EDGE_ZONE,
+    };
+  }, []);
+
+  const handleTouchEnd = useCallback((e) => {
+    if (!touchRef.current.isEdge) return;
+    const touch = e.changedTouches[0];
+    const deltaX = touchRef.current.startX - touch.clientX;
+    const deltaY = Math.abs(touch.clientY - touchRef.current.startY);
+    // Must swipe left (from right edge) with more horizontal than vertical motion
+    if (deltaX > OPEN_THRESHOLD && deltaX > deltaY) {
+      setDrawerOpen(true);
+    }
+    touchRef.current.isEdge = false;
+  }, []);
 
   return (
-    <div className="relative min-h-dvh bg-navy-900 overflow-x-hidden text-mist">
+    <div
+      className="relative min-h-dvh bg-navy-900 overflow-x-hidden text-mist"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
       <OceanBackground />
-
-      {/* Burger button — fixed top-right */}
-      <button
-        onClick={() => setDrawerOpen(true)}
-        aria-label="Menu"
-        className="fixed z-50 right-3 w-10 h-10 rounded-full flex items-center justify-center text-foam/80 hover:text-foam transition-all glass-strong border border-foam/10"
-        style={{
-          top: 'calc(env(safe-area-inset-top) + 0.5rem)',
-          background: 'linear-gradient(180deg, rgba(10,24,40,0.85), rgba(2,21,43,0.75))',
-          boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
-        }}
-      >
-        <Menu className="w-5 h-5" />
-      </button>
 
       <div
         className="relative z-10 max-w-lg mx-auto page-content"
