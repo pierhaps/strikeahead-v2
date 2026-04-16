@@ -13,8 +13,10 @@ import { recommendBaits, getTimeOfDay, todaysHotSpecies } from '../utils/baitInt
 import logoCircle from '../assets/logo-circle.svg';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
-const GAUGE_R = 110;
-const GAUGE_STROKE = 7;
+const SIZE = 300;           // overall component size
+const CENTER = SIZE / 2;    // 150
+const GAUGE_R = 130;        // ring radius — big & bold
+const GAUGE_STROKE = 10;    // thicker ring
 const GAUGE_CIRC = 2 * Math.PI * GAUGE_R;
 
 /* ------------------------------------------------------------------ */
@@ -103,122 +105,150 @@ function StrikeGauge({ progress, active, minutes, type }) {
   const { t } = useTranslation();
   const dashOffset = GAUGE_CIRC * (1 - progress);
 
+  // Clock hand angle: minutes of current hour mapped to 360°
+  const now = new Date();
+  const handAngle = ((now.getMinutes() * 60 + now.getSeconds()) / 3600) * 360;
+
   return (
-    <div className="relative flex items-center justify-center" style={{ width: 264, height: 264 }}>
+    <div className="relative flex items-center justify-center" style={{ width: SIZE, height: SIZE }}>
       {/* Ambient glow behind gauge */}
       <motion.div
         className="absolute rounded-full"
         style={{
-          width: 240, height: 240,
+          width: SIZE - 20, height: SIZE - 20,
           background: active
             ? 'radial-gradient(circle, rgba(46,224,201,0.25), transparent 70%)'
-            : 'radial-gradient(circle, rgba(45,168,255,0.15), transparent 70%)',
-          filter: 'blur(30px)',
+            : 'radial-gradient(circle, rgba(45,168,255,0.18), transparent 70%)',
+          filter: 'blur(35px)',
         }}
-        animate={active ? { scale: [1, 1.08, 1], opacity: [0.7, 1, 0.7] } : {}}
+        animate={active ? { scale: [1, 1.06, 1], opacity: [0.6, 1, 0.6] } : {}}
         transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
       />
 
-      <svg width={264} height={264} viewBox="0 0 264 264" className="absolute">
+      {/* Inner radar/dark texture circle */}
+      <div
+        className="absolute rounded-full"
+        style={{
+          width: GAUGE_R * 2 - GAUGE_STROKE - 8,
+          height: GAUGE_R * 2 - GAUGE_STROKE - 8,
+          background: 'radial-gradient(circle at 40% 35%, rgba(10,50,68,0.6) 0%, rgba(2,21,33,0.85) 70%)',
+          border: '1px solid rgba(46,224,201,0.08)',
+        }}
+      >
+        {/* Radar grid lines inside */}
+        <svg width="100%" height="100%" viewBox="0 0 240 240" className="absolute inset-0 opacity-20">
+          {[40, 80, 120].map(r => (
+            <circle key={r} cx={120} cy={120} r={r} fill="none" stroke="rgba(46,224,201,0.3)" strokeWidth="0.5" />
+          ))}
+          <line x1={120} y1={0} x2={120} y2={240} stroke="rgba(46,224,201,0.2)" strokeWidth="0.5" />
+          <line x1={0} y1={120} x2={240} y2={120} stroke="rgba(46,224,201,0.2)" strokeWidth="0.5" />
+          <line x1={30} y1={30} x2={210} y2={210} stroke="rgba(46,224,201,0.1)" strokeWidth="0.5" />
+          <line x1={210} y1={30} x2={30} y2={210} stroke="rgba(46,224,201,0.1)" strokeWidth="0.5" />
+        </svg>
+      </div>
+
+      {/* SVG gauge ring */}
+      <svg width={SIZE} height={SIZE} viewBox={`0 0 ${SIZE} ${SIZE}`} className="absolute">
         <defs>
-          <linearGradient id="gauge-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#2DA8FF" />
-            <stop offset="50%" stopColor="#2EE0C9" />
-            <stop offset="100%" stopColor="#B6F03C" />
+          <linearGradient id="gauge-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#2580C3" />
+            <stop offset="30%" stopColor="#0EBDD8" />
+            <stop offset="60%" stopColor="#2EE0C9" />
+            <stop offset="85%" stopColor="#8BE752" />
+            <stop offset="100%" stopColor="#B7F347" />
           </linearGradient>
-          <filter id="gauge-glow">
-            <feGaussianBlur stdDeviation="4" result="blur" />
+          <filter id="arc-glow">
+            <feGaussianBlur stdDeviation="5" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
-          <linearGradient id="track-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="rgba(232,240,245,0.06)" />
-            <stop offset="100%" stopColor="rgba(232,240,245,0.03)" />
-          </linearGradient>
         </defs>
 
-        {/* Track */}
+        {/* Track (subtle) */}
         <circle
-          cx={132} cy={132} r={GAUGE_R}
+          cx={CENTER} cy={CENTER} r={GAUGE_R}
           fill="none"
-          stroke="url(#track-gradient)"
+          stroke="rgba(232,240,245,0.05)"
           strokeWidth={GAUGE_STROKE}
-          strokeLinecap="round"
         />
 
-        {/* Progress arc */}
+        {/* Animated progress arc */}
         <motion.circle
-          cx={132} cy={132} r={GAUGE_R}
+          cx={CENTER} cy={CENTER} r={GAUGE_R}
           fill="none"
-          stroke="url(#gauge-gradient)"
+          stroke="url(#gauge-grad)"
           strokeWidth={GAUGE_STROKE}
           strokeLinecap="round"
           strokeDasharray={GAUGE_CIRC}
           initial={{ strokeDashoffset: GAUGE_CIRC }}
           animate={{ strokeDashoffset: dashOffset }}
-          transition={{ duration: 1.8, ease: tideEase }}
+          transition={{ duration: 2, ease: tideEase }}
           style={{ transform: 'rotate(-90deg)', transformOrigin: '50% 50%' }}
-          filter="url(#gauge-glow)"
+          filter="url(#arc-glow)"
         />
 
-        {/* Tick marks around the gauge */}
-        {Array.from({ length: 60 }, (_, i) => {
-          const angle = (i / 60) * 360 - 90;
-          const rad = (angle * Math.PI) / 180;
-          const isMajor = i % 15 === 0;
-          const r1 = GAUGE_R + (isMajor ? 14 : 12);
-          const r2 = GAUGE_R + (isMajor ? 20 : 16);
-          return (
-            <line
-              key={i}
-              x1={132 + r1 * Math.cos(rad)}
-              y1={132 + r1 * Math.sin(rad)}
-              x2={132 + r2 * Math.cos(rad)}
-              y2={132 + r2 * Math.sin(rad)}
-              stroke={isMajor ? 'rgba(232,240,245,0.18)' : 'rgba(232,240,245,0.06)'}
-              strokeWidth={isMajor ? 1.5 : 0.8}
-              strokeLinecap="round"
-            />
-          );
-        })}
+        {/* White clock hand / needle — like in the reference */}
+        <motion.line
+          x1={CENTER}
+          y1={CENTER}
+          x2={CENTER}
+          y2={CENTER - GAUGE_R + 20}
+          stroke="white"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          style={{ transformOrigin: `${CENTER}px ${CENTER}px` }}
+          initial={{ rotate: 0 }}
+          animate={{ rotate: handAngle }}
+          transition={{ duration: 1.5, ease: tideEase }}
+          filter="url(#arc-glow)"
+        />
+        {/* Needle center dot */}
+        <circle cx={CENTER} cy={CENTER} r={4} fill="white" opacity={0.9} />
       </svg>
 
-      {/* Center content — Logo + Timer */}
-      <div className="relative z-10 flex flex-col items-center">
-        {/* StrikeAhead logo with animated white glow */}
-        <div className="relative mb-2">
-          {/* White glow layer (pulsing) */}
-          <motion.div
-            className="absolute inset-0 flex items-center justify-center"
-            animate={{
-              filter: [
-                'drop-shadow(0 0 8px rgba(255,255,255,0.3)) drop-shadow(0 0 20px rgba(255,255,255,0.15))',
-                'drop-shadow(0 0 16px rgba(255,255,255,0.55)) drop-shadow(0 0 40px rgba(255,255,255,0.25))',
-                'drop-shadow(0 0 8px rgba(255,255,255,0.3)) drop-shadow(0 0 20px rgba(255,255,255,0.15))',
-              ],
-            }}
-            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <img src={logoCircle} alt="" className="w-[100px] h-[100px] object-contain" />
-          </motion.div>
-          {/* Crisp logo on top */}
-          <img src={logoCircle} alt="StrikeAhead" className="relative w-[100px] h-[100px] object-contain" />
-        </div>
+      {/* Logo — large, filling the circle like the reference */}
+      <div className="absolute z-10 flex items-center justify-center">
+        {/* White glow layer (pulsing) */}
+        <motion.div
+          className="absolute"
+          animate={{
+            filter: [
+              'drop-shadow(0 0 10px rgba(255,255,255,0.2)) drop-shadow(0 0 25px rgba(255,255,255,0.1))',
+              'drop-shadow(0 0 20px rgba(255,255,255,0.45)) drop-shadow(0 0 50px rgba(255,255,255,0.2))',
+              'drop-shadow(0 0 10px rgba(255,255,255,0.2)) drop-shadow(0 0 25px rgba(255,255,255,0.1))',
+            ],
+          }}
+          transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <img src={logoCircle} alt="" style={{ width: 170, height: 170 }} className="object-contain" />
+        </motion.div>
+        {/* Crisp logo on top */}
+        <img src={logoCircle} alt="StrikeAhead" style={{ width: 170, height: 170 }} className="relative object-contain" />
+      </div>
 
-        <p className="text-foam/50 text-xs font-semibold uppercase tracking-widest mb-1">
+      {/* Text overlay on top of everything */}
+      <div className="absolute z-20 flex flex-col items-center" style={{ top: 32 }}>
+        <p className="text-foam/60 text-[11px] font-semibold uppercase tracking-[0.2em]">
           {active ? t('home.strike_active', { defaultValue: 'Strike Active' }) : t('home.strike_timer', { defaultValue: 'Strike Timer' })}
         </p>
+      </div>
+
+      <div className="absolute z-20 flex flex-col items-center" style={{ bottom: 38 }}>
         <motion.p
-          className="font-display font-extrabold text-[44px] leading-none tracking-tight"
-          style={{ color: active ? '#2EE0C9' : '#E8F0F5' }}
+          className="font-display font-extrabold text-[40px] leading-none tracking-tight"
+          style={{
+            color: active ? '#2EE0C9' : '#E8F0F5',
+            textShadow: '0 2px 12px rgba(0,0,0,0.6)',
+          }}
           animate={active ? { textShadow: ['0 0 20px rgba(46,224,201,0.5)', '0 0 40px rgba(46,224,201,0.8)', '0 0 20px rgba(46,224,201,0.5)'] } : {}}
           transition={{ duration: 2, repeat: Infinity }}
         >
           {formatTimer(minutes)}
         </motion.p>
-        <p className="text-foam/35 text-[10px] uppercase tracking-wider mt-1">
+        <p className="text-foam/40 text-[9px] uppercase tracking-widest mt-0.5"
+           style={{ textShadow: '0 1px 6px rgba(0,0,0,0.5)' }}>
           {active
             ? t('home.strike_remaining', { defaultValue: 'remaining' })
             : (type === 'major'
@@ -227,18 +257,18 @@ function StrikeGauge({ progress, active, minutes, type }) {
         </p>
       </div>
 
-      {/* Orbiting dot */}
+      {/* Orbiting green dot on the gauge arc */}
       <motion.div
-        className="absolute w-2.5 h-2.5 rounded-full"
+        className="absolute w-3 h-3 rounded-full"
         style={{
-          background: active ? '#B6F03C' : '#2EE0C9',
-          boxShadow: active ? '0 0 12px rgba(182,240,60,0.6)' : '0 0 10px rgba(46,224,201,0.5)',
-          top: 132 - GAUGE_R - 1,
-          left: 132 - 5,
-          transformOrigin: `5px ${GAUGE_R + 1}px`,
+          background: '#B6F03C',
+          boxShadow: '0 0 14px rgba(182,240,60,0.7)',
+          top: CENTER - GAUGE_R - 6,
+          left: CENTER - 6,
+          transformOrigin: `6px ${GAUGE_R + 6}px`,
         }}
         animate={{ rotate: [0, 360] }}
-        transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+        transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
       />
     </div>
   );
