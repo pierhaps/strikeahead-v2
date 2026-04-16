@@ -10,6 +10,7 @@ import { base44 } from '@/api/base44Client';
 import { useTranslation } from 'react-i18next';
 import { computeTrustScore, aggregateTrust } from '../utils/trustEngine';
 import { recommendBaits, getTimeOfDay, todaysHotSpecies } from '../utils/baitIntelligence';
+import logoCircle from '../assets/logo-circle.svg';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 const GAUGE_R = 110;
@@ -184,19 +185,27 @@ function StrikeGauge({ progress, active, minutes, type }) {
         })}
       </svg>
 
-      {/* Center content */}
+      {/* Center content — Logo + Timer */}
       <div className="relative z-10 flex flex-col items-center">
-        {/* Hook icon — SVG */}
-        <svg width="40" height="40" viewBox="0 0 40 40" className="mb-1 opacity-70">
-          <path
-            d="M20 4 C20 4 28 8 28 18 C28 26 22 30 20 32 C18 34 14 32 14 28 C14 24 18 22 20 22 C22 22 24 24 24 26"
-            fill="none"
-            stroke="url(#gauge-gradient)"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-          />
-          <circle cx="20" cy="4" r="2" fill="#2EE0C9" />
-        </svg>
+        {/* StrikeAhead logo with animated white glow */}
+        <div className="relative mb-2">
+          {/* White glow layer (pulsing) */}
+          <motion.div
+            className="absolute inset-0 flex items-center justify-center"
+            animate={{
+              filter: [
+                'drop-shadow(0 0 8px rgba(255,255,255,0.3)) drop-shadow(0 0 20px rgba(255,255,255,0.15))',
+                'drop-shadow(0 0 16px rgba(255,255,255,0.55)) drop-shadow(0 0 40px rgba(255,255,255,0.25))',
+                'drop-shadow(0 0 8px rgba(255,255,255,0.3)) drop-shadow(0 0 20px rgba(255,255,255,0.15))',
+              ],
+            }}
+            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <img src={logoCircle} alt="" className="w-[100px] h-[100px] object-contain" />
+          </motion.div>
+          {/* Crisp logo on top */}
+          <img src={logoCircle} alt="StrikeAhead" className="relative w-[100px] h-[100px] object-contain" />
+        </div>
 
         <p className="text-foam/50 text-xs font-semibold uppercase tracking-widest mb-1">
           {active ? t('home.strike_active', { defaultValue: 'Strike Active' }) : t('home.strike_timer', { defaultValue: 'Strike Timer' })}

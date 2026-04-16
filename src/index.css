@@ -158,6 +158,22 @@
       0 12px 32px rgba(0,0,0,0.20);
   }
 
+  /* ---------------- Logo glow animation ---------------- */
+  .logo-glow {
+    animation: logo-breathe 3s ease-in-out infinite;
+  }
+  @keyframes logo-breathe {
+    0%, 100% {
+      filter: drop-shadow(0 0 8px rgba(255,255,255,0.25))
+              drop-shadow(0 0 20px rgba(46,224,201,0.15));
+    }
+    50% {
+      filter: drop-shadow(0 0 16px rgba(255,255,255,0.5))
+              drop-shadow(0 0 40px rgba(46,224,201,0.3))
+              drop-shadow(0 0 60px rgba(182,240,60,0.15));
+    }
+  }
+
   /* ---------------- Glows ---------------- */
   .glow-strike {
     box-shadow:
