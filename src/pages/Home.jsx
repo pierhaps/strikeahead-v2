@@ -13,10 +13,11 @@ import { recommendBaits, getTimeOfDay, todaysHotSpecies } from '../utils/baitInt
 import logoCircle from '../assets/logo-circle.svg';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
-const SIZE = 300;           // overall component size
-const CENTER = SIZE / 2;    // 150
-const GAUGE_R = 130;        // ring radius — big & bold
-const GAUGE_STROKE = 10;    // thicker ring
+const LOGO_SIZE = 252;      // logo element size (was 210, +20%)
+const SIZE = LOGO_SIZE + 28; // gauge ring sits right on logo edge
+const CENTER = SIZE / 2;
+const GAUGE_R = LOGO_SIZE / 2; // ring exactly on logo border
+const GAUGE_STROKE = 10;
 const GAUGE_CIRC = 2 * Math.PI * GAUGE_R;
 
 /* ------------------------------------------------------------------ */
@@ -208,46 +209,50 @@ function StrikeGauge({ progress, active, minutes, type }) {
         <circle cx={CENTER} cy={CENTER} r={4} fill="white" opacity={0.9} />
       </svg>
 
-      {/* Logo — large, filling the circle like the reference */}
+      {/* Logo — fills the gauge ring exactly */}
       <div className="absolute z-10 flex items-center justify-center">
         {/* White glow layer (pulsing) */}
         <motion.div
           className="absolute"
           animate={{
             filter: [
-              'drop-shadow(0 0 10px rgba(255,255,255,0.2)) drop-shadow(0 0 25px rgba(255,255,255,0.1))',
-              'drop-shadow(0 0 20px rgba(255,255,255,0.45)) drop-shadow(0 0 50px rgba(255,255,255,0.2))',
-              'drop-shadow(0 0 10px rgba(255,255,255,0.2)) drop-shadow(0 0 25px rgba(255,255,255,0.1))',
+              'drop-shadow(0 0 12px rgba(255,255,255,0.2)) drop-shadow(0 0 30px rgba(255,255,255,0.1))',
+              'drop-shadow(0 0 24px rgba(255,255,255,0.5)) drop-shadow(0 0 56px rgba(255,255,255,0.2))',
+              'drop-shadow(0 0 12px rgba(255,255,255,0.2)) drop-shadow(0 0 30px rgba(255,255,255,0.1))',
             ],
           }}
           transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
         >
-          <img src={logoCircle} alt="" style={{ width: 210, height: 210 }} className="object-contain" />
+          <img src={logoCircle} alt="" style={{ width: LOGO_SIZE, height: LOGO_SIZE }} className="object-contain" />
         </motion.div>
         {/* Crisp logo on top */}
-        <img src={logoCircle} alt="StrikeAhead" style={{ width: 210, height: 210 }} className="relative object-contain" />
+        <img src={logoCircle} alt="StrikeAhead" style={{ width: LOGO_SIZE, height: LOGO_SIZE }} className="relative object-contain" />
       </div>
 
-      {/* Text overlay on top of everything */}
-      <div className="absolute z-20 flex flex-col items-center" style={{ top: 32 }}>
-        <p className="text-foam/60 text-[11px] font-semibold uppercase tracking-[0.2em]">
+      {/* Timer value — centered inside the logo */}
+      <div className="absolute z-20 flex flex-col items-center justify-center" style={{ width: LOGO_SIZE, height: LOGO_SIZE }}>
+        {/* Top label */}
+        <p className="text-foam/50 text-[10px] font-semibold uppercase tracking-[0.22em] mb-1">
           {active ? t('home.strike_active', { defaultValue: 'Strike Active' }) : t('home.strike_timer', { defaultValue: 'Strike Timer' })}
         </p>
-      </div>
 
-      <div className="absolute z-20 flex flex-col items-center" style={{ bottom: 38 }}>
+        {/* Big countdown */}
         <motion.p
-          className="font-display font-extrabold text-[40px] leading-none tracking-tight"
+          className="font-display font-black text-[44px] leading-none tracking-tight"
           style={{
             color: active ? '#2EE0C9' : '#E8F0F5',
-            textShadow: '0 2px 12px rgba(0,0,0,0.6)',
+            textShadow: active
+              ? '0 0 24px rgba(46,224,201,0.6), 0 2px 12px rgba(0,0,0,0.5)'
+              : '0 0 16px rgba(255,255,255,0.15), 0 2px 12px rgba(0,0,0,0.5)',
           }}
-          animate={active ? { textShadow: ['0 0 20px rgba(46,224,201,0.5)', '0 0 40px rgba(46,224,201,0.8)', '0 0 20px rgba(46,224,201,0.5)'] } : {}}
+          animate={active ? { textShadow: ['0 0 20px rgba(46,224,201,0.5), 0 2px 12px rgba(0,0,0,0.5)', '0 0 44px rgba(46,224,201,0.8), 0 2px 12px rgba(0,0,0,0.5)', '0 0 20px rgba(46,224,201,0.5), 0 2px 12px rgba(0,0,0,0.5)'] } : {}}
           transition={{ duration: 2, repeat: Infinity }}
         >
           {formatTimer(minutes)}
         </motion.p>
-        <p className="text-foam/40 text-[9px] uppercase tracking-widest mt-0.5"
+
+        {/* Subtitle */}
+        <p className="text-foam/35 text-[9px] uppercase tracking-[0.18em] mt-1"
            style={{ textShadow: '0 1px 6px rgba(0,0,0,0.5)' }}>
           {active
             ? t('home.strike_remaining', { defaultValue: 'remaining' })
