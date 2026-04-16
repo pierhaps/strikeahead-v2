@@ -251,7 +251,19 @@
     "day_fr": "Παρ",
     "day_sa": "Σάβ",
     "day_su": "Κυρ",
-    "details": "Λεπτομέρειες"
+    "details": "Λεπτομέρειες",
+    "month_jan": "Ιαν",
+    "month_feb": "Φεβ",
+    "month_mar": "Μάρ",
+    "month_apr": "Απρ",
+    "month_may": "Μάι",
+    "month_jun": "Ιούν",
+    "month_jul": "Ιούλ",
+    "month_aug": "Αύγ",
+    "month_sep": "Σεπ",
+    "month_oct": "Οκτ",
+    "month_nov": "Νοέ",
+    "month_dec": "Δεκ"
   },
   "home": {
     "welcome_back": "Καλώς επέστρεψες",
@@ -296,7 +308,15 @@
     "trust_overview": "Εμπιστοσύνη",
     "trust_avg": "Μέσο σκορ",
     "hot_species": "Σε τάση",
-    "hot_n": "{{n}} αλιεύματα"
+    "hot_n": "{{n}} αλιεύματα",
+    "license_expired_title": "{{name}} έληξε",
+    "license_expired_sub": "Ανανέωσε ή ανεβάσε ξανά την άδεια",
+    "license_expiring_title_one": "Η άδεια λήγει σε {{n}} μέρα",
+    "license_expiring_title_other": "Η άδεια λήγει σε {{n}} μέρες",
+    "license_expiring_sub": "{{name}} — ανανέωσε σύντομα",
+    "license_generic": "Άδεια αλιείας",
+    "license_none_title": "Δεν υπάρχει άδεια",
+    "license_none_sub": "Σάρωσε ή πρόσθεσε μία τώρα"
   },
   "dashboard": {
     "title": "Πίνακας",
@@ -310,7 +330,15 @@
     "monthly_goal": "Μηνιαίος στόχος",
     "hit_rate": "Ποσοστό επιτυχίας",
     "personal_bests": "Προσωπικά ρεκόρ",
-    "record": "Ρεκόρ"
+    "record": "Ρεκόρ",
+    "empty_title": "Ακόμη δεν υπάρχουν δεδομένα",
+    "empty_sub": "Το dashboard γεμίζει με κάθε ψάρεμα",
+    "empty_cta": "Κατέγραψε το πρώτο σου ψάρεμα",
+    "no_bests_yet": "Ακόμη κανένα ρεκόρ",
+    "activity_week": "Δραστηριότητα (7 ημέρες)",
+    "activity_month": "Δραστηριότητα (τελευταίες 7 εβδομάδες)",
+    "activity_year": "Δραστηριότητα (τελευταίοι 7 μήνες)",
+    "activity_total": "Δραστηριότητα (τελευταία 7 έτη)"
   },
   "upload": {
     "title": "Καταχώρηση",
@@ -422,7 +450,13 @@
       "afternoon": "απόγευμα",
       "evening": "βράδυ",
       "after_sunset": "μετά τη δύση"
-    }
+    },
+    "reg_warning_title": "Κανονιστική ειδοποίηση",
+    "reg_too_small": "{{species}} κάτω από το ελάχιστο μέγεθος ({{min}} cm, {{region}})",
+    "reg_schonzeit": "{{species}} σε απαγόρευση ({{sz}}, {{region}})",
+    "reg_ok": "Ελάχιστο μέγεθος καλύπτεται ({{min}} cm, {{region}})",
+    "reg_source": "Πηγή",
+    "reg_confirm_save": "Αυτό το ψάρεμα παραβιάζει το ελάχιστο μέγεθος ή την απαγόρευση. Αποθήκευση παρόλα αυτά;"
   },
   "map": {
     "search_placeholder": "Αναζήτηση σημείων...",

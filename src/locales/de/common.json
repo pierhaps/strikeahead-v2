@@ -251,7 +251,19 @@
     "day_fr": "Fr",
     "day_sa": "Sa",
     "day_su": "So",
-    "details": "Details"
+    "details": "Details",
+    "month_jan": "Jan",
+    "month_feb": "Feb",
+    "month_mar": "Mär",
+    "month_apr": "Apr",
+    "month_may": "Mai",
+    "month_jun": "Jun",
+    "month_jul": "Jul",
+    "month_aug": "Aug",
+    "month_sep": "Sep",
+    "month_oct": "Okt",
+    "month_nov": "Nov",
+    "month_dec": "Dez"
   },
   "home": {
     "welcome_back": "Willkommen zurück",
@@ -296,7 +308,15 @@
     "trust_overview": "Trust Übersicht",
     "trust_avg": "Ø Score",
     "hot_species": "Im Trend",
-    "hot_n": "{{n}} Fänge"
+    "hot_n": "{{n}} Fänge",
+    "license_expired_title": "{{name}} abgelaufen",
+    "license_expired_sub": "Jetzt Schein erneuern oder hochladen",
+    "license_expiring_title_one": "Lizenz läuft in {{n}} Tag ab",
+    "license_expiring_title_other": "Lizenz läuft in {{n}} Tagen ab",
+    "license_expiring_sub": "{{name}} — rechtzeitig verlängern",
+    "license_generic": "Angelschein",
+    "license_none_title": "Kein Angelschein hinterlegt",
+    "license_none_sub": "Jetzt scannen oder manuell erfassen"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -310,7 +330,15 @@
     "monthly_goal": "Monatsziel",
     "hit_rate": "Hit-Rate",
     "personal_bests": "Persönliche Bestleistungen",
-    "record": "Rekord"
+    "record": "Rekord",
+    "empty_title": "Noch keine Daten",
+    "empty_sub": "Dein Dashboard füllt sich mit jedem Fang",
+    "empty_cta": "Ersten Fang loggen",
+    "no_bests_yet": "Noch keine Rekorde vorhanden",
+    "activity_week": "Aktivität (7 Tage)",
+    "activity_month": "Aktivität (letzte 7 Wochen)",
+    "activity_year": "Aktivität (letzte 7 Monate)",
+    "activity_total": "Aktivität (letzte 7 Jahre)"
   },
   "upload": {
     "title": "Fang loggen",
@@ -422,7 +450,13 @@
       "afternoon": "Nachmittag",
       "evening": "Abend",
       "after_sunset": "nach Sonnenuntergang"
-    }
+    },
+    "reg_warning_title": "Rechtlicher Hinweis",
+    "reg_too_small": "{{species}} unter Mindestmaß ({{min}} cm, {{region}})",
+    "reg_schonzeit": "{{species}} in Schonzeit ({{sz}}, {{region}})",
+    "reg_ok": "Mindestmaß erfüllt ({{min}} cm, {{region}})",
+    "reg_source": "Quelle",
+    "reg_confirm_save": "Der Fang verstößt gegen die gesetzliche Schonzeit oder das Mindestmaß. Trotzdem speichern?"
   },
   "map": {
     "search_placeholder": "Spot suchen...",

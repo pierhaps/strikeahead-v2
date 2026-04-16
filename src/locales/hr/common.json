@@ -251,7 +251,19 @@
     "day_fr": "Pet",
     "day_sa": "Sub",
     "day_su": "Ned",
-    "details": "Detalji"
+    "details": "Detalji",
+    "month_jan": "Sij",
+    "month_feb": "Velj",
+    "month_mar": "Ožu",
+    "month_apr": "Tra",
+    "month_may": "Svi",
+    "month_jun": "Lip",
+    "month_jul": "Srp",
+    "month_aug": "Kol",
+    "month_sep": "Ruj",
+    "month_oct": "Lis",
+    "month_nov": "Stu",
+    "month_dec": "Pro"
   },
   "home": {
     "welcome_back": "Dobrodošao natrag",
@@ -296,7 +308,15 @@
     "trust_overview": "Povjerenje",
     "trust_avg": "Prosjek",
     "hot_species": "U trendu",
-    "hot_n": "{{n}} ulova"
+    "hot_n": "{{n}} ulova",
+    "license_expired_title": "{{name}} istekla",
+    "license_expired_sub": "Obnovi ili ponovno učitaj dozvolu",
+    "license_expiring_title_one": "Dozvola istječe za {{n}} dan",
+    "license_expiring_title_other": "Dozvola istječe za {{n}} dana",
+    "license_expiring_sub": "{{name}} — obnovi uskoro",
+    "license_generic": "Ribolovna dozvola",
+    "license_none_title": "Nema registrirane dozvole",
+    "license_none_sub": "Skeniraj ili dodaj sada"
   },
   "dashboard": {
     "title": "Nadzorna ploča",
@@ -310,7 +330,15 @@
     "monthly_goal": "Mjesečni cilj",
     "hit_rate": "Stopa pogodaka",
     "personal_bests": "Osobni rekordi",
-    "record": "Rekord"
+    "record": "Rekord",
+    "empty_title": "Još nema podataka",
+    "empty_sub": "Pregled se puni svakim ulovom",
+    "empty_cta": "Zabilježi prvi ulov",
+    "no_bests_yet": "Još nema osobnih rekorda",
+    "activity_week": "Aktivnost (7 dana)",
+    "activity_month": "Aktivnost (zadnjih 7 tjedana)",
+    "activity_year": "Aktivnost (zadnjih 7 mjeseci)",
+    "activity_total": "Aktivnost (zadnjih 7 godina)"
   },
   "upload": {
     "title": "Zabilježi ulov",
@@ -422,7 +450,13 @@
       "afternoon": "popodne",
       "evening": "večer",
       "after_sunset": "nakon zalaska"
-    }
+    },
+    "reg_warning_title": "Regulatorno upozorenje",
+    "reg_too_small": "{{species}} ispod minimalne veličine ({{min}} cm, {{region}})",
+    "reg_schonzeit": "{{species}} u poštedi ({{sz}}, {{region}})",
+    "reg_ok": "Minimalna veličina zadovoljena ({{min}} cm, {{region}})",
+    "reg_source": "Izvor",
+    "reg_confirm_save": "Ovaj ulov krši minimalnu veličinu ili poštedu. Spremiti ipak?"
   },
   "map": {
     "search_placeholder": "Pretraži lokacije...",

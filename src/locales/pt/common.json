@@ -251,7 +251,19 @@
     "day_fr": "Sex",
     "day_sa": "Sáb",
     "day_su": "Dom",
-    "details": "Detalhes"
+    "details": "Detalhes",
+    "month_jan": "Jan",
+    "month_feb": "Fev",
+    "month_mar": "Mar",
+    "month_apr": "Abr",
+    "month_may": "Mai",
+    "month_jun": "Jun",
+    "month_jul": "Jul",
+    "month_aug": "Ago",
+    "month_sep": "Set",
+    "month_oct": "Out",
+    "month_nov": "Nov",
+    "month_dec": "Dez"
   },
   "home": {
     "welcome_back": "Bem-vindo de volta",
@@ -296,7 +308,15 @@
     "trust_overview": "Confiança",
     "trust_avg": "Média",
     "hot_species": "Em tendência",
-    "hot_n": "{{n}} capturas"
+    "hot_n": "{{n}} capturas",
+    "license_expired_title": "{{name}} expirada",
+    "license_expired_sub": "Renova ou recarrega a licença",
+    "license_expiring_title_one": "A licença expira em {{n}} dia",
+    "license_expiring_title_other": "A licença expira em {{n}} dias",
+    "license_expiring_sub": "{{name}} — renova em breve",
+    "license_generic": "Licença de pesca",
+    "license_none_title": "Sem licença registada",
+    "license_none_sub": "Digitaliza ou adiciona agora"
   },
   "dashboard": {
     "title": "Painel",
@@ -310,7 +330,15 @@
     "monthly_goal": "Objetivo mensal",
     "hit_rate": "Taxa de sucesso",
     "personal_bests": "Melhores marcas pessoais",
-    "record": "Recorde"
+    "record": "Recorde",
+    "empty_title": "Ainda sem dados",
+    "empty_sub": "O painel enche com cada captura",
+    "empty_cta": "Regista a primeira captura",
+    "no_bests_yet": "Sem recordes pessoais ainda",
+    "activity_week": "Atividade (7 dias)",
+    "activity_month": "Atividade (últimas 7 semanas)",
+    "activity_year": "Atividade (últimos 7 meses)",
+    "activity_total": "Atividade (últimos 7 anos)"
   },
   "upload": {
     "title": "Registar captura",
@@ -422,7 +450,13 @@
       "afternoon": "tarde",
       "evening": "noite",
       "after_sunset": "após pôr-do-sol"
-    }
+    },
+    "reg_warning_title": "Aviso regulamentar",
+    "reg_too_small": "{{species}} abaixo do tamanho mínimo ({{min}} cm, {{region}})",
+    "reg_schonzeit": "{{species}} em período de defeso ({{sz}}, {{region}})",
+    "reg_ok": "Tamanho mínimo cumprido ({{min}} cm, {{region}})",
+    "reg_source": "Fonte",
+    "reg_confirm_save": "Esta captura viola o tamanho mínimo ou o defeso. Guardar mesmo assim?"
   },
   "map": {
     "search_placeholder": "Pesquisar locais...",

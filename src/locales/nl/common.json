@@ -251,7 +251,19 @@
     "day_fr": "Vr",
     "day_sa": "Za",
     "day_su": "Zo",
-    "details": "Details"
+    "details": "Details",
+    "month_jan": "Jan",
+    "month_feb": "Feb",
+    "month_mar": "Mrt",
+    "month_apr": "Apr",
+    "month_may": "Mei",
+    "month_jun": "Jun",
+    "month_jul": "Jul",
+    "month_aug": "Aug",
+    "month_sep": "Sep",
+    "month_oct": "Okt",
+    "month_nov": "Nov",
+    "month_dec": "Dec"
   },
   "home": {
     "welcome_back": "Welkom terug",
@@ -296,7 +308,15 @@
     "trust_overview": "Vertrouwen",
     "trust_avg": "Gem. score",
     "hot_species": "In trend",
-    "hot_n": "{{n}} vangsten"
+    "hot_n": "{{n}} vangsten",
+    "license_expired_title": "{{name}} verlopen",
+    "license_expired_sub": "Vernieuw of upload je vergunning opnieuw",
+    "license_expiring_title_one": "Vergunning verloopt over {{n}} dag",
+    "license_expiring_title_other": "Vergunning verloopt over {{n}} dagen",
+    "license_expiring_sub": "{{name}} — binnenkort vernieuwen",
+    "license_generic": "Visvergunning",
+    "license_none_title": "Geen vergunning opgeslagen",
+    "license_none_sub": "Scan of voeg er nu een toe"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -310,7 +330,15 @@
     "monthly_goal": "Maanddoel",
     "hit_rate": "Trefpercentage",
     "personal_bests": "Persoonlijke records",
-    "record": "Record"
+    "record": "Record",
+    "empty_title": "Nog geen gegevens",
+    "empty_sub": "Je dashboard vult zich met elke vangst",
+    "empty_cta": "Log je eerste vangst",
+    "no_bests_yet": "Nog geen persoonlijke records",
+    "activity_week": "Activiteit (7 dagen)",
+    "activity_month": "Activiteit (laatste 7 weken)",
+    "activity_year": "Activiteit (laatste 7 maanden)",
+    "activity_total": "Activiteit (laatste 7 jaren)"
   },
   "upload": {
     "title": "Vangst loggen",
@@ -422,7 +450,13 @@
       "afternoon": "namiddag",
       "evening": "avond",
       "after_sunset": "na zonsondergang"
-    }
+    },
+    "reg_warning_title": "Regelgevingsmelding",
+    "reg_too_small": "{{species}} onder minimummaat ({{min}} cm, {{region}})",
+    "reg_schonzeit": "{{species}} in gesloten seizoen ({{sz}}, {{region}})",
+    "reg_ok": "Minimummaat gehaald ({{min}} cm, {{region}})",
+    "reg_source": "Bron",
+    "reg_confirm_save": "Deze vangst overtreedt de minimummaat of het gesloten seizoen. Toch opslaan?"
   },
   "map": {
     "search_placeholder": "Zoek spots...",

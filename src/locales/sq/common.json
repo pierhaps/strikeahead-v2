@@ -251,7 +251,19 @@
     "day_fr": "Pre",
     "day_sa": "Sht",
     "day_su": "Die",
-    "details": "Detaje"
+    "details": "Detaje",
+    "month_jan": "Jan",
+    "month_feb": "Shk",
+    "month_mar": "Mar",
+    "month_apr": "Pri",
+    "month_may": "Maj",
+    "month_jun": "Qer",
+    "month_jul": "Kor",
+    "month_aug": "Gus",
+    "month_sep": "Sht",
+    "month_oct": "Tet",
+    "month_nov": "Nën",
+    "month_dec": "Dhj"
   },
   "home": {
     "welcome_back": "Mirë se u kthevet",
@@ -296,7 +308,15 @@
     "trust_overview": "Besim",
     "trust_avg": "Mesatare",
     "hot_species": "Në trend",
-    "hot_n": "{{n}} kapje"
+    "hot_n": "{{n}} kapje",
+    "license_expired_title": "{{name}} ka skaduar",
+    "license_expired_sub": "Rinovo ose ringarko lejen",
+    "license_expiring_title_one": "Leja skadon për {{n}} ditë",
+    "license_expiring_title_other": "Leja skadon për {{n}} ditë",
+    "license_expiring_sub": "{{name}} — rinovo së shpejti",
+    "license_generic": "Leje peshkimi",
+    "license_none_title": "Asnjë leje e regjistruar",
+    "license_none_sub": "Skano ose shto një tani"
   },
   "dashboard": {
     "title": "Paneli",
@@ -310,7 +330,15 @@
     "monthly_goal": "Qëllimi mujor",
     "hit_rate": "Shkalla e suksesit",
     "personal_bests": "Rekordet personale",
-    "record": "Rekord"
+    "record": "Rekord",
+    "empty_title": "Ende pa të dhëna",
+    "empty_sub": "Paneli mbushet me çdo kapje",
+    "empty_cta": "Regjistro kapjen e parë",
+    "no_bests_yet": "Ende pa rekorde personale",
+    "activity_week": "Aktiviteti (7 ditë)",
+    "activity_month": "Aktiviteti (7 javët e fundit)",
+    "activity_year": "Aktiviteti (7 muajt e fundit)",
+    "activity_total": "Aktiviteti (7 vitet e fundit)"
   },
   "upload": {
     "title": "Regjistro kapje",
@@ -422,7 +450,13 @@
       "afternoon": "pasdite",
       "evening": "mbrëmje",
       "after_sunset": "pas perëndimit"
-    }
+    },
+    "reg_warning_title": "Njoftim rregullator",
+    "reg_too_small": "{{species}} ndën përmasat minimale ({{min}} cm, {{region}})",
+    "reg_schonzeit": "{{species}} në periudhën e mbyllur ({{sz}}, {{region}})",
+    "reg_ok": "Përmasat minimale përmbushen ({{min}} cm, {{region}})",
+    "reg_source": "Burimi",
+    "reg_confirm_save": "Kjo kapje shkel përmasat minimale ose periudhën e mbyllur. Ruaj gjithsesi?"
   },
   "map": {
     "search_placeholder": "Kërko vende...",

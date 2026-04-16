@@ -1,9 +1,9 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   Upload as UploadIcon, MapPin, Loader2, CheckCircle,
-  Leaf, Sparkles, Zap, Fish, Clock, Cloud, Anchor,
+  Leaf, Sparkles, Zap, Fish, Clock, Cloud, Anchor, AlertTriangle, Calendar,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
@@ -99,6 +99,44 @@ function calculateFishXP(c) {
   return xp;
 }
 
+// Parse "DD-MM" into [day, month] (1-based month)
+function parseDDMM(s) {
+  if (!s || typeof s !== 'string') return null;
+  const [dd, mm] = s.split('-').map(Number);
+  if (!Number.isFinite(dd) || !Number.isFinite(mm)) return null;
+  return [dd, mm];
+}
+
+// Checks whether date (Date obj) falls in [start, end] schonzeit, supporting year-wrap.
+function isInSchonzeit(startStr, endStr, date = new Date()) {
+  const s = parseDDMM(startStr);
+  const e = parseDDMM(endStr);
+  if (!s || !e) return false;
+  const todayKey = (date.getMonth() + 1) * 100 + date.getDate(); // e.g. 0415
+  const sKey = s[1] * 100 + s[0];
+  const eKey = e[1] * 100 + e[0];
+  if (sKey <= eKey) return todayKey >= sKey && todayKey <= eKey;
+  // wraps year boundary (e.g. 01-10 → 28-02)
+  return todayKey >= sKey || todayKey <= eKey;
+}
+
+// Picks the best Regulation row for a given species + optional country preference
+function pickRegulation(regs, species, preferredCountry) {
+  if (!species) return null;
+  const bySpecies = regs.filter(r => r.species && r.species.toLowerCase() === species.toLowerCase());
+  if (!bySpecies.length) return null;
+  if (preferredCountry) {
+    const countryMatch = bySpecies.find(r => r.country && r.country.toLowerCase() === preferredCountry.toLowerCase());
+    if (countryMatch) return countryMatch;
+  }
+  // fallback: lowest mindestmass row (most lenient) or first
+  const withSize = bySpecies.filter(r => r.mindestmass_cm != null);
+  if (withSize.length) {
+    return withSize.reduce((a, b) => (a.mindestmass_cm <= b.mindestmass_cm ? a : b));
+  }
+  return bySpecies[0];
+}
+
 // ---------------- Component ----------------
 
 export default function Upload() {
@@ -119,6 +157,14 @@ export default function Upload() {
   const [ecoAnalysis, setEcoAnalysis] = useState(null);
   const [autoFields, setAutoFields] = useState({});
   const [submitting, setSubmitting] = useState(false);
+  const [regulations, setRegulations] = useState([]);
+
+  // Load regulations once
+  useEffect(() => {
+    base44.entities.Regulation.list('species', 500)
+      .then(data => setRegulations(data || []))
+      .catch(() => setRegulations([]));
+  }, []);
 
   const urlParams = new URLSearchParams(window.location.search);
   const preselectedSpecies = urlParams.get('species') || '';
@@ -150,6 +196,31 @@ export default function Upload() {
     moon_phase: getMoonPhase(),
     released: false,
   });
+
+  // Applicable regulation for the current species + user country
+  const applicableReg = useMemo(
+    () => pickRegulation(regulations, formData.species, user?.country),
+    [regulations, formData.species, user?.country],
+  );
+
+  // Size + Schonzeit warnings
+  const regWarnings = useMemo(() => {
+    const out = { tooSmall: false, inSchonzeit: false, minSize: null, sz: null };
+    if (!applicableReg) return out;
+    const len = parseFloat(formData.length_cm);
+    if (applicableReg.mindestmass_cm != null && Number.isFinite(len) && len > 0 && len < applicableReg.mindestmass_cm) {
+      out.tooSmall = true;
+      out.minSize = applicableReg.mindestmass_cm;
+    }
+    if (applicableReg.schonzeit_start && applicableReg.schonzeit_end) {
+      const d = formData.caught_date ? new Date(formData.caught_date) : new Date();
+      if (isInSchonzeit(applicableReg.schonzeit_start, applicableReg.schonzeit_end, d)) {
+        out.inSchonzeit = true;
+        out.sz = `${applicableReg.schonzeit_start} → ${applicableReg.schonzeit_end}`;
+      }
+    }
+    return out;
+  }, [applicableReg, formData.length_cm, formData.caught_date]);
 
   const set = (key, val) => setFormData((prev) => ({ ...prev, [key]: val }));
   const setAuto = (updates) => {
@@ -322,6 +393,12 @@ export default function Upload() {
     if (!formData.species) return toast.error(t('upload.species_required'));
     if (uploadedPhotos.length === 0) return toast.error(t('upload.photo_required'));
     if (!gpsLocation) return toast.error(t('upload.gps_required'));
+
+    // Soft confirm if regulation warning active (non-blocking for C&R intent)
+    if ((regWarnings.tooSmall || regWarnings.inSchonzeit) && !formData.released) {
+      const proceed = window.confirm(t('upload.reg_confirm_save'));
+      if (!proceed) return;
+    }
 
     setSubmitting(true);
 
@@ -567,6 +644,72 @@ export default function Upload() {
               />
               <span className="text-xs text-foam/70">{t('upload.released')}</span>
             </label>
+
+            {applicableReg && (regWarnings.tooSmall || regWarnings.inSchonzeit) && (
+              <div
+                className="mt-2 rounded-xl p-3 border"
+                style={{
+                  background: 'rgba(239,92,106,0.08)',
+                  borderColor: 'rgba(239,92,106,0.32)',
+                }}
+              >
+                <div className="flex items-start gap-2">
+                  <AlertTriangle className="w-4 h-4 text-coral-400 flex-shrink-0 mt-0.5" />
+                  <div className="flex-1 text-xs">
+                    <p className="font-bold text-coral-300 mb-1">
+                      {t('upload.reg_warning_title')}
+                    </p>
+                    {regWarnings.tooSmall && (
+                      <p className="text-foam/80">
+                        🐟 {t('upload.reg_too_small', {
+                          species: formData.species,
+                          min: regWarnings.minSize,
+                          region: applicableReg.region || applicableReg.country || '',
+                        })}
+                      </p>
+                    )}
+                    {regWarnings.inSchonzeit && (
+                      <p className="text-foam/80 mt-1">
+                        <Calendar className="w-3 h-3 inline mr-1" />
+                        {t('upload.reg_schonzeit', {
+                          species: formData.species,
+                          sz: regWarnings.sz,
+                          region: applicableReg.region || applicableReg.country || '',
+                        })}
+                      </p>
+                    )}
+                    {applicableReg.source_url && (
+                      <a
+                        href={applicableReg.source_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-tide-300 underline text-[11px] mt-1 inline-block"
+                      >
+                        {t('upload.reg_source')} ↗
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {applicableReg && !regWarnings.tooSmall && !regWarnings.inSchonzeit && applicableReg.mindestmass_cm != null && (
+              <div
+                className="mt-2 rounded-xl p-2.5 border"
+                style={{
+                  background: 'rgba(46,224,201,0.06)',
+                  borderColor: 'rgba(46,224,201,0.25)',
+                }}
+              >
+                <p className="text-[11px] text-mint-300 flex items-center gap-1.5">
+                  <CheckCircle className="w-3 h-3" />
+                  {t('upload.reg_ok', {
+                    min: applicableReg.mindestmass_cm,
+                    region: applicableReg.region || applicableReg.country || '',
+                  })}
+                </p>
+              </div>
+            )}
           </SectionCard>
 
           {/* 4. Datum + Uhrzeit */}

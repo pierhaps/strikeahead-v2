@@ -251,7 +251,19 @@
     "day_fr": "Ven",
     "day_sa": "Sab",
     "day_su": "Dom",
-    "details": "Dettagli"
+    "details": "Dettagli",
+    "month_jan": "Gen",
+    "month_feb": "Feb",
+    "month_mar": "Mar",
+    "month_apr": "Apr",
+    "month_may": "Mag",
+    "month_jun": "Giu",
+    "month_jul": "Lug",
+    "month_aug": "Ago",
+    "month_sep": "Set",
+    "month_oct": "Ott",
+    "month_nov": "Nov",
+    "month_dec": "Dic"
   },
   "home": {
     "welcome_back": "Bentornato",
@@ -296,7 +308,15 @@
     "trust_overview": "Fiducia",
     "trust_avg": "Punteggio medio",
     "hot_species": "In tendenza",
-    "hot_n": "{{n}} catture"
+    "hot_n": "{{n}} catture",
+    "license_expired_title": "{{name}} scaduta",
+    "license_expired_sub": "Rinnova o ricarica la licenza",
+    "license_expiring_title_one": "La licenza scade tra {{n}} giorno",
+    "license_expiring_title_other": "La licenza scade tra {{n}} giorni",
+    "license_expiring_sub": "{{name}} — rinnova presto",
+    "license_generic": "Licenza di pesca",
+    "license_none_title": "Nessuna licenza registrata",
+    "license_none_sub": "Scansiona o aggiungi una licenza ora"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -310,7 +330,15 @@
     "monthly_goal": "Obiettivo mensile",
     "hit_rate": "Tasso di successo",
     "personal_bests": "Migliori prestazioni",
-    "record": "Record"
+    "record": "Record",
+    "empty_title": "Ancora nessun dato",
+    "empty_sub": "La dashboard si riempie ad ogni cattura",
+    "empty_cta": "Registra la prima cattura",
+    "no_bests_yet": "Ancora nessun record personale",
+    "activity_week": "Attività (7 giorni)",
+    "activity_month": "Attività (ultime 7 settimane)",
+    "activity_year": "Attività (ultimi 7 mesi)",
+    "activity_total": "Attività (ultimi 7 anni)"
   },
   "upload": {
     "title": "Registra cattura",
@@ -422,7 +450,13 @@
       "afternoon": "pomeriggio",
       "evening": "sera",
       "after_sunset": "dopo il tramonto"
-    }
+    },
+    "reg_warning_title": "Avviso normativo",
+    "reg_too_small": "{{species}} sotto la taglia minima ({{min}} cm, {{region}})",
+    "reg_schonzeit": "{{species}} in periodo di divieto ({{sz}}, {{region}})",
+    "reg_ok": "Taglia minima rispettata ({{min}} cm, {{region}})",
+    "reg_source": "Fonte",
+    "reg_confirm_save": "Questa cattura viola la taglia minima o il periodo di divieto. Salvare comunque?"
   },
   "map": {
     "search_placeholder": "Cerca spot...",

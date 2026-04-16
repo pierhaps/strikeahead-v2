@@ -251,7 +251,19 @@
     "day_fr": "Ven",
     "day_sa": "Sam",
     "day_su": "Dim",
-    "details": "Détails"
+    "details": "Détails",
+    "month_jan": "Jan",
+    "month_feb": "Fév",
+    "month_mar": "Mar",
+    "month_apr": "Avr",
+    "month_may": "Mai",
+    "month_jun": "Juin",
+    "month_jul": "Juil",
+    "month_aug": "Aoû",
+    "month_sep": "Sep",
+    "month_oct": "Oct",
+    "month_nov": "Nov",
+    "month_dec": "Déc"
   },
   "home": {
     "welcome_back": "Bon retour",
@@ -296,7 +308,15 @@
     "trust_overview": "Confiance",
     "trust_avg": "Score moyen",
     "hot_species": "Tendance",
-    "hot_n": "{{n}} prises"
+    "hot_n": "{{n}} prises",
+    "license_expired_title": "{{name}} expirée",
+    "license_expired_sub": "Renouvelle ou réimporte ta licence",
+    "license_expiring_title_one": "La licence expire dans {{n}} jour",
+    "license_expiring_title_other": "La licence expire dans {{n}} jours",
+    "license_expiring_sub": "{{name}} — à renouveler bientôt",
+    "license_generic": "Permis de pêche",
+    "license_none_title": "Aucun permis enregistré",
+    "license_none_sub": "Scanner ou ajouter maintenant"
   },
   "dashboard": {
     "title": "Tableau de bord",
@@ -310,7 +330,15 @@
     "monthly_goal": "Objectif mensuel",
     "hit_rate": "Taux de réussite",
     "personal_bests": "Meilleures performances",
-    "record": "Record"
+    "record": "Record",
+    "empty_title": "Pas encore de données",
+    "empty_sub": "Ton tableau de bord se remplit à chaque prise",
+    "empty_cta": "Enregistre ta première prise",
+    "no_bests_yet": "Aucun record personnel pour l'instant",
+    "activity_week": "Activité (7 jours)",
+    "activity_month": "Activité (7 dernières semaines)",
+    "activity_year": "Activité (7 derniers mois)",
+    "activity_total": "Activité (7 dernières années)"
   },
   "upload": {
     "title": "Enregistrer prise",
@@ -422,7 +450,13 @@
       "afternoon": "après-midi",
       "evening": "soir",
       "after_sunset": "après coucher"
-    }
+    },
+    "reg_warning_title": "Avertissement réglementaire",
+    "reg_too_small": "{{species}} sous la taille minimale ({{min}} cm, {{region}})",
+    "reg_schonzeit": "{{species}} en période de fermeture ({{sz}}, {{region}})",
+    "reg_ok": "Taille minimale respectée ({{min}} cm, {{region}})",
+    "reg_source": "Source",
+    "reg_confirm_save": "Cette prise enfreint la taille minimale ou la période de fermeture. Enregistrer quand même ?"
   },
   "map": {
     "search_placeholder": "Chercher des spots...",

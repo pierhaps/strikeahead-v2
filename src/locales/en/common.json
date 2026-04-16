@@ -251,7 +251,19 @@
     "day_fr": "Fri",
     "day_sa": "Sat",
     "day_su": "Sun",
-    "details": "Details"
+    "details": "Details",
+    "month_jan": "Jan",
+    "month_feb": "Feb",
+    "month_mar": "Mar",
+    "month_apr": "Apr",
+    "month_may": "May",
+    "month_jun": "Jun",
+    "month_jul": "Jul",
+    "month_aug": "Aug",
+    "month_sep": "Sep",
+    "month_oct": "Oct",
+    "month_nov": "Nov",
+    "month_dec": "Dec"
   },
   "home": {
     "welcome_back": "Welcome back",
@@ -296,7 +308,15 @@
     "trust_overview": "Trust overview",
     "trust_avg": "Avg score",
     "hot_species": "Trending",
-    "hot_n": "{{n}} catches"
+    "hot_n": "{{n}} catches",
+    "license_expired_title": "{{name}} expired",
+    "license_expired_sub": "Renew or re-upload your license",
+    "license_expiring_title_one": "License expires in {{n}} day",
+    "license_expiring_title_other": "License expires in {{n}} days",
+    "license_expiring_sub": "{{name}} — renew soon",
+    "license_generic": "Fishing license",
+    "license_none_title": "No license on file",
+    "license_none_sub": "Scan or add one now"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -310,7 +330,15 @@
     "monthly_goal": "Monthly goal",
     "hit_rate": "Hit rate",
     "personal_bests": "Personal bests",
-    "record": "Record"
+    "record": "Record",
+    "empty_title": "No data yet",
+    "empty_sub": "Your dashboard fills up with every catch",
+    "empty_cta": "Log your first catch",
+    "no_bests_yet": "No personal bests yet",
+    "activity_week": "Activity (7 days)",
+    "activity_month": "Activity (last 7 weeks)",
+    "activity_year": "Activity (last 7 months)",
+    "activity_total": "Activity (last 7 years)"
   },
   "upload": {
     "title": "Log catch",
@@ -422,7 +450,13 @@
       "afternoon": "afternoon",
       "evening": "evening",
       "after_sunset": "after sunset"
-    }
+    },
+    "reg_warning_title": "Regulatory notice",
+    "reg_too_small": "{{species}} below minimum size ({{min}} cm, {{region}})",
+    "reg_schonzeit": "{{species}} in closed season ({{sz}}, {{region}})",
+    "reg_ok": "Minimum size met ({{min}} cm, {{region}})",
+    "reg_source": "Source",
+    "reg_confirm_save": "This catch violates the minimum size or closed season. Save anyway?"
   },
   "map": {
     "search_placeholder": "Search spots...",

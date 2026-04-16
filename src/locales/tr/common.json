@@ -251,7 +251,19 @@
     "day_fr": "Cum",
     "day_sa": "Cmt",
     "day_su": "Paz",
-    "details": "Detaylar"
+    "details": "Detaylar",
+    "month_jan": "Oca",
+    "month_feb": "Şub",
+    "month_mar": "Mar",
+    "month_apr": "Nis",
+    "month_may": "May",
+    "month_jun": "Haz",
+    "month_jul": "Tem",
+    "month_aug": "Ağu",
+    "month_sep": "Eyl",
+    "month_oct": "Eki",
+    "month_nov": "Kas",
+    "month_dec": "Ara"
   },
   "home": {
     "welcome_back": "Tekrar hoş geldin",
@@ -296,7 +308,15 @@
     "trust_overview": "Güven özeti",
     "trust_avg": "Ort. puan",
     "hot_species": "Trendde",
-    "hot_n": "{{n}} yakalama"
+    "hot_n": "{{n}} yakalama",
+    "license_expired_title": "{{name}} süresi doldu",
+    "license_expired_sub": "Lisansı yenile veya tekrar yükle",
+    "license_expiring_title_one": "Lisans {{n}} günde sona eriyor",
+    "license_expiring_title_other": "Lisans {{n}} günde sona eriyor",
+    "license_expiring_sub": "{{name}} — yakında yenile",
+    "license_generic": "Balıkçılık lisansı",
+    "license_none_title": "Kayıtlı lisans yok",
+    "license_none_sub": "Şimdi tara veya ekle"
   },
   "dashboard": {
     "title": "Kontrol Paneli",
@@ -310,7 +330,15 @@
     "monthly_goal": "Aylık hedef",
     "hit_rate": "Başarı oranı",
     "personal_bests": "Kişisel rekorlar",
-    "record": "Rekord"
+    "record": "Rekord",
+    "empty_title": "Henüz veri yok",
+    "empty_sub": "Panelin her avla doluyor",
+    "empty_cta": "İlk avını kaydet",
+    "no_bests_yet": "Henüz kişisel rekor yok",
+    "activity_week": "Etkinlik (7 gün)",
+    "activity_month": "Etkinlik (son 7 hafta)",
+    "activity_year": "Etkinlik (son 7 ay)",
+    "activity_total": "Etkinlik (son 7 yıl)"
   },
   "upload": {
     "title": "Av kaydet",
@@ -422,7 +450,13 @@
       "afternoon": "öğleden sonra",
       "evening": "akşam",
       "after_sunset": "gün batımından sonra"
-    }
+    },
+    "reg_warning_title": "Yasal uyarı",
+    "reg_too_small": "{{species}} minimum boyutun altında ({{min}} cm, {{region}})",
+    "reg_schonzeit": "{{species}} av yasağı döneminde ({{sz}}, {{region}})",
+    "reg_ok": "Minimum boyut sağlanıyor ({{min}} cm, {{region}})",
+    "reg_source": "Kaynak",
+    "reg_confirm_save": "Bu av, minimum boyut veya av yasağını ihlal ediyor. Yine de kaydedilsin mi?"
   },
   "map": {
     "search_placeholder": "Noktaları ara...",

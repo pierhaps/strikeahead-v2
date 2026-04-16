@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   Flame, Fish, Anchor, Trophy, Target, ChevronRight, Shield, Sparkles, Zap,
+  AlertTriangle, FileCheck,
 } from 'lucide-react';
 import PageTransition from '../components/ui/PageTransition';
 import { base44 } from '@/api/base44Client';
@@ -139,18 +140,57 @@ export default function Home() {
   const { t, i18n } = useTranslation();
   const [user, setUser] = useState(null);
   const [catches, setCatches] = useState([]);
+  const [licenses, setLicenses] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     Promise.all([
       base44.auth.me().catch(() => null),
       base44.entities.Catch.list('-caught_date', 50).catch(() => []),
-    ]).then(([u, list]) => {
+      base44.entities.UserLicense.list('-valid_until', 20).catch(() => []),
+    ]).then(([u, list, lic]) => {
       setUser(u);
       setCatches(Array.isArray(list) ? list : []);
+      setLicenses(Array.isArray(lic) ? lic : []);
       setLoading(false);
     });
   }, []);
+
+  // License status: find the soonest expiring or expired license
+  const licenseAlert = useMemo(() => {
+    if (!licenses.length) return null;
+    const now = new Date();
+    const msDay = 86400000;
+    let status = null;
+    for (const l of licenses) {
+      if (!l.valid_until) continue;
+      const exp = new Date(l.valid_until);
+      if (isNaN(exp)) continue;
+      const days = Math.floor((exp - now) / msDay);
+      if (days < 0) {
+        // expired
+        if (!status || status.kind === 'expiring' || days > status.days) {
+          status = { kind: 'expired', days, license: l };
+        }
+      } else if (days <= 14) {
+        // expiring soon
+        if (!status || (status.kind === 'expiring' && days < status.days)) {
+          if (status?.kind !== 'expired') {
+            status = { kind: 'expiring', days, license: l };
+          }
+        }
+      }
+    }
+    return status;
+  }, [licenses]);
+
+  const hasAnyValidLicense = useMemo(
+    () => licenses.some(l => {
+      if (!l.valid_until) return false;
+      return new Date(l.valid_until) > new Date();
+    }),
+    [licenses],
+  );
 
   const firstName = user?.full_name?.split(' ')[0] || t('home.defaultName');
   const totalCatches = catches.length;
@@ -281,6 +321,65 @@ export default function Home() {
             </div>
           </div>
         </motion.div>
+
+        {/* License alert */}
+        {licenseAlert && (
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, ease: tideEase }}>
+            <Link to="/mylicenses" className="block">
+              <div className="rounded-2xl p-3.5 border flex items-start gap-3"
+                style={{
+                  background: licenseAlert.kind === 'expired' ? 'rgba(239,92,106,0.1)' : 'rgba(245,195,75,0.08)',
+                  borderColor: licenseAlert.kind === 'expired' ? 'rgba(239,92,106,0.35)' : 'rgba(245,195,75,0.32)',
+                }}>
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{
+                    background: licenseAlert.kind === 'expired' ? 'rgba(239,92,106,0.18)' : 'rgba(245,195,75,0.18)',
+                  }}>
+                  <AlertTriangle className={`w-4 h-4 ${licenseAlert.kind === 'expired' ? 'text-coral-400' : 'text-sun-400'}`} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className={`font-display font-bold text-sm ${licenseAlert.kind === 'expired' ? 'text-coral-300' : 'text-sun-gradient'}`}>
+                    {licenseAlert.kind === 'expired'
+                      ? t('home.license_expired_title', { name: licenseAlert.license.license_name || t('home.license_generic') })
+                      : t('home.license_expiring_title', { n: licenseAlert.days, count: licenseAlert.days })}
+                  </p>
+                  <p className="text-foam/60 text-xs mt-0.5 truncate">
+                    {licenseAlert.kind === 'expired'
+                      ? t('home.license_expired_sub')
+                      : t('home.license_expiring_sub', { name: licenseAlert.license.license_name || t('home.license_generic') })}
+                  </p>
+                </div>
+                <ChevronRight className="w-4 h-4 text-foam/40 mt-2.5 flex-shrink-0" />
+              </div>
+            </Link>
+          </motion.div>
+        )}
+
+        {/* No license at all — only show if user has logged some catches (meaningful context) */}
+        {!licenseAlert && !loading && licenses.length === 0 && totalCatches > 0 && (
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, ease: tideEase }}>
+            <Link to="/mylicenses" className="block">
+              <div className="rounded-2xl p-3.5 border flex items-start gap-3"
+                style={{
+                  background: 'rgba(31,167,184,0.08)',
+                  borderColor: 'rgba(31,167,184,0.28)',
+                }}>
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 bg-tide-500/20">
+                  <FileCheck className="w-4 h-4 text-tide-400" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="font-display font-bold text-sm text-tide-300">
+                    {t('home.license_none_title')}
+                  </p>
+                  <p className="text-foam/60 text-xs mt-0.5">{t('home.license_none_sub')}</p>
+                </div>
+                <ChevronRight className="w-4 h-4 text-foam/40 mt-2.5 flex-shrink-0" />
+              </div>
+            </Link>
+          </motion.div>
+        )}
 
         {/* Action tiles */}
         <div className="grid grid-cols-2 gap-3">
