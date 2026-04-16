@@ -7,12 +7,12 @@ import { useTranslation } from 'react-i18next';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 
-const PERIOD_LABELS = { today: 'Heute', tomorrow: 'Morgen', '3_days': '3 Tage', '7_days': '7 Tage' };
+const PERIODS = ['today', 'tomorrow', '3_days', '7_days'];
 
 const CONFIDENCE_CFG = {
-  low: { label: 'Niedrig', color: '#4DC3D1', bg: 'rgba(77,195,209,0.12)' },
-  medium: { label: 'Mittel', color: '#F5C34B', bg: 'rgba(245,195,75,0.12)' },
-  high: { label: 'Hoch', color: '#FF6B5B', bg: 'rgba(255,107,91,0.15)' },
+  low:    { color: '#4DC3D1', bg: 'rgba(77,195,209,0.12)' },
+  medium: { color: '#F5C34B', bg: 'rgba(245,195,75,0.12)' },
+  high:   { color: '#FF6B5B', bg: 'rgba(255,107,91,0.15)' },
 };
 
 function ScoreRing({ score }) {
@@ -41,6 +41,7 @@ function ScoreRing({ score }) {
 }
 
 export default function CatchForecast() {
+  const { t } = useTranslation();
   const [forecasts, setForecasts] = useState([]);
   const [species, setSpecies] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -100,31 +101,31 @@ export default function CatchForecast() {
     <PageTransition>
       <div className="px-4 pt-6 pb-4 space-y-5">
         <div>
-          <p className="text-foam/50 text-sm">KI-Vorhersage</p>
-          <h1 className="font-display text-2xl font-extrabold text-foam">Fang-Prognose</h1>
+          <p className="text-foam/50 text-sm">{t('catch_forecast.subtitle')}</p>
+          <h1 className="font-display text-2xl font-extrabold text-foam">{t('catch_forecast.title')}</h1>
         </div>
 
         {/* Selectors */}
         <div className="space-y-2">
           <select value={selectedSpecies} onChange={e => setSelectedSpecies(e.target.value)}
             className="w-full px-4 py-3 rounded-2xl glass-card text-foam text-sm outline-none border-none">
-            <option value="">🐟 Art wählen...</option>
+            <option value="">🐟 {t('catch_forecast.pick_species')}</option>
             {species.map(s => <option key={s} value={s}>{s}</option>)}
           </select>
           <input value={selectedWater} onChange={e => setSelectedWater(e.target.value)}
-            placeholder="🌊 Gewässer (optional)..."
+            placeholder={`🌊 ${t('catch_forecast.waterbody_placeholder')}`}
             className="w-full px-4 py-3 rounded-2xl glass-card text-foam placeholder-foam/30 text-sm outline-none" />
           <div className="flex gap-2">
-            {Object.entries(PERIOD_LABELS).map(([k, v]) => (
+            {PERIODS.map((k) => (
               <button key={k} onClick={() => setPeriod(k)}
                 className={`flex-1 py-2.5 rounded-2xl text-xs font-bold transition-all ${period === k ? 'gradient-tide text-white' : 'glass-card text-foam/60'}`}>
-                {v}
+                {t(`catch_forecast.period_${k}`)}
               </button>
             ))}
           </div>
           <button onClick={loadForecast} disabled={!selectedSpecies || generating}
             className={`w-full py-4 rounded-2xl font-display font-bold text-white transition-all ${selectedSpecies && !generating ? 'gradient-tide glow-tide' : 'bg-abyss-700 text-foam/30'}`}>
-            {generating ? <span className="flex items-center justify-center gap-2"><Loader2 className="w-5 h-5 animate-spin" /> KI berechnet...</span> : '⚡ Prognose starten'}
+            {generating ? <span className="flex items-center justify-center gap-2"><Loader2 className="w-5 h-5 animate-spin" /> {t('catch_forecast.calculating')}</span> : `⚡ ${t('catch_forecast.start')}`}
           </button>
         </div>
 
@@ -133,12 +134,12 @@ export default function CatchForecast() {
             {/* Score Ring */}
             <div className="glass-card rounded-3xl p-6 text-center"
               style={{ border: '1px solid rgba(245,195,75,0.2)' }}>
-              <p className="text-foam/50 text-xs uppercase tracking-widest mb-4">Fang-Score</p>
+              <p className="text-foam/50 text-xs uppercase tracking-widest mb-4">{t('catch_forecast.score_label')}</p>
               <ScoreRing score={result.overall_score || 0} />
               {result.confidence_level && (
                 <div className="mt-4 inline-block px-3 py-1.5 rounded-xl text-xs font-bold"
                   style={{ background: CONFIDENCE_CFG[result.confidence_level]?.bg, color: CONFIDENCE_CFG[result.confidence_level]?.color }}>
-                  Konfidenz: {CONFIDENCE_CFG[result.confidence_level]?.label}
+                  {t('catch_forecast.confidence')}: {t(`catch_forecast.confidence_${result.confidence_level}`)}
                 </div>
               )}
             </div>
@@ -146,7 +147,7 @@ export default function CatchForecast() {
             {/* Best time slots */}
             {result.best_time_slots?.length > 0 && (
               <div className="glass-card rounded-2xl p-4">
-                <p className="font-display font-bold text-foam text-sm mb-3">Beste Zeitfenster</p>
+                <p className="font-display font-bold text-foam text-sm mb-3">{t('catch_forecast.best_windows')}</p>
                 <div className="space-y-2">
                   {result.best_time_slots.map((slot, i) => (
                     <div key={i} className="flex items-center gap-3">
@@ -170,17 +171,17 @@ export default function CatchForecast() {
             <div className="grid grid-cols-2 gap-3">
               {result.recommended_techniques?.length > 0 && (
                 <div className="glass-card rounded-2xl p-3">
-                  <p className="text-foam/40 text-xs mb-2">Techniken</p>
-                  {result.recommended_techniques.slice(0, 3).map((t, i) => (
+                  <p className="text-foam/40 text-xs mb-2">{t('catch_forecast.techniques')}</p>
+                  {result.recommended_techniques.slice(0, 3).map((tech, i) => (
                     <p key={i} className="text-foam text-xs font-semibold mb-1 flex items-center gap-1">
-                      <Zap className="w-3 h-3 text-tide-400" /> {t.name || t}
+                      <Zap className="w-3 h-3 text-tide-400" /> {tech.name || tech}
                     </p>
                   ))}
                 </div>
               )}
               {result.recommended_baits?.length > 0 && (
                 <div className="glass-card rounded-2xl p-3">
-                  <p className="text-foam/40 text-xs mb-2">Köder</p>
+                  <p className="text-foam/40 text-xs mb-2">{t('catch_forecast.baits')}</p>
                   {result.recommended_baits.slice(0, 3).map((b, i) => (
                     <p key={i} className="text-foam text-xs font-semibold mb-1 flex items-center gap-1">
                       <Anchor className="w-3 h-3 text-sun-400" /> {b.name || b}
@@ -192,7 +193,7 @@ export default function CatchForecast() {
 
             {/* Factors */}
             <div className="glass-card rounded-2xl p-4">
-              <p className="font-display font-bold text-foam text-sm mb-3">Einflussfaktoren</p>
+              <p className="font-display font-bold text-foam text-sm mb-3">{t('catch_forecast.factors')}</p>
               <div className="space-y-2">
                 {result.weather_factors?.summary && (
                   <div className="flex items-start gap-2"><Thermometer className="w-4 h-4 text-tide-400 mt-0.5 flex-shrink-0" /><p className="text-foam/60 text-xs">{result.weather_factors.summary}</p></div>
@@ -211,8 +212,8 @@ export default function CatchForecast() {
         {!result && !generating && (
           <div className="glass-card rounded-3xl p-8 text-center">
             <div className="text-5xl mb-3">⚡</div>
-            <p className="font-display font-bold text-foam">Prognose starten</p>
-            <p className="text-foam/40 text-sm mt-1">Art wählen und KI-Forecast generieren</p>
+            <p className="font-display font-bold text-foam">{t('catch_forecast.start')}</p>
+            <p className="text-foam/40 text-sm mt-1">{t('catch_forecast.empty_hint')}</p>
           </div>
         )}
 

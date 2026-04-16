@@ -12,6 +12,7 @@ import { base44 } from '@/api/base44Client';
 import { useAuth } from '@/lib/AuthContext';
 import { createPageUrl } from '@/utils';
 import { computeTrustScore } from '@/utils/trustEngine';
+import { evaluateAchievements, buildRarityMap } from '@/utils/achievementEngine';
 
 // ---------------- Constants ----------------
 
@@ -438,11 +439,53 @@ export default function Upload() {
     catchData.hook_points_earned = xp + (ecoAnalysis?.eco_score >= 4 ? 20 : 0);
 
     try {
-      await base44.entities.Catch.create(catchData);
+      const createdCatch = await base44.entities.Catch.create(catchData);
+
+      // -------- Achievement evaluation (non-blocking, best-effort) --------
+      let bonusXp = 0;
+      let bonusHp = 0;
+      try {
+        const [achievements, earned, priorCatches, speciesList] = await Promise.all([
+          base44.entities.Achievement.list('sort_order', 50).catch(() => []),
+          base44.entities.UserAchievement.filter({ user_email: user?.email }, '-unlocked_date', 100).catch(() => []),
+          base44.entities.Catch.list('-caught_date', 500).catch(() => []),
+          base44.entities.Species.list('name', 200).catch(() => []),
+        ]);
+        const allCatches = [createdCatch, ...priorCatches.filter((c) => c.id !== createdCatch?.id)];
+        const rarityBySpecies = buildRarityMap(speciesList);
+        const newly = evaluateAchievements({
+          user,
+          catches: allCatches,
+          achievements,
+          earned,
+          createdCatch,
+          rarityBySpecies,
+          hasPostedInFeed: false, // first_post is triggered from Feed, not here
+        });
+        for (const unlock of newly) {
+          await base44.entities.UserAchievement.create({
+            user_email: user?.email,
+            achievement_code: unlock.achievement.code,
+            unlocked_date: new Date().toISOString(),
+            triggered_by_catch_id: createdCatch?.id,
+            progress_value: unlock.progress,
+            xp_awarded: unlock.xpAwarded,
+            hp_awarded: unlock.hpAwarded,
+          }).catch(() => {});
+          bonusXp += unlock.xpAwarded || 0;
+          bonusHp += unlock.hpAwarded || 0;
+          const nameKey = document?.documentElement?.lang === 'de' ? unlock.achievement.name_de : unlock.achievement.name_en;
+          toast.success(`🏆 ${t('achievements.unlocked')}: ${nameKey || unlock.achievement.code}`);
+        }
+      } catch (achErr) {
+        console.warn('Achievement evaluation failed:', achErr);
+      }
+      // --------------------------------------------------------------------
+
       await base44.auth.updateMe({
         total_catches: (user?.total_catches || 0) + 1,
-        fish_xp: (user?.fish_xp || 0) + xp,
-        hook_points: (user?.hook_points || 0) + catchData.hook_points_earned,
+        fish_xp: (user?.fish_xp || 0) + xp + bonusXp,
+        hook_points: (user?.hook_points || 0) + catchData.hook_points_earned + bonusHp,
         biggest_catch_weight: Math.max(user?.biggest_catch_weight || 0, catchData.weight_kg || 0),
         total_cleanups: cleanupPhoto ? (user?.total_cleanups || 0) + 1 : (user?.total_cleanups || 0),
       });

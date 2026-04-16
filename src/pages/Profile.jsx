@@ -1,31 +1,67 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronRight, Crown, Trophy, Star, Fish, Anchor, MapPin, Shield, BookOpen, Award, Globe } from 'lucide-react';
+import {
+  ChevronRight, Crown, Trophy, Star, Fish, Anchor, MapPin, Shield, BookOpen, Award, Globe,
+  Hash, Target, Sparkles, Flame, Scale, Weight, Mountain, Ruler, Heart, MessageSquare, Zap,
+} from 'lucide-react';
 import PageTransition from '../components/ui/PageTransition';
 import { base44 } from '@/api/base44Client';
 import { useTranslation } from 'react-i18next';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 
+// Lucide icon lookup — matches the `icon` string stored on Achievement records.
+const ACHIEVEMENT_ICONS = {
+  Fish, Hash, Target, Trophy, Award, Sparkles, Flame, Crown,
+  Scale, Weight, Mountain, Ruler, Heart, MessageSquare, Zap, Star,
+};
 
-
-const getAchievements = (t) => [
-  { icon: '🎣', filled: true, label: t('profile.achievements.first_catch') },
-  { icon: '🏆', filled: true, label: t('profile.achievements.top_10') },
-  { icon: '🐟', filled: true, label: t('profile.achievements.species_specialist') },
-  { icon: '⭐', filled: false, label: t('profile.achievements.record_breaker') },
-  { icon: '🌊', filled: false, label: t('profile.achievements.sea_angler') },
-];
+const RARITY_GLOW = {
+  common:    { border: 'rgba(127,220,229,0.35)', glow: 'rgba(77,195,209,0.18)',  text: 'text-foam/80' },
+  uncommon:  { border: 'rgba(46,224,201,0.45)',  glow: 'rgba(46,224,201,0.22)',  text: 'text-tide-300' },
+  rare:      { border: 'rgba(245,195,75,0.45)',  glow: 'rgba(245,195,75,0.22)',  text: 'text-sun-300' },
+  epic:      { border: 'rgba(255,107,91,0.5)',   glow: 'rgba(255,107,91,0.25)',  text: 'text-coral-400' },
+  legendary: { border: 'rgba(182,240,60,0.55)',  glow: 'rgba(182,240,60,0.3)',   text: 'text-lime-300' },
+};
 
 export default function Profile() {
   const [user, setUser] = useState(null);
-  const { t } = useTranslation();
-  const achievements = React.useMemo(() => getAchievements(t), [t]);
+  const [allAchievements, setAllAchievements] = useState([]);
+  const [earnedCodes, setEarnedCodes] = useState(new Set());
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     base44.auth.me().then(setUser).catch(() => {});
   }, []);
+
+  useEffect(() => {
+    if (!user?.email) return;
+    Promise.all([
+      base44.entities.Achievement.list('sort_order', 50).catch(() => []),
+      base44.entities.UserAchievement.filter({ user_email: user.email }, '-unlocked_date', 100).catch(() => []),
+    ]).then(([all, mine]) => {
+      setAllAchievements(all || []);
+      setEarnedCodes(new Set((mine || []).map((u) => u.achievement_code)));
+    });
+  }, [user?.email]);
+
+  const achievements = React.useMemo(() => {
+    const sorted = [...allAchievements].sort((a, b) => {
+      const aE = earnedCodes.has(a.code) ? 0 : 1;
+      const bE = earnedCodes.has(b.code) ? 0 : 1;
+      if (aE !== bE) return aE - bE;
+      return (a.sort_order || 0) - (b.sort_order || 0);
+    });
+    return sorted.map((a) => ({
+      code: a.code,
+      label: (i18n.language === 'de' ? a.name_de : a.name_en) || a.code,
+      description: (i18n.language === 'de' ? a.description_de : a.description_en) || '',
+      iconName: a.icon || 'Trophy',
+      rarity: a.rarity || 'common',
+      filled: earnedCodes.has(a.code),
+    }));
+  }, [allAchievements, earnedCodes, i18n.language]);
 
   const menuItems = [
     { icon: Fish, label: t('catches.myCatches'), hint: '', path: '/mycatches', color: 'text-tide-400' },
@@ -142,31 +178,36 @@ export default function Profile() {
           <div>
             <p className="text-foam/50 text-xs uppercase tracking-widest mb-3">{t('profile.achievements.title')}</p>
             <div className="flex gap-2.5 overflow-x-auto scrollbar-hide pb-1">
-              {achievements.map((a, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.3, delay: i * 0.07 }}
-                  className="flex-shrink-0 w-16 flex flex-col items-center gap-1.5"
-                >
-                  <div
-                    className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl relative"
-                    style={a.filled ? {
-                      background: 'linear-gradient(135deg, rgba(245,195,75,0.18) 0%, rgba(255,216,114,0.10) 100%)',
-                      border: '1px solid rgba(245,195,75,0.4)',
-                      boxShadow: '0 0 14px rgba(245,195,75,0.2)',
-                    } : {
-                      background: 'rgba(31,167,184,0.07)',
-                      border: '1px solid rgba(127,220,229,0.12)',
-                      opacity: 0.4,
-                    }}
+              {achievements.map((a, i) => {
+                const Icon = ACHIEVEMENT_ICONS[a.iconName] || Trophy;
+                const glow = RARITY_GLOW[a.rarity] || RARITY_GLOW.common;
+                return (
+                  <motion.div
+                    key={a.code || i}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.3, delay: i * 0.07 }}
+                    className="flex-shrink-0 w-16 flex flex-col items-center gap-1.5"
+                    title={a.description}
                   >
-                    {a.icon}
-                  </div>
-                  <p className={`text-[9px] text-center leading-tight ${a.filled ? 'text-sun-300/70' : 'text-foam/30'}`}>{a.label}</p>
-                </motion.div>
-              ))}
+                    <div
+                      className="w-14 h-14 rounded-2xl flex items-center justify-center relative"
+                      style={a.filled ? {
+                        background: `linear-gradient(135deg, ${glow.glow} 0%, rgba(255,255,255,0.03) 100%)`,
+                        border: `1px solid ${glow.border}`,
+                        boxShadow: `0 0 14px ${glow.glow}`,
+                      } : {
+                        background: 'rgba(31,167,184,0.07)',
+                        border: '1px solid rgba(127,220,229,0.12)',
+                        opacity: 0.4,
+                      }}
+                    >
+                      <Icon className={`w-6 h-6 ${a.filled ? glow.text : 'text-foam/40'}`} />
+                    </div>
+                    <p className={`text-[9px] text-center leading-tight ${a.filled ? glow.text : 'text-foam/30'}`}>{a.label}</p>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
 
