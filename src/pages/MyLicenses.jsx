@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Shield, AlertTriangle, X, Loader2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import PageTransition from '../components/ui/PageTransition';
 import { base44 } from '@/api/base44Client';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 
-const STATUS_CONFIG = {
-  valid: { label: 'Gültig', bg: 'rgba(31,167,184,0.15)', color: '#4DC3D1', border: 'rgba(31,167,184,0.3)' },
-  expiring_soon: { label: 'Läuft bald ab', bg: 'rgba(245,195,75,0.12)', color: '#F5C34B', border: 'rgba(245,195,75,0.3)' },
-  expired: { label: 'Abgelaufen', bg: 'rgba(255,107,91,0.12)', color: '#FF6B5B', border: 'rgba(255,107,91,0.3)' },
-  pending_verification: { label: 'Prüfung', bg: 'rgba(127,220,229,0.08)', color: '#7FDCE5', border: 'rgba(127,220,229,0.2)' },
-};
+const getStatusConfig = (t) => ({
+  valid: { label: t('mylicenses.status.valid'), bg: 'rgba(31,167,184,0.15)', color: '#4DC3D1', border: 'rgba(31,167,184,0.3)' },
+  expiring_soon: { label: t('mylicenses.status.expiring_soon'), bg: 'rgba(245,195,75,0.12)', color: '#F5C34B', border: 'rgba(245,195,75,0.3)' },
+  expired: { label: t('mylicenses.status.expired'), bg: 'rgba(255,107,91,0.12)', color: '#FF6B5B', border: 'rgba(255,107,91,0.3)' },
+  pending_verification: { label: t('mylicenses.status.pending_verification'), bg: 'rgba(127,220,229,0.08)', color: '#7FDCE5', border: 'rgba(127,220,229,0.2)' },
+});
 
 const COUNTRY_FLAGS = {
   'Deutschland': '🇩🇪', 'Germany': '🇩🇪', 'Österreich': '🇦🇹', 'Austria': '🇦🇹',
@@ -137,6 +138,8 @@ function UploadModal({ onClose, onSave }) {
 }
 
 export default function MyLicenses() {
+  const { t } = useTranslation();
+  const STATUS_CONFIG = React.useMemo(() => getStatusConfig(t), [t]);
   const [licenses, setLicenses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
@@ -162,8 +165,8 @@ export default function MyLicenses() {
       <div className="px-4 pt-6 pb-24 space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-foam/50 text-sm">Deine Lizenzen</p>
-            <h1 className="font-display text-2xl font-extrabold text-foam">Angelscheine</h1>
+            <p className="text-foam/50 text-sm">{t('mylicenses.subtitle')}</p>
+            <h1 className="font-display text-2xl font-extrabold text-foam">{t('mylicenses.title')}</h1>
           </div>
           <span className="px-2.5 py-1 rounded-xl text-xs font-bold glass-card text-tide-400">{licenses.length}</span>
         </div>
@@ -171,11 +174,11 @@ export default function MyLicenses() {
         {licenses.length === 0 ? (
           <div className="glass-card rounded-3xl p-10 text-center mt-8">
             <Shield className="w-12 h-12 text-tide-400/40 mx-auto mb-4" />
-            <p className="font-display font-bold text-foam text-lg">Keine Lizenzen</p>
-            <p className="text-foam/40 text-sm mt-2 mb-6">Füge deinen ersten Angelschein hinzu</p>
+            <p className="font-display font-bold text-foam text-lg">{t('mylicenses.empty_title')}</p>
+            <p className="text-foam/40 text-sm mt-2 mb-6">{t('mylicenses.empty_desc')}</p>
             <button onClick={() => setShowAdd(true)}
               className="inline-block px-6 py-3 rounded-2xl gradient-tide text-white font-bold text-sm glow-tide">
-              Lizenz hinzufügen
+              {t('mylicenses.add_button')}
             </button>
           </div>
         ) : (
@@ -196,7 +199,7 @@ export default function MyLicenses() {
                     <p className="text-foam font-semibold text-sm truncate">{lic.license_name}</p>
                     <p className="text-foam/40 text-xs">{lic.country}{lic.region ? ` · ${lic.region}` : ''}</p>
                     {lic.valid_until && (
-                      <p className="text-foam/40 text-xs mt-0.5">bis {lic.valid_until}</p>
+                      <p className="text-foam/40 text-xs mt-0.5">{t('mylicenses.valid_until_prefix')} {lic.valid_until}</p>
                     )}
                   </div>
                   <div className="flex-shrink-0">
@@ -244,11 +247,11 @@ export default function MyLicenses() {
               )}
               <div className="space-y-2 mb-4">
                 {[
-                  ['Lizenznummer', selected.license_number],
-                  ['Gültig ab', selected.valid_from],
-                  ['Gültig bis', selected.valid_until],
-                  ['Typ', selected.license_type],
-                  ['Preis', selected.price_paid ? `${selected.price_paid} €` : null],
+                  [t('mylicenses.detail.license_number'), selected.license_number],
+                  [t('mylicenses.detail.valid_from'), selected.valid_from],
+                  [t('mylicenses.detail.valid_until'), selected.valid_until],
+                  [t('mylicenses.detail.type'), selected.license_type],
+                  [t('mylicenses.detail.price'), selected.price_paid ? `${selected.price_paid} €` : null],
                 ].filter(([_, v]) => v).map(([k, v]) => (
                   <div key={k} className="glass-card rounded-xl px-4 py-2.5 flex justify-between">
                     <span className="text-foam/40 text-sm">{k}</span>
@@ -258,11 +261,11 @@ export default function MyLicenses() {
               </div>
               {selected.special_conditions && (
                 <div className="glass-card rounded-xl p-3 mb-4">
-                  <p className="text-foam/40 text-xs mb-1">Besondere Bedingungen</p>
+                  <p className="text-foam/40 text-xs mb-1">{t('mylicenses.detail.special_conditions')}</p>
                   <p className="text-foam/70 text-sm">{selected.special_conditions}</p>
                 </div>
               )}
-              <button onClick={() => setSelected(null)} className="w-full py-3.5 rounded-2xl glass-card text-foam/70 font-semibold">Schließen</button>
+              <button onClick={() => setSelected(null)} className="w-full py-3.5 rounded-2xl glass-card text-foam/70 font-semibold">{t('mylicenses.detail.close')}</button>
             </motion.div>
           </motion.div>
         )}

@@ -11,29 +11,30 @@ const TAG_STYLES = {
   Core: { bg: 'bg-tide-500/10', text: 'text-tide-400', icon: Zap },
 };
 
-const COLUMNS = [
-  { key: 'building', label: '🔨 In Entwicklung', color: 'border-tide-400/40' },
-  { key: 'planned', label: '📋 Geplant', color: 'border-foam/20' },
-  { key: 'discussion', label: '💬 In Diskussion', color: 'border-foam/10' },
-  { key: 'shipped', label: '✅ Ausgeliefert', color: 'border-green-400/30' },
+const getColumns = (t) => [
+  { key: 'building', label: t('roadmap.columns.building'), color: 'border-tide-400/40' },
+  { key: 'planned', label: t('roadmap.columns.planned'), color: 'border-foam/20' },
+  { key: 'discussion', label: t('roadmap.columns.discussion'), color: 'border-foam/10' },
+  { key: 'shipped', label: t('roadmap.columns.shipped'), color: 'border-green-400/30' },
 ];
 
-const INITIAL_ITEMS = [
-  { id: 1, col: 'building', title: 'KI-Fischerkennung v2', desc: 'Verbesserte Erkennungsgenauigkeit mit Tiefenlernen', tags: ['AI', 'Pro-only'], votes: 42 },
-  { id: 2, col: 'building', title: 'Offline-Modus', desc: 'Fänge loggen ohne Internetverbindung', tags: ['Core'], votes: 87 },
-  { id: 3, col: 'planned', title: 'Community-Chat-Gruppen', desc: 'Regionale Chatgruppen mit Moderationssystem', tags: ['Community'], votes: 56 },
-  { id: 4, col: 'planned', title: 'Apple Watch App', desc: 'Fangdaten und Solunar direkt auf der Uhr', tags: ['Core', 'Pro-only'], votes: 34 },
-  { id: 5, col: 'planned', title: 'Guided Fishing-Touren', desc: 'Zertifizierte Guides buchen per App', tags: ['Community'], votes: 28 },
-  { id: 6, col: 'discussion', title: 'NFT-Fang-Zertifikate', desc: 'Einmalige digitale Fang-Nachweise auf Blockchain', tags: ['Community'], votes: 12 },
-  { id: 7, col: 'discussion', title: 'AR-Fischerkennung', desc: 'Live-Kameraerkennung mit Augmented Reality', tags: ['AI'], votes: 19 },
-  { id: 8, col: 'shipped', title: 'HookPoints-System', desc: 'Gamification mit Belohnungen für Fänge und Challenges', tags: ['Core'], votes: 103 },
-  { id: 9, col: 'shipped', title: 'Community Feed', desc: 'Öffentlicher Feed mit Likes und Kommentaren', tags: ['Community'], votes: 78 },
-  { id: 10, col: 'shipped', title: 'Solunar-Kalender', desc: 'Tägliche Bisszeiten basierend auf Mondstand', tags: ['Core', 'Pro-only'], votes: 91 },
+const getInitialItems = (t) => [
+  { id: 1, col: 'building', title: t('roadmap.items.ai_v2_title'), desc: t('roadmap.items.ai_v2_desc'), tags: ['AI', 'Pro-only'], votes: 42 },
+  { id: 2, col: 'building', title: t('roadmap.items.offline_title'), desc: t('roadmap.items.offline_desc'), tags: ['Core'], votes: 87 },
+  { id: 3, col: 'planned', title: t('roadmap.items.chat_groups_title'), desc: t('roadmap.items.chat_groups_desc'), tags: ['Community'], votes: 56 },
+  { id: 4, col: 'planned', title: t('roadmap.items.apple_watch_title'), desc: t('roadmap.items.apple_watch_desc'), tags: ['Core', 'Pro-only'], votes: 34 },
+  { id: 5, col: 'planned', title: t('roadmap.items.guided_tours_title'), desc: t('roadmap.items.guided_tours_desc'), tags: ['Community'], votes: 28 },
+  { id: 6, col: 'discussion', title: t('roadmap.items.nft_title'), desc: t('roadmap.items.nft_desc'), tags: ['Community'], votes: 12 },
+  { id: 7, col: 'discussion', title: t('roadmap.items.ar_title'), desc: t('roadmap.items.ar_desc'), tags: ['AI'], votes: 19 },
+  { id: 8, col: 'shipped', title: t('roadmap.items.hookpoints_title'), desc: t('roadmap.items.hookpoints_desc'), tags: ['Core'], votes: 103 },
+  { id: 9, col: 'shipped', title: t('roadmap.items.feed_title'), desc: t('roadmap.items.feed_desc'), tags: ['Community'], votes: 78 },
+  { id: 10, col: 'shipped', title: t('roadmap.items.solunar_title'), desc: t('roadmap.items.solunar_desc'), tags: ['Core', 'Pro-only'], votes: 91 },
 ];
 
 export default function Roadmap() {
   const { t } = useTranslation();
-  const [items, setItems] = useState(INITIAL_ITEMS);
+  const COLUMNS = React.useMemo(() => getColumns(t), [t]);
+  const [items, setItems] = useState(() => getInitialItems(t));
   const [voted, setVoted] = useState(new Set());
   const [activeCol, setActiveCol] = useState('building');
 
@@ -44,9 +45,9 @@ export default function Roadmap() {
   };
 
   const handleSuggest = () => {
-    const title = window.prompt('Feature-Titel:');
+    const title = window.prompt(t('roadmap.prompt_title'));
     if (!title) return;
-    const desc = window.prompt('Kurzbeschreibung:') || '';
+    const desc = window.prompt(t('roadmap.prompt_desc')) || '';
     setItems(prev => [...prev, { id: Date.now(), col: 'discussion', title, desc, tags: ['Community'], votes: 0 }]);
   };
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { RadarChart, Radar, PolarGrid, PolarAngleAxis, ResponsiveContainer } from 'recharts';
 import { TrendingUp, TrendingDown, Minus, ChevronRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import PageTransition from '../components/ui/PageTransition';
 import { base44 } from '@/api/base44Client';
 import { Link } from 'react-router-dom';

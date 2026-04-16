@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Trophy, Fish } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import PageTransition from '../components/ui/PageTransition';
 import { base44 } from '@/api/base44Client';
 import { format } from 'date-fns';
@@ -9,6 +10,7 @@ import { de } from 'date-fns/locale';
 const tideEase = [0.2, 0.8, 0.2, 1];
 
 export default function Statistics() {
+  const { t } = useTranslation();
   const [catches, setCatches] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -24,7 +26,7 @@ export default function Statistics() {
   // Per-species records
   const speciesMap = {};
   catches.forEach(c => {
-    const s = c.species || 'Unbekannt';
+    const s = c.species || t('statistics:no_catch');
     if (!speciesMap[s]) speciesMap[s] = { species: s, maxLength: 0, maxWeight: 0, total: 0, released: 0 };
     speciesMap[s].total += 1;
     if (c.released) speciesMap[s].released += 1;
@@ -46,8 +48,8 @@ export default function Statistics() {
     <PageTransition>
       <div className="px-4 pt-6 pb-4 space-y-6">
         <div>
-          <p className="text-foam/50 text-sm">Deine Rekorde</p>
-          <h1 className="font-display text-2xl font-extrabold text-foam">Statistiken</h1>
+          <p className="text-foam/50 text-sm">{t('statistics:subtitle')}</p>
+          <h1 className="font-display text-2xl font-extrabold text-foam">{t('statistics:title')}</h1>
         </div>
 
         {/* Hero best catch */}
@@ -59,12 +61,12 @@ export default function Statistics() {
                 <img src={best.photo_urls[0]} alt={best.species} className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-abyss-950 via-transparent to-transparent" />
                 <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-xs font-bold"
-                  style={{ background: 'rgba(245,195,75,0.9)', color: '#021521' }}>⭐ Bester Fang</div>
+                  style={{ background: 'rgba(245,195,75,0.9)', color: '#021521' }}>{t('statistics:badge_best_catch')}</div>
               </div>
             )}
             <div className="p-4 flex items-center justify-between">
               <div>
-                <p className="font-display font-bold text-foam text-lg">{best.species || 'Unbekannt'}</p>
+                <p className="font-display font-bold text-foam text-lg">{best.species || t('statistics:no_catch')}</p>
                 <p className="text-foam/50 text-sm">{best.caught_date || best.created_date?.split('T')[0]}</p>
               </div>
               <div className="text-right">
@@ -75,9 +77,9 @@ export default function Statistics() {
           </motion.div>
         ) : (
           <div className="glass-card rounded-3xl p-8 text-center">
-            <div className="text-4xl mb-3">🎣</div>
-            <p className="text-foam font-bold">Noch kein Fang</p>
-            <p className="text-foam/40 text-sm mt-1">Logge deinen ersten Fang!</p>
+            <div className="text-4xl mb-3">{t('statistics:empty_emoji')}</div>
+            <p className="text-foam font-bold">{t('statistics:no_catch')}</p>
+            <p className="text-foam/40 text-sm mt-1">{t('statistics:cta_log_first')}</p>
           </div>
         )}
 
@@ -85,13 +87,13 @@ export default function Statistics() {
         {speciesRecords.length > 0 && (
           <div className="glass-card rounded-2xl overflow-hidden">
             <div className="px-4 py-3 border-b border-tide-300/10">
-              <p className="font-display font-bold text-foam text-sm">Artrekorde</p>
+              <p className="font-display font-bold text-foam text-sm">{t('statistics:species_records')}</p>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-xs">
                 <thead>
                   <tr className="border-b border-tide-300/10">
-                    {['Art','Länge','Gewicht','Gesamt','C&R'].map(h => (
+                    {[t('statistics:table_header_species'), t('statistics:table_header_length'), t('statistics:table_header_weight'), t('statistics:table_header_total'), t('statistics:table_header_cr')].map(h => (
                       <th key={h} className="px-3 py-2.5 text-left text-foam/40 font-semibold whitespace-nowrap">{h}</th>
                     ))}
                   </tr>
@@ -118,7 +120,7 @@ export default function Statistics() {
         {/* PB Timeline */}
         {timeline.length > 0 && (
           <div>
-            <p className="text-foam/50 text-xs uppercase tracking-widest mb-3">Bestleistungen Timeline</p>
+            <p className="text-foam/50 text-xs uppercase tracking-widest mb-3">{t('statistics:timeline')}</p>
             <div className="space-y-2">
               {timeline.map((c, i) => (
                 <motion.div key={c.id} initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }}

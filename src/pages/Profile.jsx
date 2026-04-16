@@ -10,17 +10,18 @@ const tideEase = [0.2, 0.8, 0.2, 1];
 
 
 
-const achievements = [
-  { icon: '🎣', filled: true, label: 'Erster Fang' },
-  { icon: '🏆', filled: true, label: 'Top 10' },
-  { icon: '🐟', filled: true, label: 'Artenspezialist' },
-  { icon: '⭐', filled: false, label: 'Rekordbrecher' },
-  { icon: '🌊', filled: false, label: 'Meeresangler' },
+const getAchievements = (t) => [
+  { icon: '🎣', filled: true, label: t('profile.achievements.first_catch') },
+  { icon: '🏆', filled: true, label: t('profile.achievements.top_10') },
+  { icon: '🐟', filled: true, label: t('profile.achievements.species_specialist') },
+  { icon: '⭐', filled: false, label: t('profile.achievements.record_breaker') },
+  { icon: '🌊', filled: false, label: t('profile.achievements.sea_angler') },
 ];
 
 export default function Profile() {
   const [user, setUser] = useState(null);
   const { t } = useTranslation();
+  const achievements = React.useMemo(() => getAchievements(t), [t]);
 
   useEffect(() => {
     base44.auth.me().then(setUser).catch(() => {});
@@ -32,7 +33,7 @@ export default function Profile() {
     { icon: BookOpen, label: t('bookings.myBookings'), hint: '', path: '/mybookings', color: 'text-tide-400' },
     { icon: Trophy, label: t('community.teams'), hint: '', path: '/teams', color: 'text-sun-400' },
     { icon: Anchor, label: t('subscription.title'), hint: '', path: '/subscription', color: 'text-sun-400' },
-    { icon: Award, label: 'Angelschule', hint: '', path: '/angelschule', color: 'text-tide-400' },
+    { icon: Award, label: t('profile.angelschule'), hint: '', path: '/angelschule', color: 'text-tide-400' },
     { icon: Globe, label: t('admin.language'), hint: '', path: '/settings', color: 'text-tide-400' },
     { icon: MapPin, label: t('legal.imprint'), hint: '', path: '/imprint', color: 'text-foam/40' },
     { icon: Shield, label: t('legal.privacy'), hint: '', path: '/privacypolicy', color: 'text-foam/40' },
@@ -98,15 +99,15 @@ export default function Profile() {
           {/* Name block */}
           <div>
             <h1 className="font-display text-2xl font-extrabold text-foam">{user?.full_name || 'Angler'}</h1>
-            <p className="text-foam/50 text-sm mt-0.5">Pro seit März 2025 · {user?.location || 'Norddeutschland'}</p>
+            <p className="text-foam/50 text-sm mt-0.5">{t('profile.pro_since', { date: 'März 2025', location: user?.location || t('profile.default_location') })}</p>
           </div>
 
           {/* Mini stats */}
           <div className="grid grid-cols-3 gap-2">
             {[
-              { label: 'Fänge', value: totalCatches },
-              { label: 'Arten', value: 24 },
-              { label: 'Rang', value: '#12' },
+              { label: t('profile.stats.catches'), value: totalCatches },
+              { label: t('profile.stats.species'), value: 24 },
+              { label: t('profile.stats.rank'), value: '#12' },
             ].map((s) => (
               <div key={s.label} className="glass-card rounded-2xl p-3 text-center">
                 <p className="font-display font-extrabold text-xl text-gradient-tide">{s.value}</p>
@@ -118,7 +119,7 @@ export default function Profile() {
           {/* XP Bar — tide→sun gradient milestone feel */}
           <div className="glass-card rounded-2xl p-4">
             <div className="flex justify-between mb-2">
-              <span className="text-foam font-bold text-sm">Level 24 → 25</span>
+              <span className="text-foam font-bold text-sm">{t('profile.level_progress', { current: 24, next: 25 })}</span>
               <span className="text-sun-gradient text-sm font-bold font-display">{fishXp.toLocaleString('de-DE')} / {xpToNext.toLocaleString('de-DE')} XP</span>
             </div>
             <div className="h-3 bg-abyss-700 rounded-full overflow-hidden relative">
@@ -134,12 +135,12 @@ export default function Profile() {
                   style={{ backgroundSize: '200% 100%' }} />
               </div>
             </div>
-            <p className="text-foam/30 text-xs mt-1">{Math.round(xpPct)}% zum nächsten Level</p>
+            <p className="text-foam/30 text-xs mt-1">{Math.round(xpPct)}{t('profile.xp_to_next')}</p>
           </div>
 
           {/* Achievements — unlocked get sun gradient glow */}
           <div>
-            <p className="text-foam/50 text-xs uppercase tracking-widest mb-3">Erfolge</p>
+            <p className="text-foam/50 text-xs uppercase tracking-widest mb-3">{t('profile.achievements.title')}</p>
             <div className="flex gap-2.5 overflow-x-auto scrollbar-hide pb-1">
               {achievements.map((a, i) => (
                 <motion.div
@@ -202,7 +203,7 @@ export default function Profile() {
 
           {/* Footer */}
           <div className="text-center py-4">
-            <p className="text-foam/20 text-xs">StrikeAhead · v2.0 · © 2026 NOMDAD LLC</p>
+            <p className="text-foam/20 text-xs">{t('profile.footer')}</p>
           </div>
         </div>
       </div>

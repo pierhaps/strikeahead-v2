@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Loader2, Wind, Thermometer, Moon, Anchor, Clock, Zap } from 'lucide-react';
 import PageTransition from '../components/ui/PageTransition';
 import { base44 } from '@/api/base44Client';
+import { useTranslation } from 'react-i18next';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 

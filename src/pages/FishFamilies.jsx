@@ -3,10 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import PageTransition from '../components/ui/PageTransition';
 import { base44 } from '@/api/base44Client';
+import { useTranslation } from 'react-i18next';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 
 export default function FishFamilies() {
+  const { t } = useTranslation();
   const [fish, setFish] = useState([]);
   const [loading, setLoading] = useState(true);
   const [openFamily, setOpenFamily] = useState(null);
@@ -30,15 +32,15 @@ export default function FishFamilies() {
     <PageTransition>
       <div className="px-4 pt-6 pb-4 space-y-3">
         <div>
-          <p className="text-foam/50 text-sm">Nach Taxonomie</p>
-          <h1 className="font-display text-2xl font-extrabold text-foam">Fischrfamilien</h1>
+          <p className="text-foam/50 text-sm">{t('families.subtitle')}</p>
+          <h1 className="font-display text-2xl font-extrabold text-foam">{t('families.title')}</h1>
         </div>
 
         {familyNames.length === 0 ? (
           <div className="glass-card rounded-3xl p-10 text-center mt-8">
             <div className="text-5xl mb-4">🐠</div>
-            <p className="font-display font-bold text-foam text-lg">Keine Familien-Daten</p>
-            <p className="text-foam/40 text-sm mt-2">Lexikon-Einträge werden bald geladen</p>
+            <p className="font-display font-bold text-foam text-lg">{t('families.empty_title')}</p>
+            <p className="text-foam/40 text-sm mt-2">{t('families.empty_desc')}</p>
           </div>
         ) : (
           familyNames.map((fam, i) => {
@@ -53,7 +55,7 @@ export default function FishFamilies() {
                   <div className="w-10 h-10 rounded-xl gradient-tide flex items-center justify-center text-xl flex-shrink-0">🐟</div>
                   <div className="flex-1 min-w-0">
                     <p className="font-display font-bold text-foam italic">{fam}</p>
-                    <p className="text-foam/40 text-xs">{members.length} {members.length === 1 ? 'Art' : 'Arten'}</p>
+                    <p className="text-foam/40 text-xs">{members.length} {members.length === 1 ? t('families.label.species_singular') : t('families.label.species_plural')}</p>
                   </div>
                   <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.25 }}>
                     <ChevronDown className="w-5 h-5 text-foam/40" />

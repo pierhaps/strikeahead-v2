@@ -6,25 +6,25 @@ import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import PageTransition from '../components/ui/PageTransition';
 
-const PLANS = [
+const getPlans = (t) => [
   {
     key: 'free', price: '0', period: '',
-    features: ['5 Fänge/Monat', 'Basis-Karte', 'Community-Feed'],
+    features: [t('subscription.features.free_1'), t('subscription.features.free_2'), t('subscription.features.free_3')],
     highlight: false,
   },
   {
-    key: 'angler', price: '4,99', period: '/Mo',
-    features: ['Unbegrenzte Fänge', 'Alle Karten-Layer', 'Wettkampf-Teilnahme', 'Basis-Analytics'],
+    key: 'angler', price: '4,99', period: t('subscription.period_monthly'),
+    features: [t('subscription.features.angler_1'), t('subscription.features.angler_2'), t('subscription.features.angler_3'), t('subscription.features.angler_4')],
     highlight: false,
   },
   {
-    key: 'pro', price: '9,99', period: '/Mo',
-    features: ['Alles in Angler', 'KI-Fischidentifikation', 'Forecast & Solunar', 'Skill-Profil', 'Coach-Zugang', '500 HP/Mo Bonus'],
+    key: 'pro', price: '9,99', period: t('subscription.period_monthly'),
+    features: [t('subscription.features.pro_1'), t('subscription.features.pro_2'), t('subscription.features.pro_3'), t('subscription.features.pro_4'), t('subscription.features.pro_5'), t('subscription.features.pro_6')],
     highlight: true,
   },
   {
-    key: 'legend', price: '19,99', period: '/Mo',
-    features: ['Alles in Pro', 'Legend-Badge', 'Exklusive Turniere', '2000 HP/Mo Bonus', 'Direkter Support', 'Beta-Features'],
+    key: 'legend', price: '19,99', period: t('subscription.period_monthly'),
+    features: [t('subscription.features.legend_1'), t('subscription.features.legend_2'), t('subscription.features.legend_3'), t('subscription.features.legend_4'), t('subscription.features.legend_5'), t('subscription.features.legend_6')],
     highlight: false,
   },
 ];
@@ -40,6 +40,7 @@ function detectPlatform() {
 
 export default function Subscription() {
   const { t } = useTranslation();
+  const PLANS = React.useMemo(() => getPlans(t), [t]);
   const [user, setUser] = useState(null);
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -58,11 +59,11 @@ export default function Subscription() {
 
   const handleUpgrade = (planKey) => {
     if (platform === 'web') {
-      alert('Stripe Checkout wird geöffnet… (Platzhalter-Integration)');
+      alert(t('subscription.alert_stripe'));
     } else if (platform === 'ios') {
-      alert('Bitte öffne die iOS-App für In-App-Käufe.');
+      alert(t('subscription.alert_ios'));
     } else {
-      alert('Bitte öffne die Android-App für In-App-Käufe.');
+      alert(t('subscription.alert_android'));
     }
   };
 
@@ -114,7 +115,7 @@ export default function Subscription() {
                   <div>
                     <div className="flex items-center gap-2">
                       <h3 className={`font-display font-extrabold text-lg ${plan.highlight ? 'text-sun-400' : 'text-foam'}`}>{PLAN_LABELS[plan.key]}</h3>
-                      {plan.highlight && <span className="px-2 py-0.5 rounded-lg text-xs font-bold bg-sun-400/20 text-sun-300">Beliebt</span>}
+                      {plan.highlight && <span className="px-2 py-0.5 rounded-lg text-xs font-bold bg-sun-400/20 text-sun-300">{t('subscription.popular')}</span>}
                       {isCurrent && <span className="px-2 py-0.5 rounded-lg text-xs font-bold bg-tide-500/20 text-tide-300">{t('subscription.current')}</span>}
                     </div>
                     <div className="flex items-baseline gap-1 mt-0.5">
@@ -175,7 +176,7 @@ export default function Subscription() {
 
         {/* Cancel link */}
         <div className="text-center">
-          <a href="#cancel" className="text-foam/30 text-xs underline" onClick={e => { e.preventDefault(); alert('Billing-Portal (Platzhalter)'); }}>
+          <a href="#cancel" className="text-foam/30 text-xs underline" onClick={e => { e.preventDefault(); alert(t('subscription.alert_billing')); }}>
             {t('subscription.cancel')}
           </a>
         </div>

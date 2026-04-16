@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Camera, Image, Loader2, CheckCircle, AlertCircle, ChevronRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import PageTransition from '../components/ui/PageTransition';
 import { base44 } from '@/api/base44Client';
 
@@ -9,6 +10,7 @@ const tideEase = [0.2, 0.8, 0.2, 1];
 const RARITY_COLORS = { common: '#1FA7B8', uncommon: '#4DC3D1', rare: '#F5C34B', epic: '#FF6B5B', legendary: '#FFD872' };
 
 export default function FishIdentify() {
+  const { t } = useTranslation();
   const [phase, setPhase] = useState('upload'); // upload | loading | result | fallback
   const [photoUrl, setPhotoUrl] = useState(null);
   const [result, setResult] = useState(null);
@@ -48,12 +50,17 @@ export default function FishIdentify() {
 
   const reset = () => { setPhase('upload'); setPhotoUrl(null); setResult(null); };
 
+  const getRarityLabel = (rarity) => {
+    const key = `identify:rarity_${rarity}`;
+    return t(key, rarity);
+  };
+
   return (
     <PageTransition>
       <div className="px-4 pt-6 pb-4 space-y-6">
         <div>
-          <p className="text-foam/50 text-sm">KI-gestützt</p>
-          <h1 className="font-display text-2xl font-extrabold text-foam">Fisch Bestimmen</h1>
+          <p className="text-foam/50 text-sm">{t('identify:subtitle')}</p>
+          <h1 className="font-display text-2xl font-extrabold text-foam">{t('identify:title')}</h1>
         </div>
 
         <AnimatePresence mode="wait">
@@ -64,16 +71,16 @@ export default function FishIdentify() {
               <div className="glass-card rounded-3xl p-6 text-center"
                 style={{ border: '2px dashed rgba(127,220,229,0.25)' }}>
                 <div className="text-6xl mb-4">🐟</div>
-                <p className="font-display font-bold text-foam text-lg mb-2">Foto hochladen</p>
-                <p className="text-foam/40 text-sm mb-6">Die KI erkennt die Fischart automatisch</p>
+                <p className="font-display font-bold text-foam text-lg mb-2">{t('identify:photo_upload')}</p>
+                <p className="text-foam/40 text-sm mb-6">{t('identify:hero_desc')}</p>
                 <div className="flex flex-col gap-3">
                   <button onClick={() => fileRef.current?.click()}
                     className="flex items-center justify-center gap-2 py-3.5 rounded-2xl gradient-tide text-white font-display font-bold glow-tide">
-                    <Camera className="w-5 h-5" /> Foto aufnehmen
+                    <Camera className="w-5 h-5" /> {t('identify:photo_capture')}
                   </button>
                   <button onClick={() => fileRef.current?.click()}
                     className="flex items-center justify-center gap-2 py-3.5 rounded-2xl glass-strong border border-tide-300/20 text-foam font-semibold">
-                    <Image className="w-5 h-5 text-tide-400" /> Aus Galerie wählen
+                    <Image className="w-5 h-5 text-tide-400" /> {t('identify:from_gallery')}
                   </button>
                 </div>
                 <input ref={fileRef} type="file" accept="image/*" capture="environment"
@@ -83,7 +90,7 @@ export default function FishIdentify() {
               <div className="glass-card rounded-2xl p-4 flex items-start gap-3"
                 style={{ border: '1px solid rgba(245,195,75,0.15)' }}>
                 <span className="text-xl">💡</span>
-                <p className="text-foam/60 text-sm">Bestes Ergebnis: Seitliches Foto mit gutem Licht. Die ganze Seite des Fisches soll sichtbar sein.</p>
+                <p className="text-foam/60 text-sm">{t('identify:tip_text')}</p>
               </div>
             </motion.div>
           )}
@@ -101,8 +108,8 @@ export default function FishIdentify() {
                 <div className="w-12 h-12 rounded-full gradient-tide flex items-center justify-center">
                   <Loader2 className="w-6 h-6 text-white animate-spin" />
                 </div>
-                <p className="font-display font-bold text-foam">KI analysiert...</p>
-                <p className="text-foam/40 text-sm">Fischart wird identifiziert</p>
+                <p className="font-display font-bold text-foam">{t('identify:analyzing')}</p>
+                <p className="text-foam/40 text-sm">{t('identify:identifying')}</p>
               </div>
             </motion.div>
           )}
@@ -118,7 +125,7 @@ export default function FishIdentify() {
                   <div className="absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1.5 rounded-full"
                     style={{ background: 'rgba(31,167,184,0.85)' }}>
                     <CheckCircle className="w-3.5 h-3.5 text-white" />
-                    <span className="text-white text-xs font-bold">Erkannt</span>
+                    <span className="text-white text-xs font-bold">{t('identify:detected')}</span>
                   </div>
                 </div>
               )}
@@ -134,14 +141,14 @@ export default function FishIdentify() {
                   <div className="text-right">
                     <div className="px-2.5 py-1 rounded-xl text-xs font-bold capitalize"
                       style={{ background: `${RARITY_COLORS[result.rarity]}22`, color: RARITY_COLORS[result.rarity], border: `1px solid ${RARITY_COLORS[result.rarity]}44` }}>
-                      {result.rarity}
+                      {getRarityLabel(result.rarity)}
                     </div>
                   </div>
                 </div>
 
                 <div className="mb-3">
                   <div className="flex justify-between text-xs mb-1">
-                    <span className="text-foam/50">Konfidenz</span>
+                    <span className="text-foam/50">{t('identify:confidence')}</span>
                     <span className="font-bold text-tide-400">{result.confidence}%</span>
                   </div>
                   <div className="h-2 bg-abyss-700 rounded-full overflow-hidden">
@@ -158,10 +165,10 @@ export default function FishIdentify() {
 
               <div className="flex gap-3">
                 <button onClick={reset} className="flex-1 py-3.5 rounded-2xl glass-card text-foam/70 font-semibold">
-                  Neues Foto
+                  {t('identify:new_photo')}
                 </button>
                 <button className="flex-1 py-3.5 rounded-2xl gradient-tide text-white font-display font-bold glow-tide flex items-center justify-center gap-2">
-                  Fang loggen <ChevronRight className="w-4 h-4" />
+                  {t('identify:log_catch')} <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
             </motion.div>
@@ -174,14 +181,14 @@ export default function FishIdentify() {
               <div className="glass-card rounded-3xl p-8 text-center"
                 style={{ border: '1px solid rgba(255,107,91,0.25)' }}>
                 <AlertCircle className="w-12 h-12 text-coral-500 mx-auto mb-4" />
-                <p className="font-display font-bold text-foam text-lg mb-2">Nicht erkannt</p>
-                <p className="text-foam/50 text-sm mb-6">Die KI konnte die Fischart nicht sicher bestimmen. Du kannst die Art manuell wählen.</p>
+                <p className="font-display font-bold text-foam text-lg mb-2">{t('identify:not_detected')}</p>
+                <p className="text-foam/50 text-sm mb-6">{t('identify:unable_msg')}</p>
                 <div className="flex flex-col gap-3">
                   <button onClick={reset} className="py-3.5 rounded-2xl glass-strong border border-tide-300/20 text-foam font-semibold">
-                    Erneut versuchen
+                    {t('identify:retry')}
                   </button>
                   <button className="py-3.5 rounded-2xl gradient-tide text-white font-display font-bold glow-tide">
-                    Manuell wählen
+                    {t('identify:manual_select')}
                   </button>
                 </div>
               </div>

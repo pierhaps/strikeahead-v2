@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Search, Euro, Star } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import PageTransition from '../components/ui/PageTransition';
 import { base44 } from '@/api/base44Client';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
-
-const TABS = [
-  { key: 'artificial', label: 'Künstlich' },
-  { key: 'natural', label: 'Natürlich' },
-  { key: 'live', label: 'Lebend' },
-];
 
 function StarRating({ rating, count }) {
   return (
@@ -24,6 +19,7 @@ function StarRating({ rating, count }) {
 }
 
 function DetailSheet({ bait, onClose }) {
+  const { t } = useTranslation('bait');
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
       className="fixed inset-0 z-50 flex flex-col justify-end"
@@ -57,14 +53,14 @@ function DetailSheet({ bait, onClose }) {
 
         {bait.rigging_method && (
           <div className="glass-card rounded-xl p-3 mb-3">
-            <p className="text-foam/40 text-xs mb-1">Rig-Methode</p>
+            <p className="text-foam/40 text-xs mb-1">{t('rig_method')}</p>
             <p className="text-foam font-semibold text-sm">{bait.rigging_method}</p>
           </div>
         )}
 
         {bait.recommended_techniques?.length > 0 && (
           <div className="glass-card rounded-xl p-3 mb-3">
-            <p className="text-foam/40 text-xs mb-2">Techniken</p>
+            <p className="text-foam/40 text-xs mb-2">{t('techniques')}</p>
             <div className="flex flex-wrap gap-1.5">
               {bait.recommended_techniques.map(t => (
                 <span key={t} className="px-2.5 py-1 bg-tide-500/15 text-tide-300 rounded-xl text-xs">{t}</span>
@@ -75,7 +71,7 @@ function DetailSheet({ bait, onClose }) {
 
         {bait.recommended_species?.length > 0 && (
           <div className="glass-card rounded-xl p-3 mb-3">
-            <p className="text-foam/40 text-xs mb-2">Zielfische</p>
+            <p className="text-foam/40 text-xs mb-2">{t('target_species')}</p>
             <div className="flex flex-wrap gap-1.5">
               {bait.recommended_species.map(s => (
                 <span key={s} className="px-2.5 py-1 bg-abyss-700 text-foam/60 rounded-xl text-xs">{s}</span>
@@ -85,18 +81,25 @@ function DetailSheet({ bait, onClose }) {
         )}
 
         <div className="grid grid-cols-3 gap-2 mb-4">
-          {bait.size && <div className="glass-card rounded-xl p-2 text-center"><p className="text-foam/30 text-[10px]">Größe</p><p className="text-foam font-bold text-xs">{bait.size}</p></div>}
-          {bait.weight_g && <div className="glass-card rounded-xl p-2 text-center"><p className="text-foam/30 text-[10px]">Gewicht</p><p className="text-foam font-bold text-xs">{bait.weight_g}g</p></div>}
-          {bait.color && <div className="glass-card rounded-xl p-2 text-center"><p className="text-foam/30 text-[10px]">Farbe</p><p className="text-foam font-bold text-xs truncate">{bait.color}</p></div>}
+          {bait.size && <div className="glass-card rounded-xl p-2 text-center"><p className="text-foam/30 text-[10px]">{t('size')}</p><p className="text-foam font-bold text-xs">{bait.size}</p></div>}
+          {bait.weight_g && <div className="glass-card rounded-xl p-2 text-center"><p className="text-foam/30 text-[10px]">{t('weight')}</p><p className="text-foam font-bold text-xs">{bait.weight_g}g</p></div>}
+          {bait.color && <div className="glass-card rounded-xl p-2 text-center"><p className="text-foam/30 text-[10px]">{t('color')}</p><p className="text-foam font-bold text-xs truncate">{bait.color}</p></div>}
         </div>
 
-        <button onClick={onClose} className="w-full py-3.5 rounded-2xl glass-card text-foam/70 font-semibold">Schließen</button>
+        <button onClick={onClose} className="w-full py-3.5 rounded-2xl glass-card text-foam/70 font-semibold">{t('close')}</button>
       </motion.div>
     </motion.div>
   );
 }
 
 export default function BaitCatalogPage() {
+  const { t } = useTranslation('bait');
+  const TABS = [
+    { key: 'artificial', label: t('artificial') },
+    { key: 'natural', label: t('natural') },
+    { key: 'live', label: t('live') },
+  ];
+
   const [baits, setBaits] = useState([]);
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState('artificial');
@@ -123,16 +126,16 @@ export default function BaitCatalogPage() {
     <PageTransition>
       <div className="px-4 pt-6 pb-4 space-y-4">
         <div>
-          <p className="text-foam/50 text-sm">Köder & Zubehör</p>
-          <h1 className="font-display text-2xl font-extrabold text-foam">Köder-Katalog</h1>
+          <p className="text-foam/50 text-sm">{t('catalog_subtitle')}</p>
+          <h1 className="font-display text-2xl font-extrabold text-foam">{t('catalog_title')}</h1>
         </div>
 
         {/* Tabs */}
         <div className="flex gap-2">
-          {TABS.map(t => (
-            <button key={t.key} onClick={() => { setTab(t.key); setFilterBrand('all'); }}
-              className={`flex-1 py-2.5 rounded-2xl text-sm font-bold transition-all ${tab === t.key ? 'gradient-tide text-white glow-tide' : 'glass-card text-foam/60'}`}>
-              {t.label}
+          {TABS.map(tab => (
+            <button key={tab.key} onClick={() => { setTab(tab.key); setFilterBrand('all'); }}
+              className={`flex-1 py-2.5 rounded-2xl text-sm font-bold transition-all ${tab.key === tab ? 'gradient-tide text-white glow-tide' : 'glass-card text-foam/60'}`}>
+              {tab.label}
             </button>
           ))}
         </div>
@@ -141,13 +144,13 @@ export default function BaitCatalogPage() {
           <div className="flex-1 glass-card rounded-2xl flex items-center gap-3 px-3 py-2.5">
             <Search className="w-4 h-4 text-tide-400 flex-shrink-0" />
             <input value={search} onChange={e => setSearch(e.target.value)}
-              placeholder="Köder suchen..."
+              placeholder={t('search_placeholder')}
               className="bg-transparent flex-1 text-foam placeholder-foam/30 text-xs outline-none" />
           </div>
           {brands.length > 0 && (
             <select value={filterBrand} onChange={e => setFilterBrand(e.target.value)}
               className="px-3 py-2 rounded-xl text-xs bg-abyss-700 text-foam/70 border border-tide-300/15 flex-shrink-0">
-              <option value="all">Alle Marken</option>
+              <option value="all">{t('all_brands')}</option>
               {brands.map(b => <option key={b} value={b}>{b}</option>)}
             </select>
           )}
@@ -156,8 +159,8 @@ export default function BaitCatalogPage() {
         {filtered.length === 0 ? (
           <div className="glass-card rounded-3xl p-10 text-center mt-8">
             <div className="text-5xl mb-4">🪝</div>
-            <p className="font-display font-bold text-foam text-lg">Keine Köder</p>
-            <p className="text-foam/40 text-sm mt-2">Katalog wird bald befüllt</p>
+            <p className="font-display font-bold text-foam text-lg">{t('empty_title')}</p>
+            <p className="text-foam/40 text-sm mt-2">{t('empty_desc')}</p>
           </div>
         ) : (
           <div className="grid grid-cols-2 gap-3">

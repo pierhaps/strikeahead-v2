@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Search, ExternalLink, MapPin, Euro } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import PageTransition from '../components/ui/PageTransition';
 import { base44 } from '@/api/base44Client';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 
-const LICENSE_TYPE_DE = { daily: 'Tageslizenz', weekly: 'Wochenlizenz', monthly: 'Monatslizenz', yearly: 'Jahreslizenz', multi_year: 'Mehrjahreslizenz', lifetime: 'Lebenslang', tourist: 'Touristenlizenz' };
+const getLicenseTypes = (t) => ({
+  daily: t('licensesearch.types.daily'), weekly: t('licensesearch.types.weekly'),
+  monthly: t('licensesearch.types.monthly'), yearly: t('licensesearch.types.yearly'),
+  multi_year: t('licensesearch.types.multi_year'), lifetime: t('licensesearch.types.lifetime'),
+  tourist: t('licensesearch.types.tourist'),
+});
 
 export default function LicenseSearch() {
+  const { t } = useTranslation();
+  const LICENSE_TYPE_DE = React.useMemo(() => getLicenseTypes(t), [t]);
   const [licenses, setLicenses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState('');
@@ -31,22 +39,22 @@ export default function LicenseSearch() {
     <PageTransition>
       <div className="px-4 pt-6 pb-4 space-y-4">
         <div>
-          <p className="text-foam/50 text-sm">Angellizenzen finden</p>
-          <h1 className="font-display text-2xl font-extrabold text-foam">Lizenz-Suche</h1>
+          <p className="text-foam/50 text-sm">{t('licensesearch.subtitle')}</p>
+          <h1 className="font-display text-2xl font-extrabold text-foam">{t('licensesearch.title')}</h1>
         </div>
 
         <div className="glass-card rounded-2xl flex items-center gap-3 px-4 py-3">
           <Search className="w-4 h-4 text-tide-400 flex-shrink-0" />
           <input value={query} onChange={e => setQuery(e.target.value)}
-            placeholder="Gewässer, Ort oder Land suchen..."
+            placeholder={t('licensesearch.placeholder')}
             className="bg-transparent flex-1 text-foam placeholder-foam/30 text-sm outline-none" />
         </div>
 
         {filtered.length === 0 ? (
           <div className="glass-card rounded-3xl p-10 text-center mt-8">
             <div className="text-5xl mb-4">🎫</div>
-            <p className="font-display font-bold text-foam text-lg">Keine Lizenzen gefunden</p>
-            <p className="text-foam/40 text-sm mt-2">Anderen Suchbegriff versuchen</p>
+            <p className="font-display font-bold text-foam text-lg">{t('licensesearch.empty_title')}</p>
+            <p className="text-foam/40 text-sm mt-2">{t('licensesearch.empty_desc')}</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -90,7 +98,7 @@ export default function LicenseSearch() {
                 {l.hejfish_url && (
                   <a href={l.hejfish_url} target="_blank" rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2 w-full py-3 rounded-2xl gradient-tide text-white font-bold text-sm glow-tide">
-                    <ExternalLink className="w-4 h-4" /> Bei HejFish kaufen
+                    <ExternalLink className="w-4 h-4" /> {t('licensesearch.buy_hejfish')}
                   </a>
                 )}
               </motion.div>

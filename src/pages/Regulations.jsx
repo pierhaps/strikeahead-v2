@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Fish, Ruler, Calendar, RefreshCw } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import PageTransition from '../components/ui/PageTransition';
 import { base44 } from '@/api/base44Client';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 
 export default function Regulations() {
+  const { t } = useTranslation();
   const [regs, setRegs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filterRegion, setFilterRegion] = useState('all');
@@ -31,29 +33,29 @@ export default function Regulations() {
     <PageTransition>
       <div className="px-4 pt-6 pb-4 space-y-4">
         <div>
-          <p className="text-foam/50 text-sm">Gesetzliche Vorschriften</p>
-          <h1 className="font-display text-2xl font-extrabold text-foam">Fangbestimmungen</h1>
+          <p className="text-foam/50 text-sm">{t('regulations.subtitle')}</p>
+          <h1 className="font-display text-2xl font-extrabold text-foam">{t('regulations.title')}</h1>
         </div>
 
         <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
           <select value={filterRegion} onChange={e => setFilterRegion(e.target.value)}
             className="px-3 py-2 rounded-xl text-xs bg-abyss-700 text-foam/70 border border-tide-300/15 flex-shrink-0">
-            <option value="all">Alle Bundesländer</option>
+            <option value="all">{t('regulations.filter_regions')}</option>
             {regions.map(r => <option key={r} value={r}>{r}</option>)}
           </select>
           <select value={filterSpecies} onChange={e => setFilterSpecies(e.target.value)}
             className="px-3 py-2 rounded-xl text-xs bg-abyss-700 text-foam/70 border border-tide-300/15 flex-shrink-0">
-            <option value="all">Alle Arten</option>
+            <option value="all">{t('regulations.filter_species')}</option>
             {species.map(s => <option key={s} value={s}>{s}</option>)}
           </select>
-          <span className="px-3 py-2 rounded-xl text-xs font-semibold glass-card text-tide-400 flex-shrink-0">{filtered.length} Regeln</span>
+          <span className="px-3 py-2 rounded-xl text-xs font-semibold glass-card text-tide-400 flex-shrink-0">{filtered.length} {t('regulations.rules_count')}</span>
         </div>
 
         {filtered.length === 0 ? (
           <div className="glass-card rounded-3xl p-10 text-center mt-8">
             <div className="text-5xl mb-4">📋</div>
-            <p className="font-display font-bold text-foam text-lg">Keine Bestimmungen gefunden</p>
-            <p className="text-foam/40 text-sm mt-2">Filter anpassen oder Daten werden bald geladen</p>
+            <p className="font-display font-bold text-foam text-lg">{t('regulations.empty_title')}</p>
+            <p className="text-foam/40 text-sm mt-2">{t('regulations.empty_desc')}</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -72,7 +74,7 @@ export default function Regulations() {
                       <span className="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-tide-500/15 text-tide-300 border border-tide-400/20">C&R ✓</span>
                     )}
                     {r.entnahmepflicht && (
-                      <span className="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-coral-500/15 text-coral-500 border border-coral-500/25">Entnahmepflicht</span>
+                      <span className="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-coral-500/15 text-coral-500 border border-coral-500/25">{t('regulations.mandatory_keep')}</span>
                     )}
                   </div>
                 </div>
@@ -82,21 +84,21 @@ export default function Regulations() {
                     <div className="glass-card rounded-xl p-2 text-center">
                       <Ruler className="w-3.5 h-3.5 text-tide-400 mx-auto mb-1" />
                       <p className="font-bold text-foam text-sm">{r.mindestmass_cm} cm</p>
-                      <p className="text-foam/30 text-[10px]">Min-Maß</p>
+                      <p className="text-foam/30 text-[10px]">{t('regulations.min_size')}</p>
                     </div>
                   )}
                   {r.maxmass_cm && (
                     <div className="glass-card rounded-xl p-2 text-center">
                       <Ruler className="w-3.5 h-3.5 text-sun-400 mx-auto mb-1" />
                       <p className="font-bold text-foam text-sm">{r.maxmass_cm} cm</p>
-                      <p className="text-foam/30 text-[10px]">Max-Maß</p>
+                      <p className="text-foam/30 text-[10px]">{t('regulations.max_size')}</p>
                     </div>
                   )}
                   {(r.schonzeit_start || r.schonzeit_end) && (
                     <div className="glass-card rounded-xl p-2 text-center">
                       <Calendar className="w-3.5 h-3.5 text-foam/50 mx-auto mb-1" />
                       <p className="font-bold text-foam text-[11px]">{r.schonzeit_start}–{r.schonzeit_end}</p>
-                      <p className="text-foam/30 text-[10px]">Schonzeit</p>
+                      <p className="text-foam/30 text-[10px]">{t('regulations.closed_season')}</p>
                     </div>
                   )}
                 </div>
@@ -108,7 +110,7 @@ export default function Regulations() {
                 {r.source_url && (
                   <a href={r.source_url} target="_blank" rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 text-tide-400 text-xs hover:text-tide-300">
-                    <ExternalLink className="w-3 h-3" /> Amtliche Quelle
+                    <ExternalLink className="w-3 h-3" /> {t('regulations.official_source')}
                   </a>
                 )}
               </motion.div>

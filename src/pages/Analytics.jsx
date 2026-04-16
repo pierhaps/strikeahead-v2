@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
 import { Fish, Anchor, Trophy, TrendingUp } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import PageTransition from '../components/ui/PageTransition';
 import { base44 } from '@/api/base44Client';
 
@@ -32,6 +33,8 @@ const MONTH_LABELS = ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Ok
 const HOURS = ['00-06','06-09','09-12','12-15','15-18','18-21','21-24'];
 
 export default function Analytics() {
+  const { t } = useTranslation('analytics');
+
   const [catches, setCatches] = useState([]);
   const [range, setRange] = useState('30d');
   const [filterSpecies, setFilterSpecies] = useState('all');
@@ -101,8 +104,8 @@ export default function Analytics() {
     <PageTransition>
       <div className="px-4 pt-6 pb-4 space-y-6">
         <div>
-          <p className="text-foam/50 text-sm">Deine Statistiken</p>
-          <h1 className="font-display text-2xl font-extrabold text-foam">Analytics</h1>
+          <p className="text-foam/50 text-sm">{t('subtitle')}</p>
+          <h1 className="font-display text-2xl font-extrabold text-foam">{t('title')}</h1>
         </div>
 
         {/* Filters */}
@@ -110,29 +113,29 @@ export default function Analytics() {
           {['7d','30d','90d','year','all'].map(r => (
             <button key={r} onClick={() => setRange(r)}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold flex-shrink-0 transition-all ${range === r ? 'gradient-tide text-white' : 'glass-card text-foam/60'}`}>
-              {r === 'year' ? '1 Jahr' : r === 'all' ? 'Alle' : r}
+              {r === 'year' ? t('filter_year') : r === 'all' ? t('filter_all') : r}
             </button>
           ))}
           <select value={filterSpecies} onChange={e => setFilterSpecies(e.target.value)}
             className="px-3 py-1.5 rounded-xl text-xs font-medium bg-abyss-700 text-foam/70 border border-tide-300/15 flex-shrink-0">
-            <option value="all">Alle Arten</option>
+            <option value="all">{t('filter_species_all')}</option>
             {allSpecies.map(s => <option key={s} value={s}>{s}</option>)}
           </select>
         </div>
 
         {/* KPIs */}
         <div className="grid grid-cols-2 gap-3">
-          <KPICard icon={Fish} label="Fänge gesamt" value={totalCatches} sub={`Zeitraum: ${range}`} />
-          <KPICard icon={TrendingUp} label="Ø Gewicht" value={avgWeight !== '—' ? `${avgWeight} kg` : '—'} sub="Aller Fänge" />
-          <KPICard icon={Trophy} label="Top Art" value={topSpecies} sub={speciesCounts[topSpecies] ? `${speciesCounts[topSpecies]}x` : ''} sun />
-          <KPICard icon={Anchor} label="HookPoints" value={totalHP} sub="Verdient" sun />
+          <KPICard icon={Fish} label={t('kpi_catches_total')} value={totalCatches} sub={`${t('timerange_label')}: ${range}`} />
+          <KPICard icon={TrendingUp} label={t('kpi_avg_weight')} value={avgWeight !== '—' ? `${avgWeight} kg` : '—'} sub={t('kpi_weight_desc')} />
+          <KPICard icon={Trophy} label={t('kpi_top_species')} value={topSpecies} sub={speciesCounts[topSpecies] ? `${speciesCounts[topSpecies]}x` : ''} sun />
+          <KPICard icon={Anchor} label={t('kpi_hookpoints')} value={totalHP} sub={t('kpi_hookpoints_desc')} sun />
         </div>
 
         {/* Bar Chart */}
         <div className="glass-card rounded-2xl p-4">
-          <p className="font-display font-bold text-foam text-sm mb-4">Fänge pro Monat</p>
+          <p className="font-display font-bold text-foam text-sm mb-4">{t('chart_catches_per_month')}</p>
           {filtered.length === 0 ? (
-            <div className="h-36 flex items-center justify-center text-foam/30 text-sm">Noch keine Daten</div>
+            <div className="h-36 flex items-center justify-center text-foam/30 text-sm">{t('no_data')}</div>
           ) : (
             <ResponsiveContainer width="100%" height={160}>
               <BarChart data={monthData} barCategoryGap="30%">
@@ -148,9 +151,9 @@ export default function Analytics() {
         {/* Donut + Line side by side on larger screens, stacked on mobile */}
         <div className="grid grid-cols-1 gap-4">
           <div className="glass-card rounded-2xl p-4">
-            <p className="font-display font-bold text-foam text-sm mb-4">Verteilung nach Art</p>
+            <p className="font-display font-bold text-foam text-sm mb-4">{t('chart_by_species')}</p>
             {donutData.length === 0 ? (
-              <div className="h-36 flex items-center justify-center text-foam/30 text-sm">Noch keine Daten</div>
+              <div className="h-36 flex items-center justify-center text-foam/30 text-sm">{t('no_data')}</div>
             ) : (
               <div className="flex items-center gap-4">
                 <ResponsiveContainer width={120} height={120}>
@@ -174,9 +177,9 @@ export default function Analytics() {
           </div>
 
           <div className="glass-card rounded-2xl p-4">
-            <p className="font-display font-bold text-foam text-sm mb-4">Erfolg nach Tageszeit</p>
+            <p className="font-display font-bold text-foam text-sm mb-4">{t('chart_by_daytime')}</p>
             {filtered.length === 0 ? (
-              <div className="h-36 flex items-center justify-center text-foam/30 text-sm">Noch keine Daten</div>
+              <div className="h-36 flex items-center justify-center text-foam/30 text-sm">{t('no_data')}</div>
             ) : (
               <ResponsiveContainer width="100%" height={140}>
                 <LineChart data={hourData}>
