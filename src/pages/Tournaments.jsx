@@ -11,26 +11,24 @@ const TABS = [
   { key: 'completed', label: 'tournaments_ended' },
 ];
 
-const TYPE_LABELS = {
-  solo_challenge: 'Solo',
-  crew_battle: 'Crew',
-  regional_cup: 'Regional',
-  species_hunt: 'Artenjagd',
-  big_fish: 'Big Fish',
-  most_catches: 'Most Catches',
-  heaviest_total: 'Heaviest',
-};
+const TYPE_KEYS = ['solo_challenge','crew_battle','regional_cup','species_hunt','big_fish','most_catches','heaviest_total'];
+const SCORING_KEYS = ['biggest_single','total_weight','total_count','total_length','species_variety'];
 
-const SCORING_LABELS = {
-  biggest_single: 'Größter Einzelfang',
-  total_weight: 'Gesamtgewicht',
-  total_count: 'Fanganzahl',
-  total_length: 'Gesamtlänge',
-  species_variety: 'Artenvielfalt',
+const localeTag = (code) => {
+  const map = { de: 'de-DE', en: 'en-US', es: 'es-ES', fr: 'fr-FR', it: 'it-IT', hr: 'hr-HR', pt: 'pt-PT', nl: 'nl-NL', tr: 'tr-TR', el: 'el-GR', sq: 'sq-AL' };
+  return map[code] || 'de-DE';
 };
 
 export default function Tournaments() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const TYPE_LABELS = React.useMemo(() => {
+    const defaults = { solo_challenge:'Solo', crew_battle:'Crew', regional_cup:'Regional', species_hunt:'Artenjagd', big_fish:'Big Fish', most_catches:'Most Catches', heaviest_total:'Heaviest' };
+    return Object.fromEntries(TYPE_KEYS.map(k => [k, t(`tournaments.type_${k}`, { defaultValue: defaults[k] })]));
+  }, [t]);
+  const SCORING_LABELS = React.useMemo(() => {
+    const defaults = { biggest_single:'Größter Einzelfang', total_weight:'Gesamtgewicht', total_count:'Fanganzahl', total_length:'Gesamtlänge', species_variety:'Artenvielfalt' };
+    return Object.fromEntries(SCORING_KEYS.map(k => [k, t(`tournaments.scoring_${k}`, { defaultValue: defaults[k] })]));
+  }, [t]);
   const [tab, setTab] = useState('upcoming');
   const [tournaments, setTournaments] = useState([]);
   const [user, setUser] = useState(null);
@@ -87,7 +85,7 @@ export default function Tournaments() {
                   <div className="flex-1">
                     <div className="flex gap-2 mb-1">
                       <span className="px-2 py-0.5 rounded-lg bg-tide-500/20 text-tide-300 text-xs">{TYPE_LABELS[tour.type] || tour.type}</span>
-                      {tour.is_official && <span className="px-2 py-0.5 rounded-lg bg-sun-500/20 text-sun-300 text-xs">✓ Offiziell</span>}
+                      {tour.is_official && <span className="px-2 py-0.5 rounded-lg bg-sun-500/20 text-sun-300 text-xs">✓ {t('tournaments.official', { defaultValue: 'Offiziell' })}</span>}
                     </div>
                     <h3 className="text-foam font-bold">{tour.title}</h3>
                     <p className="text-foam/40 text-xs mt-0.5">{SCORING_LABELS[tour.scoring_method]}</p>
@@ -101,7 +99,7 @@ export default function Tournaments() {
                   </div>
                   <div className="glass-card rounded-xl p-2.5">
                     <p className="text-foam/40 text-[10px] mb-0.5">{t('community.tournaments_prize')}</p>
-                    <p className="text-sun-400 font-display font-bold text-sm">{(tour.prize_pool_hookpoints || 0).toLocaleString('de-DE')} HP</p>
+                    <p className="text-sun-400 font-display font-bold text-sm">{(tour.prize_pool_hookpoints || 0).toLocaleString(localeTag(i18n.language))} HP</p>
                   </div>
                 </div>
 
@@ -114,7 +112,7 @@ export default function Tournaments() {
                     {tour.registration_deadline && (
                       <span className="text-foam/40 text-xs flex items-center gap-1">
                         <Clock className="w-3 h-3" />
-                        {new Date(tour.registration_deadline).toLocaleDateString('de-DE')}
+                        {new Date(tour.registration_deadline).toLocaleDateString(localeTag(i18n.language))}
                       </span>
                     )}
                   </div>

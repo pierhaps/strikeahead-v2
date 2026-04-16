@@ -22,13 +22,13 @@ function EffectivenessBar({ score }) {
 }
 
 export default function BaitDatabase() {
-  const { t } = useTranslation('bait');
+  const { t } = useTranslation();
   const { t: tCommon } = useTranslation('common');
   
   const CATEGORY_DE = {
-    artificial: t('artificial'),
-    natural: t('natural'),
-    live: t('live')
+    artificial: t('bait.artificial'),
+    natural: t('bait.natural'),
+    live: t('bait.live')
   };
 
   const [recommendations, setRecommendations] = useState([]);
@@ -58,14 +58,14 @@ export default function BaitDatabase() {
     <PageTransition>
       <div className="px-4 pt-6 pb-4 space-y-4">
         <div>
-          <p className="text-foam/50 text-sm">{t('database_title')}</p>
-          <h1 className="font-display text-2xl font-extrabold text-foam">{t('which_bait')}</h1>
+          <p className="text-foam/50 text-sm">{t('bait.database_title')}</p>
+          <h1 className="font-display text-2xl font-extrabold text-foam">{t('bait.which_bait')}</h1>
         </div>
 
         <div className="glass-card rounded-2xl flex items-center gap-3 px-4 py-3">
           <Search className="w-4 h-4 text-tide-400 flex-shrink-0" />
           <input value={query} onChange={e => { setQuery(e.target.value); setSelectedSpecies(null); }}
-            placeholder={t('which_species')}
+            placeholder={t('bait.which_species')}
             className="bg-transparent flex-1 text-foam placeholder-foam/30 text-sm outline-none" />
         </div>
 
@@ -75,12 +75,12 @@ export default function BaitDatabase() {
               {filteredSpecies.length === 0 ? (
                 <div className="glass-card rounded-3xl p-10 text-center mt-4">
                   <div className="text-5xl mb-4">🐟</div>
-                  <p className="font-display font-bold text-foam text-lg">{t('empty_search')}</p>
-                  <p className="text-foam/40 text-sm mt-2">{t('recommendations_loading')}</p>
+                  <p className="font-display font-bold text-foam text-lg">{t('bait.empty_search')}</p>
+                  <p className="text-foam/40 text-sm mt-2">{t('bait.recommendations_loading')}</p>
                 </div>
               ) : (
                 <div className="space-y-2">
-                  <p className="text-foam/40 text-xs uppercase tracking-widest">{filteredSpecies.length} {t('species_available')}</p>
+                  <p className="text-foam/40 text-xs uppercase tracking-widest">{filteredSpecies.length} {t('bait.species_available')}</p>
                   {filteredSpecies.map((s, i) => (
                     <motion.button key={s} onClick={() => setSelectedSpecies(s)}
                       initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
@@ -90,7 +90,7 @@ export default function BaitDatabase() {
                       <div className="w-10 h-10 rounded-xl gradient-tide flex items-center justify-center text-xl flex-shrink-0">🐟</div>
                       <div className="flex-1">
                         <p className="font-semibold text-foam text-sm">{s}</p>
-                        <p className="text-foam/40 text-xs">{recommendations.filter(r => r.fish_species === s).length} {t('bait_recommendations')}</p>
+                        <p className="text-foam/40 text-xs">{recommendations.filter(r => r.fish_species === s).length} {t('bait.bait_recommendations')}</p>
                       </div>
                       <span className="text-foam/30 text-lg">›</span>
                     </motion.button>
@@ -103,7 +103,7 @@ export default function BaitDatabase() {
               <div className="flex items-center gap-3 mb-4">
                 <button onClick={() => setSelectedSpecies(null)} className="w-9 h-9 rounded-xl glass-card flex items-center justify-center text-foam/60 text-lg">←</button>
                 <div>
-                  <p className="text-foam/40 text-xs">{t('recommendations_for')}</p>
+                  <p className="text-foam/40 text-xs">{t('bait.recommendations_for')}</p>
                   <h2 className="font-display font-bold text-foam text-lg">{selectedSpecies}</h2>
                 </div>
               </div>
@@ -111,7 +111,7 @@ export default function BaitDatabase() {
               {recs.length === 0 ? (
                 <div className="glass-card rounded-3xl p-8 text-center">
                   <div className="text-4xl mb-3">🪝</div>
-                  <p className="font-bold text-foam">{t('no_recommendations')}</p>
+                  <p className="font-bold text-foam">{t('bait.no_recommendations')}</p>
                 </div>
               ) : (
                 <div className="space-y-3">
@@ -139,7 +139,7 @@ export default function BaitDatabase() {
                       </div>
 
                       <div className="flex items-center justify-between text-xs mb-2">
-                        <span className="text-foam/40">{t('effectiveness')}</span>
+                        <span className="text-foam/40">{t('bait.effectiveness')}</span>
                         <span className="font-bold text-tide-400">{r.effectiveness_score}/5</span>
                       </div>
                       <EffectivenessBar score={r.effectiveness_score} />

@@ -1,24 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Trophy, Anchor, Fish, TrendingUp, TrendingDown, Minus } from 'lucide-react';
+import { Trophy, Anchor, Fish, TrendingUp } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { base44 } from '@/api/base44Client';
 import PageTransition from '../components/ui/PageTransition';
 
 const TABS = ['leaderboard_global','leaderboard_region','leaderboard_friends','leaderboard_team','leaderboard_crew'];
-const SORTS = [
-  { key: 'fish_xp', label: 'XP', icon: TrendingUp },
-  { key: 'hook_points', label: 'HP', icon: Anchor },
-  { key: 'total_catches', label: 'Fänge', icon: Fish },
-];
+
+const localeTag = (code) => {
+  const map = { de: 'de-DE', en: 'en-US', es: 'es-ES', fr: 'fr-FR', it: 'it-IT', hr: 'hr-HR', pt: 'pt-PT', nl: 'nl-NL', tr: 'tr-TR', el: 'el-GR', sq: 'sq-AL' };
+  return map[code] || 'de-DE';
+};
+const formatNum = (n, lang) => (n || 0).toLocaleString(localeTag(lang));
 
 export default function Leaderboard() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [tab, setTab] = useState('leaderboard_global');
   const [sortKey, setSortKey] = useState('fish_xp');
   const [users, setUsers] = useState([]);
   const [me, setMe] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const sorts = useMemo(() => ([
+    { key: 'fish_xp',       label: t('leaderboard.metric_xp',      { defaultValue: 'XP' }),    icon: TrendingUp },
+    { key: 'hook_points',   label: t('leaderboard.metric_hp',      { defaultValue: 'HP' }),    icon: Anchor },
+    { key: 'total_catches', label: t('leaderboard.metric_catches', { defaultValue: 'Fänge' }), icon: Fish },
+  ]), [t]);
+
+  const metricLabel = useMemo(() => {
+    if (sortKey === 'fish_xp')       return t('leaderboard.metric_xp',      { defaultValue: 'XP' });
+    if (sortKey === 'hook_points')   return t('leaderboard.metric_hp',      { defaultValue: 'HP' });
+    return t('leaderboard.metric_catches', { defaultValue: 'Fänge' });
+  }, [sortKey, t]);
 
   useEffect(() => {
     Promise.all([base44.auth.me(), base44.entities.User.list(`-${sortKey}`, 100)])
@@ -28,6 +41,7 @@ export default function Leaderboard() {
 
   const myRank = users.findIndex(u => u.email === me?.email) + 1;
   const myScore = me?.[sortKey] ?? 0;
+  const lang = i18n.language;
 
   return (
     <PageTransition>
@@ -49,7 +63,7 @@ export default function Leaderboard() {
 
         {/* Sort */}
         <div className="flex gap-2">
-          {SORTS.map(s => (
+          {sorts.map(s => (
             <button key={s.key} onClick={() => setSortKey(s.key)}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1 transition-all ${sortKey === s.key ? 'bg-tide-500/20 text-tide-300 border border-tide-400/30' : 'glass-card text-foam/40'}`}>
               <s.icon className="w-3 h-3" />
@@ -66,8 +80,8 @@ export default function Leaderboard() {
               #{myRank}
             </div>
             <div className="flex-1">
-              <p className="text-foam font-bold text-sm">{me.full_name} (Du)</p>
-              <p className="text-foam/40 text-xs">{myScore.toLocaleString('de-DE')} {sortKey === 'fish_xp' ? 'XP' : sortKey === 'hook_points' ? 'HP' : 'Fänge'}</p>
+              <p className="text-foam font-bold text-sm">{me.full_name} ({t('leaderboard.you', { defaultValue: 'Du' })})</p>
+              <p className="text-foam/40 text-xs">{formatNum(myScore, lang)} {metricLabel}</p>
             </div>
             <Trophy className="w-5 h-5 text-sun-400" />
           </div>
@@ -95,7 +109,7 @@ export default function Leaderboard() {
                   <div className="flex-1 min-w-0">
                     <p className={`font-semibold text-sm truncate ${isMe ? 'text-tide-300' : 'text-foam'}`}>{u.full_name || u.email}</p>
                   </div>
-                  <p className="text-foam font-display font-bold text-sm">{(u[sortKey] || 0).toLocaleString('de-DE')}</p>
+                  <p className="text-foam font-display font-bold text-sm">{formatNum(u[sortKey], lang)}</p>
                 </motion.div>
               );
             })}

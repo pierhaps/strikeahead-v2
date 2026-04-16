@@ -5,23 +5,28 @@ import { useTranslation } from 'react-i18next';
 import { base44 } from '@/api/base44Client';
 import PageTransition from '../components/ui/PageTransition';
 
-const CHANNELS = [
-  { key: 'general', label: '🌊 Allgemein' },
-  { key: 'freshwater', label: '🏞 Süßwasser' },
-  { key: 'saltwater', label: '🌊 Salzwasser' },
-  { key: 'de', label: '🇩🇪 Deutschland' },
-  { key: 'at', label: '🇦🇹 Österreich' },
-  { key: 'ch', label: '🇨🇭 Schweiz' },
-  { key: 'it', label: '🇮🇹 Italien' },
-  { key: 'gr', label: '🇬🇷 Griechenland' },
-  { key: 'hr', label: '🇭🇷 Kroatien' },
-  { key: 'al', label: '🇦🇱 Albanien' },
+const CHANNEL_KEYS = [
+  { key: 'general',    emoji: '🌊', i18nKey: 'room_general',    fallback: 'Allgemein' },
+  { key: 'freshwater', emoji: '🏞', i18nKey: 'room_freshwater', fallback: 'Süßwasser' },
+  { key: 'saltwater',  emoji: '🌊', i18nKey: 'room_saltwater',  fallback: 'Salzwasser' },
+  { key: 'de',         emoji: '🇩🇪', i18nKey: 'room_de',         fallback: 'Deutschland' },
+  { key: 'at',         emoji: '🇦🇹', i18nKey: 'room_at',         fallback: 'Österreich' },
+  { key: 'ch',         emoji: '🇨🇭', i18nKey: 'room_ch',         fallback: 'Schweiz' },
+  { key: 'it',         emoji: '🇮🇹', i18nKey: 'room_it',         fallback: 'Italien' },
+  { key: 'gr',         emoji: '🇬🇷', i18nKey: 'room_gr',         fallback: 'Griechenland' },
+  { key: 'hr',         emoji: '🇭🇷', i18nKey: 'room_hr',         fallback: 'Kroatien' },
+  { key: 'al',         emoji: '🇦🇱', i18nKey: 'room_al',         fallback: 'Albanien' },
 ];
 
 const CONTACT_REGEX = /(\+\d{6,}|@\w+|www\.|\.com|\.de|email|whatsapp|telegram|phone|tel:|mailto:)/i;
 
 export default function AnglerChat() {
   const { t } = useTranslation();
+  const CHANNELS = React.useMemo(() => CHANNEL_KEYS.map(c => ({
+    key: c.key,
+    emoji: c.emoji,
+    name: t(`anglerchat.${c.i18nKey}`, { defaultValue: c.fallback }),
+  })), [t]);
   const [channel, setChannel] = useState(null);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
@@ -83,8 +88,8 @@ export default function AnglerChat() {
                 <motion.button key={ch.key} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}
                   onClick={() => setChannel(ch.key)}
                   className="w-full glass-card rounded-2xl px-4 py-3.5 flex items-center gap-3 text-left">
-                  <span className="text-xl w-8">{ch.label.split(' ')[0]}</span>
-                  <span className="text-foam font-semibold text-sm">{ch.label.split(' ').slice(1).join(' ')}</span>
+                  <span className="text-xl w-8">{ch.emoji}</span>
+                  <span className="text-foam font-semibold text-sm">{ch.name}</span>
                 </motion.button>
               ))}
             </div>
@@ -96,7 +101,7 @@ export default function AnglerChat() {
               <button onClick={() => setChannel(null)}>
                 <ChevronLeft className="w-5 h-5 text-tide-400" />
               </button>
-              <h2 className="font-display font-bold text-foam">{CHANNELS.find(c => c.key === channel)?.label}</h2>
+              <h2 className="font-display font-bold text-foam">{(() => { const c = CHANNELS.find(c => c.key === channel); return c ? `${c.emoji} ${c.name}` : ''; })()}</h2>
             </div>
 
             <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3">

@@ -5,17 +5,21 @@ import { useTranslation } from 'react-i18next';
 import { base44 } from '@/api/base44Client';
 import PageTransition from '../components/ui/PageTransition';
 
-const SECTIONS = [
-  { key: 'reports', label: 'Reports', icon: BarChart2 },
-  { key: 'users', label: 'Users', icon: Users },
-  { key: 'catches', label: 'Catches', icon: Fish },
-  { key: 'moderation', label: 'Moderation', icon: Shield },
-  { key: 'entities', label: 'Entities', icon: Database },
-  { key: 'competitions', label: 'Competitions', icon: Trophy },
+const SECTION_KEYS = [
+  { key: 'reports',      icon: BarChart2 },
+  { key: 'users',        icon: Users },
+  { key: 'catches',      icon: Fish },
+  { key: 'moderation',   icon: Shield },
+  { key: 'entities',     icon: Database },
+  { key: 'competitions', icon: Trophy },
 ];
 
 export default function Admin() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const SECTIONS = React.useMemo(() => SECTION_KEYS.map(s => ({
+    ...s,
+    label: t(`admin.section_${s.key}`, { defaultValue: s.key[0].toUpperCase() + s.key.slice(1) }),
+  })), [t]);
   const [user, setUser] = useState(null);
   const [section, setSection] = useState('reports');
   const [users, setUsers] = useState([]);
@@ -91,10 +95,10 @@ export default function Admin() {
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-3">
                 {[
-                  { label: 'Nutzer', value: metrics.totalUsers, icon: '👥' },
-                  { label: 'Fänge', value: metrics.totalCatches, icon: '🎣' },
-                  { label: 'Moderationen', value: metrics.totalMods, icon: '🛡' },
-                  { label: 'Revenue', value: '–', icon: '💰' },
+                  { label: t('admin.metric_users',       { defaultValue: 'Nutzer' }),       value: metrics.totalUsers, icon: '👥' },
+                  { label: t('admin.metric_catches',     { defaultValue: 'Fänge' }),        value: metrics.totalCatches, icon: '🎣' },
+                  { label: t('admin.metric_moderations', { defaultValue: 'Moderationen' }), value: metrics.totalMods, icon: '🛡' },
+                  { label: t('admin.metric_revenue',     { defaultValue: 'Revenue' }),      value: '–', icon: '💰' },
                 ].map(m => (
                   <div key={m.label} className="glass-card rounded-2xl p-4 text-center">
                     <p className="text-2xl mb-1">{m.icon}</p>
@@ -104,8 +108,8 @@ export default function Admin() {
                 ))}
               </div>
               <div className="glass-card rounded-2xl p-4">
-                <p className="text-foam/50 text-xs mb-2">System-Info</p>
-                <p className="text-foam/70 text-sm">StrikeAhead v2.0 · NOMDAD LLC · {new Date().toLocaleDateString('de-DE')}</p>
+                <p className="text-foam/50 text-xs mb-2">{t('admin.system_info', { defaultValue: 'System-Info' })}</p>
+                <p className="text-foam/70 text-sm">StrikeAhead v2.0 · NOMDAD LLC · {new Date().toLocaleDateString(i18n.language || 'de-DE')}</p>
               </div>
             </div>
           )}
@@ -115,7 +119,7 @@ export default function Admin() {
             <div className="space-y-3">
               <div className="glass-card rounded-2xl flex items-center gap-3 px-4 py-3">
                 <Search className="w-4 h-4 text-tide-400 flex-shrink-0" />
-                <input value={search} onChange={e => setSearch(e.target.value)} placeholder="User suchen..." className="bg-transparent flex-1 text-foam placeholder-foam/30 text-sm outline-none" />
+                <input value={search} onChange={e => setSearch(e.target.value)} placeholder={t('admin.search_users', { defaultValue: 'User suchen...' })} className="bg-transparent flex-1 text-foam placeholder-foam/30 text-sm outline-none" />
               </div>
               {filteredUsers.map(u => (
                 <div key={u.id || u.email} className="glass-card rounded-xl px-4 py-3 flex items-center gap-3">
@@ -157,7 +161,7 @@ export default function Admin() {
           {/* MODERATION */}
           {section === 'moderation' && !loading && (
             <div className="space-y-2">
-              {mods.length === 0 && <p className="text-foam/40 text-center py-8 text-sm">Keine Moderationsfälle.</p>}
+              {mods.length === 0 && <p className="text-foam/40 text-center py-8 text-sm">{t('admin.no_mod_cases', { defaultValue: 'Keine Moderationsfälle.' })}</p>}
               {mods.map(mod => (
                 <div key={mod.id} className="glass-card rounded-xl px-4 py-3 space-y-2">
                   <div className="flex items-center justify-between gap-2">
@@ -167,7 +171,7 @@ export default function Admin() {
                         W{mod.warning_level || 0}
                       </span>
                       <button onClick={() => escalateMod(mod)} className="px-2 py-1 rounded-lg bg-tide-500/10 text-tide-400 text-xs font-semibold">
-                        Eskalieren
+                        {t('admin.escalate', { defaultValue: 'Eskalieren' })}
                       </button>
                     </div>
                   </div>
@@ -186,7 +190,7 @@ export default function Admin() {
                 <div key={entity} className="glass-card rounded-xl px-4 py-3.5 flex items-center justify-between">
                   <p className="text-foam font-semibold text-sm">{entity}</p>
                   <div className="flex gap-2">
-                    <button className="px-3 py-1.5 rounded-lg bg-tide-500/10 text-tide-400 text-xs font-semibold">Verwalten</button>
+                    <button className="px-3 py-1.5 rounded-lg bg-tide-500/10 text-tide-400 text-xs font-semibold">{t('admin.manage', { defaultValue: 'Verwalten' })}</button>
                   </div>
                 </div>
               ))}
@@ -196,8 +200,8 @@ export default function Admin() {
           {/* COMPETITIONS */}
           {section === 'competitions' && !loading && (
             <div className="space-y-3">
-              <button className="w-full py-3 rounded-xl gradient-tide text-white text-sm font-bold">+ Wettkampf erstellen</button>
-              <button className="w-full py-3 rounded-xl glass-card border border-tide-400/30 text-tide-300 text-sm font-bold">+ Turnier erstellen</button>
+              <button className="w-full py-3 rounded-xl gradient-tide text-white text-sm font-bold">+ {t('admin.create_competition', { defaultValue: 'Wettkampf erstellen' })}</button>
+              <button className="w-full py-3 rounded-xl glass-card border border-tide-400/30 text-tide-300 text-sm font-bold">+ {t('admin.create_tournament', { defaultValue: 'Turnier erstellen' })}</button>
             </div>
           )}
         </div>

@@ -29,11 +29,18 @@ function KPICard({ icon: KpiIcon, label, value, sub, sun }) {
   );
 }
 
-const MONTH_LABELS = ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
 const HOURS = ['00-06','06-09','09-12','12-15','15-18','18-21','21-24'];
 
 export default function Analytics() {
-  const { t } = useTranslation('analytics');
+  const { t } = useTranslation();
+  const ta = (k, opts) => t(`analytics.${k}`, opts);
+  const MONTH_LABELS = [
+    t('common.month_jan'), t('common.month_feb'), t('common.month_mar'),
+    t('common.month_apr'), t('common.month_may'), t('common.month_jun'),
+    t('common.month_jul'), t('common.month_aug'), t('common.month_sep'),
+    t('common.month_oct'), t('common.month_nov'), t('common.month_dec'),
+  ];
+  const catchesName = t('analytics.catches_label', { defaultValue: 'Fänge' });
 
   const [catches, setCatches] = useState([]);
   const [range, setRange] = useState('30d');
@@ -64,7 +71,7 @@ export default function Analytics() {
     : '—';
 
   const speciesCounts = filtered.reduce((acc, c) => {
-    acc[c.species || 'Unbekannt'] = (acc[c.species || 'Unbekannt'] || 0) + 1;
+    acc[c.species || t('common.unknown', { defaultValue: 'Unbekannt' })] = (acc[c.species || t('common.unknown', { defaultValue: 'Unbekannt' })] || 0) + 1;
     return acc;
   }, {});
   const topSpecies = Object.entries(speciesCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || '—';
@@ -77,7 +84,7 @@ export default function Analytics() {
       const d = c.caught_date ? new Date(c.caught_date) : new Date(c.created_date);
       return d.getMonth() === m.getMonth() && d.getFullYear() === m.getFullYear();
     }).length;
-    return { name: MONTH_LABELS[m.getMonth()], Fänge: count };
+    return { name: MONTH_LABELS[m.getMonth()], count };
   });
 
   // Donut species
@@ -89,7 +96,7 @@ export default function Analytics() {
       const h = c.caught_time ? parseInt(c.caught_time.split(':')[0]) : 12;
       return h >= i * 3 && h < (i + 1) * 3;
     }).length;
-    return { name: label, Fänge: count };
+    return { name: label, count };
   });
 
   const allSpecies = [...new Set(catches.map(c => c.species).filter(Boolean))];
@@ -104,8 +111,8 @@ export default function Analytics() {
     <PageTransition>
       <div className="px-4 pt-6 pb-4 space-y-6">
         <div>
-          <p className="text-foam/50 text-sm">{t('subtitle')}</p>
-          <h1 className="font-display text-2xl font-extrabold text-foam">{t('title')}</h1>
+          <p className="text-foam/50 text-sm">{ta('subtitle')}</p>
+          <h1 className="font-display text-2xl font-extrabold text-foam">{ta('title')}</h1>
         </div>
 
         {/* Filters */}
@@ -113,36 +120,36 @@ export default function Analytics() {
           {['7d','30d','90d','year','all'].map(r => (
             <button key={r} onClick={() => setRange(r)}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold flex-shrink-0 transition-all ${range === r ? 'gradient-tide text-white' : 'glass-card text-foam/60'}`}>
-              {r === 'year' ? t('filter_year') : r === 'all' ? t('filter_all') : r}
+              {r === 'year' ? ta('filter_year') : r === 'all' ? ta('filter_all') : r}
             </button>
           ))}
           <select value={filterSpecies} onChange={e => setFilterSpecies(e.target.value)}
             className="px-3 py-1.5 rounded-xl text-xs font-medium bg-abyss-700 text-foam/70 border border-tide-300/15 flex-shrink-0">
-            <option value="all">{t('filter_species_all')}</option>
+            <option value="all">{ta('filter_species_all')}</option>
             {allSpecies.map(s => <option key={s} value={s}>{s}</option>)}
           </select>
         </div>
 
         {/* KPIs */}
         <div className="grid grid-cols-2 gap-3">
-          <KPICard icon={Fish} label={t('kpi_catches_total')} value={totalCatches} sub={`${t('timerange_label')}: ${range}`} />
-          <KPICard icon={TrendingUp} label={t('kpi_avg_weight')} value={avgWeight !== '—' ? `${avgWeight} kg` : '—'} sub={t('kpi_weight_desc')} />
-          <KPICard icon={Trophy} label={t('kpi_top_species')} value={topSpecies} sub={speciesCounts[topSpecies] ? `${speciesCounts[topSpecies]}x` : ''} sun />
-          <KPICard icon={Anchor} label={t('kpi_hookpoints')} value={totalHP} sub={t('kpi_hookpoints_desc')} sun />
+          <KPICard icon={Fish} label={ta('kpi_catches_total')} value={totalCatches} sub={`${ta('timerange_label')}: ${range}`} />
+          <KPICard icon={TrendingUp} label={ta('kpi_avg_weight')} value={avgWeight !== '—' ? `${avgWeight} kg` : '—'} sub={ta('kpi_weight_desc')} />
+          <KPICard icon={Trophy} label={ta('kpi_top_species')} value={topSpecies} sub={speciesCounts[topSpecies] ? `${speciesCounts[topSpecies]}x` : ''} sun />
+          <KPICard icon={Anchor} label={ta('kpi_hookpoints')} value={totalHP} sub={ta('kpi_hookpoints_desc')} sun />
         </div>
 
         {/* Bar Chart */}
         <div className="glass-card rounded-2xl p-4">
-          <p className="font-display font-bold text-foam text-sm mb-4">{t('chart_catches_per_month')}</p>
+          <p className="font-display font-bold text-foam text-sm mb-4">{ta('chart_catches_per_month')}</p>
           {filtered.length === 0 ? (
-            <div className="h-36 flex items-center justify-center text-foam/30 text-sm">{t('no_data')}</div>
+            <div className="h-36 flex items-center justify-center text-foam/30 text-sm">{ta('no_data')}</div>
           ) : (
             <ResponsiveContainer width="100%" height={160}>
               <BarChart data={monthData} barCategoryGap="30%">
                 <XAxis dataKey="name" tick={{ fill: 'rgba(234,248,250,0.4)', fontSize: 10 }} axisLine={false} tickLine={false} />
                 <YAxis hide />
                 <Tooltip contentStyle={{ background: '#041C2B', border: '1px solid rgba(127,220,229,0.2)', borderRadius: 12, color: '#EAF8FA' }} />
-                <Bar dataKey="Fänge" fill="#1FA7B8" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="count" name={catchesName} fill="#1FA7B8" radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           )}
@@ -151,9 +158,9 @@ export default function Analytics() {
         {/* Donut + Line side by side on larger screens, stacked on mobile */}
         <div className="grid grid-cols-1 gap-4">
           <div className="glass-card rounded-2xl p-4">
-            <p className="font-display font-bold text-foam text-sm mb-4">{t('chart_by_species')}</p>
+            <p className="font-display font-bold text-foam text-sm mb-4">{ta('chart_by_species')}</p>
             {donutData.length === 0 ? (
-              <div className="h-36 flex items-center justify-center text-foam/30 text-sm">{t('no_data')}</div>
+              <div className="h-36 flex items-center justify-center text-foam/30 text-sm">{ta('no_data')}</div>
             ) : (
               <div className="flex items-center gap-4">
                 <ResponsiveContainer width={120} height={120}>
@@ -177,16 +184,16 @@ export default function Analytics() {
           </div>
 
           <div className="glass-card rounded-2xl p-4">
-            <p className="font-display font-bold text-foam text-sm mb-4">{t('chart_by_daytime')}</p>
+            <p className="font-display font-bold text-foam text-sm mb-4">{ta('chart_by_daytime')}</p>
             {filtered.length === 0 ? (
-              <div className="h-36 flex items-center justify-center text-foam/30 text-sm">{t('no_data')}</div>
+              <div className="h-36 flex items-center justify-center text-foam/30 text-sm">{ta('no_data')}</div>
             ) : (
               <ResponsiveContainer width="100%" height={140}>
                 <LineChart data={hourData}>
                   <XAxis dataKey="name" tick={{ fill: 'rgba(234,248,250,0.4)', fontSize: 9 }} axisLine={false} tickLine={false} />
                   <YAxis hide />
                   <Tooltip contentStyle={{ background: '#041C2B', border: '1px solid rgba(127,220,229,0.2)', borderRadius: 12, color: '#EAF8FA' }} />
-                  <Line type="monotone" dataKey="Fänge" stroke="#F5C34B" strokeWidth={2.5} dot={{ fill: '#F5C34B', r: 4 }} />
+                  <Line type="monotone" dataKey="count" name={catchesName} stroke="#F5C34B" strokeWidth={2.5} dot={{ fill: '#F5C34B', r: 4 }} />
                 </LineChart>
               </ResponsiveContainer>
             )}

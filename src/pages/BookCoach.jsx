@@ -11,8 +11,13 @@ const tideEase = [0.2, 0.8, 0.2, 1];
 
 const AVAILABLE_TIMES = ['08:00','09:00','10:00','11:00','14:00','15:00','16:00','17:00'];
 
+const localeTag = (code) => {
+  const map = { de: 'de-DE', en: 'en-US', es: 'es-ES', fr: 'fr-FR', it: 'it-IT', hr: 'hr-HR', pt: 'pt-PT', nl: 'nl-NL', tr: 'tr-TR', el: 'el-GR', sq: 'sq-AL' };
+  return map[code] || 'de-DE';
+};
+
 export default function BookCoach() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const location = useLocation();
   const [step, setStep] = useState(location.state?.coach ? 1 : 0);
   const [coaches, setCoaches] = useState([]);
@@ -59,7 +64,7 @@ export default function BookCoach() {
       <div className="px-4 pt-20 pb-4 text-center">
         <div className="w-20 h-20 rounded-3xl gradient-tide flex items-center justify-center text-4xl mx-auto mb-6 glow-tide">✓</div>
         <h2 className="font-display text-2xl font-bold text-foam mb-2">{t('community.bookcoach_success')}</h2>
-        <p className="text-foam/50 text-sm">Du erhältst eine Bestätigung per E-Mail.</p>
+        <p className="text-foam/50 text-sm">{t('bookcoach.email_confirmation', { defaultValue: 'Du erhältst eine Bestätigung per E-Mail.' })}</p>
       </div>
     </PageTransition>
   );
@@ -103,7 +108,7 @@ export default function BookCoach() {
                   </div>
                   <div className="flex-1">
                     <p className="text-foam font-bold text-sm">{c.full_name}</p>
-                    <p className="text-sun-400 text-xs">{c.coach_hourly_rate || '–'} €/Std</p>
+                    <p className="text-sun-400 text-xs">{c.coach_hourly_rate || '–'} €/{t('bookcoach.hour_short', { defaultValue: 'Std' })}</p>
                   </div>
                   <ChevronRight className="w-4 h-4 text-foam/30" />
                 </motion.div>
@@ -119,7 +124,7 @@ export default function BookCoach() {
                 {dates.map(d => (
                   <button key={d} onClick={() => setSelectedDate(d)}
                     className={`py-2.5 rounded-xl text-xs font-semibold transition-all ${selectedDate === d ? 'gradient-tide text-white' : 'glass-card text-foam/60'}`}>
-                    {new Date(d).toLocaleDateString('de-DE', { weekday: 'short', day: 'numeric', month: 'numeric' })}
+                    {new Date(d).toLocaleDateString(localeTag(i18n.language), { weekday: 'short', day: 'numeric', month: 'numeric' })}
                   </button>
                 ))}
               </div>
@@ -135,7 +140,7 @@ export default function BookCoach() {
               )}
               <button disabled={!selectedDate || !selectedTime} onClick={() => setStep(2)}
                 className={`w-full py-4 rounded-2xl font-bold text-white ${selectedDate && selectedTime ? 'gradient-tide' : 'bg-abyss-700 text-foam/30'}`}>
-                Weiter
+                {t('bookcoach.next', { defaultValue: 'Weiter' })}
               </button>
             </motion.div>
           )}
@@ -171,9 +176,9 @@ export default function BookCoach() {
                 <p className="text-foam/50 text-xs mb-2">{t('community.bookcoach_note')}</p>
                 <textarea value={note} onChange={e => setNote(e.target.value)} rows={3}
                   className="w-full bg-transparent text-foam placeholder-foam/30 text-sm outline-none resize-none"
-                  placeholder="Deine Ziele, Fragen..." />
+                  placeholder={t('bookcoach.note_placeholder', { defaultValue: 'Deine Ziele, Fragen...' })} />
               </div>
-              <button onClick={() => setStep(3)} className="w-full py-4 rounded-2xl gradient-tide text-white font-bold">Weiter</button>
+              <button onClick={() => setStep(3)} className="w-full py-4 rounded-2xl gradient-tide text-white font-bold">{t('bookcoach.next', { defaultValue: 'Weiter' })}</button>
             </motion.div>
           )}
 
@@ -183,9 +188,9 @@ export default function BookCoach() {
               <div className="glass-card rounded-2xl p-5 space-y-3">
                 <h3 className="text-foam font-bold">{t('community.bookcoach_step4')}</h3>
                 {[
-                  ['Coach', selectedCoach.full_name],
-                  ['Datum', selectedDate],
-                  ['Uhrzeit', selectedTime],
+                  [t('bookcoach.coach',  { defaultValue: 'Coach' }),   selectedCoach.full_name],
+                  [t('bookcoach.date',   { defaultValue: 'Datum' }),   selectedDate],
+                  [t('bookcoach.time',   { defaultValue: 'Uhrzeit' }), selectedTime],
                   [t('community.bookcoach_duration'), `${duration}h`],
                   [t('community.bookcoach_location'), locationType === 'virtual' ? t('community.bookcoach_virtual') : t('community.bookcoach_onsite')],
                 ].map(([label, val]) => (
@@ -195,7 +200,7 @@ export default function BookCoach() {
                   </div>
                 ))}
                 <div className="flex justify-between">
-                  <span className="text-foam/50 text-sm">Gesamt</span>
+                  <span className="text-foam/50 text-sm">{t('bookcoach.total', { defaultValue: 'Gesamt' })}</span>
                   <span className="text-sun-400 font-display font-bold text-xl">{totalPrice.toFixed(2)} €</span>
                 </div>
               </div>
@@ -208,7 +213,7 @@ export default function BookCoach() {
         </AnimatePresence>
 
         {step > 0 && !success && (
-          <button onClick={() => setStep(s => s - 1)} className="text-foam/40 text-sm">← Zurück</button>
+          <button onClick={() => setStep(s => s - 1)} className="text-foam/40 text-sm">← {t('bookcoach.back', { defaultValue: 'Zurück' })}</button>
         )}
       </div>
     </PageTransition>
