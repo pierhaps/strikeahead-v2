@@ -222,10 +222,10 @@ function StrikeGauge({ progress, active, minutes, type }) {
           }}
           transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
         >
-          <img src={logoCircle} alt="" style={{ width: 187, height: 187 }} className="object-contain" />
+          <img src={logoCircle} alt="" style={{ width: 210, height: 210 }} className="object-contain" />
         </motion.div>
         {/* Crisp logo on top */}
-        <img src={logoCircle} alt="StrikeAhead" style={{ width: 187, height: 187 }} className="relative object-contain" />
+        <img src={logoCircle} alt="StrikeAhead" style={{ width: 210, height: 210 }} className="relative object-contain" />
       </div>
 
       {/* Text overlay on top of everything */}
