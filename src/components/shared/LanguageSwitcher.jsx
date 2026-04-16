@@ -12,7 +12,7 @@ import i18n, { LANGUAGES } from '@/lib/i18n';
  *   inline   → full-width dropdown button (for drawer/settings)
  *   chips    → horizontal pill row (for onboarding)
  */
-export default function LanguageSwitcher({ variant = 'inline', align = 'left' }) {
+export default function LanguageSwitcher({ variant = 'inline', align = 'left', dropUp = false }) {
   const { i18n: i18nInstance } = useTranslation();
   const [open, setOpen] = useState(false);
   const current = LANGUAGES.find((l) => l.code === i18nInstance.language) || LANGUAGES[0];
@@ -68,7 +68,7 @@ export default function LanguageSwitcher({ variant = 'inline', align = 'left' })
         >
           <span className="text-lg leading-none">{current.flag}</span>
         </button>
-        <LangMenu open={open} align={align} current={current} onPick={change} />
+        <LangMenu open={open} align={align} current={current} onPick={change} dropUp={dropUp} />
       </div>
     );
   }
@@ -87,24 +87,26 @@ export default function LanguageSwitcher({ variant = 'inline', align = 'left' })
           className={`w-4 h-4 text-foam/50 transition-transform ${open ? 'rotate-180' : ''}`}
         />
       </button>
-      <LangMenu open={open} align={align} current={current} onPick={change} />
+      <LangMenu open={open} align={align} current={current} onPick={change} dropUp={dropUp} />
     </div>
   );
 }
 
-function LangMenu({ open, align, current, onPick }) {
+function LangMenu({ open, align, current, onPick, dropUp = false }) {
   return (
     <AnimatePresence>
       {open && (
         <motion.div
-          initial={{ opacity: 0, y: -6, scale: 0.98 }}
+          initial={{ opacity: 0, y: dropUp ? 6 : -6, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: -6, scale: 0.98 }}
+          exit={{ opacity: 0, y: dropUp ? 6 : -6, scale: 0.98 }}
           transition={{ duration: 0.18, ease: [0.2, 0.8, 0.2, 1] }}
-          className={`absolute z-[62] mt-2 w-56 rounded-2xl overflow-hidden glass-strong border border-foam/10 shadow-2xl ${
+          className={`absolute w-56 rounded-2xl overflow-hidden glass-strong border border-foam/10 shadow-2xl ${
             align === 'right' ? 'right-0' : 'left-0'
           }`}
           style={{
+            zIndex: 9990,
+            ...(dropUp ? { bottom: '100%', marginBottom: 8 } : { top: '100%', marginTop: 8 }),
             background: 'linear-gradient(180deg, #0A1828 0%, #02152B 100%)',
             maxHeight: '60vh',
             overflowY: 'auto',

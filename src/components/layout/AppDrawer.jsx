@@ -91,7 +91,7 @@ export default function AppDrawer({ open, onClose }) {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={panelSpring}
-            className="liquid-glass-heavy fixed top-0 right-0 bottom-0 z-[61] w-[72%] max-w-xs flex flex-col"
+            className="liquid-glass-heavy fixed top-0 right-0 bottom-0 z-[61] w-[72%] max-w-xs flex flex-col overflow-visible"
             style={{
               background:
                 'linear-gradient(180deg, rgba(14,30,48,0.75) 0%, rgba(10,24,40,0.65) 100%)',
@@ -180,10 +180,10 @@ export default function AppDrawer({ open, onClose }) {
 
             {/* ---- Footer ---- */}
             <div
-              className="px-4 pt-2 pb-3 border-t border-foam/5 space-y-3"
-              style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 0.75rem)' }}
+              className="relative px-4 pt-2 pb-3 border-t border-foam/5 space-y-3"
+              style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 0.75rem)', overflow: 'visible' }}
             >
-              {/* Language switcher — compact */}
+              {/* Language switcher — opens upward */}
               <div className="flex items-center justify-between">
                 <span
                   className="text-[10px] font-bold uppercase tracking-wider"
@@ -191,7 +191,7 @@ export default function AppDrawer({ open, onClose }) {
                 >
                   {t('drawer.language', { defaultValue: 'Sprache' })}
                 </span>
-                <LanguageSwitcher />
+                <LanguageSwitcher variant="compact" align="right" dropUp />
               </div>
 
               {/* Logout */}
