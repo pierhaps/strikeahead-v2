@@ -4,6 +4,7 @@ import { Search, X, ChevronRight, Thermometer, Anchor, Clock, Fish, BookOpen, Ar
 import PageTransition from '../components/ui/PageTransition';
 import { base44 } from '@/api/base44Client';
 import { useTranslation } from 'react-i18next';
+import { getLocalizedSpeciesName } from '@/utils/localizeSpeciesName';
 import { SkeletonFishCard, FadeIn } from '@/components/shared/Skeleton';
 import { fetchWithCache } from '@/hooks/useOfflineCache';
 
@@ -77,7 +78,7 @@ function DetailView({ fish, onClose }) {
               </span>
             )}
           </div>
-          <h2 className="font-display font-extrabold text-foam text-2xl leading-tight">{fish.name_de}</h2>
+          <h2 className="font-display font-extrabold text-foam text-2xl leading-tight">{getLocalizedSpeciesName(fish, i18n.language.split('-')[0])}</h2>
           <p className="text-foam/40 italic text-sm">{fish.name_latin || fish.name_en}</p>
         </div>
       </div>
@@ -543,7 +544,7 @@ export default function FishEncyclopediaPage() {
                     )}
                   </div>
                   <div className="p-2.5">
-                    <p className="font-display font-bold text-foam text-sm leading-tight truncate">{f.name_de}</p>
+                    <p className="font-display font-bold text-foam text-sm leading-tight truncate">{getLocalizedSpeciesName(f, i18n.language.split('-')[0])}</p>
                     <p className="text-foam/25 italic text-[10px] truncate">{f.name_latin || f.name_en}</p>
                     {f.fish_family && <p className="text-tide-400/40 text-[9px] mt-0.5 truncate">{f.fish_family}</p>}
                   </div>
