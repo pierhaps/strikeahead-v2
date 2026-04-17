@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Users, Fish, Shield, Database, Trophy, BarChart2, Search, AlertTriangle, Trash2, Edit3 } from 'lucide-react';
+import { Users, Fish, Shield, Database, Trophy, BarChart2, Search, AlertTriangle, Trash2, Edit3, Tag } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { base44 } from '@/api/base44Client';
 import PageTransition from '../components/ui/PageTransition';
+import PromoCodeAdmin from '../components/admin/PromoCodeAdmin';
 
 const SECTION_KEYS = [
   { key: 'reports',      icon: BarChart2 },
@@ -12,6 +13,7 @@ const SECTION_KEYS = [
   { key: 'moderation',   icon: Shield },
   { key: 'entities',     icon: Database },
   { key: 'competitions', icon: Trophy },
+  { key: 'promo',        icon: Tag },
 ];
 
 export default function Admin() {

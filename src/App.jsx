@@ -48,7 +48,7 @@ import TideCatch from './pages/TideCatch';
 import AIInsights from './pages/AIInsights';
 
 // Stub pages
-import Subscription from './pages/Subscription';
+import Subscription from './pages/Subscription.jsx';
 import Roadmap from './pages/Roadmap';
 import Admin from './pages/Admin';
 import Imprint from './pages/Imprint';
