@@ -43,7 +43,7 @@ const DETAIL_TABS = [
 ];
 
 function DetailView({ fish, onClose }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [tab, setTab] = useState(0);
   const scrollRef = useRef(null);
   const rc = RARITY_CFG[fish.rarity] || RARITY_CFG.common;
@@ -381,7 +381,7 @@ function DetailView({ fish, onClose }) {
 }
 
 export default function FishEncyclopediaPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [fish, setFish] = useState([]);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState('');
