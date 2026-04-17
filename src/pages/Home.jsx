@@ -415,10 +415,7 @@ function StrikeGauge({ progress, active, minutes, type }) {
               transition={{ duration: 2, repeat: Infinity }}
             >
               <span>{hh}</span>
-              <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 7, margin: '0 8px' }}>
-                <span style={{ width: 6, height: 6, borderRadius: '50%', background: timerColor, flexShrink: 0 }} />
-                <span style={{ width: 6, height: 6, borderRadius: '50%', background: timerColor, flexShrink: 0 }} />
-              </span>
+              <span style={{ margin: '0 6px', color: timerColor }}>∶</span>
               <span>{mm}</span>
             </motion.div>
           );
