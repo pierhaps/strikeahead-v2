@@ -49,6 +49,7 @@ export default function Admin() {
       moderation: () => base44.entities.ChatModeration.list('-warning_level', 50).then(setMods),
       entities: () => Promise.resolve(),
       competitions: () => Promise.resolve(),
+      promo: () => Promise.resolve(),
     };
     (loaders[section] || (() => Promise.resolve()))().finally(() => setLoading(false));
   }, [section, user]);
@@ -197,6 +198,11 @@ export default function Admin() {
                 </div>
               ))}
             </div>
+          )}
+
+          {/* PROMO CODES */}
+          {section === 'promo' && !loading && (
+            <PromoCodeAdmin adminEmail={user.email} />
           )}
 
           {/* COMPETITIONS */}
