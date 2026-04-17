@@ -15,7 +15,8 @@ import { recommendBaits, getTimeOfDay, todaysHotSpecies } from '../utils/baitInt
 import logoCircle from '../assets/logo-circle.svg';
 import WelcomeHeader from '../components/home/WelcomeHeader';
 import InsightBar from '../components/home/InsightBar';
-import { SkInsightBar, SkStatGrid, SkCatchCard } from '../components/ui/Skeleton';
+import { SkeletonInsight, SkeletonStats, FadeIn } from '@/components/shared/Skeleton';
+import { fetchWithCache } from '@/hooks/useOfflineCache';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 const LOGO_SIZE = 252;      // logo element size (was 210, +20%)
@@ -514,7 +515,7 @@ export default function Home() {
   useEffect(() => {
     Promise.all([
       base44.auth.me().catch(() => null),
-      base44.entities.Catch.list('-caught_date', 50).catch(() => []),
+      fetchWithCache('my_catches', () => base44.entities.Catch.list('-caught_date', 50)),
     ]).then(([u, list]) => {
       setUser(u);
       setCatches(Array.isArray(list) ? list : []);
@@ -541,21 +542,10 @@ export default function Home() {
       <div className="px-4 pt-4 pb-4 space-y-5">
 
         {/* ── Welcome Header ── */}
-        {loading ? (
-          <div className="flex items-center gap-3 animate-fade-in">
-            <div className="skeleton-shimmer w-12 h-12 rounded-2xl flex-shrink-0" />
-            <div className="flex-1 space-y-1.5">
-              <div className="skeleton-shimmer rounded-lg h-3 w-24" />
-              <div className="skeleton-shimmer rounded-lg h-5 w-48" />
-              <div className="skeleton-shimmer rounded-lg h-3 w-32" />
-            </div>
-          </div>
-        ) : (
-          <WelcomeHeader user={user} />
-        )}
+        <WelcomeHeader user={user} />
 
         {/* ── Insight Bar ── */}
-        {loading ? <SkInsightBar /> : <InsightBar catches={catches} />}
+        {loading ? <SkeletonInsight /> : <FadeIn><InsightBar catches={catches} /></FadeIn>}
 
         {/* ── Strike Timer Hero ── */}
         <motion.div
@@ -619,9 +609,9 @@ export default function Home() {
         </motion.div>
 
         {/* ── Quick stats ── */}
-        {loading && <SkStatGrid />}
+        {loading && <SkeletonStats />}
         <motion.div
-          className={`grid grid-cols-3 gap-2 ${loading ? 'hidden' : ''}`}
+          className={`grid grid-cols-3 gap-2${loading ? ' hidden' : ''}`}
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5, ease: tideEase }}
@@ -652,18 +642,8 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* ── Recent catches skeleton ── */}
-        {loading && (
-          <div className="animate-fade-in">
-            <div className="skeleton-shimmer rounded-lg h-5 w-36 mb-3" />
-            <div className="flex gap-2.5 overflow-hidden">
-              {[1,2,3,4].map(i => <SkCatchCard key={i} />)}
-            </div>
-          </div>
-        )}
-
         {/* ── Recent catches (horizontal scroll) ── */}
-        {!loading && recentCatches.length > 0 && (
+        {recentCatches.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -693,7 +673,7 @@ export default function Home() {
         )}
 
         {/* ── Hot species ── */}
-        {!loading && hotSpecies.length > 0 && (
+        {hotSpecies.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}

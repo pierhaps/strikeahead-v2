@@ -429,6 +429,7 @@ export default function FishEncyclopediaPage() {
 
   return (
     <PageTransition>
+      <PullToRefresh onRefresh={loadFish}>
       <div className="px-4 pt-6 pb-4 space-y-4">
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ ease: tideEase }}
@@ -526,12 +527,19 @@ export default function FishEncyclopediaPage() {
           <div className="grid grid-cols-2 gap-3">
             {filtered.map((f, i) => {
               const rc = RARITY_CFG[f.rarity] || RARITY_CFG.common;
+              const isWishlisted = wishlist.has(f.id);
+              const fishMenuItems = [
+                { label: 'Regulierungen', icon: <Shield size={14} />, onPress: () => setSelected(f) },
+                { label: 'Köderempfehlung', icon: <Anchor size={14} />, onPress: () => setSelected(f) },
+                { label: isWishlisted ? 'Von Merkliste' : 'Auf Merkliste', icon: <BookOpen size={14} />, onPress: () => setWishlist(prev => { const next = new Set(prev); isWishlisted ? next.delete(f.id) : next.add(f.id); return next; }) },
+              ];
               return (
-                <motion.button key={f.id} onClick={() => setSelected(f)}
+                <LongPressMenu key={f.id} items={fishMenuItems}>
+                <motion.button onClick={() => setSelected(f)}
                   initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: i * 0.03, ease: tideEase }}
                   whileTap={{ scale: 0.97 }}
-                  className={`liquid-glass-subtle rounded-2xl overflow-hidden text-left border ${rc.ring}`}>
+                  className={`liquid-glass-subtle rounded-2xl overflow-hidden text-left border w-full ${rc.ring}`}>
                   <div className="h-28 relative bg-abyss-800">
                     {fishImageUrl(f)
                       ? <img src={fishImageUrl(f)} alt={f.name_de} className="w-full h-full object-cover" loading="lazy" />
@@ -545,6 +553,9 @@ export default function FishEncyclopediaPage() {
                         <AlertTriangle className="w-3 h-3 text-red-400" />
                       </span>
                     )}
+                    {isWishlisted && (
+                      <span className="absolute bottom-2 right-2 text-sun-400 text-xs">★</span>
+                    )}
                   </div>
                   <div className="p-2.5">
                     <p className="font-display font-bold text-foam text-sm leading-tight truncate">{f.name_de}</p>
@@ -552,11 +563,15 @@ export default function FishEncyclopediaPage() {
                     {f.fish_family && <p className="text-tide-400/40 text-[9px] mt-0.5 truncate">{f.fish_family}</p>}
                   </div>
                 </motion.button>
+                </LongPressMenu>
               );
             })}
           </div>
         )}
       </div>
+
+      </div>
+      </PullToRefresh>
 
       <AnimatePresence>
         {selected && <DetailView fish={selected} onClose={() => setSelected(null)} />}

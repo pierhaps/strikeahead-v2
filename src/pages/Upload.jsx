@@ -401,6 +401,20 @@ export default function Upload() {
       if (!proceed) return;
     }
 
+    // Offline: queue the catch and exit early
+    if (!navigator.onLine) {
+      const offlineData = {
+        ...formData,
+        photo_urls: uploadedPhotos,
+        gps_lat: gpsLocation?.lat || null,
+        gps_lon: gpsLocation?.lon || null,
+      };
+      addPendingCatch(offlineData);
+      toast.success('📥 Fang gespeichert — wird hochgeladen sobald du wieder online bist');
+      navigate(createPageUrl('Dashboard'));
+      return;
+    }
+
     setSubmitting(true);
 
     const toNum = (v) => {
