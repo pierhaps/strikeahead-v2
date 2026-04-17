@@ -50,7 +50,14 @@ export default function Subscription() {
   const [user, setUser] = useState(null);
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [successMsg, setSuccessMsg] = useState('');
   const platform = detectPlatform();
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('success') === 'true') setSuccessMsg('🎉 Payment successful! Your plan has been activated.');
+    if (params.get('cancelled') === 'true') setSuccessMsg('Checkout was cancelled.');
+  }, []);
 
   useEffect(() => {
     Promise.all([
@@ -63,13 +70,34 @@ export default function Subscription() {
   const expires = user?.premium_expires ? new Date(user.premium_expires).toLocaleDateString(localeTag(i18n.language)) : null;
   const hookPoints = user?.hook_points ?? 0;
 
-  const handleUpgrade = (planKey) => {
-    if (platform === 'web') {
-      alert(t('subscription.alert_stripe'));
-    } else if (platform === 'ios') {
-      alert(t('subscription.alert_ios'));
-    } else {
-      alert(t('subscription.alert_android'));
+  const [checkoutLoading, setCheckoutLoading] = useState(null);
+
+  const handleUpgrade = async (planKey) => {
+    if (platform === 'ios') { alert(t('subscription.alert_ios')); return; }
+    if (platform === 'android') { alert(t('subscription.alert_android')); return; }
+
+    // Block checkout inside iframe (preview mode)
+    if (window.self !== window.top) {
+      alert('Checkout is only available in the published app, not in preview mode.');
+      return;
+    }
+
+    setCheckoutLoading(planKey);
+    try {
+      const origin = window.location.origin;
+      const res = await base44.functions.invoke('stripeCheckout', {
+        plan: planKey,
+        successUrl: `${origin}/subscription?success=true`,
+        cancelUrl: `${origin}/subscription?cancelled=true`,
+      });
+      if (res.data?.url) {
+        window.location.href = res.data.url;
+      }
+    } catch (err) {
+      console.error('Checkout error:', err);
+      alert('Could not start checkout. Please try again.');
+    } finally {
+      setCheckoutLoading(null);
     }
   };
 
@@ -107,6 +135,35 @@ export default function Subscription() {
           </div>
         )}
 
+        {/* Success / cancel banner */}
+        {successMsg && (
+          <div className="glass-card rounded-2xl p-4 text-center text-foam font-semibold text-sm border border-tide-400/30">
+            {successMsg}
+          </div>
+        )}
+
+        {/* Lifetime Deal */}
+        <div className="rounded-2xl p-4 space-y-3"
+          style={{ background: 'linear-gradient(135deg, rgba(182,240,60,0.12) 0%, rgba(45,168,255,0.10) 100%)', border: '1.5px solid rgba(182,240,60,0.35)' }}>
+          <div className="flex items-start justify-between gap-2">
+            <div>
+              <div className="flex items-center gap-2">
+                <h3 className="font-display font-extrabold text-lg text-lime2">Lifetime Deal</h3>
+                <span className="px-2 py-0.5 rounded-lg text-xs font-bold bg-lime2/20 text-lime2">One-time</span>
+              </div>
+              <div className="flex items-baseline gap-1 mt-0.5">
+                <span className="font-display font-extrabold text-2xl text-lime2">€149</span>
+                <span className="text-foam/40 text-sm">forever</span>
+              </div>
+            </div>
+            <button onClick={() => handleUpgrade('lifetime')} disabled={checkoutLoading === 'lifetime'}
+              className="px-4 py-2 rounded-xl text-sm font-bold flex-shrink-0 disabled:opacity-60 bg-lime2/20 border border-lime2/40 text-lime2">
+              {checkoutLoading === 'lifetime' ? '…' : 'Get Lifetime'}
+            </button>
+          </div>
+          <p className="text-foam/60 text-sm">All Pro features — pay once, use forever. No recurring charges.</p>
+        </div>
+
         {/* Pricing cards */}
         <div className="space-y-3">
           {PLANS.map((plan, i) => {
@@ -130,9 +187,9 @@ export default function Subscription() {
                     </div>
                   </div>
                   {!isCurrent && plan.key !== 'free' && (
-                    <button onClick={() => handleUpgrade(plan.key)}
-                      className={`px-4 py-2 rounded-xl text-sm font-bold flex-shrink-0 ${plan.highlight ? 'gradient-tide text-white glow-tide' : 'glass-card border border-tide-400/30 text-tide-300'}`}>
-                      {t('subscription.upgrade')}
+                    <button onClick={() => handleUpgrade(plan.key)} disabled={checkoutLoading === plan.key}
+                      className={`px-4 py-2 rounded-xl text-sm font-bold flex-shrink-0 disabled:opacity-60 ${plan.highlight ? 'gradient-tide text-white glow-tide' : 'glass-card border border-tide-400/30 text-tide-300'}`}>
+                      {checkoutLoading === plan.key ? '…' : t('subscription.upgrade')}
                     </button>
                   )}
                 </div>
