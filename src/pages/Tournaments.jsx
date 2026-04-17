@@ -4,6 +4,8 @@ import { Users, Anchor, Clock, Trophy, Target } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { base44 } from '@/api/base44Client';
 import PageTransition from '../components/ui/PageTransition';
+import PaywallModal from '../components/shared/PaywallModal';
+import { useEntitlement } from '@/hooks/useEntitlement';
 
 const TABS = [
   { key: 'upcoming', label: 'tournaments_open' },
@@ -21,6 +23,8 @@ const localeTag = (code) => {
 
 export default function Tournaments() {
   const { t, i18n } = useTranslation();
+  const { canAccess, requiredTier } = useEntitlement();
+  const hasAccess = canAccess('tournaments');
   const TYPE_LABELS = React.useMemo(() => {
     const defaults = { solo_challenge:'Solo', crew_battle:'Crew', regional_cup:'Regional', species_hunt:'Artenjagd', big_fish:'Big Fish', most_catches:'Most Catches', heaviest_total:'Heaviest' };
     return Object.fromEntries(TYPE_KEYS.map(k => [k, t(`tournaments.type_${k}`, { defaultValue: defaults[k] })]));
@@ -57,6 +61,10 @@ export default function Tournaments() {
 
   return (
     <PageTransition>
+      {!hasAccess && (
+        <PaywallModal open={true} onClose={() => window.history.back()} featureKey="tournaments" requiredTier={requiredTier('tournaments')} />
+      )}
+      {hasAccess && (
       <div className="px-4 pt-6 pb-4 space-y-4">
         <div>
           <p className="text-foam/50 text-sm">{t('community.tournaments')}</p>
@@ -128,6 +136,7 @@ export default function Tournaments() {
           </div>
         )}
       </div>
+      )}
     </PageTransition>
   );
 }

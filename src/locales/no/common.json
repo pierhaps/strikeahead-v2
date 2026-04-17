@@ -1444,7 +1444,7 @@
     "kpi": {
       "avg_size": "Snittstørrelse",
       "catches": "Fangster",
-      "hook_points": "Hook Points",
+      "hook_points": "HookPoints",
       "top_species": "Toppart"
     },
     "length": "Lengde",

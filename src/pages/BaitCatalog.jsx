@@ -3,7 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Search, Euro, Star } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import PageTransition from '../components/ui/PageTransition';
+import PaywallModal from '../components/shared/PaywallModal';
 import { base44 } from '@/api/base44Client';
+import { useEntitlement } from '@/hooks/useEntitlement';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 
@@ -94,6 +96,8 @@ function DetailSheet({ bait, onClose }) {
 
 export default function BaitCatalogPage() {
   const { t } = useTranslation();
+  const { canAccess, requiredTier } = useEntitlement();
+  const hasAccess = canAccess('bait_intelligence');
   const TABS = [
     { key: 'artificial', label: t('bait.artificial') },
     { key: 'natural', label: t('bait.natural') },
@@ -124,6 +128,10 @@ export default function BaitCatalogPage() {
 
   return (
     <PageTransition>
+      {!hasAccess && (
+        <PaywallModal open={true} onClose={() => window.history.back()} featureKey="bait_intelligence" requiredTier={requiredTier('bait_intelligence')} />
+      )}
+      {hasAccess && (<>
       <div className="px-4 pt-6 pb-4 space-y-4">
         <div>
           <p className="text-foam/50 text-sm">{t('bait.catalog_subtitle')}</p>
@@ -193,6 +201,7 @@ export default function BaitCatalogPage() {
       <AnimatePresence>
         {selected && <DetailSheet bait={selected} onClose={() => setSelected(null)} />}
       </AnimatePresence>
+      </>)}
     </PageTransition>
   );
 }

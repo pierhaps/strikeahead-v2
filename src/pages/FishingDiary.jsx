@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Wind, Fish } from 'lucide-react';
 import PageTransition from '../components/ui/PageTransition';
+import PaywallModal from '../components/shared/PaywallModal';
 import { base44 } from '@/api/base44Client';
 import { useTranslation } from 'react-i18next';
+import { useEntitlement } from '@/hooks/useEntitlement';
 
 const MOOD_EMOJI = { amazing: '🤩', great: '😄', good: '🙂', okay: '😐', tough: '😤' };
 
@@ -75,6 +77,8 @@ function NewEntryModal({ onClose, onSave, t }) {
 
 export default function FishingDiary() {
   const { t } = useTranslation();
+  const { canAccess, requiredTier } = useEntitlement();
+  const hasAccess = canAccess('diary');
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showNew, setShowNew] = useState(false);
@@ -96,6 +100,10 @@ export default function FishingDiary() {
 
   return (
     <PageTransition>
+      {!hasAccess && (
+        <PaywallModal open={true} onClose={() => window.history.back()} featureKey="diary" requiredTier={requiredTier('diary')} />
+      )}
+      {hasAccess && (<>
       <div className="px-4 pt-6 pb-24 space-y-4">
         <div>
           <p className="text-foam/50 text-sm">{t('diary.subtitle')}</p>
@@ -175,6 +183,7 @@ export default function FishingDiary() {
       <AnimatePresence>
         {showNew && <NewEntryModal onClose={() => setShowNew(false)} onSave={load} t={t} />}
       </AnimatePresence>
+      </>)}
     </PageTransition>
   );
 }

@@ -9,8 +9,10 @@ import {
 import { Trophy, Fish, Thermometer, Wind, Gauge, Droplets } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import PageTransition from '../components/ui/PageTransition';
+import PaywallModal from '../components/shared/PaywallModal';
 import { base44 } from '@/api/base44Client';
 import { useAuth } from '@/lib/AuthContext';
+import { useEntitlement } from '@/hooks/useEntitlement';
 
 const COLORS = ['#4DC3D1', '#2EE0C9', '#B6F03C', '#F5C34B', '#FF6B5B', '#FFD872', '#2DA8FF', '#A78BFA'];
 const MOON_COLORS = { 'Neumond': '#1F2937', 'Zunehmend': '#6366F1', 'Halbmond': '#F59E0B', 'Vollmond': '#FDE68A', 'Abnehmend': '#64748B' };
@@ -20,6 +22,8 @@ const tideEase = [0.2, 0.8, 0.2, 1];
 export default function Statistics() {
   const { t } = useTranslation();
   const { user } = useAuth();
+  const { canAccess, requiredTier } = useEntitlement();
+  const hasAccess = canAccess('statistics_pro');
   const [catches, setCatches] = useState([]);
   const [loading, setLoading] = useState(true);
   const [timeRange, setTimeRange] = useState('12');
@@ -213,6 +217,10 @@ export default function Statistics() {
 
   return (
     <PageTransition>
+      {!hasAccess && (
+        <PaywallModal open={true} onClose={() => window.history.back()} featureKey="statistics_pro" requiredTier={requiredTier('statistics_pro')} />
+      )}
+      {hasAccess && (
       <div className="px-4 pt-6 pb-24 space-y-6">
         {/* Header */}
         <div>
@@ -474,6 +482,7 @@ export default function Statistics() {
 
         <div className="h-4" />
       </div>
+      )}
     </PageTransition>
   );
 }

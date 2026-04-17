@@ -1444,7 +1444,7 @@
     "kpi": {
       "avg_size": "Avg size",
       "catches": "Catches",
-      "hook_points": "Hook points",
+      "hook_points": "HookPoints",
       "top_species": "Top species"
     },
     "length": "Length",
