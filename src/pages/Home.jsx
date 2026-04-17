@@ -414,7 +414,13 @@ function StrikeGauge({ progress, active, minutes, type }) {
         >
           {(() => {
             const [hh, mm] = formatTimer(minutes).split(':');
-            return <>{hh}<span style={{ margin: '0 5px', opacity: 0.7 }}>:</span>{mm}</>;
+            return (
+              <span className="flex items-center">
+                {hh}
+                <span style={{ margin: '0 6px', opacity: 0.7, lineHeight: 1 }}>:</span>
+                {mm}
+              </span>
+            );
           })()}
         </motion.p>
 
