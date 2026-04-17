@@ -573,7 +573,8 @@
       "sex_differences": "♂ / ♀ Farklar",
       "techniques": "Teknikler",
       "warning": "Uyarı",
-      "water_temp": "Su sıcaklığı"
+      "water_temp": "Su sıcaklığı",
+      "tide": "Gel-git"
     },
     "rarity": {
       "common": "Yaygın",
@@ -590,7 +591,10 @@
       "overview": "Genel bakış",
       "technique": "Teknik"
     },
-    "title": "Balık ansiklopedisi"
+    "title": "Balık ansiklopedisi",
+    "species_count": "Tür",
+    "invasive_label": "İstilacı",
+    "results": "Sonuç"
   },
   "families": {
     "empty_desc": "Ansiklopedi girdileri yakında yüklü olacak",

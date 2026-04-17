@@ -573,7 +573,8 @@
       "sex_differences": "الفروق بين ♂ / ♀",
       "techniques": "التقنيات",
       "warning": "تحذير",
-      "water_temp": "حرارة الماء"
+      "water_temp": "حرارة الماء",
+      "tide": "المد والجزر"
     },
     "rarity": {
       "common": "شائع",
@@ -590,7 +591,10 @@
       "overview": "نظرة عامة",
       "technique": "التقنية"
     },
-    "title": "موسوعة الأسماك"
+    "title": "موسوعة الأسماك",
+    "species_count": "أنواع",
+    "invasive_label": "غازية",
+    "results": "نتائج"
   },
   "families": {
     "empty_desc": "إدخالات الموسوعة قريباً",

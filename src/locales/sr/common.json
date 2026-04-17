@@ -573,7 +573,8 @@
       "sex_differences": "♂ / ♀ razlike",
       "techniques": "Tehnike",
       "warning": "Upozorenje",
-      "water_temp": "Temperatura vode"
+      "water_temp": "Temperatura vode",
+      "tide": "Плима и осека"
     },
     "rarity": {
       "common": "Uobičajena",
@@ -590,7 +591,10 @@
       "overview": "Pregled",
       "technique": "Tehnika"
     },
-    "title": "Enciklopedija riba"
+    "title": "Enciklopedija riba",
+    "species_count": "Врста",
+    "invasive_label": "Инвазивних",
+    "results": "Резултата"
   },
   "families": {
     "empty_desc": "Enciklopedijski unosi uskoro",

@@ -573,7 +573,8 @@
       "sex_differences": "♂ / ♀ Differenze",
       "techniques": "Tecniche",
       "warning": "Avvertenza",
-      "water_temp": "Temp. acqua"
+      "water_temp": "Temp. acqua",
+      "tide": "Maree"
     },
     "rarity": {
       "common": "Comune",
@@ -590,7 +591,10 @@
       "overview": "Panoramica",
       "technique": "Tecnica"
     },
-    "title": "Enciclopedia pesci"
+    "title": "Enciclopedia pesci",
+    "species_count": "Specie",
+    "invasive_label": "Invasive",
+    "results": "Risultati"
   },
   "families": {
     "empty_desc": "Le voci dell'enciclopedia verranno caricate presto",

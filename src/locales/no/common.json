@@ -573,7 +573,8 @@
       "sex_differences": "♂ / ♀ Forskjeller",
       "techniques": "Teknikker",
       "warning": "Advarsel",
-      "water_temp": "Vanntemperatur"
+      "water_temp": "Vanntemperatur",
+      "tide": "Tidevann"
     },
     "rarity": {
       "common": "Vanlig",
@@ -590,7 +591,10 @@
       "overview": "Oversikt",
       "technique": "Teknikk"
     },
-    "title": "Fiskeleksikon"
+    "title": "Fiskeleksikon",
+    "species_count": "Arter",
+    "invasive_label": "Invasive",
+    "results": "Resultater"
   },
   "families": {
     "empty_desc": "Leksikonoppføringer kommer snart",

@@ -573,7 +573,8 @@
       "sex_differences": "♂ / ♀ razlike",
       "techniques": "Tehnike",
       "warning": "Opozorilo",
-      "water_temp": "Temperatura vode"
+      "water_temp": "Temperatura vode",
+      "tide": "Bibavica"
     },
     "rarity": {
       "common": "Pogosta",
@@ -590,7 +591,10 @@
       "overview": "Pregled",
       "technique": "Tehnika"
     },
-    "title": "Ribja enciklopedija"
+    "title": "Ribja enciklopedija",
+    "species_count": "Vrst",
+    "invasive_label": "Invazivnih",
+    "results": "Rezultatov"
   },
   "families": {
     "empty_desc": "Vnosi v enciklopedijo bodo kmalu na voljo",

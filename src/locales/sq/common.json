@@ -573,7 +573,8 @@
       "sex_differences": "♂ / ♀ Ndryshime",
       "techniques": "Teknikat",
       "warning": "Paralajmërim",
-      "water_temp": "Temp. e ujit"
+      "water_temp": "Temp. e ujit",
+      "tide": "Batica"
     },
     "rarity": {
       "common": "I zakonshëm",
@@ -590,7 +591,10 @@
       "overview": "Përgjithësim",
       "technique": "Teknika"
     },
-    "title": "Enciklopedia e peshkut"
+    "title": "Enciklopedia e peshkut",
+    "species_count": "Lloje",
+    "invasive_label": "Invazive",
+    "results": "Rezultate"
   },
   "families": {
     "empty_desc": "Hyrjet e enciklopedisë do të ngarkohen shpejt",

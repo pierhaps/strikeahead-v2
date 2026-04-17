@@ -573,7 +573,8 @@
       "sex_differences": "♂ / ♀ Verschillen",
       "techniques": "Technieken",
       "warning": "Waarschuwing",
-      "water_temp": "Watertemp."
+      "water_temp": "Watertemp.",
+      "tide": "Getijden"
     },
     "rarity": {
       "common": "Algemeen",
@@ -590,7 +591,10 @@
       "overview": "Overzicht",
       "technique": "Techniek"
     },
-    "title": "Visencyclopedie"
+    "title": "Visencyclopedie",
+    "species_count": "Soorten",
+    "invasive_label": "Invasief",
+    "results": "Resultaten"
   },
   "families": {
     "empty_desc": "Encyclopedie-items worden binnenkort geladen",

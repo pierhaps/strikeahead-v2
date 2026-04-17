@@ -573,7 +573,8 @@
       "sex_differences": "♂ / ♀ Differences",
       "techniques": "Techniques",
       "warning": "Warning",
-      "water_temp": "Water temp"
+      "water_temp": "Water temp",
+      "tide": "Tides"
     },
     "rarity": {
       "common": "Common",
@@ -590,7 +591,10 @@
       "overview": "Overview",
       "technique": "Technique"
     },
-    "title": "Fish Encyclopedia"
+    "title": "Fish Encyclopedia",
+    "species_count": "Species",
+    "invasive_label": "Invasive",
+    "results": "Results"
   },
   "families": {
     "empty_desc": "Encyclopedia entries coming soon",

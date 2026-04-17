@@ -573,7 +573,8 @@
       "sex_differences": "♂ / ♀ Unterschiede",
       "techniques": "Techniken",
       "warning": "Achtung",
-      "water_temp": "Wassertemperatur"
+      "water_temp": "Wassertemperatur",
+      "tide": "Gezeiten"
     },
     "rarity": {
       "common": "Häufig",
@@ -590,7 +591,10 @@
       "overview": "Übersicht",
       "technique": "Technik"
     },
-    "title": "Fischlexikon"
+    "title": "Fischlexikon",
+    "species_count": "Arten",
+    "invasive_label": "Invasive",
+    "results": "Ergebnisse"
   },
   "families": {
     "empty_desc": "Lexikon-Einträge werden bald geladen",

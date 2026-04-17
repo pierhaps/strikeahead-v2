@@ -573,7 +573,8 @@
       "sex_differences": "Различия ♂ / ♀",
       "techniques": "Техники",
       "warning": "Предупреждение",
-      "water_temp": "Температура воды"
+      "water_temp": "Температура воды",
+      "tide": "Приливы"
     },
     "rarity": {
       "common": "Обычная",
@@ -590,7 +591,10 @@
       "overview": "Обзор",
       "technique": "Техника"
     },
-    "title": "Энциклопедия рыб"
+    "title": "Энциклопедия рыб",
+    "species_count": "Видов",
+    "invasive_label": "Инвазивных",
+    "results": "Результатов"
   },
   "families": {
     "empty_desc": "Записи энциклопедии скоро появятся",

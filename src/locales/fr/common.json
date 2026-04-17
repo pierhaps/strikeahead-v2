@@ -573,7 +573,8 @@
       "sex_differences": "Différences ♂ / ♀",
       "techniques": "Techniques",
       "warning": "Attention",
-      "water_temp": "Temp. de l'eau"
+      "water_temp": "Temp. de l'eau",
+      "tide": "Marées"
     },
     "rarity": {
       "common": "Commun",
@@ -590,7 +591,10 @@
       "overview": "Aperçu",
       "technique": "Technique"
     },
-    "title": "Encyclopédie des poissons"
+    "title": "Encyclopédie des poissons",
+    "species_count": "Espèces",
+    "invasive_label": "Invasives",
+    "results": "Résultats"
   },
   "families": {
     "empty_desc": "Les entrées encyclopédiques seront bientôt chargées",
