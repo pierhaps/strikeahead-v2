@@ -401,25 +401,19 @@ function StrikeGauge({ progress, active, minutes, type }) {
         </p>
 
         {/* Big countdown */}
-        {(() => {
-          const [hh, mm] = formatTimer(minutes).split(':');
-          const timerColor = active ? '#2EE0C9' : '#E8F0F5';
-          const timerShadow = active
-            ? '0 0 24px rgba(46,224,201,0.6), 0 2px 12px rgba(0,0,0,0.5)'
-            : '0 0 16px rgba(255,255,255,0.15), 0 2px 12px rgba(0,0,0,0.5)';
-          return (
-            <motion.div
-              className="flex items-center font-display font-black text-[44px] leading-none"
-              style={{ color: timerColor, textShadow: timerShadow }}
-              animate={active ? { textShadow: ['0 0 20px rgba(46,224,201,0.5), 0 2px 12px rgba(0,0,0,0.5)', '0 0 44px rgba(46,224,201,0.8), 0 2px 12px rgba(0,0,0,0.5)', '0 0 20px rgba(46,224,201,0.5), 0 2px 12px rgba(0,0,0,0.5)'] } : {}}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              <span>{hh}</span>
-              <span style={{ margin: '0 6px', color: timerColor }}>∶</span>
-              <span>{mm}</span>
-            </motion.div>
-          );
-        })()}
+        <p
+          className="font-display font-black leading-none"
+          style={{
+            fontSize: 48,
+            letterSpacing: 2,
+            color: active ? '#2EE0C9' : '#E8F0F5',
+            textShadow: active
+              ? '0 0 24px rgba(46,224,201,0.6), 0 2px 12px rgba(0,0,0,0.5)'
+              : '0 0 16px rgba(255,255,255,0.15), 0 2px 12px rgba(0,0,0,0.5)',
+          }}
+        >
+          {formatTimer(minutes)}
+        </p>
 
         {/* Subtitle */}
         <p className="text-foam/35 text-[9px] uppercase tracking-[0.18em] mt-1"
