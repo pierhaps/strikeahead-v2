@@ -1053,7 +1053,9 @@
     "heat_very_hot": "Veoma vruće",
     "open_spot": "Otvori mesto",
     "search_placeholder": "Pretraži mesta...",
-    "top_species": "Najčešće vrste"
+    "top_species": "Najčešće vrste",
+    "empty_title": "Još nema ulova na mapi",
+    "empty_sub": "Zabeleži ulov sa GPS-om da ga vidiš ovde"
   },
   "measure": {
     "calculating": "Izračunavanje...",

@@ -1051,6 +1051,8 @@
     "heat_active": "Aktiv",
     "heat_calm": "I Qetë",
     "heat_very_hot": "Shumë Aktiv",
+    "empty_title": "Ende nuk ka gjueti në hartë",
+    "empty_sub": "Regjistro një gjueti me GPS për ta parë këtu",
     "open_spot": "Hap Vend",
     "search_placeholder": "Kërko vende...",
     "top_species": "Lloji Kryesor"

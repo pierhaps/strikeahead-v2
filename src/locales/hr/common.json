@@ -1051,6 +1051,8 @@
     "heat_active": "Aktivno",
     "heat_calm": "Mirno",
     "heat_very_hot": "Vrlo Aktivno",
+    "empty_title": "Još nema ulova na karti",
+    "empty_sub": "Zabilježi ulov s GPS-om da ga vidiš ovdje",
     "open_spot": "Otvori Lokaciju",
     "search_placeholder": "Pretraži lokacije...",
     "top_species": "Glavna Vrsta"

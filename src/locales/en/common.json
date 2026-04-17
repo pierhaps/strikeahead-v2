@@ -1053,7 +1053,9 @@
     "heat_very_hot": "Very Hot",
     "open_spot": "Open Spot",
     "search_placeholder": "Search spots...",
-    "top_species": "Top Species"
+    "top_species": "Top Species",
+    "empty_title": "No catches on map yet",
+    "empty_sub": "Log a catch with GPS to see it here"
   },
   "measure": {
     "calculating": "Calculating...",

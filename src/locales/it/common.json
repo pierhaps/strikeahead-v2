@@ -1051,6 +1051,8 @@
     "heat_active": "Attivo",
     "heat_calm": "Calmo",
     "heat_very_hot": "Molto Attivo",
+    "empty_title": "Nessuna cattura sulla mappa",
+    "empty_sub": "Registra una cattura con GPS per vederla qui",
     "open_spot": "Apri Spot",
     "search_placeholder": "Cerca spot...",
     "top_species": "Specie Principale"

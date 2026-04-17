@@ -140,7 +140,15 @@ export default function Profile() {
           {/* Name block */}
           <div>
             <h1 className="font-display text-2xl font-extrabold text-foam">{user?.full_name || 'Angler'}</h1>
-            <p className="text-foam/50 text-sm mt-0.5">{t('profile.pro_since', { date: 'März 2025', location: user?.location || t('profile.default_location') })}</p>
+            <p className="text-foam/50 text-sm mt-0.5">
+              {isPremium
+                ? t('profile.pro_since', {
+                    date: user?.created_date ? new Date(user.created_date).toLocaleDateString(localeTag(i18n.language), { month: 'long', year: 'numeric' }) : '',
+                    location: user?.location || t('profile.default_location')
+                  })
+                : `Free · ${user?.location || t('profile.default_location')}`
+              }
+            </p>
           </div>
 
           {/* Mini stats */}

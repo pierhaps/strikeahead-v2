@@ -1053,7 +1053,9 @@
     "heat_very_hot": "Очень горячо",
     "open_spot": "Открыть место",
     "search_placeholder": "Поиск мест...",
-    "top_species": "Топ-виды"
+    "top_species": "Топ-виды",
+    "empty_title": "На карте пока нет уловов",
+    "empty_sub": "Зарегистрируй улов с GPS, чтобы увидеть его здесь"
   },
   "measure": {
     "calculating": "Вычисление...",

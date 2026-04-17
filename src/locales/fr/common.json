@@ -1053,7 +1053,9 @@
     "heat_very_hot": "Très Actif",
     "open_spot": "Ouvrir le Spot",
     "search_placeholder": "Chercher des spots...",
-    "top_species": "Espèce Principale"
+    "top_species": "Espèce Principale",
+    "empty_title": "Pas encore de captures sur la carte",
+    "empty_sub": "Enregistre une capture avec GPS pour la voir ici"
   },
   "measure": {
     "calculating": "Calcul en cours...",

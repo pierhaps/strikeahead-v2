@@ -1051,6 +1051,8 @@
     "heat_active": "Actief",
     "heat_calm": "Rustig",
     "heat_very_hot": "Zeer Actief",
+    "empty_title": "Nog geen vangsten op de kaart",
+    "empty_sub": "Log een vangst met GPS om deze hier te zien",
     "open_spot": "Spot Openen",
     "search_placeholder": "Zoek spots...",
     "top_species": "Topsoort"

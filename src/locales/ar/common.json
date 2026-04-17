@@ -1053,7 +1053,9 @@
     "heat_very_hot": "ساخن جداً",
     "open_spot": "افتح الموقع",
     "search_placeholder": "ابحث عن مواقع...",
-    "top_species": "أفضل الأنواع"
+    "top_species": "أفضل الأنواع",
+    "empty_title": "لا توجد صيدات على الخريطة بعد",
+    "empty_sub": "سجّل صيدة بالـ GPS لتراها هنا"
   },
   "measure": {
     "calculating": "جارٍ الحساب...",

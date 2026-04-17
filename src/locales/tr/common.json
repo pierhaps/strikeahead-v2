@@ -1051,6 +1051,8 @@
     "heat_active": "Aktif",
     "heat_calm": "Sakin",
     "heat_very_hot": "Çok Aktif",
+    "empty_title": "Haritada henüz yakalama yok",
+    "empty_sub": "GPS ile bir yakalama kaydet ve burada gör",
     "open_spot": "Noktayı Aç",
     "search_placeholder": "Noktaları ara...",
     "top_species": "Ana Tür"

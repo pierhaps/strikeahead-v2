@@ -1051,6 +1051,8 @@
     "heat_active": "Aktiv",
     "heat_calm": "Rolig",
     "heat_very_hot": "Svært varmt",
+    "empty_title": "Ingen fangster på kartet ennå",
+    "empty_sub": "Logg en fangst med GPS for å se den her",
     "open_spot": "Åpne plass",
     "search_placeholder": "Søk plasser...",
     "top_species": "Topparter"

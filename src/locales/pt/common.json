@@ -1051,6 +1051,8 @@
     "heat_active": "Ativo",
     "heat_calm": "Calmo",
     "heat_very_hot": "Muito Ativo",
+    "empty_title": "Ainda sem capturas no mapa",
+    "empty_sub": "Regista uma captura com GPS para a ver aqui",
     "open_spot": "Abrir Local",
     "search_placeholder": "Pesquisar locais...",
     "top_species": "Espécie Principal"
