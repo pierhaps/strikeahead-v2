@@ -15,6 +15,9 @@ setupIframeMessaging();
 // Landing page (public, no shell)
 import LandingPageReal from './pages/landing/LandingPage';
 
+// Admin pages (hidden)
+import DataMigration from './pages/admin/DataMigration';
+
 // Core pages
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
@@ -150,6 +153,10 @@ const AuthenticatedApp = () => {
 
       {/* Public landing page — no AppShell, no auth required */}
       <Route path="/landingpage" element={<LandingPageReal />} />
+
+      {/* Admin pages (hidden from navigation) */}
+      <Route path="/admin/migrate" element={<DataMigration />} />
+
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
