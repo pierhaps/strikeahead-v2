@@ -412,7 +412,10 @@ function StrikeGauge({ progress, active, minutes, type }) {
           animate={active ? { textShadow: ['0 0 20px rgba(46,224,201,0.5), 0 2px 12px rgba(0,0,0,0.5)', '0 0 44px rgba(46,224,201,0.8), 0 2px 12px rgba(0,0,0,0.5)', '0 0 20px rgba(46,224,201,0.5), 0 2px 12px rgba(0,0,0,0.5)'] } : {}}
           transition={{ duration: 2, repeat: Infinity }}
         >
-          {formatTimer(minutes)}
+          {(() => {
+            const [hh, mm] = formatTimer(minutes).split(':');
+            return <>{hh}<span style={{ margin: '0 5px', opacity: 0.7 }}>:</span>{mm}</>;
+          })()}
         </motion.p>
 
         {/* Subtitle */}
