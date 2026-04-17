@@ -401,32 +401,28 @@ function StrikeGauge({ progress, active, minutes, type }) {
         </p>
 
         {/* Big countdown */}
-        <motion.p
-          className="font-display font-black text-[44px] leading-none tracking-tight"
-          style={{
-            color: active ? '#2EE0C9' : '#E8F0F5',
-            textShadow: active
-              ? '0 0 24px rgba(46,224,201,0.6), 0 2px 12px rgba(0,0,0,0.5)'
-              : '0 0 16px rgba(255,255,255,0.15), 0 2px 12px rgba(0,0,0,0.5)',
-          }}
-          animate={active ? { textShadow: ['0 0 20px rgba(46,224,201,0.5), 0 2px 12px rgba(0,0,0,0.5)', '0 0 44px rgba(46,224,201,0.8), 0 2px 12px rgba(0,0,0,0.5)', '0 0 20px rgba(46,224,201,0.5), 0 2px 12px rgba(0,0,0,0.5)'] } : {}}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          {(() => {
-            const [hh, mm] = formatTimer(minutes).split(':');
-            const dotColor = active ? '#2EE0C9' : '#E8F0F5';
-            return (
-              <span className="flex items-center">
-                {hh}
-                <span className="flex flex-col items-center justify-center gap-[7px]" style={{ margin: '0 8px' }}>
-                  <span style={{ width: 6, height: 6, borderRadius: '50%', background: dotColor, display: 'block' }} />
-                  <span style={{ width: 6, height: 6, borderRadius: '50%', background: dotColor, display: 'block' }} />
-                </span>
-                {mm}
+        {(() => {
+          const [hh, mm] = formatTimer(minutes).split(':');
+          const timerColor = active ? '#2EE0C9' : '#E8F0F5';
+          const timerShadow = active
+            ? '0 0 24px rgba(46,224,201,0.6), 0 2px 12px rgba(0,0,0,0.5)'
+            : '0 0 16px rgba(255,255,255,0.15), 0 2px 12px rgba(0,0,0,0.5)';
+          return (
+            <motion.div
+              className="flex items-center font-display font-black text-[44px] leading-none"
+              style={{ color: timerColor, textShadow: timerShadow }}
+              animate={active ? { textShadow: ['0 0 20px rgba(46,224,201,0.5), 0 2px 12px rgba(0,0,0,0.5)', '0 0 44px rgba(46,224,201,0.8), 0 2px 12px rgba(0,0,0,0.5)', '0 0 20px rgba(46,224,201,0.5), 0 2px 12px rgba(0,0,0,0.5)'] } : {}}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              <span>{hh}</span>
+              <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 7, margin: '0 8px' }}>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: timerColor, flexShrink: 0 }} />
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: timerColor, flexShrink: 0 }} />
               </span>
-            );
-          })()}
-        </motion.p>
+              <span>{mm}</span>
+            </motion.div>
+          );
+        })()}
 
         {/* Subtitle */}
         <p className="text-foam/35 text-[9px] uppercase tracking-[0.18em] mt-1"
