@@ -231,6 +231,10 @@ export default function Upload() {
       ...Object.fromEntries(Object.keys(updates).map((k) => [k, true])),
     }));
   };
+  
+  const handleNumberBlur = (key) => (e) => {
+    set(key, e.target.value);
+  };
 
   // ---------- Weather / GPS ----------
 
@@ -653,8 +657,10 @@ export default function Upload() {
                 <input
                   type="number"
                   step="0.1"
+                  inputMode="decimal"
                   value={formData.length_cm}
-                  onChange={(e) => set('length_cm', e.target.value)}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, length_cm: e.target.value }))}
+                  onBlur={handleNumberBlur('length_cm')}
                   placeholder="45"
                   className={inputCls}
                 />
@@ -664,8 +670,10 @@ export default function Upload() {
                 <input
                   type="number"
                   step="0.01"
+                  inputMode="decimal"
                   value={formData.weight_kg}
-                  onChange={(e) => set('weight_kg', e.target.value)}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, weight_kg: e.target.value }))}
+                  onBlur={handleNumberBlur('weight_kg')}
                   placeholder="2.5"
                   className={inputCls}
                 />
@@ -675,8 +683,10 @@ export default function Upload() {
                 <input
                   type="number"
                   step="0.5"
+                  inputMode="decimal"
                   value={formData.fishing_depth_m}
-                  onChange={(e) => set('fishing_depth_m', e.target.value)}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, fishing_depth_m: e.target.value }))}
+                  onBlur={handleNumberBlur('fishing_depth_m')}
                   placeholder="5"
                   className={inputCls}
                 />
@@ -770,23 +780,23 @@ export default function Upload() {
 
           {/* 4. Datum + Uhrzeit */}
           <SectionCard icon={Clock} iconClass="text-tide-400" title={t('upload.section_datetime')}>
-            <div className="grid grid-cols-2 gap-3">
-              <div>
+            <div className="grid grid-cols-2 gap-3 auto-cols-fr">
+              <div className="min-w-0">
                 <FieldLabel>{t('upload.date')}</FieldLabel>
                 <input
                   type="date"
                   value={formData.caught_date}
                   onChange={(e) => set('caught_date', e.target.value)}
-                  className={inputCls}
+                  className={`${inputCls} w-full`}
                 />
               </div>
-              <div>
+              <div className="min-w-0">
                 <FieldLabel>{t('upload.time')}</FieldLabel>
                 <input
                   type="time"
                   value={formData.caught_time}
                   onChange={(e) => set('caught_time', e.target.value)}
-                  className={inputCls}
+                  className={`${inputCls} w-full`}
                 />
               </div>
             </div>
@@ -817,8 +827,10 @@ export default function Upload() {
                   <input
                     type="number"
                     step="0.1"
+                    inputMode="decimal"
                     value={formData[key]}
-                    onChange={(e) => set(key, e.target.value)}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, [key]: e.target.value }))}
+                    onBlur={handleNumberBlur(key)}
                     placeholder={ph}
                     className={inputCls}
                   />
