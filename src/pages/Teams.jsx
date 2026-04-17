@@ -128,7 +128,7 @@ export default function Teams() {
                 <p className="text-foam/50 text-xs mb-2">{t('community.teams_members')}</p>
                 <div className="space-y-2">
                   {(myTeam.members || []).map((email, i) => (
-                    <div key={i} className="flex items-center gap-2">
+                    <div key={email} className="flex items-center gap-2">
                       <div className="w-7 h-7 rounded-xl gradient-tide flex items-center justify-center text-xs text-white font-bold">{email[0]?.toUpperCase()}</div>
                       <span className="text-foam text-sm">{email}</span>
                       {email === myTeam.captain_email && <span className="text-sun-400 text-xs">👑</span>}

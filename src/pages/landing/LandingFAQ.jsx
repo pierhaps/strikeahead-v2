@@ -21,7 +21,7 @@ export default function LandingFAQ() {
         </div>
         <div className="space-y-3">
           {faqs.map((faq, i) => (
-            <div key={i} className="glass-card rounded-2xl overflow-hidden"
+            <div key={faq.q || faq.question || i} className="glass-card rounded-2xl overflow-hidden"
               style={{ border: open === i ? '1px solid rgba(31,167,184,0.3)' : undefined }}>
               <button onClick={() => setOpen(open === i ? null : i)}
                 className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left">

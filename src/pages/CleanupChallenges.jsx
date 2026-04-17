@@ -106,7 +106,7 @@ export default function CleanupChallenges() {
                 <p className="text-foam/50 text-xs mb-3">{t('community.cleanup_gallery')}</p>
                 <div className="grid grid-cols-3 gap-2 mb-4">
                   {(selected.cleanup_proof_urls || []).map((url, i) => (
-                    <div key={i} className="aspect-square rounded-xl overflow-hidden bg-abyss-700">
+                    <div key={url} className="aspect-square rounded-xl overflow-hidden bg-abyss-700">
                       <img src={url} className="w-full h-full object-cover" alt="" />
                     </div>
                   ))}

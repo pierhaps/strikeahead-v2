@@ -176,7 +176,7 @@ export default function Admin() {
                     </div>
                   </div>
                   {(mod.violation_reasons || []).map((r, i) => (
-                    <p key={i} className="text-foam/40 text-xs flex items-center gap-1"><AlertTriangle className="w-3 h-3" />{r}</p>
+                    <p key={r} className="text-foam/40 text-xs flex items-center gap-1"><AlertTriangle className="w-3 h-3" />{r}</p>
                   ))}
                 </div>
               ))}

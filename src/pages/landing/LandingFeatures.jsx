@@ -33,7 +33,7 @@ export default function LandingFeatures() {
             const Icon = f.icon;
             const isSun = f.color === 'sun';
             return (
-              <motion.div key={i} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+              <motion.div key={f.title || f.label || i} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.5, delay: i * 0.07, ease: tideEase }}
                 whileHover={{ y: -4, transition: { duration: 0.2 } }}
                 className="glass-card rounded-3xl p-6 group"

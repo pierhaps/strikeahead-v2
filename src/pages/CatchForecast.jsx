@@ -158,7 +158,7 @@ export default function CatchForecast() {
                 <p className="font-display font-bold text-foam text-sm mb-3">{t('catch_forecast.best_windows')}</p>
                 <div className="space-y-2">
                   {result.best_time_slots.map((slot, i) => (
-                    <div key={i} className="flex items-center gap-3">
+                    <div key={slot.label || slot.time || i} className="flex items-center gap-3">
                       <Clock className="w-4 h-4 text-tide-400 flex-shrink-0" />
                       <span className="text-foam text-sm font-semibold">{slot.start} – {slot.end}</span>
                       {slot.score && (
@@ -181,7 +181,7 @@ export default function CatchForecast() {
                 <div className="glass-card rounded-2xl p-3">
                   <p className="text-foam/40 text-xs mb-2">{t('catch_forecast.techniques')}</p>
                   {result.recommended_techniques.slice(0, 3).map((tech, i) => (
-                    <p key={i} className="text-foam text-xs font-semibold mb-1 flex items-center gap-1">
+                    <p key={tech.name || tech} className="text-foam text-xs font-semibold mb-1 flex items-center gap-1">
                       <Zap className="w-3 h-3 text-tide-400" /> {tech.name || tech}
                     </p>
                   ))}
@@ -191,7 +191,7 @@ export default function CatchForecast() {
                 <div className="glass-card rounded-2xl p-3">
                   <p className="text-foam/40 text-xs mb-2">{t('catch_forecast.baits')}</p>
                   {result.recommended_baits.slice(0, 3).map((b, i) => (
-                    <p key={i} className="text-foam text-xs font-semibold mb-1 flex items-center gap-1">
+                    <p key={b.name || b} className="text-foam text-xs font-semibold mb-1 flex items-center gap-1">
                       <Anchor className="w-3 h-3 text-sun-400" /> {b.name || b}
                     </p>
                   ))}

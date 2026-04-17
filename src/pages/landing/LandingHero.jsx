@@ -40,7 +40,7 @@ function PhoneMockup() {
               { emoji: '🌊', label: t('landing.mockup.tile_tide'), gradient: false },
               { emoji: '🏆', label: t('landing.mockup.tile_tournaments'), gradient: false },
             ].map((tile, i) => (
-              <div key={i} className={`rounded-xl p-2 flex flex-col gap-1 ${tile.gradient ? 'gradient-tide' : 'bg-abyss-700/60 border border-tide-300/10'}`}>
+              <div key={tile.label || tile.title || i} className={`rounded-xl p-2 flex flex-col gap-1 ${tile.gradient ? 'gradient-tide' : 'bg-abyss-700/60 border border-tide-300/10'}`}>
                 <span className="text-base">{tile.emoji}</span>
                 <p className={`text-[9px] font-bold ${tile.gradient ? 'text-white' : 'text-foam/70'}`}>{tile.label}</p>
               </div>

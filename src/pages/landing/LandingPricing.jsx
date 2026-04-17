@@ -59,7 +59,7 @@ export default function LandingPricing() {
                 </div>
                 <ul className="space-y-2.5 flex-1 mb-6">
                   {Array.isArray(features) && features.map((f, fi) => (
-                    <li key={fi} className="flex items-start gap-2.5">
+                    <li key={f} className="flex items-start gap-2.5">
                       <Check className={`w-4 h-4 flex-shrink-0 mt-0.5 ${plan.color === 'sun' ? 'text-sun-400' : plan.color === 'tide' ? 'text-tide-400' : 'text-foam/50'}`} />
                       <span className="text-foam/70 text-sm">{f}</span>
                     </li>
