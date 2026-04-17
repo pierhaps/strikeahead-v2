@@ -10,24 +10,26 @@ import { useAnalytics } from '@/hooks/useAnalytics';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 
-// Icon mapping for natural/live baits by keyword
-const NATURAL_ICONS = {
-  sardine: '🐟', sardin: '🐟', anchovy: '🐟', anchovis: '🐟',
-  shrimp: '🦐', garnele: '🦐', garnel: '🦐', prawn: '🦐',
-  crab: '🦀', krebs: '🦀', krebse: '🦀',
-  worm: '🪱', wurm: '🪱', würmer: '🪱', regenwurm: '🪱',
-  squid: '🦑', tintenfisch: '🦑', calamari: '🦑',
+// Emoji icons for natural/live baits by keyword
+const BAIT_ICONS = {
+  sardine: '🐟', sardin: '🐟',
+  shrimp: '🦐', garnele: '🦐', krill: '🦐',
+  squid: '🦑', tintenfisch: '🦑', kalmar: '🦑',
   mussel: '🦪', muschel: '🦪',
-  mackerel: '🐠', makrele: '🐠',
-  default: '🐡',
+  crab: '🦀', krabbe: '🦀', krebs: '🦀',
+  worm: '🪱', wurm: '🪱', regenwurm: '🪱',
+  anchovy: '🐠', sardelle: '🐠',
+  mackerel: '🐡', makrele: '🐡',
+  eel: '🐍', aal: '🐍',
+  herring: '🐟', hering: '🐟',
 };
 
-function getBaitIcon(name) {
-  const lower = (name || '').toLowerCase();
-  for (const [key, emoji] of Object.entries(NATURAL_ICONS)) {
-    if (key !== 'default' && lower.includes(key)) return emoji;
+function getBaitIcon(name = '') {
+  const lower = name.toLowerCase();
+  for (const [key, icon] of Object.entries(BAIT_ICONS)) {
+    if (lower.includes(key)) return icon;
   }
-  return NATURAL_ICONS.default;
+  return '🪱';
 }
 
 function StarRating({ rating, count }) {
@@ -59,8 +61,7 @@ function DetailSheet({ bait, onClose }) {
               <img src={bait.image_url} alt={bait.name} className="w-full h-full object-cover" />
             </div>
           ) : (
-            <div className="w-20 h-20 rounded-2xl flex-shrink-0 flex items-center justify-center text-4xl"
-              style={{ background: 'rgba(14,30,48,0.8)', border: '1px solid rgba(127,220,229,0.15)' }}>
+            <div className="w-20 h-20 rounded-2xl bg-abyss-700 flex items-center justify-center text-4xl flex-shrink-0">
               {getBaitIcon(bait.name_de || bait.name)}
             </div>
           )}
@@ -120,48 +121,80 @@ function DetailSheet({ bait, onClose }) {
   );
 }
 
-// ── Artificial card — with product image ──
-function ArtificialCard({ b, onClick }) {
+// Info banner for natural baits
+function NaturalBaitBanner({ lang }) {
+  const text = lang === 'de'
+    ? 'Naturköder sind natürliche Nahrungsquellen, die Raubfische durch Geruch, Geschmack und Konsistenz anlocken. Sie können frisch oder gefroren präsentiert werden und eignen sich besonders beim Ansitzangeln (Grund- oder Posenmontage). Typische Naturköder: Köderfische (ganz), Fischfetzen, Würmer, Garnelen, Krebse.'
+    : 'Natural baits attract predatory fish through scent, taste and texture. They can be presented fresh or frozen and are especially effective for bottom fishing and float fishing. Typical natural baits: whole baitfish, fish strips, worms, shrimp, crabs.';
+  return (
+    <div className="rounded-2xl p-4 flex gap-3" style={{ background: 'rgba(45,168,255,0.08)', border: '1px solid rgba(45,168,255,0.25)' }}>
+      <Info className="w-5 h-5 text-cyan2 flex-shrink-0 mt-0.5" />
+      <p className="text-foam/70 text-xs leading-relaxed">{text}</p>
+    </div>
+  );
+}
+
+// Warning banner for live baits
+function LiveBaitBanner({ lang }) {
+  const text = lang === 'de'
+    ? '⚠️ Rechtlicher Hinweis: Das Angeln mit lebendem Köderfisch ist in Deutschland laut Tierschutzgesetz (§17 TierSchG) verboten und strafbar. Diese Informationen gelten für Länder, in denen Live Bait erlaubt ist (z.B. Mittelmeer-Angeln).'
+    : '⚠️ Legal Notice: Live bait fishing is prohibited in Germany under animal protection law (§17 TierSchG). This information applies to countries where live bait is permitted (e.g. Mediterranean fishing).';
+  const desc = lang === 'de'
+    ? 'Lebendköder reizen Raubfische durch natürliche Bewegung und Vibrationen. Die Handhabung ist aufwendig (Hälterung, Sauerstoff) und der Köder muss oft gewechselt werden.'
+    : 'Live bait stimulates predatory fish through natural movement and vibrations. Handling requires effort (live wells, oxygen) and baits need frequent replacement.';
+  return (
+    <div className="space-y-2">
+      <div className="rounded-2xl p-4 flex gap-3" style={{ background: 'rgba(255,165,0,0.08)', border: '1px solid rgba(255,165,0,0.35)' }}>
+        <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+        <p className="text-amber-200/80 text-xs leading-relaxed font-medium">{text}</p>
+      </div>
+      <div className="rounded-2xl p-4 flex gap-3" style={{ background: 'rgba(45,168,255,0.06)', border: '1px solid rgba(45,168,255,0.15)' }}>
+        <Info className="w-4 h-4 text-cyan2/60 flex-shrink-0 mt-0.5" />
+        <p className="text-foam/60 text-xs leading-relaxed">{desc}</p>
+      </div>
+    </div>
+  );
+}
+
+// Card for artificial baits — with image
+function ArtificialBaitCard({ bait, onClick }) {
   return (
     <motion.button onClick={onClick}
       initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
       whileTap={{ scale: 0.97 }}
-      className="glass-card rounded-2xl overflow-hidden text-left">
-      <div className="h-32 bg-abyss-800 relative">
-        {b.image_url
-          ? <img src={b.image_url} alt={b.name} className="w-full h-full object-cover" />
+      className="glass-card rounded-2xl overflow-hidden text-left w-full">
+      <div className="h-28 bg-abyss-800 relative">
+        {bait.image_url
+          ? <img src={bait.image_url} alt={bait.name} className="w-full h-full object-cover" />
           : <div className="w-full h-full flex items-center justify-center text-4xl">🪝</div>
         }
-        {b.rating >= 4.5 && (
-          <span className="absolute top-2 left-2 px-1.5 py-0.5 rounded-lg text-[9px] font-bold bg-sun-400/90 text-abyss-950">TOP</span>
-        )}
       </div>
       <div className="p-2.5 space-y-1">
-        <p className="font-bold text-foam text-xs leading-tight line-clamp-2">{b.name_de || b.name}</p>
-        {b.brand && <p className="text-foam/40 text-[10px]">{b.brand}</p>}
-        <StarRating rating={b.rating} count={b.rating_count} />
-        {b.price_eur && <p className="font-display font-bold text-sun-400 text-sm">{b.price_eur} €</p>}
+        <p className="font-bold text-foam text-xs leading-tight line-clamp-2">{bait.name_de || bait.name}</p>
+        {bait.brand && <p className="text-foam/40 text-[10px]">{bait.brand}</p>}
+        <StarRating rating={bait.rating} count={bait.rating_count} />
+        {bait.price_eur && <p className="font-display font-bold text-sun-400 text-sm">{bait.price_eur} €</p>}
       </div>
     </motion.button>
   );
 }
 
-// ── Natural / Live card — icon-based, no image ──
-function IconCard({ b, onClick, color }) {
-  const icon = getBaitIcon(b.name_de || b.name);
+// Card for natural/live baits — icon-based, no image
+function NaturalBaitCard({ bait, onClick }) {
+  const icon = getBaitIcon(bait.name_de || bait.name);
   return (
     <motion.button onClick={onClick}
       initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
       whileTap={{ scale: 0.97 }}
-      className="glass-card rounded-2xl overflow-hidden text-left">
-      <div className="h-24 flex items-center justify-center text-5xl"
-        style={{ background: `linear-gradient(135deg, ${color}18 0%, rgba(14,30,48,0.6) 100%)`, borderBottom: `1px solid ${color}20` }}>
+      className="glass-card rounded-2xl overflow-hidden text-left w-full">
+      <div className="h-28 bg-abyss-800 flex items-center justify-center text-5xl">
         {icon}
       </div>
       <div className="p-2.5 space-y-1">
-        <p className="font-bold text-foam text-xs leading-tight line-clamp-2">{b.name_de || b.name}</p>
-        {b.brand && <p className="text-foam/40 text-[10px]">{b.brand}</p>}
-        <StarRating rating={b.rating} count={b.rating_count} />
+        <p className="font-bold text-foam text-xs leading-tight line-clamp-2">{bait.name_de || bait.name}</p>
+        {bait.brand && <p className="text-foam/40 text-[10px]">{bait.brand}</p>}
+        <StarRating rating={bait.rating} count={bait.rating_count} />
+        {bait.price_eur && <p className="font-display font-bold text-sun-400 text-sm">{bait.price_eur} €</p>}
       </div>
     </motion.button>
   );
@@ -169,23 +202,22 @@ function IconCard({ b, onClick, color }) {
 
 export default function BaitCatalogPage() {
   const { t, i18n } = useTranslation();
+  const lang = i18n.language?.split('-')[0] || 'de';
   const { canAccess, requiredTier } = useEntitlement();
   const hasAccess = canAccess('bait_intelligence');
   const [currentUser, setCurrentUser] = React.useState(null);
   const { track } = useAnalytics(currentUser?.email);
   React.useEffect(() => { base44.auth.me().then(setCurrentUser).catch(() => {}); }, []);
 
-  const isDE = i18n.language === 'de';
-
   const TABS = [
-    { key: 'artificial', label: isDE ? 'Kunstköder' : 'Lures', emoji: '🪝' },
-    { key: 'natural',    label: isDE ? 'Naturköder' : 'Natural', emoji: '🐟' },
-    { key: 'live',       label: isDE ? 'Lebendköder' : 'Live Bait', emoji: '🐠' },
+    { key: 'artificial', label: t('bait.artificial', { defaultValue: 'Kunstköder' }) },
+    { key: 'natural',    label: t('bait.natural',    { defaultValue: 'Naturköder' }) },
+    { key: 'live',       label: t('bait.live',       { defaultValue: 'Lebendköder' }) },
   ];
 
   const [baits, setBaits] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [tab, setTab] = useState('artificial');
+  const [activeTab, setActiveTab] = useState('artificial');
   const [search, setSearch] = useState('');
   const [filterBrand, setFilterBrand] = useState('all');
   const [selected, setSelected] = useState(null);
@@ -194,7 +226,7 @@ export default function BaitCatalogPage() {
     base44.entities.BaitCatalog.list('name', 500).then(d => { setBaits(d || []); setLoading(false); }).catch(() => setLoading(false));
   }, []);
 
-  const byCategory = baits.filter(b => b.category === tab);
+  const byCategory = baits.filter(b => b.category === activeTab);
   const brands = [...new Set(byCategory.map(b => b.brand).filter(Boolean))].sort();
 
   const filtered = byCategory.filter(b => {
@@ -210,102 +242,69 @@ export default function BaitCatalogPage() {
       {!hasAccess && (
         <PaywallModal open={true} onClose={() => window.history.back()} featureKey="bait_intelligence" requiredTier={requiredTier('bait_intelligence')} />
       )}
-      {hasAccess && (<>
-      <div className="px-4 pt-6 pb-4 space-y-4">
-        <div>
-          <p className="text-foam/50 text-sm">{t('bait.catalog_subtitle')}</p>
-          <h1 className="font-display text-2xl font-extrabold text-foam">{t('bait.catalog_title')}</h1>
-        </div>
-
-        {/* Category Tabs */}
-        <div className="flex gap-2">
-          {TABS.map(tabCfg => (
-            <button key={tabCfg.key} onClick={() => { setTab(tabCfg.key); setFilterBrand('all'); setSearch(''); }}
-              className={`flex-1 py-2.5 rounded-2xl text-sm font-bold transition-all flex items-center justify-center gap-1.5 ${tab === tabCfg.key ? 'gradient-tide text-white glow-tide' : 'glass-card text-foam/60'}`}>
-              <span>{tabCfg.emoji}</span>
-              <span className="text-xs">{tabCfg.label}</span>
-            </button>
-          ))}
-        </div>
-
-        {/* ── Natural bait info banner ── */}
-        {tab === 'natural' && (
-          <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}
-            className="rounded-2xl p-4 flex gap-3"
-            style={{ background: 'rgba(14,189,216,0.08)', border: '1px solid rgba(14,189,216,0.25)' }}>
-            <Info className="w-5 h-5 text-tide-400 flex-shrink-0 mt-0.5" />
-            <p className="text-foam/70 text-xs leading-relaxed">
-              {isDE
-                ? 'Naturköder sind natürliche Nahrungsquellen, die Raubfische durch Geruch, Geschmack und Konsistenz anlocken. Sie können frisch oder gefroren präsentiert werden und eignen sich besonders beim Ansitzangeln (Grund- oder Posenmontage). Typische Beispiele: Köderfische (ganz), Fischfetzen, Würmer, Garnelen, Krebse.'
-                : 'Natural baits attract predatory fish through scent, taste and texture. They can be presented fresh or frozen and are especially effective for bottom fishing and float fishing. Common examples: whole baitfish, fish strips, worms, shrimp, crabs.'}
-            </p>
-          </motion.div>
-        )}
-
-        {/* ── Live bait legal warning ── */}
-        {tab === 'live' && (
-          <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}
-            className="rounded-2xl p-4 flex gap-3"
-            style={{ background: 'rgba(245,158,11,0.08)', border: '1.5px solid rgba(245,158,11,0.35)' }}>
-            <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
-            <div className="space-y-2">
-              <p className="text-amber-300 font-bold text-xs">
-                {isDE ? '⚠️ Rechtlicher Hinweis' : '⚠️ Legal Notice'}
-              </p>
-              <p className="text-foam/70 text-xs leading-relaxed">
-                {isDE
-                  ? 'Das Angeln mit lebendem Köderfisch ist in Deutschland laut Tierschutzgesetz (§17 TierSchG) verboten und strafbar. Diese Informationen gelten für Länder, in denen Live Bait erlaubt ist (z.B. Mittelmeer-Angeln).'
-                  : 'Live bait fishing is prohibited in Germany under animal protection law (§17 TierSchG). This information applies to countries where live bait is permitted (e.g. Mediterranean fishing).'}
-              </p>
-              <p className="text-foam/50 text-xs leading-relaxed">
-                {isDE
-                  ? 'Lebendköder reizen Raubfische durch natürliche Bewegung und Vibrationen. Die Handhabung ist aufwendig (Hälterung, Sauerstoff) und der Köder muss oft gewechselt werden.'
-                  : 'Live bait attracts predatory fish through natural movement and vibrations. Handling requires effort (live-well, oxygen) and baits need frequent replacement.'}
-              </p>
-            </div>
-          </motion.div>
-        )}
-
-        {/* Search + Brand filter */}
-        <div className="flex gap-2">
-          <div className="flex-1 glass-card rounded-2xl flex items-center gap-3 px-3 py-2.5">
-            <Search className="w-4 h-4 text-tide-400 flex-shrink-0" />
-            <input value={search} onChange={e => setSearch(e.target.value)}
-              placeholder={t('bait.search_placeholder')}
-              className="bg-transparent flex-1 text-foam placeholder-foam/30 text-xs outline-none" />
+      {hasAccess && (
+        <div className="px-4 pt-6 pb-4 space-y-4">
+          <div>
+            <p className="text-foam/50 text-sm">{t('bait.catalog_subtitle')}</p>
+            <h1 className="font-display text-2xl font-extrabold text-foam">{t('bait.catalog_title')}</h1>
           </div>
-          {brands.length > 0 && (
-            <select value={filterBrand} onChange={e => setFilterBrand(e.target.value)}
-              className="px-3 py-2 rounded-xl text-xs bg-abyss-700 text-foam/70 border border-tide-300/15 flex-shrink-0">
-              <option value="all">{t('bait.all_brands')}</option>
-              {brands.map(b => <option key={b} value={b}>{b}</option>)}
-            </select>
+
+          {/* Tabs */}
+          <div className="flex gap-2">
+            {TABS.map(tab => (
+              <button key={tab.key} onClick={() => { setActiveTab(tab.key); setFilterBrand('all'); setSearch(''); }}
+                className={`flex-1 py-2.5 rounded-2xl text-sm font-bold transition-all ${activeTab === tab.key ? 'gradient-tide text-white glow-tide' : 'glass-card text-foam/60'}`}>
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Category-specific info banners */}
+          {activeTab === 'natural' && <NaturalBaitBanner lang={lang} />}
+          {activeTab === 'live' && <LiveBaitBanner lang={lang} />}
+
+          {/* Search + brand filter */}
+          <div className="flex gap-2">
+            <div className="flex-1 glass-card rounded-2xl flex items-center gap-3 px-3 py-2.5">
+              <Search className="w-4 h-4 text-tide-400 flex-shrink-0" />
+              <input value={search} onChange={e => setSearch(e.target.value)}
+                placeholder={t('bait.search_placeholder')}
+                className="bg-transparent flex-1 text-foam placeholder-foam/30 text-xs outline-none" />
+            </div>
+            {brands.length > 0 && (
+              <select value={filterBrand} onChange={e => setFilterBrand(e.target.value)}
+                className="px-3 py-2 rounded-xl text-xs bg-abyss-700 text-foam/70 border border-tide-300/15 flex-shrink-0">
+                <option value="all">{t('bait.all_brands')}</option>
+                {brands.map(b => <option key={b} value={b}>{b}</option>)}
+              </select>
+            )}
+          </div>
+
+          {filtered.length === 0 ? (
+            <div className="glass-card rounded-3xl p-10 text-center mt-8">
+              <div className="text-5xl mb-4">🪝</div>
+              <p className="font-display font-bold text-foam text-lg">{t('bait.empty_title')}</p>
+              <p className="text-foam/40 text-sm mt-2">{t('bait.empty_desc')}</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 gap-3">
+              {filtered.map((b, i) => {
+                const handleTap = () => {
+                  setSelected(b);
+                  track('bait_recommendation_tap', { bait_name: b.name_de || b.name, category: b.category });
+                };
+                return activeTab === 'artificial'
+                  ? <ArtificialBaitCard key={b.id} bait={b} onClick={handleTap} />
+                  : <NaturalBaitCard key={b.id} bait={b} onClick={handleTap} />;
+              })}
+            </div>
           )}
         </div>
-
-        {/* Bait grid */}
-        {filtered.length === 0 ? (
-          <div className="glass-card rounded-3xl p-10 text-center mt-8">
-            <div className="text-5xl mb-4">{tab === 'artificial' ? '🪝' : tab === 'natural' ? '🐟' : '🐠'}</div>
-            <p className="font-display font-bold text-foam text-lg">{t('bait.empty_title')}</p>
-            <p className="text-foam/40 text-sm mt-2">{t('bait.empty_desc')}</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-2 gap-3">
-            {filtered.map((b, i) => {
-              const handleClick = () => { setSelected(b); track('bait_recommendation_tap', { bait_name: b.name_de || b.name, category: b.category }); };
-              if (tab === 'artificial') return <ArtificialCard key={b.id} b={b} onClick={handleClick} />;
-              if (tab === 'natural')   return <IconCard key={b.id} b={b} onClick={handleClick} color="#0EBDD8" />;
-              return <IconCard key={b.id} b={b} onClick={handleClick} color="#F59E0B" />;
-            })}
-          </div>
-        )}
-      </div>
+      )}
 
       <AnimatePresence>
         {selected && <DetailSheet bait={selected} onClose={() => setSelected(null)} />}
       </AnimatePresence>
-      </>)}
     </PageTransition>
   );
 }
