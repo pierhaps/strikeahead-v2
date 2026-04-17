@@ -1300,12 +1300,35 @@
       "offline_desc": "Registra capturas sin conexión a internet",
       "offline_title": "Modo Sin Conexión",
       "solunar_desc": "Horarios diarios de picada según fase lunar",
-      "solunar_title": "Calendario Solunar"
+      "solunar_title": "Calendario Solunar",
+      "i18n_title": "16 Idiomas",
+      "i18n_desc": "App en 16 idiomas con detección automática",
+      "encyclopedia_title": "Enciclopedia de Peces",
+      "encyclopedia_desc": "24 especies con perfiles, tallas mínimas y técnicas",
+      "bait_intel_title": "Inteligencia de Cebos",
+      "bait_intel_desc": "Recomendaciones de cebos con IA y 85 combinaciones",
+      "map_v2_title": "Mapa Interactivo v2",
+      "map_v2_desc": "Mapa de calor, clusters, GPS y filtros por especie",
+      "invasive_title": "Alerta de Especies Invasoras",
+      "invasive_desc": "Detección, reporte y puntos bonus por eliminación"
     },
     "prompt_desc": "Descripción breve:",
     "prompt_title": "Título de la función:",
     "suggest": "Sugerir función",
-    "title": "Hoja de ruta"
+    "title": "Hoja de ruta",
+    "subtitle": "Vota y da forma a StrikeAhead juntos",
+    "stats": {
+      "shipped": "Activo",
+      "building": "En desarrollo",
+      "planned": "Planificado",
+      "total": "Total"
+    },
+    "col_desc": {
+      "shipped": "Ya disponible para todos los usuarios",
+      "building": "En desarrollo activo — próximamente",
+      "planned": "Confirmado para próximas versiones",
+      "discussion": "Ideas de la comunidad — ¡tu voto cuenta\\!"
+    }
   },
   "seasonguide": {
     "best_time": "Mejor época",
