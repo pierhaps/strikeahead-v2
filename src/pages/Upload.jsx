@@ -18,17 +18,16 @@ import * as exifr from 'exifr';
 
 // ---------------- Constants ----------------
 
-const COMMON_SPECIES = [
-  'Hecht', 'Zander', 'Barsch', 'Karpfen', 'Forelle', 'Wels', 'Aal',
-  'Dorsch', 'Makrele', 'Thunfisch', 'Wolfsbarsch', 'Barracuda', 'Bonito',
-  'Brasse', 'Rotauge', 'Schleie', 'Lachs', 'Saibling', 'Hering', 'Scholle',
-  'Seezunge', 'Goldbrasse', 'Seehecht', 'Rotbarbe',
-];
-
 const COMMON_BAITS = [
   'Gummifisch', 'Wobbler', 'Spinner', 'Blinker', 'Jig', 'Popper',
   'Crankbait', 'Softbait', 'Fliege', 'Twister', 'Metalljig', 'Streamer',
   'Tauwurm', 'Maden', 'Mais', 'Boilie', 'Köderfisch', 'Sardine', 'Shrimp',
+];
+
+const BAIT_BRANDS = [
+  'Savage Gear', 'Rapala', 'Mepps', 'Abu Garcia', 'Berkley', 'Daiwa',
+  'Shimano', 'Fox', 'Korda', 'Nash', 'Westin', 'Illex', 'Balzer',
+  'Cormoran', 'DAM', 'Jenzi', 'Spro', 'Strike Pro', 'Lucky Craft', 'Megabass',
 ];
 
 const MOON_PHASES = [
@@ -230,15 +229,22 @@ export default function Upload() {
   const [analyzingEco, setAnalyzingEco] = useState(false);
   const [fetchingWeather, setFetchingWeather] = useState(false);
   const [gpsLocation, setGpsLocation] = useState(null);
+  const [gpsValidationError, setGpsValidationError] = useState(null);
   const [ecoAnalysis, setEcoAnalysis] = useState(null);
   const [autoFields, setAutoFields] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [regulations, setRegulations] = useState([]);
+  const [allSpecies, setAllSpecies] = useState([]);
 
-  // Load regulations once (with offline cache)
+  // Load regulations and species once (with offline cache)
   useEffect(() => {
-    fetchWithCache('regulations', () => base44.entities.Regulation.list('species', 500))
-      .then(data => setRegulations(data || []));
+    Promise.all([
+      fetchWithCache('regulations', () => base44.entities.Regulation.list('species', 500)),
+      fetchWithCache('all_species', () => base44.entities.Species.list('name', 500)),
+    ]).then(([regs, species]) => {
+      setRegulations(regs || []);
+      setAllSpecies((species || []).map(s => s.name || s.name_de || s.name_en).filter(Boolean).sort());
+    });
   }, []);
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -436,12 +442,24 @@ export default function Upload() {
     const files = Array.from(e.target.files || []);
     if (!files.length) return;
     setUploading(true);
+    setGpsValidationError(null);
     try {
       // Extract EXIF from first file
       if (files[0]) {
         const exifData = await extractExifData(files[0]);
         if (exifData) {
           const updates = { ...exifData };
+          
+          // Validate GPS is near water
+          if (exifData.gps_lat && exifData.gps_lon) {
+            const nearWater = await checkNearWater(exifData.gps_lat, exifData.gps_lon);
+            if (!nearWater) {
+              setGpsValidationError(t('upload.not_near_water'));
+              toast.error(t('upload.not_near_water'));
+              setUploading(false);
+              return;
+            }
+          }
           
           // Calculate astronomical data from EXIF date + GPS
           if (exifData.caught_date) {
@@ -521,6 +539,7 @@ export default function Upload() {
     if (!formData.species) return toast.error(t('upload.species_required'));
     if (uploadedPhotos.length === 0) return toast.error(t('upload.photo_required'));
     if (!gpsLocation) return toast.error(t('upload.gps_required'));
+    if (gpsValidationError) return toast.error(gpsValidationError);
 
     // Soft confirm if regulation warning active (non-blocking for C&R intent)
     if ((regWarnings.tooSmall || regWarnings.inSchonzeit) && !formData.released) {
@@ -762,18 +781,18 @@ export default function Upload() {
           {/* 3. Fischart + Maße */}
           <SectionCard icon={Fish} iconClass="text-sun-400" title={t('upload.section_species')}>
             <div>
-              <FieldLabel>{t('upload.species')} *</FieldLabel>
-              <select
-                value={formData.species}
-                onChange={(e) => set('species', e.target.value)}
-                className={selectCls}
-              >
-                <option value="">-- {t('upload.species_placeholder')} --</option>
-                {COMMON_SPECIES.map((s) => (
-                  <option key={s} value={s}>{s}</option>
-                ))}
-              </select>
-            </div>
+               <FieldLabel>{t('upload.species')} *</FieldLabel>
+               <select
+                 value={formData.species}
+                 onChange={(e) => set('species', e.target.value)}
+                 className={selectCls}
+               >
+                 <option value="">-- {t('upload.species_placeholder')} --</option>
+                 {(allSpecies.length > 0 ? allSpecies : ['Hecht', 'Zander', 'Barsch', 'Karpfen']).map((s) => (
+                   <option key={s} value={s}>{s}</option>
+                 ))}
+               </select>
+             </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <FieldLabel>{t('upload.length_cm')}</FieldLabel>
@@ -1068,14 +1087,20 @@ export default function Upload() {
               </select>
             </div>
             <div>
-              <FieldLabel>{t('upload.bait_brand')}</FieldLabel>
-              <input
-                value={formData.bait_brand}
-                onChange={(e) => set('bait_brand', e.target.value)}
-                placeholder={t('upload.bait_brand_placeholder')}
-                className={inputCls}
-              />
-            </div>
+               <FieldLabel>{t('upload.bait_brand')}</FieldLabel>
+               <input
+                 list="bait-brands-list"
+                 value={formData.bait_brand}
+                 onChange={(e) => set('bait_brand', e.target.value)}
+                 placeholder={t('upload.bait_brand_placeholder')}
+                 className={inputCls}
+               />
+               <datalist id="bait-brands-list">
+                 {BAIT_BRANDS.map((b) => (
+                   <option key={b} value={b} />
+                 ))}
+               </datalist>
+             </div>
             <div>
               <FieldLabel>{t('upload.description')}</FieldLabel>
               <textarea
