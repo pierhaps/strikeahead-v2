@@ -75,6 +75,7 @@ export default function Profile() {
     { icon: BookOpen, label: t('bookings.myBookings'), hint: '', path: '/mybookings', color: 'text-tide-400' },
     { icon: Trophy, label: t('community.teams'), hint: '', path: '/teams', color: 'text-sun-400' },
     { icon: Anchor, label: t('subscription.title'), hint: '', path: '/subscription', color: 'text-sun-400' },
+    { icon: Zap, label: 'HookPoints Shop', hint: 'HP kaufen & einlösen', path: '/hookpoints-shop', color: 'text-lime2' },
     { icon: Award, label: t('profile.angelschule'), hint: '', path: '/angelschule', color: 'text-tide-400' },
     { icon: MapPin, label: t('legal.imprint'), hint: '', path: '/imprint', color: 'text-foam/40' },
     { icon: Shield, label: t('legal.privacy'), hint: '', path: '/privacypolicy', color: 'text-foam/40' },

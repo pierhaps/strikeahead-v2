@@ -1,0 +1,38 @@
+{
+  "name": "HookPointTransaction",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "purchase",
+        "spend",
+        "earn",
+        "bonus",
+        "refund"
+      ]
+    },
+    "amount": {
+      "type": "number",
+      "description": "Positive for credits, negative for debits"
+    },
+    "balance_after": {
+      "type": "number"
+    },
+    "description": {
+      "type": "string"
+    },
+    "stripe_session_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "user_email",
+    "type",
+    "amount",
+    "description"
+  ]
+}

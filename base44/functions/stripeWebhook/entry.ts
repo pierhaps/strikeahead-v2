@@ -60,11 +60,43 @@ Deno.serve(async (req) => {
       case 'checkout.session.completed': {
         const session = event.data.object;
         const userEmail = session.metadata?.user_email || session.customer_email;
+
+        if (!userEmail) { console.error('No user email in session'); break; }
+
+        // ── HookPoints purchase ──────────────────────────────────────────────
+        if (session.metadata?.purchase_type === 'hookpoints') {
+          const hpToAdd = parseInt(session.metadata?.hook_points || '0');
+          const packageName = session.metadata?.package_name || 'HookPoints';
+
+          if (hpToAdd > 0) {
+            const users = await base44.asServiceRole.entities.User.filter({ email: userEmail });
+            if (users.length > 0) {
+              const currentHp = users[0].hook_points || 0;
+              const newBalance = currentHp + hpToAdd;
+              await base44.asServiceRole.entities.User.update(users[0].id, { hook_points: newBalance });
+
+              await base44.asServiceRole.entities.HookPointTransaction.create({
+                user_email: userEmail,
+                type: 'purchase',
+                amount: hpToAdd,
+                balance_after: newBalance,
+                description: `${packageName} gekauft`,
+                stripe_session_id: session.id,
+              });
+
+              console.log(`Added ${hpToAdd} HP to ${userEmail}, new balance: ${newBalance}`);
+            } else {
+              console.error(`HP purchase: user not found: ${userEmail}`);
+            }
+          }
+          break;
+        }
+
+        // ── Subscription purchase ────────────────────────────────────────────
         const metaPlan = session.metadata?.plan;
         const metaCycle = session.metadata?.cycle;
         const metaTier = session.metadata?.lifetime_tier ? parseInt(session.metadata.lifetime_tier) : null;
 
-        if (!userEmail) { console.error('No user email in session'); break; }
         console.log(`Checkout completed: ${userEmail}, plan=${metaPlan}, cycle=${metaCycle}, tier=${metaTier}`);
 
         // Resolve plan from price if metadata is missing

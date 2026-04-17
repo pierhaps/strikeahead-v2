@@ -241,6 +241,18 @@ export default function Subscription() {
         {/* Promo Code */}
         {user && <PromoCodeRedeemer userEmail={user.email} onSuccess={(plan) => setSuccessMsg(`✅ Plan "${plan}" wurde per Promo Code aktiviert!`)} />}
 
+        {/* HookPoints Shop link */}
+        <Link to="/hookpoints-shop">
+          <div className="glass-card rounded-2xl p-4 flex items-center gap-3 border border-lime2/20 hover:border-lime2/40 transition-colors">
+            <span className="text-2xl">🪝</span>
+            <div className="flex-1">
+              <p className="text-foam font-bold text-sm">HookPoints Shop</p>
+              <p className="text-muted2 text-xs">HP kaufen &amp; Prämien einlösen</p>
+            </div>
+            <ExternalLink className="w-4 h-4 text-muted2" />
+          </div>
+        </Link>
+
         {/* Cancel link */}
         <div className="text-center">
           <a href="#cancel" className="text-foam/30 text-xs underline" onClick={e => { e.preventDefault(); alert(t('subscription.alert_billing')); }}>

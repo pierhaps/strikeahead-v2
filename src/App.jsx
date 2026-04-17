@@ -49,6 +49,7 @@ import AIInsights from './pages/AIInsights';
 
 // Stub pages
 import Subscription from './pages/Subscription.jsx';
+import HookPointsShop from './pages/HookPointsShop';
 import Roadmap from './pages/Roadmap';
 import Admin from './pages/Admin';
 import Imprint from './pages/Imprint';
@@ -139,6 +140,7 @@ const AuthenticatedApp = () => {
         <Route path="/tidecatch" element={<TideCatch />} />
         <Route path="/aiinsights" element={<AIInsights />} />
         <Route path="/subscription" element={<Subscription />} />
+        <Route path="/hookpoints-shop" element={<HookPointsShop />} />
         <Route path="/roadmap" element={<Roadmap />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/imprint" element={<Imprint />} />

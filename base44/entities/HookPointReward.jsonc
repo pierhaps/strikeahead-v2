@@ -1,0 +1,44 @@
+{
+  "name": "HookPointReward",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "cost_hp": {
+      "type": "number"
+    },
+    "reward_type": {
+      "type": "string",
+      "enum": [
+        "temp_premium",
+        "single_use_feature",
+        "cosmetic"
+      ]
+    },
+    "grants_plan": {
+      "type": "string",
+      "description": "e.g. pro \u2014 for temp_premium rewards"
+    },
+    "duration_hours": {
+      "type": "number",
+      "description": "Hours of access for temp_premium"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "name",
+    "cost_hp",
+    "reward_type"
+  ]
+}
