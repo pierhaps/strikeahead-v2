@@ -6,7 +6,7 @@ import {
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
   LineChart, Line, Legend,
 } from 'recharts';
-import { Trophy, Fish, Thermometer, Wind, Gauge, Droplets } from 'lucide-react';
+import { Trophy, Fish, Thermometer, Wind, Gauge } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import PageTransition from '../components/ui/PageTransition';
 import PaywallModal from '../components/shared/PaywallModal';

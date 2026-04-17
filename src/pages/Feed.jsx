@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, MessageCircle, Share2, Fish, MapPin, Scale, Plus, X, Send } from 'lucide-react';
+import { Heart, MessageCircle, Share2, Fish, MapPin, Scale, Plus, Send } from 'lucide-react';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 import { base44 } from '@/api/base44Client';
@@ -259,7 +259,7 @@ export default function Feed() {
                 <h2 className="font-display font-extrabold text-foam text-lg">{t('feed.create_post')}</h2>
                 <button onClick={() => !publishing && setCreateOpen(false)}
                   className="w-8 h-8 rounded-full glass-card flex items-center justify-center">
-                  <X className="w-4 h-4 text-foam/70" />
+                  <span className="text-lg text-foam/70">✕</span>
                 </button>
               </div>
 
