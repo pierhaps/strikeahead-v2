@@ -414,10 +414,14 @@ function StrikeGauge({ progress, active, minutes, type }) {
         >
           {(() => {
             const [hh, mm] = formatTimer(minutes).split(':');
+            const dotColor = active ? '#2EE0C9' : '#E8F0F5';
             return (
               <span className="flex items-center">
                 {hh}
-                <span style={{ margin: '0 6px', opacity: 0.7, lineHeight: 1 }}>:</span>
+                <span className="flex flex-col items-center justify-center gap-[7px]" style={{ margin: '0 8px' }}>
+                  <span style={{ width: 6, height: 6, borderRadius: '50%', background: dotColor, display: 'block' }} />
+                  <span style={{ width: 6, height: 6, borderRadius: '50%', background: dotColor, display: 'block' }} />
+                </span>
                 {mm}
               </span>
             );
