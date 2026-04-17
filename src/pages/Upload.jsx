@@ -235,6 +235,7 @@ export default function Upload() {
   const [submitting, setSubmitting] = useState(false);
   const [regulations, setRegulations] = useState([]);
   const [allSpecies, setAllSpecies] = useState([]);
+  const [analyzingSpecies, setAnalyzingSpecies] = useState(false);
 
   // Load regulations and species once (with offline cache)
   useEffect(() => {
@@ -412,6 +413,7 @@ export default function Upload() {
   };
 
   const analyzeStrike = async (photoUrl) => {
+    setAnalyzingSpecies(true);
     try {
       const result = await base44.integrations.Core.InvokeLLM({
         prompt: 'Analyze this fish catch photo. Return JSON with the detected species name (German), estimated conditions, a strike score 0-100, and a one-sentence tip. Keep tips under 80 chars. Schema: { species_detected: string, conditions: string, strike_score: number, strike_tips: string }',
@@ -428,11 +430,14 @@ export default function Upload() {
       });
       if (result.species_detected && !formData.species) {
         set('species', result.species_detected);
+        toast.success(`🐟 Fischart erkannt: ${result.species_detected}`);
       }
       toast.success(`🎯 ${t('upload.strike_score')}: ${result.strike_score}/100`);
       return result;
     } catch {
       return null;
+    } finally {
+      setAnalyzingSpecies(false);
     }
   };
 
@@ -781,11 +786,20 @@ export default function Upload() {
           {/* 3. Fischart + Maße */}
           <SectionCard icon={Fish} iconClass="text-sun-400" title={t('upload.section_species')}>
             <div>
-               <FieldLabel>{t('upload.species')} *</FieldLabel>
+               <div className="flex items-center justify-between">
+                 <FieldLabel>{t('upload.species')} *</FieldLabel>
+                 {analyzingSpecies && (
+                   <div className="flex items-center gap-1.5 text-[10px] text-sun-400">
+                     <Loader2 className="w-3 h-3 animate-spin" />
+                     <span>Fischart wird erkannt...</span>
+                   </div>
+                 )}
+               </div>
                <select
                  value={formData.species}
                  onChange={(e) => set('species', e.target.value)}
                  className={selectCls}
+                 disabled={analyzingSpecies}
                >
                  <option value="">-- {t('upload.species_placeholder')} --</option>
                  {(allSpecies.length > 0 ? allSpecies : ['Hecht', 'Zander', 'Barsch', 'Karpfen']).map((s) => (
