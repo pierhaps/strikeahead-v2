@@ -68,7 +68,7 @@ export function useEntitlement() {
 
   return useMemo(() => {
     const email = (user?.email || '').toLowerCase();
-    const isAdmin = ADMIN_EMAILS.includes(email);
+    const isAdmin = user?.role === 'admin' || ADMIN_EMAILS.includes(email);
     const tier = planToTier(user?.premium_plan);
     const userRank = TIER_RANK[tier] ?? 0;
     const isPremium = isAdmin || userRank > 0;
