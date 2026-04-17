@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -8,7 +8,7 @@ import {
 import PageTransition from '../components/ui/PageTransition';
 import { base44 } from '@/api/base44Client';
 import { useTranslation } from 'react-i18next';
-import { SkProfileHeader } from '../components/ui/Skeleton';
+import { SkeletonProfile, FadeIn } from '@/components/shared/Skeleton';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 
@@ -34,12 +34,13 @@ const localeTag = (code) => {
 
 export default function Profile() {
   const [user, setUser] = useState(null);
+  const [loadingUser, setLoadingUser] = useState(true);
   const [allAchievements, setAllAchievements] = useState([]);
   const [earnedCodes, setEarnedCodes] = useState(new Set());
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
-    base44.auth.me().then(setUser).catch(() => {});
+    base44.auth.me().then(u => { setUser(u); setLoadingUser(false); }).catch(() => setLoadingUser(false));
   }, []);
 
   useEffect(() => {
@@ -84,6 +85,8 @@ export default function Profile() {
     { icon: Star, label: t('admin.title'), hint: '', path: '/admin', color: 'text-foam/40' },
   ];
 
+  if (loadingUser) return <PageTransition><SkeletonProfile /></PageTransition>;
+
   const isPremium = user?.premium_plan && user.premium_plan !== 'free';
   const firstName = user?.full_name?.split(' ')[0] || 'Angler';
   const totalCatches = user?.total_catches ?? 142;
@@ -91,18 +94,9 @@ export default function Profile() {
   const xpToNext = 5000;
   const xpPct = Math.min((fishXp / xpToNext) * 100, 100);
 
-  if (!user) return (
-    <PageTransition>
-      <SkProfileHeader />
-      <div className="px-4 mt-4 space-y-2">
-        {[1,2,3,4,5].map(i => <div key={i} className="skeleton-shimmer rounded-2xl h-14" />)}
-      </div>
-    </PageTransition>
-  );
-
   return (
     <PageTransition>
-      <div className="pb-4 animate-fade-in">
+      <div className="pb-4">
         {/* Cover / Header */}
         <div className="relative h-36 mb-16">
           <div className="absolute inset-0 gradient-tide opacity-40" style={{
