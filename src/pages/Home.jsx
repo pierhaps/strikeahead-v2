@@ -13,6 +13,8 @@ import { useTranslation } from 'react-i18next';
 import { computeTrustScore, aggregateTrust } from '../utils/trustEngine';
 import { recommendBaits, getTimeOfDay, todaysHotSpecies } from '../utils/baitIntelligence';
 import logoCircle from '../assets/logo-circle.svg';
+import WelcomeHeader from '../components/home/WelcomeHeader';
+import InsightBar from '../components/home/InsightBar';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 const LOGO_SIZE = 252;      // logo element size (was 210, +20%)
@@ -537,19 +539,11 @@ export default function Home() {
     <PageTransition>
       <div className="px-4 pt-4 pb-4 space-y-5">
 
-        {/* ── Location bar ── */}
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: tideEase }}
-          className="flex items-center justify-center gap-2"
-        >
-          <MapPin className="w-3.5 h-3.5 text-tide-400" />
-          <p className="text-foam/60 text-sm font-medium">
-            {t(`home.greet_${tod}`, { defaultValue: t('home.welcome_back', { defaultValue: 'Welcome back' }) })},{' '}
-            <span className="text-foam">{firstName}</span>
-          </p>
-        </motion.div>
+        {/* ── Welcome Header ── */}
+        <WelcomeHeader user={user} />
+
+        {/* ── Insight Bar ── */}
+        <InsightBar catches={catches} />
 
         {/* ── Strike Timer Hero ── */}
         <motion.div
