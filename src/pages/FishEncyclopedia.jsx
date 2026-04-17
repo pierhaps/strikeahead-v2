@@ -7,6 +7,20 @@ import { useTranslation } from 'react-i18next';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 
+/** Build local image path from fish name_de */
+function fishImageUrl(fish) {
+  if (fish.image_url) return fish.image_url;
+  if (!fish.name_de) return null;
+  const slug = fish.name_de
+    .split(/\s*[\/(]\s*/)[0].trim()
+    .toLowerCase()
+    .replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+  return `/fish/${slug}.webp`;
+}
+
 const RARITY_CFG = {
   common:    { label: 'encyclopedia.rarity.common',    color: '#4DC3D1', bg: 'rgba(77,195,209,0.15)',  ring: 'border-tide-400/30' },
   uncommon:  { label: 'encyclopedia.rarity.uncommon',   color: '#7FDCE5', bg: 'rgba(127,220,229,0.12)', ring: 'border-cyan-400/30' },
@@ -37,8 +51,8 @@ function DetailView({ fish, onClose }) {
       className="fixed inset-0 z-50 flex flex-col bg-abyss-950 overflow-y-auto">
       {/* Hero image */}
       <div className="relative h-60 flex-shrink-0">
-        {fish.image_url
-          ? <img src={fish.image_url} alt={fish.name_de} className="w-full h-full object-cover" />
+        {fishImageUrl(fish)
+          ? <img src={fishImageUrl(fish)} alt={fish.name_de} className="w-full h-full object-cover" />
           : <div className="w-full h-full bg-gradient-to-br from-tide-500/30 to-abyss-900" />
         }
         <div className="absolute inset-0 bg-gradient-to-t from-abyss-950 via-abyss-950/20 to-transparent" />
@@ -475,8 +489,8 @@ export default function FishEncyclopediaPage() {
                   whileTap={{ scale: 0.97 }}
                   className={`liquid-glass-subtle rounded-2xl overflow-hidden text-left border ${rc.ring}`}>
                   <div className="h-28 relative bg-abyss-800">
-                    {f.image_url
-                      ? <img src={f.image_url} alt={f.name_de} className="w-full h-full object-cover" loading="lazy" />
+                    {fishImageUrl(f)
+                      ? <img src={fishImageUrl(f)} alt={f.name_de} className="w-full h-full object-cover" loading="lazy" />
                       : <div className="w-full h-full flex items-center justify-center"><Fish className="w-8 h-8 text-foam/10" /></div>
                     }
                     <div className="absolute inset-0 bg-gradient-to-t from-abyss-950/80 to-transparent" />
