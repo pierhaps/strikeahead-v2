@@ -1,0 +1,39 @@
+{
+  "name": "AnalyticsEvent",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "Email of the user who triggered the event"
+    },
+    "event_name": {
+      "type": "string",
+      "description": "e.g. onboarding_complete, first_catch_logged, paywall_view"
+    },
+    "event_data": {
+      "type": "object",
+      "description": "Flexible JSON payload for the event"
+    },
+    "session_id": {
+      "type": "string",
+      "description": "Random ID generated per app session to group events"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "platform": {
+      "type": "string",
+      "enum": [
+        "ios",
+        "android",
+        "web"
+      ],
+      "description": "Platform the event was triggered from"
+    }
+  },
+  "required": [
+    "user_email",
+    "event_name"
+  ]
+}

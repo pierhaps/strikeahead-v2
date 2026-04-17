@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
  *  - Teal active icon with subtle glow + dot indicator
  *  - Center Log (+) button: strike-gradient circle, clean & elevated
  */
-export default function BottomNav() {
+export default function BottomNav({ onLogPress }) {
   const location = useLocation();
   const { t } = useTranslation();
 
@@ -45,10 +45,11 @@ export default function BottomNav() {
           /* ── Center Log button ── */
           if (tab.isCenter) {
             return (
-              <Link
+              <button
                 key={tab.path}
-                to={tab.path}
+                type="button"
                 aria-label={tab.label}
+                onClick={onLogPress}
                 className="relative -mt-5 flex flex-col items-center focus-strike"
               >
                 <motion.div
@@ -66,7 +67,7 @@ export default function BottomNav() {
                 <span className="text-[10px] mt-1 font-medium tracking-wide text-mist/60">
                   {tab.label}
                 </span>
-              </Link>
+              </button>
             );
           }
 
