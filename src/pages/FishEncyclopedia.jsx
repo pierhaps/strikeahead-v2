@@ -7,11 +7,12 @@ import { useTranslation } from 'react-i18next';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 
-/** Build image URL from fish name_de → GitHub raw content */
+/** Build image URL: GitHub raw first, Base44 CDN fallback */
 const FISH_IMG_BASE = 'https://raw.githubusercontent.com/pierhaps/strikeahead-v2/main/public/fish';
 function fishImageUrl(fish) {
-  if (fish.image_url) return fish.image_url;
-  if (!fish.name_de) return null;
+  if (!fish.name_de) {
+    return (fish.image_url && fish.image_url.includes('media.base44.com')) ? fish.image_url : null;
+  }
   const slug = fish.name_de
     .split(/\s*[\/(]\s*/)[0].trim()
     .toLowerCase()
