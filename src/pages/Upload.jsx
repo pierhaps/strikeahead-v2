@@ -14,6 +14,7 @@ import { createPageUrl } from '@/utils';
 import { computeTrustScore } from '@/utils/trustEngine';
 import { evaluateAchievements, buildRarityMap } from '@/utils/achievementEngine';
 import { fetchWithCache, addPendingCatch } from '@/hooks/useOfflineCache';
+import * as exifr from 'exifr';
 
 // ---------------- Constants ----------------
 
@@ -99,6 +100,79 @@ function calculateFishXP(c) {
   if (c.gps_lat && c.gps_lon) xp += 5;
   if (c.eco_score >= 4) xp += 10;
   return xp;
+}
+
+// ---- EXIF & Astronomical helpers ----
+
+async function extractExifData(file) {
+  try {
+    const data = await exifr.parse(file);
+    if (!data) return null;
+    const result = {};
+    if (data.latitude && data.longitude) {
+      result.gps_lat = data.latitude;
+      result.gps_lon = data.longitude;
+    }
+    if (data.DateTimeOriginal) {
+      const dt = new Date(data.DateTimeOriginal);
+      if (!isNaN(dt)) {
+        result.caught_date = dt.toISOString().slice(0, 10);
+        result.caught_time = dt.toTimeString().slice(0, 5);
+      }
+    }
+    return Object.keys(result).length > 0 ? result : null;
+  } catch {
+    return null;
+  }
+}
+
+function calculateMoonPhase(date = new Date()) {
+  const known = new Date(2000, 0, 6);
+  const diff = (date - known) / (1000 * 60 * 60 * 24);
+  const cycle = 29.53;
+  const phase = ((diff % cycle) + cycle) % cycle;
+  if (phase < 2 || phase > 27.5) return 'Neumond';
+  if (phase < 8.5) return 'Zunehmend';
+  if (phase < 10) return 'Halbmond';
+  if (phase < 15.5) return 'Zunehmend';
+  if (phase < 17) return 'Vollmond';
+  if (phase < 23) return 'Abnehmend';
+  if (phase < 24.5) return 'Halbmond';
+  return 'Abnehmend';
+}
+
+function getSunriseSunset(lat, lon, date = new Date()) {
+  const J2000 = 2451545;
+  const jd = Math.floor((date.getTime() / 86400000) + 2440587.5);
+  const n = jd - J2000 - 0.0008;
+  const J = n / 36525;
+  const M = 357.52910 + 35999.05029 * J;
+  const C = (1.9146 - 0.004817 * J - 0.000014 * J * J) * Math.sin(M * Math.PI / 180) +
+            (0.019993 - 0.000101 * J) * Math.sin(2 * M * Math.PI / 180) +
+            0.00029 * Math.sin(3 * M * Math.PI / 180);
+  const lambda = 280.46646 + 36000.76983 * J + 0.0003032 * J * J + C;
+  const epsilon = 23.439291 - 0.0130042 * J - 0.00000016 * J * J + 0.000000504 * J * J * J;
+  const alpha = Math.atan2(Math.cos(epsilon * Math.PI / 180) * Math.sin(lambda * Math.PI / 180), Math.cos(lambda * Math.PI / 180)) * 180 / Math.PI;
+  const delta = Math.asin(Math.sin(epsilon * Math.PI / 180) * Math.sin(lambda * Math.PI / 180)) * 180 / Math.PI;
+  const H = Math.acos(-Math.tan(lat * Math.PI / 180) * Math.tan(delta * Math.PI / 180)) * 180 / Math.PI / 15;
+  const ut = 12 + H - alpha / 15 + (lon / 15);
+  const sunrise_hours = ((ut - Math.floor(ut)) * 24) % 24;
+  const sunset_hours = ((ut + 2 * H - Math.floor(ut + 2 * H)) * 24) % 24;
+  const fmt = (h) => {
+    const hh = Math.floor(h);
+    const mm = Math.floor((h - hh) * 60);
+    return `${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')}`;
+  };
+  return { sunrise: fmt(sunrise_hours), sunset: fmt(sunset_hours) };
+}
+
+function getSunPositionFromTime(hour) {
+  if (hour < 6) return 'before_sunrise';
+  if (hour < 10) return 'morning';
+  if (hour < 14) return 'midday';
+  if (hour < 18) return 'afternoon';
+  if (hour < 22) return 'evening';
+  return 'after_sunset';
 }
 
 // Parse "DD-MM" into [day, month] (1-based month)
@@ -363,6 +437,55 @@ export default function Upload() {
     if (!files.length) return;
     setUploading(true);
     try {
+      // Extract EXIF from first file
+      if (files[0]) {
+        const exifData = await extractExifData(files[0]);
+        if (exifData) {
+          const updates = { ...exifData };
+          
+          // Calculate astronomical data from EXIF date + GPS
+          if (exifData.caught_date) {
+            const catchDate = new Date(exifData.caught_date);
+            updates.moon_phase = calculateMoonPhase(catchDate);
+            
+            // Sun position from time
+            if (exifData.caught_time) {
+              const [hh, mm] = exifData.caught_time.split(':').map(Number);
+              updates.sun_position = getSunPositionFromTime(hh + mm / 60);
+            }
+            
+            // Sunrise/sunset from GPS
+            if (exifData.gps_lat && exifData.gps_lon) {
+              const sunTimes = getSunriseSunset(exifData.gps_lat, exifData.gps_lon, catchDate);
+              updates.sunrise_time = sunTimes.sunrise;
+              updates.sunset_time = sunTimes.sunset;
+              
+              // Fetch weather from GPS + date
+              try {
+                const weatherUrl = `https://archive-api.open-meteo.com/v1/archive?latitude=${exifData.gps_lat}&longitude=${exifData.gps_lon}&start_date=${exifData.caught_date}&end_date=${exifData.caught_date}&hourly=temperature_2m,wind_speed_10m,wind_direction_10m,relative_humidity_2m,apparent_temperature&timezone=auto`;
+                const wRes = await fetch(weatherUrl);
+                if (wRes.ok) {
+                  const wData = await wRes.json();
+                  if (wData.hourly && exifData.caught_time) {
+                    const [hh] = exifData.caught_time.split(':').map(Number);
+                    const idx = hh;
+                    if (wData.hourly.temperature_2m?.[idx] != null) updates.air_temp_c = Math.round(wData.hourly.temperature_2m[idx] * 10) / 10;
+                    if (wData.hourly.wind_speed_10m?.[idx] != null) updates.wind_speed_kmh = Math.round(wData.hourly.wind_speed_10m[idx]);
+                    if (wData.hourly.wind_direction_10m?.[idx] != null) updates.wind_direction = degToDirection(wData.hourly.wind_direction_10m[idx]);
+                  }
+                }
+              } catch {
+                // Best-effort weather; don't fail if unavailable
+              }
+            }
+          }
+          
+          setAuto(updates);
+          toast.success(`📍 EXIF-Daten gefunden: GPS, Datum, Wetter, Mondphase`);
+        }
+      }
+      
+      // Upload all files
       const results = await Promise.all(
         files.map((f) => base44.integrations.Core.UploadFile({ file: f })),
       );
