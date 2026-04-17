@@ -4,13 +4,16 @@ import { motion } from 'framer-motion';
 import { Home, BarChart2, MapPin, User, Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
+const ACTIVE_COLOR = '#0ebdd8';
+const INACTIVE_COLOR = '#6b7280';
+
 /**
  * BottomNav — iOS 26 Liquid Glass
  *  - Translucent pill tab bar with liquid glass effect
  *  - Teal active icon with subtle glow + dot indicator
  *  - Center Log (+) button: strike-gradient circle, clean & elevated
  */
-export default function BottomNav({ onLogPress }) {
+export default function BottomNav() {
   const location = useLocation();
   const { t } = useTranslation();
 
@@ -45,29 +48,26 @@ export default function BottomNav({ onLogPress }) {
           /* ── Center Log button ── */
           if (tab.isCenter) {
             return (
-              <button
+              <Link
                 key={tab.path}
-                type="button"
+                to={tab.path}
                 aria-label={tab.label}
-                onClick={onLogPress}
-                className="relative -mt-5 flex flex-col items-center focus-strike"
+                className="relative -mt-6 flex flex-col items-center focus-strike"
               >
                 <motion.div
-                  whileTap={{ scale: 0.93 }}
-                  className="w-[52px] h-[52px] rounded-full flex items-center justify-center relative z-10 overflow-hidden sheen"
+                  whileTap={{ scale: 0.91 }}
+                  className="w-[58px] h-[58px] rounded-full flex items-center justify-center relative z-10 sheen"
                   style={{
-                    background:
-                      'linear-gradient(225deg, #B6F03C 0%, #2EE0C9 55%, #2DA8FF 100%)',
-                    boxShadow:
-                      '0 6px 20px rgba(46,224,201,0.30), 0 0 0 1.5px rgba(10,24,40,0.7)',
+                    background: 'linear-gradient(135deg, #2580C3 0%, #2EE0C9 50%, #8BE752 100%)',
+                    boxShadow: '0 6px 24px rgba(37,128,195,0.45), 0 0 0 2px rgba(10,24,40,0.8), 0 0 0 3px rgba(46,224,201,0.2)',
                   }}
                 >
-                  <Icon className="w-6 h-6 text-navy-900" strokeWidth={2.6} />
+                  <Icon className="w-7 h-7 text-navy-900" strokeWidth={2.8} />
                 </motion.div>
-                <span className="text-[10px] mt-1 font-medium tracking-wide text-mist/60">
+                <span className="text-[10px] mt-1 font-semibold" style={{ color: INACTIVE_COLOR }}>
                   {tab.label}
                 </span>
-              </button>
+              </Link>
             );
           }
 
@@ -81,28 +81,21 @@ export default function BottomNav({ onLogPress }) {
               className="relative flex flex-col items-center min-w-[52px] py-1.5 px-2 focus-strike"
             >
               <motion.div
-                whileTap={{ scale: 0.92 }}
-                className="flex flex-col items-center relative z-10"
+                whileTap={{ scale: 0.91 }}
+                className="flex flex-col items-center relative z-10 gap-0.5"
               >
                 <Icon
                   className="w-5 h-5 transition-colors duration-200"
-                  strokeWidth={isActive ? 2.2 : 1.8}
+                  strokeWidth={isActive ? 2.3 : 1.7}
                   style={{
-                    color: isActive
-                      ? '#2EE0C9'
-                      : 'rgba(232,240,245,0.40)',
-                    filter: isActive
-                      ? 'drop-shadow(0 0 6px rgba(46,224,201,0.40))'
-                      : undefined,
+                    color: isActive ? ACTIVE_COLOR : INACTIVE_COLOR,
+                    filter: isActive ? `drop-shadow(0 0 7px ${ACTIVE_COLOR}60)` : undefined,
+                    transition: 'color 0.2s, filter 0.2s',
                   }}
                 />
                 <span
-                  className="text-[10px] mt-0.5 font-medium transition-colors duration-200"
-                  style={{
-                    color: isActive
-                      ? '#E8F0F5'
-                      : 'rgba(232,240,245,0.40)',
-                  }}
+                  className="text-[10px] font-medium transition-colors duration-200"
+                  style={{ color: isActive ? '#E8F0F5' : INACTIVE_COLOR }}
                 >
                   {tab.label}
                 </span>
@@ -113,10 +106,7 @@ export default function BottomNav({ onLogPress }) {
                 <motion.div
                   layoutId="nav-dot"
                   className="absolute -bottom-0.5 w-1 h-1 rounded-full"
-                  style={{
-                    background: '#2EE0C9',
-                    boxShadow: '0 0 6px rgba(46,224,201,0.50)',
-                  }}
+                  style={{ background: ACTIVE_COLOR, boxShadow: `0 0 6px ${ACTIVE_COLOR}80` }}
                   transition={{ type: 'spring', stiffness: 420, damping: 34 }}
                 />
               )}

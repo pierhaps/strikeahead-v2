@@ -6,6 +6,7 @@ import PageTransition from '../components/ui/PageTransition';
 import PaywallModal from '../components/shared/PaywallModal';
 import { base44 } from '@/api/base44Client';
 import { useEntitlement } from '@/hooks/useEntitlement';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 
@@ -98,6 +99,9 @@ export default function BaitCatalogPage() {
   const { t } = useTranslation();
   const { canAccess, requiredTier } = useEntitlement();
   const hasAccess = canAccess('bait_intelligence');
+  const [currentUser, setCurrentUser] = React.useState(null);
+  const { track } = useAnalytics(currentUser?.email);
+  React.useEffect(() => { base44.auth.me().then(setCurrentUser).catch(() => {}); }, []);
   const TABS = [
     { key: 'artificial', label: t('bait.artificial') },
     { key: 'natural', label: t('bait.natural') },
@@ -173,7 +177,7 @@ export default function BaitCatalogPage() {
         ) : (
           <div className="grid grid-cols-2 gap-3">
             {filtered.map((b, i) => (
-              <motion.button key={b.id} onClick={() => setSelected(b)}
+              <motion.button key={b.id} onClick={() => { setSelected(b); track('bait_recommendation_tap', { bait_name: b.name_de || b.name, category: b.category }); }}
                 initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: i * 0.03 }}
                 whileTap={{ scale: 0.97 }}

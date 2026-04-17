@@ -13,6 +13,7 @@ import { useAuth } from '@/lib/AuthContext';
 import { createPageUrl } from '@/utils';
 import { computeTrustScore } from '@/utils/trustEngine';
 import { evaluateAchievements, buildRarityMap } from '@/utils/achievementEngine';
+import { fetchWithCache, addPendingCatch } from '@/hooks/useOfflineCache';
 
 // ---------------- Constants ----------------
 
@@ -160,11 +161,10 @@ export default function Upload() {
   const [submitting, setSubmitting] = useState(false);
   const [regulations, setRegulations] = useState([]);
 
-  // Load regulations once
+  // Load regulations once (with offline cache)
   useEffect(() => {
-    base44.entities.Regulation.list('species', 500)
-      .then(data => setRegulations(data || []))
-      .catch(() => setRegulations([]));
+    fetchWithCache('regulations', () => base44.entities.Regulation.list('species', 500))
+      .then(data => setRegulations(data || []));
   }, []);
 
   const urlParams = new URLSearchParams(window.location.search);

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ExternalLink, Fish, Ruler, Calendar, RefreshCw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import PageTransition from '../components/ui/PageTransition';
+import { SkRegRow } from '../components/ui/Skeleton';
 import { base44 } from '@/api/base44Client';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
@@ -27,7 +28,15 @@ export default function Regulations() {
     return true;
   });
 
-  if (loading) return <PageTransition><div className="flex items-center justify-center min-h-[60vh]"><div className="w-8 h-8 border-2 border-tide-400 border-t-transparent rounded-full animate-spin" /></div></PageTransition>;
+  if (loading) return (
+    <PageTransition>
+      <div className="px-4 pt-6 pb-4 space-y-4 animate-fade-in">
+        <div className="space-y-1"><div className="skeleton-shimmer rounded-lg h-4 w-32" /><div className="skeleton-shimmer rounded-lg h-7 w-48 mt-1" /></div>
+        <div className="flex gap-2">{[1,2].map(i => <div key={i} className="skeleton-shimmer rounded-xl h-9 w-32" />)}</div>
+        <div className="space-y-3">{[1,2,3,4,5,6].map(i => <SkRegRow key={i} />)}</div>
+      </div>
+    </PageTransition>
+  );
 
   return (
     <PageTransition>

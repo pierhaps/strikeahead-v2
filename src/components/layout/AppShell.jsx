@@ -1,10 +1,13 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';
 import OceanBackground from './OceanBackground';
 import BottomNav from './BottomNav';
 import AppDrawer from './AppDrawer';
+import { trackEvent } from '@/hooks/useAnalytics';
+import { base44 } from '@/api/base44Client';
+import CatchLogSheet from '../catch/CatchLogSheet';
 
 const EDGE_ZONE = 24;
 const OPEN_THRESHOLD = 80;
@@ -24,7 +27,26 @@ const CAPSULE_STYLE = {
 export default function AppShell() {
   const location = useLocation();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [catchSheetOpen, setCatchSheetOpen] = useState(false);
   const touchRef = useRef({ startX: 0, startY: 0, isEdge: false });
+
+  // Track app_session_start once per browser session
+  useEffect(() => {
+    const key = 'sa_session_tracked';
+    if (sessionStorage.getItem(key)) return;
+    sessionStorage.setItem(key, '1');
+    base44.auth.me().then(user => {
+      if (!user?.email) return;
+      const daysSince = user.created_date
+        ? Math.floor((Date.now() - new Date(user.created_date)) / 86400000)
+        : 0;
+      trackEvent(user.email, 'app_session_start', {
+        days_since_signup: daysSince,
+        total_catches: user.total_catches || 0,
+        current_plan: user.premium_plan || 'free',
+      });
+    }).catch(() => {});
+  }, []);
 
   const handleTouchStart = useCallback((e) => {
     const touch = e.touches[0];
@@ -112,22 +134,23 @@ export default function AppShell() {
         className="relative z-10 max-w-lg mx-auto page-content"
         style={{ paddingTop: 'env(safe-area-inset-top)' }}
       >
-        <AnimatePresence mode="wait" initial={false}>
+        <AnimatePresence mode="wait">
           <motion.div
             key={location.pathname}
-            initial={{ opacity: 0, x: 32 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -24 }}
-            transition={{ duration: 0.28, ease: [0.32, 0.72, 0, 1] }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
           >
             <Outlet />
           </motion.div>
         </AnimatePresence>
       </div>
 
-      <BottomNav />
+      <BottomNav onLogPress={() => setCatchSheetOpen(true)} />
 
       <AppDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
+      <CatchLogSheet open={catchSheetOpen} onClose={() => setCatchSheetOpen(false)} />
     </div>
   );
 }

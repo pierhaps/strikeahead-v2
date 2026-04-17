@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -8,6 +8,7 @@ import {
 import PageTransition from '../components/ui/PageTransition';
 import { base44 } from '@/api/base44Client';
 import { useTranslation } from 'react-i18next';
+import { SkProfileHeader } from '../components/ui/Skeleton';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 
@@ -90,9 +91,18 @@ export default function Profile() {
   const xpToNext = 5000;
   const xpPct = Math.min((fishXp / xpToNext) * 100, 100);
 
+  if (!user) return (
+    <PageTransition>
+      <SkProfileHeader />
+      <div className="px-4 mt-4 space-y-2">
+        {[1,2,3,4,5].map(i => <div key={i} className="skeleton-shimmer rounded-2xl h-14" />)}
+      </div>
+    </PageTransition>
+  );
+
   return (
     <PageTransition>
-      <div className="pb-4">
+      <div className="pb-4 animate-fade-in">
         {/* Cover / Header */}
         <div className="relative h-36 mb-16">
           <div className="absolute inset-0 gradient-tide opacity-40" style={{

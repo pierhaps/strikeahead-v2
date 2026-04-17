@@ -8,6 +8,7 @@ import PageTransition from '../components/ui/PageTransition';
 import PromoCodeRedeemer from '../components/subscription/PromoCodeRedeemer';
 import BillingToggle from '../components/subscription/BillingToggle';
 import LifetimeDealBanner from '../components/subscription/LifetimeDealBanner';
+import { trackEvent } from '@/hooks/useAnalytics';
 
 // ── Price data ──────────────────────────────────────────────────────────────
 const PLAN_META = {
@@ -128,7 +129,15 @@ export default function Subscription() {
       }
 
       const res = await base44.functions.invoke('stripeCheckout', payload);
-      if (res.data?.url) window.location.href = res.data.url;
+      if (res.data?.url) {
+        // Track subscription_started before redirecting
+        if (user?.email) {
+          const plan = planKey === 'lifetime' ? 'lifetime' : planKey;
+          const cycle = planKey === 'lifetime' ? 'lifetime' : billingCycle;
+          trackEvent(user.email, 'subscription_started', { plan, billing_cycle: cycle });
+        }
+        window.location.href = res.data.url;
+      }
     } catch (err) {
       console.error('Checkout error:', err);
       alert('Could not start checkout. Please try again.');

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Crown, Zap, X, Check, Sparkles } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { trackEvent } from '@/hooks/useAnalytics';
+import { base44 } from '@/api/base44Client';
 
 /**
  * PaywallModal — shown when a free user hits a premium feature.
@@ -13,8 +15,21 @@ import { useTranslation } from 'react-i18next';
  *   featureKey      — 'heatmap' | 'strike_score' | ...
  *   requiredTier    — 'angler' | 'pro' | 'legend'
  */
-export default function PaywallModal({ open, onClose, featureKey, requiredTier = 'pro' }) {
+export default function PaywallModal({ open, onClose, featureKey, requiredTier = 'pro', triggerSource = '' }) {
   const { t } = useTranslation();
+
+  // Track paywall_view on open
+  useEffect(() => {
+    if (!open) return;
+    base44.auth.me().then(user => {
+      if (!user?.email) return;
+      trackEvent(user.email, 'paywall_view', {
+        feature_key: featureKey,
+        required_tier: requiredTier,
+        trigger_source: triggerSource,
+      });
+    }).catch(() => {});
+  }, [open]);
 
   const tierInfo = {
     angler: {

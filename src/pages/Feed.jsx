@@ -5,6 +5,8 @@ import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 import { base44 } from '@/api/base44Client';
 import PageTransition from '../components/ui/PageTransition';
+import { SkeletonFeedPost, FadeIn } from '@/components/shared/Skeleton';
+import { fetchWithCache } from '@/hooks/useOfflineCache';
 
 const FILTERS = ['feed_all','feed_followed','feed_region','feed_my_species'];
 
@@ -30,8 +32,11 @@ export default function Feed() {
   const [publishing, setPublishing] = useState(false);
 
   useEffect(() => {
-    Promise.all([base44.auth.me(), base44.entities.TcPost.list('-created_date', 20)])
-      .then(([u, ps]) => { setUser(u); setPosts(ps); })
+    Promise.all([
+      base44.auth.me().catch(() => null),
+      fetchWithCache('feed_posts', () => base44.entities.TcPost.list('-created_date', 20)),
+    ])
+      .then(([u, ps]) => { setUser(u); setPosts(ps || []); })
       .finally(() => setLoading(false));
   }, []);
 
@@ -145,7 +150,9 @@ export default function Feed() {
         </div>
 
         {loading ? (
-          <div className="text-center py-12"><div className="w-8 h-8 border-2 border-tide-400 border-t-transparent rounded-full animate-spin mx-auto" /></div>
+          <FadeIn className="space-y-4">
+            {[0,1,2].map(i => <SkeletonFeedPost key={i} />)}
+          </FadeIn>
         ) : posts.length === 0 ? (
           <div className="text-center py-16"><p className="text-5xl mb-4">🐟</p><p className="text-foam/50">{t('community.feed_empty')}</p></div>
         ) : (

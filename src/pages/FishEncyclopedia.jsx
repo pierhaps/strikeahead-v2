@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, X, ChevronRight, Thermometer, Anchor, Clock, Fish, BookOpen, ArrowUp, Shield, AlertTriangle } from 'lucide-react';
 import PageTransition from '../components/ui/PageTransition';
 import { base44 } from '@/api/base44Client';
+import PullToRefresh from '../components/shared/PullToRefresh';
+import LongPressMenu from '../components/shared/LongPressMenu';
 import { useTranslation } from 'react-i18next';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
@@ -381,17 +383,20 @@ export default function FishEncyclopediaPage() {
   const { t } = useTranslation();
   const [fish, setFish] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [wishlist, setWishlist] = useState(new Set());
   const [query, setQuery] = useState('');
   const [filterHabitat, setFilterHabitat] = useState('all');
   const [filterRarity, setFilterRarity] = useState('all');
   const [filterInvasive, setFilterInvasive] = useState('all');
   const [selected, setSelected] = useState(null);
 
-  useEffect(() => {
-    base44.entities.FishEncyclopedia.list('name_de', 500)
-      .then(d => { setFish(d || []); setLoading(false); })
-      .catch(() => setLoading(false));
+  const loadFish = useCallback(async () => {
+    const d = await base44.entities.FishEncyclopedia.list('name_de', 500).catch(() => []);
+    setFish(d || []);
+    setLoading(false);
   }, []);
+
+  useEffect(() => { loadFish(); }, [loadFish]);
 
   const filtered = useMemo(() => fish.filter(f => {
     const q = query.toLowerCase();

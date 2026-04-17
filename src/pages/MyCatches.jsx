@@ -6,6 +6,8 @@ import { base44 } from '@/api/base44Client';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { computeTrustScore, trustMeta } from '../utils/trustEngine';
+import { SkeletonCatchCard, FadeIn } from '@/components/shared/Skeleton';
+import { fetchWithCache } from '@/hooks/useOfflineCache';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 
@@ -95,10 +97,9 @@ export default function MyCatches() {
   const [filterRange, setFilterRange] = useState('all');
 
   useEffect(() => {
-    base44.entities.Catch.list('-caught_date', 200).then(data => {
-      setCatches(data || []);
-      setLoading(false);
-    }).catch(() => setLoading(false));
+    fetchWithCache('my_catches', () => base44.entities.Catch.list('-caught_date', 200))
+      .then(data => { setCatches(data || []); })
+      .finally(() => setLoading(false));
   }, []);
 
   const now = new Date();
@@ -119,9 +120,17 @@ export default function MyCatches() {
   const allWaters = [...new Set(catches.map(c => c.waterbody).filter(Boolean))];
 
   if (loading) return (
-    <PageTransition><div className="flex items-center justify-center min-h-[60vh]">
-      <div className="w-8 h-8 border-2 border-tide-400 border-t-transparent rounded-full animate-spin" />
-    </div></PageTransition>
+    <PageTransition>
+      <div className="px-4 pt-6 pb-4 space-y-4">
+        <div className="space-y-1">
+          <div className="h-3 w-24 rounded-lg" style={{ background: '#0D1E30' }} />
+          <div className="h-6 w-40 rounded-xl" style={{ background: '#0D1E30' }} />
+        </div>
+        <FadeIn className="grid grid-cols-2 gap-3">
+          {[0,1,2,3,4,5].map(i => <SkeletonCatchCard key={i} />)}
+        </FadeIn>
+      </div>
+    </PageTransition>
   );
 
   return (
