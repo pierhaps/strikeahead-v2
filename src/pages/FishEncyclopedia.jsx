@@ -7,7 +7,8 @@ import { useTranslation } from 'react-i18next';
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 
-/** Build local image path from fish name_de */
+/** Build image URL from fish name_de → GitHub raw content */
+const FISH_IMG_BASE = 'https://raw.githubusercontent.com/pierhaps/strikeahead-v2/main/public/fish';
 function fishImageUrl(fish) {
   if (fish.image_url) return fish.image_url;
   if (!fish.name_de) return null;
@@ -18,7 +19,7 @@ function fishImageUrl(fish) {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/-+/g, '-')
     .replace(/^-|-$/g, '');
-  return `/fish/${slug}.webp`;
+  return `${FISH_IMG_BASE}/${slug}.webp`;
 }
 
 const RARITY_CFG = {
