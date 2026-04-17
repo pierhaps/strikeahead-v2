@@ -1,0 +1,38 @@
+{
+  "name": "LifetimeDealCounter",
+  "type": "object",
+  "properties": {
+    "tier": {
+      "type": "number",
+      "description": "Tier number 1-4"
+    },
+    "tier_name": {
+      "type": "string",
+      "description": "Display name e.g. Founding Angler"
+    },
+    "price": {
+      "type": "number",
+      "description": "Price in EUR"
+    },
+    "max_slots": {
+      "type": "number",
+      "description": "Maximum slots available"
+    },
+    "sold": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of slots sold"
+    },
+    "active": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this tier is currently active"
+    }
+  },
+  "required": [
+    "tier",
+    "tier_name",
+    "price",
+    "max_slots"
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "name": "PromoCode",
+  "type": "object",
+  "properties": {
+    "code": {
+      "type": "string",
+      "description": "Unique promo code e.g. ANDRE-FRIEND-01"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "friend",
+        "ambassador",
+        "beta",
+        "press"
+      ]
+    },
+    "grants_plan": {
+      "type": "string",
+      "enum": [
+        "angler",
+        "pro",
+        "legend"
+      ]
+    },
+    "duration_days": {
+      "type": "number",
+      "description": "Days of access. Null = forever"
+    },
+    "max_uses": {
+      "type": "number",
+      "default": 1
+    },
+    "times_used": {
+      "type": "number",
+      "default": 0
+    },
+    "created_by": {
+      "type": "string",
+      "description": "Admin email who created it"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    },
+    "expires_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the code itself expires"
+    },
+    "note": {
+      "type": "string",
+      "description": "Internal note e.g. For fishing YouTuber Max"
+    }
+  },
+  "required": [
+    "code",
+    "type",
+    "grants_plan"
+  ]
+}

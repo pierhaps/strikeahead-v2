@@ -40,6 +40,23 @@
       ],
       "default": "free"
     },
+    "billing_cycle": {
+      "type": "string",
+      "enum": [
+        "monthly",
+        "annual",
+        "lifetime"
+      ]
+    },
+    "stripe_customer_id": {
+      "type": "string"
+    },
+    "stripe_subscription_id": {
+      "type": "string"
+    },
+    "lifetime_tier": {
+      "type": "number"
+    },
     "is_coach": {
       "type": "boolean",
       "default": false

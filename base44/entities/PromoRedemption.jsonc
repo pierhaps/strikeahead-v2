@@ -1,0 +1,32 @@
+{
+  "name": "PromoRedemption",
+  "type": "object",
+  "properties": {
+    "code": {
+      "type": "string",
+      "description": "The promo code used"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "Who redeemed it"
+    },
+    "redeemed_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "grants_plan": {
+      "type": "string",
+      "description": "Which plan was granted"
+    },
+    "expires_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the granted access expires. Null = forever"
+    }
+  },
+  "required": [
+    "code",
+    "user_email",
+    "grants_plan"
+  ]
+}
