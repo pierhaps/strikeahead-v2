@@ -594,7 +594,14 @@
     "title": "Enciklopedia e peshkut",
     "species_count": "Lloje",
     "invasive_label": "Invazive",
-    "results": "Rezultate"
+    "results": "Rezultate",
+    "safe_label": "Pa rrezik",
+    "invasive": {
+      "deadly_toxic": "Helmatisës vdekjeprurës",
+      "venomous_invasive": "Helmues dhe invaziv",
+      "invasive_herbivore": "Invaziv (barisngrënës)",
+      "venomous_native": "Helmues (vendës)"
+    }
   },
   "families": {
     "empty_desc": "Hyrjet e enciklopedisë do të ngarkohen shpejt",

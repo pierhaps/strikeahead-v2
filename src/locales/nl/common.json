@@ -594,7 +594,14 @@
     "title": "Visencyclopedie",
     "species_count": "Soorten",
     "invasive_label": "Invasief",
-    "results": "Resultaten"
+    "results": "Resultaten",
+    "safe_label": "Niet gevaarlijk",
+    "invasive": {
+      "deadly_toxic": "Dodelijk giftig",
+      "venomous_invasive": "Giftig en invasief",
+      "invasive_herbivore": "Invasief (herbivoor)",
+      "venomous_native": "Giftig (inheems)"
+    }
   },
   "families": {
     "empty_desc": "Encyclopedie-items worden binnenkort geladen",

@@ -594,7 +594,14 @@
     "title": "Encyclopédie des poissons",
     "species_count": "Espèces",
     "invasive_label": "Invasives",
-    "results": "Résultats"
+    "results": "Résultats",
+    "safe_label": "Sans danger",
+    "invasive": {
+      "deadly_toxic": "Toxique mortel",
+      "venomous_invasive": "Venimeux et invasif",
+      "invasive_herbivore": "Invasif (herbivore)",
+      "venomous_native": "Venimeux (indigène)"
+    }
   },
   "families": {
     "empty_desc": "Les entrées encyclopédiques seront bientôt chargées",

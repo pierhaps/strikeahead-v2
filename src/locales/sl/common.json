@@ -594,7 +594,14 @@
     "title": "Ribja enciklopedija",
     "species_count": "Vrst",
     "invasive_label": "Invazivnih",
-    "results": "Rezultatov"
+    "results": "Rezultatov",
+    "safe_label": "Nenevaren",
+    "invasive": {
+      "deadly_toxic": "Smrtno strupeno",
+      "venomous_invasive": "Strupeno in invazivno",
+      "invasive_herbivore": "Invazivno (rastlinojedec)",
+      "venomous_native": "Strupeno (domače)"
+    }
   },
   "families": {
     "empty_desc": "Vnosi v enciklopedijo bodo kmalu na voljo",

@@ -594,7 +594,14 @@
     "title": "Fischlexikon",
     "species_count": "Arten",
     "invasive_label": "Invasive",
-    "results": "Ergebnisse"
+    "results": "Ergebnisse",
+    "safe_label": "Ungefährlich",
+    "invasive": {
+      "deadly_toxic": "Tödlich giftig",
+      "venomous_invasive": "Giftig & invasiv",
+      "invasive_herbivore": "Invasiv (herbivor)",
+      "venomous_native": "Giftig (heimisch)"
+    }
   },
   "families": {
     "empty_desc": "Lexikon-Einträge werden bald geladen",

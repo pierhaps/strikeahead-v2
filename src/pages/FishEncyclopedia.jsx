@@ -384,6 +384,7 @@ export default function FishEncyclopediaPage() {
   const [query, setQuery] = useState('');
   const [filterHabitat, setFilterHabitat] = useState('all');
   const [filterRarity, setFilterRarity] = useState('all');
+  const [filterInvasive, setFilterInvasive] = useState('all');
   const [selected, setSelected] = useState(null);
 
   useEffect(() => {
@@ -397,8 +398,11 @@ export default function FishEncyclopediaPage() {
     if (q && !(f.name_de || '').toLowerCase().includes(q) && !(f.name_en || '').toLowerCase().includes(q) && !(f.name_latin || '').toLowerCase().includes(q)) return false;
     if (filterHabitat !== 'all' && !(f.habitat || []).includes(filterHabitat)) return false;
     if (filterRarity !== 'all' && f.rarity !== filterRarity) return false;
+    if (filterInvasive === 'invasive' && !f.invasive_category) return false;
+    if (filterInvasive === 'safe' && f.invasive_category) return false;
+    if (filterInvasive !== 'all' && filterInvasive !== 'invasive' && filterInvasive !== 'safe' && f.invasive_category !== filterInvasive) return false;
     return true;
-  }), [fish, query, filterHabitat, filterRarity]);
+  }), [fish, query, filterHabitat, filterRarity, filterInvasive]);
 
   const habitats = useMemo(() => [...new Set(fish.flatMap(f => f.habitat || []))].sort(), [fish]);
 
@@ -469,6 +473,39 @@ export default function FishEncyclopediaPage() {
             </motion.button>
           ))}
         </motion.div>
+
+        {/* Invasive filter */}
+        {stats.invasive > 0 && (
+          <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, ease: tideEase }}
+            className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
+            {[
+              { key: 'all',               label: t('common.all'),                              icon: null },
+              { key: 'invasive',          label: t('encyclopedia.invasive_label'),              icon: '⚠️' },
+              { key: 'deadly_toxic',      label: t('encyclopedia.invasive.deadly_toxic'),       icon: '☠️' },
+              { key: 'venomous_invasive', label: t('encyclopedia.invasive.venomous_invasive'),  icon: '🐡' },
+              { key: 'invasive_herbivore',label: t('encyclopedia.invasive.invasive_herbivore'), icon: '🌿' },
+              { key: 'venomous_native',   label: t('encyclopedia.invasive.venomous_native'),    icon: '🔶' },
+              { key: 'safe',             label: t('encyclopedia.safe_label'),                  icon: '✅' },
+            ].map(chip => {
+              const isActive = filterInvasive === chip.key;
+              const isDanger = chip.key !== 'all' && chip.key !== 'safe';
+              return (
+                <motion.button key={chip.key} onClick={() => setFilterInvasive(chip.key)}
+                  whileTap={{ scale: 0.95 }}
+                  className={`px-3 py-2 rounded-xl text-xs font-bold flex-shrink-0 transition-all flex items-center gap-1 ${
+                    isActive
+                      ? isDanger
+                        ? 'bg-gradient-to-r from-red-600 to-red-500 text-white shadow-lg shadow-red-600/30'
+                        : 'bg-gradient-to-r from-tide-500 to-tide-400 text-white shadow-lg shadow-tide-500/20'
+                      : 'liquid-glass-subtle text-foam/50'
+                  }`}>
+                  {chip.icon && <span>{chip.icon}</span>}
+                  {chip.label}
+                </motion.button>
+              );
+            })}
+          </motion.div>
+        )}
 
         {/* Results count */}
         <p className="text-foam/25 text-xs">{filtered.length} {t('encyclopedia.results')}</p>

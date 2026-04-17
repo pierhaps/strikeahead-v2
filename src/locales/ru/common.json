@@ -594,7 +594,14 @@
     "title": "Энциклопедия рыб",
     "species_count": "Видов",
     "invasive_label": "Инвазивных",
-    "results": "Результатов"
+    "results": "Результатов",
+    "safe_label": "Безопасно",
+    "invasive": {
+      "deadly_toxic": "Смертельно ядовитый",
+      "venomous_invasive": "Ядовитый и инвазивный",
+      "invasive_herbivore": "Инвазивный (травоядный)",
+      "venomous_native": "Ядовитый (местный)"
+    }
   },
   "families": {
     "empty_desc": "Записи энциклопедии скоро появятся",

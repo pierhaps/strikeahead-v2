@@ -594,7 +594,14 @@
     "title": "Fish Encyclopedia",
     "species_count": "Species",
     "invasive_label": "Invasive",
-    "results": "Results"
+    "results": "Results",
+    "safe_label": "Safe",
+    "invasive": {
+      "deadly_toxic": "Deadly toxic",
+      "venomous_invasive": "Venomous invasive",
+      "invasive_herbivore": "Invasive herbivore",
+      "venomous_native": "Venomous native"
+    }
   },
   "families": {
     "empty_desc": "Encyclopedia entries coming soon",

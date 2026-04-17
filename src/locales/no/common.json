@@ -594,7 +594,14 @@
     "title": "Fiskeleksikon",
     "species_count": "Arter",
     "invasive_label": "Invasive",
-    "results": "Resultater"
+    "results": "Resultater",
+    "safe_label": "Ufarlig",
+    "invasive": {
+      "deadly_toxic": "Dødelig giftig",
+      "venomous_invasive": "Giftig og invasiv",
+      "invasive_herbivore": "Invasiv (plantespiser)",
+      "venomous_native": "Giftig (hjemmehørende)"
+    }
   },
   "families": {
     "empty_desc": "Leksikonoppføringer kommer snart",

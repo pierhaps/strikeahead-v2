@@ -594,7 +594,14 @@
     "title": "موسوعة الأسماك",
     "species_count": "أنواع",
     "invasive_label": "غازية",
-    "results": "نتائج"
+    "results": "نتائج",
+    "safe_label": "آمن",
+    "invasive": {
+      "deadly_toxic": "سام مميت",
+      "venomous_invasive": "سام وغازي",
+      "invasive_herbivore": "غازي (عاشب)",
+      "venomous_native": "سام (محلي)"
+    }
   },
   "families": {
     "empty_desc": "إدخالات الموسوعة قريباً",

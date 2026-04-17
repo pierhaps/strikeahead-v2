@@ -594,7 +594,14 @@
     "title": "Balık ansiklopedisi",
     "species_count": "Tür",
     "invasive_label": "İstilacı",
-    "results": "Sonuç"
+    "results": "Sonuç",
+    "safe_label": "Tehlikesiz",
+    "invasive": {
+      "deadly_toxic": "Ölümcül zehirli",
+      "venomous_invasive": "Zehirli ve istilacı",
+      "invasive_herbivore": "İstilacı (otçul)",
+      "venomous_native": "Zehirli (yerli)"
+    }
   },
   "families": {
     "empty_desc": "Ansiklopedi girdileri yakında yüklü olacak",

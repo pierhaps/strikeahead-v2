@@ -594,7 +594,14 @@
     "title": "Enciklopedija riba",
     "species_count": "Врста",
     "invasive_label": "Инвазивних",
-    "results": "Резултата"
+    "results": "Резултата",
+    "safe_label": "Bezopasno",
+    "invasive": {
+      "deadly_toxic": "Smrtonosno otrovno",
+      "venomous_invasive": "Otrovno i invazivno",
+      "invasive_herbivore": "Invazivno (biljojed)",
+      "venomous_native": "Otrovno (domaće)"
+    }
   },
   "families": {
     "empty_desc": "Enciklopedijski unosi uskoro",

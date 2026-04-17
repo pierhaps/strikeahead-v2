@@ -594,7 +594,14 @@
     "title": "Εγκυκλοπαίδεια ψαριών",
     "species_count": "Είδη",
     "invasive_label": "Χωροκ.",
-    "results": "Αποτελέσματα"
+    "results": "Αποτελέσματα",
+    "safe_label": "Αβλαβές",
+    "invasive": {
+      "deadly_toxic": "Θανατηφόρα τοξικό",
+      "venomous_invasive": "Δηλητηριώδες & χωροκατακτητικό",
+      "invasive_herbivore": "Χωροκατακτητικό (φυτοφάγο)",
+      "venomous_native": "Δηλητηριώδες (εγγενές)"
+    }
   },
   "families": {
     "empty_desc": "Τα στοιχεία της εγκυκλοπαίδειας θα φορτωθούν σύντομα",
