@@ -4,6 +4,7 @@ import { Plus, Wind, Fish } from 'lucide-react';
 import PageTransition from '../components/ui/PageTransition';
 import PaywallModal from '../components/shared/PaywallModal';
 import { base44 } from '@/api/base44Client';
+import { useAuth } from '@/lib/AuthContext';
 import { useTranslation } from 'react-i18next';
 import { useEntitlement } from '@/hooks/useEntitlement';
 
@@ -77,6 +78,7 @@ function NewEntryModal({ onClose, onSave, t }) {
 
 export default function FishingDiary() {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const { canAccess, requiredTier } = useEntitlement();
   const hasAccess = canAccess('diary');
   const [entries, setEntries] = useState([]);
@@ -90,7 +92,7 @@ export default function FishingDiary() {
     }).catch(() => setLoading(false));
   };
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { if (!user?.email) { setLoading(false); return; } load(); }, [user?.email]);
 
   if (loading) return (
     <PageTransition><div className="flex items-center justify-center min-h-[60vh]">

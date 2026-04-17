@@ -29,13 +29,14 @@ export default function Statistics() {
   const [timeRange, setTimeRange] = useState('12');
 
   useEffect(() => {
+    if (!user?.email) { setLoading(false); return; }
     base44.entities.Catch.list('-caught_date', 500)
       .then((data) => {
         setCatches(data || []);
         setLoading(false);
       })
       .catch(() => setLoading(false));
-  }, []);
+  }, [user?.email]);
 
   // ---- Filtering ----
   const filteredCatches = useMemo(() => {

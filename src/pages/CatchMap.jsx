@@ -4,6 +4,7 @@ import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 import { Navigation, X } from 'lucide-react';
 import PageTransition from '../components/ui/PageTransition';
 import { base44 } from '@/api/base44Client';
+import { useAuth } from '@/lib/AuthContext';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useTranslation } from 'react-i18next';
@@ -37,6 +38,7 @@ function LocationButton() {
 
 export default function CatchMap() {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const [catches, setCatches] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState(null);
@@ -48,7 +50,7 @@ export default function CatchMap() {
       setCatches((data || []).filter(c => c.gps_lat && c.gps_lon));
       setLoading(false);
     }).catch(() => setLoading(false));
-  }, []);
+  }, [user]);
 
   const allSpecies = [...new Set(catches.map(c => c.species).filter(Boolean))];
   const speciesColorMap = Object.fromEntries(allSpecies.map((s, i) => [s, SPECIES_COLORS[i % SPECIES_COLORS.length]]));

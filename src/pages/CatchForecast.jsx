@@ -4,6 +4,7 @@ import { Loader2, Wind, Thermometer, Moon, Anchor, Clock, Zap } from 'lucide-rea
 import PageTransition from '../components/ui/PageTransition';
 import PaywallModal from '../components/shared/PaywallModal';
 import { useEntitlement } from '@/hooks/useEntitlement';
+import { useAuth } from '@/lib/AuthContext';
 import { base44 } from '@/api/base44Client';
 import { useTranslation } from 'react-i18next';
 
@@ -44,6 +45,7 @@ function ScoreRing({ score }) {
 
 export default function CatchForecast() {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const { canAccess, requiredTier } = useEntitlement();
   const hasAccess = canAccess('catch_forecast');
   const [forecasts, setForecasts] = useState([]);
@@ -56,6 +58,7 @@ export default function CatchForecast() {
   const [result, setResult] = useState(null);
 
   useEffect(() => {
+    if (!user?.email) { setLoading(false); return; }
     Promise.all([
       base44.entities.ForecastModel.list('-forecast_date', 100),
       base44.entities.Species.list('name', 200),
@@ -64,7 +67,7 @@ export default function CatchForecast() {
       setSpecies((sp || []).map(s => s.name).filter(Boolean).sort());
       setLoading(false);
     }).catch(() => setLoading(false));
-  }, []);
+  }, [user?.email]);
 
   const loadForecast = async () => {
     if (!selectedSpecies) return;
