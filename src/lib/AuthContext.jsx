@@ -89,18 +89,33 @@ export const AuthProvider = ({ children }) => {
 
   const checkUserAuth = async () => {
     try {
-      // Now check if the user is authenticated
       setIsLoadingAuth(true);
-      const currentUser = await base44.auth.me();
-      setUser(currentUser);
-      setIsAuthenticated(true);
+      let currentUser = null;
+
+      try {
+        currentUser = await base44.auth.me();
+      } catch (meError) {
+        console.log('auth.me() failed, trying getUserProfile fallback...');
+        try {
+          const result = await base44.functions.invoke('getUserProfile', {});
+          currentUser = result?.data?.user || result?.user || null;
+          console.log('getUserProfile fallback result:', currentUser ? 'found user' : 'no user');
+        } catch (fallbackError) {
+          console.error('getUserProfile fallback failed:', fallbackError);
+        }
+      }
+
+      if (currentUser) {
+        setUser(currentUser);
+        setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
+      }
       setIsLoadingAuth(false);
     } catch (error) {
       console.error('User auth check failed:', error);
       setIsLoadingAuth(false);
       setIsAuthenticated(false);
-      
-      // If user auth fails, it might be an expired token
       if (error.status === 401 || error.status === 403) {
         setAuthError({
           type: 'auth_required',
