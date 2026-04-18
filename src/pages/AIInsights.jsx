@@ -3,25 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ThumbsUp, ThumbsDown, Bell, Leaf, TrendingUp, MapPin, Fish, BookOpen, Trophy, Zap, CloudRain, Star } from 'lucide-react';
 import PageTransition from '../components/ui/PageTransition';
 import PaywallModal from '../components/shared/PaywallModal';
+import PremiumGate from '../components/PremiumGate';
 import { useEntitlement } from '@/hooks/useEntitlement';
 import { base44 } from '@/api/base44Client';
 import { useTranslation } from 'react-i18next';
-import PremiumGate from '../components/PremiumGate';
-import { useLanguageContext } from '../hooks/useLanguage';
 
-const FEATURE_LABELS = {
-  de: "KI-Insights & Muster-Erkennung",
-  en: "AI Insights & Pattern Recognition",
-  es: "IA Insights y Reconocimiento de Patrones",
-  fr: "IA Insights et Reconnaissance de Modèles",
-  it: "IA Insights e Riconoscimento di Pattern",
-  nl: "AI Inzichten & Patroonherkenning",
-  tr: "AI İçgörüler & Desen Tanıma",
-  hr: "AI Uvidi & Prepoznavanje Uzoraka",
-  pt: "IA Insights e Reconhecimento de Padrões",
-  el: "AI Πληροφορίες & Αναγνώριση Μοτίβων",
-  ru: "ИИ Инсайты и Распознавание Паттернов",
-};
+const FEATURE_LABELS = { de: "KI-Insights & Muster-Erkennung", en: "AI Insights & Pattern Recognition", es: "IA Insights y Reconocimiento de Patrones", fr: "IA Insights et Reconnaissance de Modèles", it: "IA Insights e Riconoscimento di Pattern", nl: "AI Inzichten & Patroonherkenning", tr: "AI İçgörüler & Desen Tanıma", hr: "AI Uvidi & Prepoznavanje Uzoraka", pt: "IA Insights e Reconhecimento de Padrões", el: "AI Πληροφορίες & Αναγνώριση Μοτίβων", ru: "ИИ Инсайты и Распознавание Паттернов" };
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 
@@ -39,8 +26,8 @@ const INSIGHT_COLOR_MAP = {
 };
 
 export default function AIInsights() {
-  const { t } = useTranslation();
-  const { lang } = useLanguageContext();
+  const { t, i18n } = useTranslation();
+  const lang = (i18n.language || 'de').split('-')[0];
   const { canAccess, requiredTier } = useEntitlement();
   const hasAccess = canAccess('ai_insights');
   const [insights, setInsights] = useState([]);

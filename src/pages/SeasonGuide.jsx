@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Lock } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import PageTransition from '../components/ui/PageTransition';
 import { base44 } from '@/api/base44Client';
 import { useTranslation } from 'react-i18next';
+import { usePremiumCheck } from '../hooks/usePremiumCheck';
+
+const FEATURE_LABELS = { de: "Saisonale Fang-Vorhersagen", en: "Seasonal Catch Forecasts", es: "Pronósticos de Captura Estacionales", fr: "Prévisions de Prise Saisonnières", it: "Previsioni di Cattura Stagionali", nl: "Seizoensgebonden Vangstvoorspellingen", tr: "Mevsimsel Av Tahminleri", hr: "Sezonske Prognoze Ulova", pt: "Previsões de Captura Sazonais", el: "Εποχιακές Προβλέψεις Αλιείας", ru: "Сезонные Прогнозы Улова" };
+const PREMIUM_CTA = { de: "Alle 12 Monate freischalten", en: "Unlock all 12 months", es: "Desbloquear los 12 meses", fr: "Débloquer les 12 mois", it: "Sblocca tutti i 12 mesi", nl: "Alle 12 maanden ontgrendelen", tr: "Tüm 12 ayı açın", hr: "Otključaj svih 12 mjeseci", pt: "Desbloquear todos os 12 meses", el: "Ξεκλειδώστε και τους 12 μήνες", ru: "Разблокировать все 12 месяцев" };
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 
@@ -25,10 +31,15 @@ const TIME_DE_KEYS = {
 };
 
 export default function SeasonGuide() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = (i18n.language || 'de').split('-')[0];
+  const { isPremium, isAdmin } = usePremiumCheck();
+  const canAccessAll = isPremium || isAdmin;
+  const navigate = useNavigate();
+  const currentMonth = new Date().getMonth() + 1;
   const [patterns, setPatterns] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [month, setMonth] = useState(new Date().getMonth() + 1);
+  const [month, setMonth] = useState(currentMonth);
 
   useEffect(() => {
     base44.entities.SeasonalPattern.list('species', 500).then(d => { setPatterns(d || []); setLoading(false); }).catch(() => setLoading(false));
@@ -67,7 +78,24 @@ export default function SeasonGuide() {
           <span className="text-foam/40 text-sm">· {forMonth.length} {forMonth.length === 1 ? 'record' : 'records'}</span>
         </div>
 
-        {forMonth.length === 0 ? (
+        {!canAccessAll && month !== currentMonth ? (
+          <div className="glass-card rounded-3xl p-8 text-center space-y-4"
+            style={{ border: '1px solid rgba(182,240,60,0.2)' }}>
+            <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto"
+              style={{ background: 'rgba(182,240,60,0.12)', border: '1px solid rgba(182,240,60,0.3)' }}>
+              <Lock className="w-7 h-7 text-lime2" />
+            </div>
+            <div>
+              <p className="font-display font-bold text-foam text-lg">{FEATURE_LABELS[lang] || FEATURE_LABELS.en}</p>
+              <p className="text-foam/50 text-sm mt-1">{t(`months_short.${month}`)}</p>
+            </div>
+            <button onClick={() => navigate('/subscription')}
+              className="w-full py-3.5 rounded-2xl font-bold text-navy-900"
+              style={{ background: 'linear-gradient(225deg, #B6F03C 0%, #2EE0C9 55%, #2DA8FF 100%)', boxShadow: '0 8px 24px rgba(46,224,201,0.3)' }}>
+              {PREMIUM_CTA[lang] || PREMIUM_CTA.en}
+            </button>
+          </div>
+        ) : forMonth.length === 0 ? (
           <div className="glass-card rounded-3xl p-10 text-center">
             <div className="text-5xl mb-4">📅</div>
             <p className="font-display font-bold text-foam">{t('seasonguide.empty_title')}</p>

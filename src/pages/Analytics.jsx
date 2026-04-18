@@ -5,24 +5,12 @@ import { Fish, Anchor, Trophy, TrendingUp } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import PageTransition from '../components/ui/PageTransition';
 import PaywallModal from '../components/shared/PaywallModal';
+import PremiumGate from '../components/PremiumGate';
 import { useEntitlement } from '@/hooks/useEntitlement';
 import { base44 } from '@/api/base44Client';
-import PremiumGate from '../components/PremiumGate';
 import { useLanguageContext } from '../hooks/useLanguage';
 
-const FEATURE_LABELS = {
-  de: "Erweiterte Analytik & Trends",
-  en: "Advanced Analytics & Trends",
-  es: "Analítica Avanzada y Tendencias",
-  fr: "Analytique Avancée et Tendances",
-  it: "Analisi Avanzate e Tendenze",
-  nl: "Geavanceerde Analyse & Trends",
-  tr: "Gelişmiş Analitik & Trendler",
-  hr: "Napredna Analitika & Trendovi",
-  pt: "Análise Avançada & Tendências",
-  el: "Προηγμένη Ανάλυση & Τάσεις",
-  ru: "Продвинутая Аналитика & Тренды",
-};
+const FEATURE_LABELS = { de: "Erweiterte Analytik & Trends", en: "Advanced Analytics & Trends", es: "Analítica Avanzada y Tendencias", fr: "Analytique Avancée et Tendances", it: "Analisi Avanzate e Tendenze", nl: "Geavanceerde Analyse & Trends", tr: "Gelişmiş Analitik & Trendler", hr: "Napredna Analitika & Trendovi", pt: "Análise Avançada & Tendências", el: "Προηγμένη Ανάλυση & Τάσεις", ru: "Продвинутая Аналитика & Тренды" };
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 const COLORS = ['#1FA7B8', '#F5C34B', '#4DC3D1', '#FF6B5B', '#7FDCE5', '#FFD872'];
@@ -50,8 +38,8 @@ function KPICard({ icon: KpiIcon, label, value, sub, sun }) {
 const HOURS = ['00-06','06-09','09-12','12-15','15-18','18-21','21-24'];
 
 export default function Analytics() {
-  const { t } = useTranslation();
-  const { lang } = useLanguageContext();
+  const { t, i18n } = useTranslation();
+  const lang = (i18n.language || 'de').split('-')[0];
   const { canAccess, requiredTier } = useEntitlement();
   const hasAccess = canAccess('analytics');
   const ta = (k, opts) => t(`analytics.${k}`, opts);

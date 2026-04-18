@@ -7,19 +7,7 @@ import PageTransition from '../components/ui/PageTransition';
 import PremiumGate from '../components/PremiumGate';
 import { useLanguageContext } from '../hooks/useLanguage';
 
-const FEATURE_LABELS = {
-  de: "Gezeiten & Marine Intelligence",
-  en: "Tide & Marine Intelligence",
-  es: "Mareas e Inteligencia Marina",
-  fr: "Marées et Intelligence Marine",
-  it: "Maree e Intelligence Marina",
-  nl: "Getijden & Marine Intelligentie",
-  tr: "Gelgit & Deniz İstihbaratı",
-  hr: "Plima i Morska Inteligencija",
-  pt: "Marés e Inteligência Marinha",
-  el: "Παλίρροιες & Θαλάσσια Πληροφορία",
-  ru: "Приливы & Морская Разведка",
-};
+const FEATURE_LABELS = { de: "Gezeiten & Marine Intelligence", en: "Tide & Marine Intelligence", es: "Mareas e Inteligencia Marina", fr: "Marées et Intelligence Marine", it: "Maree e Intelligence Marina", nl: "Getijden & Marine Intelligentie", tr: "Gelgit & Deniz İstihbaratı", hr: "Plima i Morska Inteligencija", pt: "Marés e Inteligência Marinha", el: "Παλίρροιες & Θαλάσσια Πληροφορία", ru: "Приливы & Морская Разведка" };
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 
@@ -114,8 +102,8 @@ function TideTooltip({ active, payload }) {
 }
 
 export default function TideCatch() {
-  const { t } = useTranslation();
-  const { lang } = useLanguageContext();
+  const { t, i18n } = useTranslation();
+  const lang = (i18n.language || 'de').split('-')[0];
   const [coast, setCoast] = useState('nordsee');
   const [tideData, setTideData] = useState([]);
   const [loading, setLoading] = useState(false);

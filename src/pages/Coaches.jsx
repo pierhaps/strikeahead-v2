@@ -5,6 +5,10 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import PageTransition from '../components/ui/PageTransition';
+import { usePremiumCheck } from '../hooks/usePremiumCheck';
+import { useLanguageContext } from '../hooks/useLanguage';
+
+const PREMIUM_BOOKING_CTA = { de: "Premium nötig — Jetzt freischalten", en: "Premium required — Unlock now", es: "Se requiere Premium — Desbloquear ahora", fr: "Premium requis — Débloquer maintenant", it: "Premium richiesto — Sblocca ora", nl: "Premium vereist — Nu ontgrendelen", tr: "Premium gerekli — Şimdi aç", hr: "Premium potreban — Otključaj sada", pt: "Premium necessário — Desbloquear agora", el: "Απαιτείται Premium — Ξεκλειδώστε τώρα", ru: "Требуется Премиум — Разблокировать" };
 
 function StarRating({ rating, count }) {
   return (
@@ -18,7 +22,10 @@ function StarRating({ rating, count }) {
 }
 
 export default function Coaches() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = (i18n.language || 'de').split('-')[0];
+  const { isPremium, isAdmin } = usePremiumCheck();
+  const canBook = isPremium || isAdmin;
   const navigate = useNavigate();
   const [coaches, setCoaches] = useState([]);
   const [search, setSearch] = useState('');
@@ -81,10 +88,18 @@ export default function Coaches() {
                   </div>
                 )}
 
-                <button onClick={() => navigate('/bookcoach', { state: { coach } })}
-                  className="w-full py-2.5 rounded-xl gradient-tide text-white text-sm font-bold">
-                  {t('community.coaches_book')}
-                </button>
+                {canBook ? (
+                  <button onClick={() => navigate('/bookcoach', { state: { coach } })}
+                    className="w-full py-2.5 rounded-xl gradient-tide text-white text-sm font-bold">
+                    {t('community.coaches_book')}
+                  </button>
+                ) : (
+                  <button onClick={() => navigate('/subscription')}
+                    className="w-full py-2.5 rounded-xl text-sm font-bold text-navy-900"
+                    style={{ background: 'linear-gradient(135deg, #F5C34B 0%, #FFD872 100%)', boxShadow: '0 4px 16px rgba(245,195,75,0.3)' }}>
+                    🔒 {PREMIUM_BOOKING_CTA[lang] || PREMIUM_BOOKING_CTA.en}
+                  </button>
+                )}
               </motion.div>
             ))}
           </div>

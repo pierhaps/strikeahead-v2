@@ -7,19 +7,7 @@ import PageTransition from '../components/ui/PageTransition';
 import PremiumGate from '../components/PremiumGate';
 import { useLanguageContext } from '../hooks/useLanguage';
 
-const FEATURE_LABELS = {
-  de: "Angler-Chat & Private Gruppen",
-  en: "Angler Chat & Private Groups",
-  es: "Chat de Pescadores y Grupos Privados",
-  fr: "Chat Pêcheurs et Groupes Privés",
-  it: "Chat Pescatori e Gruppi Privati",
-  nl: "Visser Chat & Privé Groepen",
-  tr: "Balıkçı Sohbeti & Özel Gruplar",
-  hr: "Chat Ribolovaca i Privatne Grupe",
-  pt: "Chat de Pescadores e Grupos Privados",
-  el: "Συνομιλία Ψαράδων & Ιδιωτικές Ομάδες",
-  ru: "Чат Рыбаков & Приватные Группы",
-};
+const FEATURE_LABELS = { de: "Angler-Chat & Private Gruppen", en: "Angler Chat & Private Groups", es: "Chat de Pescadores y Grupos Privados", fr: "Chat Pêcheurs et Groupes Privés", it: "Chat Pescatori e Gruppi Privati", nl: "Visser Chat & Privé Groepen", tr: "Balıkçı Sohbeti & Özel Gruplar", hr: "Chat Ribolovaca i Privatne Grupe", pt: "Chat de Pescadores e Grupos Privados", el: "Συνομιλία Ψαράδων & Ιδιωτικές Ομάδες", ru: "Чат Рыбаков & Приватные Группы" };
 
 const CHANNEL_KEYS = [
   { key: 'general',    emoji: '🌊', i18nKey: 'room_general',    fallback: 'Allgemein' },
@@ -37,8 +25,8 @@ const CHANNEL_KEYS = [
 const CONTACT_REGEX = /(\+\d{6,}|@\w+|www\.|\.com|\.de|email|whatsapp|telegram|phone|tel:|mailto:)/i;
 
 export default function AnglerChat() {
-  const { t } = useTranslation();
-  const { lang } = useLanguageContext();
+  const { t, i18n } = useTranslation();
+  const lang = (i18n.language || 'de').split('-')[0];
   const CHANNELS = React.useMemo(() => CHANNEL_KEYS.map(c => ({
     key: c.key,
     emoji: c.emoji,

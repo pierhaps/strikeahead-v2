@@ -3,23 +3,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, Clock, Euro, MessageCircle, Send, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import PageTransition from '../components/ui/PageTransition';
-import { base44 } from '@/api/base44Client';
 import PremiumGate from '../components/PremiumGate';
 import { useLanguageContext } from '../hooks/useLanguage';
+import { base44 } from '@/api/base44Client';
 
-const FEATURE_LABELS = {
-  de: "Meine Buchungen",
-  en: "My Bookings",
-  es: "Mis Reservas",
-  fr: "Mes Réservations",
-  it: "Le Mie Prenotazioni",
-  nl: "Mijn Reserveringen",
-  tr: "Rezervasyonlarım",
-  hr: "Moje Rezervacije",
-  pt: "Minhas Reservas",
-  el: "Οι Κρατήσεις μου",
-  ru: "Мои Бронирования",
-};
+const FEATURE_LABELS = { de: "Meine Buchungen", en: "My Bookings", es: "Mis Reservas", fr: "Mes Réservations", it: "Le Mie Prenotazioni", nl: "Mijn Reserveringen", tr: "Rezervasyonlarım", hr: "Moje Rezervacije", pt: "Minhas Reservas", el: "Οι Κρατήσεις μου", ru: "Мои Бронирования" };
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 
@@ -130,8 +118,8 @@ function BookingDetail({ booking, onClose, userEmail }) {
 }
 
 export default function MyBookings() {
-  const { t } = useTranslation();
-  const { lang } = useLanguageContext();
+  const { t, i18n } = useTranslation();
+  const lang = (i18n.language || 'de').split('-')[0];
   const STATUS_CONFIG = React.useMemo(() => getStatusConfig(t), [t]);
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
