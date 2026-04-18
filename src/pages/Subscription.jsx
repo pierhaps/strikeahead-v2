@@ -319,6 +319,7 @@ export default function Subscription() {
   const [billing, setBilling] = useState('yearly');
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [toast, setToast] = useState(null);
+  const [manualEmail, setManualEmail] = useState('');
 
   useEffect(() => {
     base44.auth.me().then(setUser).catch(() => {});
@@ -341,12 +342,16 @@ export default function Subscription() {
       alert('Checkout is only available in the published app, not in preview mode.');
       return;
     }
+    if (!user?.email && !manualEmail) {
+      setToast({ msg: 'Bitte gib deine E-Mail-Adresse ein', ok: false });
+      return;
+    }
     setCheckoutLoading(true);
     try {
       const res = await base44.functions.invoke('createCheckoutSession', {
         priceKey: billing,
         lang,
-        email: user?.email,
+        email: user?.email || manualEmail,
       });
       if (res.data?.url) {
         window.location.href = res.data.url;
@@ -506,6 +511,20 @@ export default function Subscription() {
                   {billing === 'monthly' ? L.monthly_period : L.yearly_period}
                 </span>
               </div>
+
+              {/* Email fallback */}
+              {!user?.email && (
+                <div className="mb-3">
+                  <input
+                    type="email"
+                    value={manualEmail}
+                    onChange={(e) => setManualEmail(e.target.value)}
+                    placeholder="Deine E-Mail-Adresse"
+                    className="w-full px-4 py-3 rounded-xl text-white text-sm"
+                    style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)' }}
+                  />
+                </div>
+              )}
 
               {/* CTA */}
               <button
