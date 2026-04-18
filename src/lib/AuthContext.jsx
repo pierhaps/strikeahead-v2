@@ -128,12 +128,20 @@ export const AuthProvider = ({ children }) => {
   const logout = (shouldRedirect = true) => {
     setUser(null);
     setIsAuthenticated(false);
-    
+    // Clear any stored tokens
+    try {
+      localStorage.removeItem('base44_token');
+      localStorage.removeItem('token');
+      // Remove token from URL if present
+      const url = new URL(window.location.href);
+      url.searchParams.delete('token');
+      window.history.replaceState({}, '', url.toString());
+    } catch (e) {
+      console.error('Token cleanup error:', e);
+    }
     if (shouldRedirect) {
-      // Use the SDK's logout method which handles token cleanup and redirect
       base44.auth.logout(window.location.href);
     } else {
-      // Just remove the token without redirect
       base44.auth.logout();
     }
   };
