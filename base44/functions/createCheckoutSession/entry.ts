@@ -78,9 +78,6 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'No approval URL returned from PayPal' }, { status: 500 });
     }
 
-    // Save PayPal subscription ID to user
-    await base44.auth.updateMe({ paypal_subscription_id: subscription.id });
-
     console.log(`Created PayPal subscription ${subscription.id} for ${user.email}, plan=${priceKey}`);
     return Response.json({ url: approveLink.href });
 
