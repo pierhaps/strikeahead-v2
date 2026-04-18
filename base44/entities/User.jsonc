@@ -53,11 +53,9 @@
         "lifetime"
       ]
     },
-    "stripe_customer_id": {
-      "type": "string"
-    },
-    "stripe_subscription_id": {
-      "type": "string"
+    "paypal_subscription_id": {
+      "type": "string",
+      "description": "PayPal subscription ID"
     },
     "lifetime_tier": {
       "type": "number"
