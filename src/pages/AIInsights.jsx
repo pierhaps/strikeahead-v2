@@ -6,6 +6,22 @@ import PaywallModal from '../components/shared/PaywallModal';
 import { useEntitlement } from '@/hooks/useEntitlement';
 import { base44 } from '@/api/base44Client';
 import { useTranslation } from 'react-i18next';
+import PremiumGate from '../components/PremiumGate';
+import { useLanguageContext } from '../hooks/useLanguage';
+
+const FEATURE_LABELS = {
+  de: "KI-Insights & Muster-Erkennung",
+  en: "AI Insights & Pattern Recognition",
+  es: "IA Insights y Reconocimiento de Patrones",
+  fr: "IA Insights et Reconnaissance de Modèles",
+  it: "IA Insights e Riconoscimento di Pattern",
+  nl: "AI Inzichten & Patroonherkenning",
+  tr: "AI İçgörüler & Desen Tanıma",
+  hr: "AI Uvidi & Prepoznavanje Uzoraka",
+  pt: "IA Insights e Reconhecimento de Padrões",
+  el: "AI Πληροφορίες & Αναγνώριση Μοτίβων",
+  ru: "ИИ Инсайты и Распознавание Паттернов",
+};
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 
@@ -24,6 +40,7 @@ const INSIGHT_COLOR_MAP = {
 
 export default function AIInsights() {
   const { t } = useTranslation();
+  const { lang } = useLanguageContext();
   const { canAccess, requiredTier } = useEntitlement();
   const hasAccess = canAccess('ai_insights');
   const [insights, setInsights] = useState([]);
@@ -63,6 +80,7 @@ export default function AIInsights() {
   if (loading) return <PageTransition><div className="flex items-center justify-center min-h-[60vh]"><div className="w-8 h-8 border-2 border-tide-400 border-t-transparent rounded-full animate-spin" /></div></PageTransition>;
 
   return (
+    <PremiumGate feature={FEATURE_LABELS[lang] || FEATURE_LABELS.en}>
     <PageTransition>
       {!hasAccess && (
         <PaywallModal open={true} onClose={() => window.history.back()} featureKey="ai_insights" requiredTier={requiredTier('ai_insights')} />
@@ -177,5 +195,6 @@ export default function AIInsights() {
       </div>
       )}
     </PageTransition>
+    </PremiumGate>
   );
 }

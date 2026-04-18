@@ -5,6 +5,22 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import PageTransition from '../components/ui/PageTransition';
+import PremiumGate from '../components/PremiumGate';
+import { useLanguageContext } from '../hooks/useLanguage';
+
+const FEATURE_LABELS = {
+  de: "Coach-Buchung",
+  en: "Coach Booking",
+  es: "Reserva de Entrenador",
+  fr: "Réservation d'Entraîneur",
+  it: "Prenotazione Allenatore",
+  nl: "Trainer Boeken",
+  tr: "Antrenör Rezervasyonu",
+  hr: "Rezervacija Trenera",
+  pt: "Agendamento de Treinador",
+  el: "Κράτηση Προπονητή",
+  ru: "Бронирование Тренера",
+};
 
 const STEPS = ['bookcoach_step1','bookcoach_step2','bookcoach_step3','bookcoach_step4'];
 const tideEase = [0.2, 0.8, 0.2, 1];
@@ -18,6 +34,7 @@ const localeTag = (code) => {
 
 export default function BookCoach() {
   const { t, i18n } = useTranslation();
+  const { lang } = useLanguageContext();
   const location = useLocation();
   const [step, setStep] = useState(location.state?.coach ? 1 : 0);
   const [coaches, setCoaches] = useState([]);
@@ -70,6 +87,7 @@ export default function BookCoach() {
   );
 
   return (
+    <PremiumGate feature={FEATURE_LABELS[lang] || FEATURE_LABELS.en}>
     <PageTransition>
       <div className="px-4 pt-6 pb-4 space-y-5">
         <div>
@@ -217,5 +235,6 @@ export default function BookCoach() {
         )}
       </div>
     </PageTransition>
+    </PremiumGate>
   );
 }

@@ -4,6 +4,22 @@ import { AreaChart, Area, XAxis, YAxis, ReferenceLine, Tooltip, ResponsiveContai
 import { Anchor, Clock, Fish, Loader2, Moon, MapPin } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import PageTransition from '../components/ui/PageTransition';
+import PremiumGate from '../components/PremiumGate';
+import { useLanguageContext } from '../hooks/useLanguage';
+
+const FEATURE_LABELS = {
+  de: "Gezeiten & Marine Intelligence",
+  en: "Tide & Marine Intelligence",
+  es: "Mareas e Inteligencia Marina",
+  fr: "Marées et Intelligence Marine",
+  it: "Maree e Intelligence Marina",
+  nl: "Getijden & Marine Intelligentie",
+  tr: "Gelgit & Deniz İstihbaratı",
+  hr: "Plima i Morska Inteligencija",
+  pt: "Marés e Inteligência Marinha",
+  el: "Παλίρροιες & Θαλάσσια Πληροφορία",
+  ru: "Приливы & Морская Разведка",
+};
 
 const tideEase = [0.2, 0.8, 0.2, 1];
 
@@ -99,6 +115,7 @@ function TideTooltip({ active, payload }) {
 
 export default function TideCatch() {
   const { t } = useTranslation();
+  const { lang } = useLanguageContext();
   const [coast, setCoast] = useState('nordsee');
   const [tideData, setTideData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -143,6 +160,7 @@ export default function TideCatch() {
   }, [tideData, currentHour]);
 
   return (
+    <PremiumGate feature={FEATURE_LABELS[lang] || FEATURE_LABELS.en}>
     <PageTransition>
       <div className="px-4 pt-6 pb-4 space-y-5">
         <div>
@@ -287,5 +305,6 @@ export default function TideCatch() {
         <div className="h-4" />
       </div>
     </PageTransition>
+    </PremiumGate>
   );
 }
