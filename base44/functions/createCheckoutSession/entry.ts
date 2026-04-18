@@ -1,4 +1,4 @@
-const PAYPAL_BASE = 'https://api-m.sandbox.paypal.com';
+const PAYPAL_BASE = 'https://api-m.paypal.com';
 
 async function getAccessToken() {
   const clientId = Deno.env.get('PAYPAL_CLIENT_ID');
