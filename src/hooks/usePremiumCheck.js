@@ -1,28 +1,20 @@
-import { useState, useEffect } from 'react';
-import { base44 } from '@/api/base44Client';
+import { useAuth } from '../lib/AuthContext';
 
 const PREMIUM_PLANS = ['angler', 'pro', 'legend'];
 
 /**
- * Returns { isPremium, isAdmin, loading }
+ * Returns { isPremium, isAdmin, loading, user }
  * isPremium — true if user has any paid plan (angler / pro / legend)
  * isAdmin   — true if user.role === 'admin'
  */
 export function usePremiumCheck() {
-  const [state, setState] = useState({ isPremium: false, isAdmin: false, loading: true });
+  const { user, isLoadingAuth } = useAuth();
 
-  useEffect(() => {
-    base44.auth.me()
-      .then(user => {
-        if (!user) { setState({ isPremium: false, isAdmin: false, loading: false }); return; }
-        const plan = user.plan || user.subscription_plan || '';
-        const isPremium = PREMIUM_PLANS.includes(plan) ||
-          (user.premium_expires_at && new Date(user.premium_expires_at) > new Date());
-        const isAdmin = user.role === 'admin';
-        setState({ isPremium, isAdmin, loading: false });
-      })
-      .catch(() => setState({ isPremium: false, isAdmin: false, loading: false }));
-  }, []);
+  const plan = user?.plan || user?.subscription_plan || '';
+  const isPremium = PREMIUM_PLANS.includes(plan) ||
+    (user?.premium_expires_at && new Date(user.premium_expires_at) > new Date()) ||
+    (user?.is_premium === true);
+  const isAdmin = user?.role === 'admin';
 
-  return state;
+  return { isPremium, isAdmin, loading: isLoadingAuth, user };
 }
