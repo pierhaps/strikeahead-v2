@@ -346,6 +346,7 @@ export default function Subscription() {
       const res = await base44.functions.invoke('createCheckoutSession', {
         priceKey: billing,
         lang,
+        email: user?.email,
       });
       if (res.data?.url) {
         window.location.href = res.data.url;

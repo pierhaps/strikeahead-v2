@@ -1,5 +1,3 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
-
 const PAYPAL_BASE = 'https://api-m.sandbox.paypal.com';
 
 async function getAccessToken() {
@@ -25,13 +23,11 @@ const LOCALE_MAP = {
 
 Deno.serve(async (req) => {
   try {
-    const base44 = createClientFromRequest(req);
-    const user = await base44.auth.me();
-    if (!user) {
-      return Response.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const { priceKey = 'yearly', lang = 'de', email } = await req.json();
 
-    const { priceKey = 'yearly', lang = 'de' } = await req.json();
+    if (!email) {
+      return Response.json({ error: 'Email is required' }, { status: 400 });
+    }
 
     const planId = priceKey === 'monthly'
       ? Deno.env.get('PAYPAL_PLAN_MONTHLY')
@@ -53,7 +49,7 @@ Deno.serve(async (req) => {
       },
       body: JSON.stringify({
         plan_id: planId,
-        custom_id: user.email,
+        custom_id: email,
         application_context: {
           brand_name: 'StrikeAhead',
           locale: LOCALE_MAP[lang] || 'en-US',
@@ -78,7 +74,7 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'No approval URL returned from PayPal' }, { status: 500 });
     }
 
-    console.log(`Created PayPal subscription ${subscription.id} for ${user.email}, plan=${priceKey}`);
+    console.log(`Created PayPal subscription ${subscription.id} for ${email}, plan=${priceKey}`);
     return Response.json({ url: approveLink.href });
 
   } catch (error) {
