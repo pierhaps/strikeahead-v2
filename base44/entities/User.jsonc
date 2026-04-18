@@ -26,6 +26,11 @@
       "type": "number",
       "default": 0
     },
+    "is_premium": {
+      "type": "boolean",
+      "default": false,
+      "description": "True if user has an active subscription"
+    },
     "premium_expires": {
       "type": "string",
       "format": "date-time"

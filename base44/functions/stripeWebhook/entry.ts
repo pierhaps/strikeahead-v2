@@ -4,7 +4,7 @@ import Stripe from 'npm:stripe@14';
 const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY'));
 const webhookSecret = Deno.env.get('STRIPE_WEBHOOK_SECRET');
 
-// Map price IDs to plan names and billing cycles
+// Legacy multi-plan price map (kept for backwards compat)
 const PRICE_MAP = {
   'price_1TN9RXGoVmyTT5LjvgDEhhHI': { plan: 'angler',  cycle: 'monthly' },
   'price_1TN9RXGoVmyTT5Lj1YHtz6Ql': { plan: 'angler',  cycle: 'annual'  },
@@ -16,16 +16,17 @@ const PRICE_MAP = {
   'price_1TN9RXGoVmyTT5LjBaSEiv3H': { plan: 'legend',  cycle: 'lifetime', tier: 2 },
   'price_1TN9RXGoVmyTT5Lj2rDAWpxg': { plan: 'legend',  cycle: 'lifetime', tier: 3 },
   'price_1TN9RXGoVmyTT5LjZbPBYkVg': { plan: 'legend',  cycle: 'lifetime', tier: 4 },
+  // New unified prices
+  'price_1TNUCdRfymtZ5rNsoariAJ2o': { plan: 'pro', cycle: 'monthly' },
+  'price_1TNUECRfymtZ5rNsxdS4gFbH': { plan: 'pro', cycle: 'annual'  },
 };
 
 async function advanceLifetimeTier(base44, completedTier) {
   try {
-    // Mark current tier as inactive
     const tiers = await base44.asServiceRole.entities.LifetimeDealCounter.filter({ tier: completedTier });
     if (tiers.length > 0) {
       await base44.asServiceRole.entities.LifetimeDealCounter.update(tiers[0].id, { active: false });
     }
-    // Activate next tier if it exists
     if (completedTier < 4) {
       const nextTiers = await base44.asServiceRole.entities.LifetimeDealCounter.filter({ tier: completedTier + 1 });
       if (nextTiers.length > 0) {
@@ -67,14 +68,12 @@ Deno.serve(async (req) => {
         if (session.metadata?.purchase_type === 'hookpoints') {
           const hpToAdd = parseInt(session.metadata?.hook_points || '0');
           const packageName = session.metadata?.package_name || 'HookPoints';
-
           if (hpToAdd > 0) {
             const users = await base44.asServiceRole.entities.User.filter({ email: userEmail });
             if (users.length > 0) {
               const currentHp = users[0].hook_points || 0;
               const newBalance = currentHp + hpToAdd;
               await base44.asServiceRole.entities.User.update(users[0].id, { hook_points: newBalance });
-
               await base44.asServiceRole.entities.HookPointTransaction.create({
                 user_email: userEmail,
                 type: 'purchase',
@@ -83,7 +82,6 @@ Deno.serve(async (req) => {
                 description: `${packageName} gekauft`,
                 stripe_session_id: session.id,
               });
-
               console.log(`Added ${hpToAdd} HP to ${userEmail}, new balance: ${newBalance}`);
             } else {
               console.error(`HP purchase: user not found: ${userEmail}`);
@@ -94,39 +92,62 @@ Deno.serve(async (req) => {
 
         // ── Subscription purchase ────────────────────────────────────────────
         const metaPlan = session.metadata?.plan;
-        const metaCycle = session.metadata?.cycle;
+        const metaCycle = session.metadata?.cycle || session.metadata?.price_key;
         const metaTier = session.metadata?.lifetime_tier ? parseInt(session.metadata.lifetime_tier) : null;
 
-        console.log(`Checkout completed: ${userEmail}, plan=${metaPlan}, cycle=${metaCycle}, tier=${metaTier}`);
-
-        // Resolve plan from price if metadata is missing
         let plan = metaPlan;
         let cycle = metaCycle;
         let lifetimeTier = metaTier;
 
-        if (!plan && session.line_items) {
-          const priceId = session.line_items?.data?.[0]?.price?.id;
-          if (priceId && PRICE_MAP[priceId]) {
-            plan = PRICE_MAP[priceId].plan;
-            cycle = PRICE_MAP[priceId].cycle;
-            lifetimeTier = PRICE_MAP[priceId].tier || null;
+        if (!plan) {
+          // Try to resolve from line items
+          try {
+            const lineItems = await stripe.checkout.sessions.listLineItems(session.id);
+            const priceId = lineItems?.data?.[0]?.price?.id;
+            if (priceId && PRICE_MAP[priceId]) {
+              plan = PRICE_MAP[priceId].plan;
+              cycle = PRICE_MAP[priceId].cycle;
+              lifetimeTier = PRICE_MAP[priceId].tier || null;
+            }
+          } catch (e) {
+            console.warn('Could not fetch line items:', e.message);
           }
         }
+
+        // For new unified checkout, default to 'pro'
+        if (!plan) plan = 'pro';
+
+        console.log(`Checkout completed: ${userEmail}, plan=${plan}, cycle=${cycle}`);
 
         const users = await base44.asServiceRole.entities.User.filter({ email: userEmail });
         if (users.length === 0) { console.error(`User not found: ${userEmail}`); break; }
 
+        // Determine premium_expires from subscription
+        let premiumExpires = null;
+        if (session.subscription) {
+          try {
+            const sub = await stripe.subscriptions.retrieve(session.subscription);
+            if (sub.current_period_end) {
+              premiumExpires = new Date(sub.current_period_end * 1000).toISOString();
+            }
+          } catch (e) {
+            console.warn('Could not fetch subscription:', e.message);
+          }
+        }
+
         const updateData = {
-          premium_plan: plan || 'legend',
+          premium_plan: plan,
           billing_cycle: cycle || 'monthly',
           stripe_customer_id: session.customer,
+          is_premium: true,
           subscription_status: 'active',
         };
         if (session.subscription) updateData.stripe_subscription_id = session.subscription;
+        if (premiumExpires) updateData.premium_expires = premiumExpires;
         if (lifetimeTier) updateData.lifetime_tier = lifetimeTier;
 
         await base44.asServiceRole.entities.User.update(users[0].id, updateData);
-        console.log(`Updated user ${userEmail}: plan=${plan}, cycle=${cycle}`);
+        console.log(`Updated user ${userEmail}: plan=${plan}, is_premium=true`);
 
         // Handle lifetime tier counter
         if (cycle === 'lifetime' && lifetimeTier) {
@@ -134,26 +155,56 @@ Deno.serve(async (req) => {
           if (tiers.length > 0) {
             const newSold = (tiers[0].sold || 0) + 1;
             await base44.asServiceRole.entities.LifetimeDealCounter.update(tiers[0].id, { sold: newSold });
-            console.log(`Tier ${lifetimeTier} sold: ${newSold}/${tiers[0].max_slots}`);
-            if (newSold >= tiers[0].max_slots) {
-              await advanceLifetimeTier(base44, lifetimeTier);
-            }
+            if (newSold >= tiers[0].max_slots) await advanceLifetimeTier(base44, lifetimeTier);
           }
         }
+        break;
+      }
+
+      case 'customer.subscription.updated': {
+        const sub = event.data.object;
+        console.log(`Subscription updated: ${sub.customer}, status=${sub.status}`);
+
+        const users = await base44.asServiceRole.entities.User.filter({ stripe_customer_id: sub.customer });
+        if (users.length === 0) { console.warn(`No user for customer ${sub.customer}`); break; }
+
+        const isLifetime = users[0].billing_cycle === 'lifetime';
+        if (isLifetime) { console.log('Skipping update for lifetime user'); break; }
+
+        const premiumExpires = sub.current_period_end
+          ? new Date(sub.current_period_end * 1000).toISOString()
+          : null;
+
+        const updateData = {
+          subscription_status: sub.status,
+          is_premium: sub.status === 'active' || sub.status === 'trialing',
+        };
+        if (premiumExpires) updateData.premium_expires = premiumExpires;
+
+        await base44.asServiceRole.entities.User.update(users[0].id, updateData);
+        console.log(`Synced subscription for ${users[0].email}: status=${sub.status}`);
         break;
       }
 
       case 'customer.subscription.deleted': {
         const sub = event.data.object;
         console.log(`Subscription cancelled: ${sub.customer}`);
+
         const users = await base44.asServiceRole.entities.User.filter({ stripe_customer_id: sub.customer });
         if (users.length > 0) {
-          await base44.asServiceRole.entities.User.update(users[0].id, {
-            premium_plan: 'free',
-            billing_cycle: null,
-            stripe_subscription_id: null,
-            subscription_status: 'cancelled',
-          });
+          const isLifetime = users[0].billing_cycle === 'lifetime';
+          if (!isLifetime) {
+            await base44.asServiceRole.entities.User.update(users[0].id, {
+              premium_plan: 'free',
+              billing_cycle: null,
+              stripe_subscription_id: null,
+              subscription_status: 'cancelled',
+              is_premium: false,
+            });
+            console.log(`Revoked premium for ${users[0].email}`);
+          } else {
+            console.log(`Skipping revoke for lifetime user ${users[0].email}`);
+          }
         }
         break;
       }
@@ -163,7 +214,12 @@ Deno.serve(async (req) => {
         console.log(`Invoice paid: ${invoice.customer}`);
         const users = await base44.asServiceRole.entities.User.filter({ stripe_customer_id: invoice.customer });
         if (users.length > 0) {
-          await base44.asServiceRole.entities.User.update(users[0].id, { subscription_status: 'active' });
+          const updateData = { subscription_status: 'active', is_premium: true };
+          // Sync period end
+          if (invoice.lines?.data?.[0]?.period?.end) {
+            updateData.premium_expires = new Date(invoice.lines.data[0].period.end * 1000).toISOString();
+          }
+          await base44.asServiceRole.entities.User.update(users[0].id, updateData);
         }
         break;
       }
