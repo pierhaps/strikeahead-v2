@@ -35,7 +35,7 @@ export default function Imprint() {
           <p className="text-foam/60 text-sm">USA</p>
           <p className="text-foam/40 text-sm mt-2">{t('imprint.register_type')}</p>
           <p className="text-foam/70 text-sm">{t('imprint.register_number')}</p>
-          <p className="text-foam/40 text-sm mt-2">{t('imprint.vat_id')}</p>
+
         </section>
 
         {/* Contact */}
