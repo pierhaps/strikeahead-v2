@@ -33,8 +33,6 @@ export default function Imprint() {
           <p className="text-foam/60 text-sm">8 The Green, Suite A</p>
           <p className="text-foam/60 text-sm">Dover, DE 19901</p>
           <p className="text-foam/60 text-sm">USA</p>
-          <p className="text-foam/40 text-sm mt-2">{t('imprint.represented_by')}</p>
-          <p className="text-foam/70 text-sm">{t('imprint.ceo_name')}</p>
           <p className="text-foam/40 text-sm mt-2">{t('imprint.register_type')}</p>
           <p className="text-foam/70 text-sm">{t('imprint.register_number')}</p>
           <p className="text-foam/40 text-sm mt-2">{t('imprint.vat_id')}</p>
